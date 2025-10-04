@@ -1,0 +1,217 @@
+{
+    "name": "turbowarp-desktop",
+    "description": "Scratch mod with a compiler, dark mode, a bunch of addons, and more.",
+    "version": "1.14.5",
+    "license": "GPL-3.0",
+    "author": {
+        "email": "contact@turbowarp.org",
+        "name": "Thomas Weber"
+    },
+    "scripts": {
+        "prepare": "# There is no prepare script for desktop. This is a comment so that npm doesn't get mad",
+        "fetch": "node scripts/download-library-files.js && node scripts/download-packager.js && node scripts/prepare-extensions.js",
+        "webpack:compile": "webpack",
+        "webpack:watch": "webpack --watch",
+        "webpack:prod": "cross-env NODE_ENV=production webpack",
+        "electron:start": "electron src-main/entrypoint.js",
+        "electron:package:dir": "electron-builder --dir"
+    },
+    "dependencies": {
+        "semver": "^7.7.2"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.28.0",
+        "@babel/preset-env": "^7.12.16",
+        "@babel/preset-react": "^7.13.13",
+        "@electron/fuses": "^1.7.0",
+        "@turbowarp/extensions": "github:TurboWarp/extensions#master",
+        "adm-zip": "^0.5.16",
+        "autoprefixer": "^9.8.8",
+        "babel-loader": "^8.4.1",
+        "copy-webpack-plugin": "^6.4.1",
+        "cross-env": "^7.0.3",
+        "css-loader": "^1.0.1",
+        "electron": "^37.2.6",
+        "electron-builder": "^26.0.19",
+        "file-loader": "^6.2.0",
+        "postcss": "^8.4.13",
+        "postcss-import": "^14.0.0",
+        "postcss-loader": "^4.2.0",
+        "postcss-simple-vars": "^6.0.3",
+        "scratch-gui": "*",
+        "style-loader": "^0.23.0",
+        "url-loader": "^4.1.1"
+    },
+    "overrides": {
+        "webpack@4.47.0": {
+            "terser-webpack-plugin": "^4.2.3"
+        }
+    },
+    "homepage": "https://desktop.turbowarp.org/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/TurboWarp/desktop.git"
+    },
+    "bugs": {
+        "url": "https://github.com/TurboWarp/desktop/issues",
+        "email": "contact@turbowarp.org"
+    },
+    "main": "./src-main/entrypoint.js",
+    "build": {
+        "appId": "org.turbowarp.desktop",
+        "productName": "TurboWarp",
+        "files": [
+            "node_modules/**/*",
+            "src-main/**/*",
+            "src-preload/**/*",
+            "src-renderer/**/*",
+            "dist-renderer-webpack/**/*",
+            "dist-library-files/**/*",
+            "dist-extensions/**/*"
+        ],
+        "extraResources": [
+            {
+                "from": "art/icon.png",
+                "to": "icon.png"
+            },
+            {
+                "from": "art/icon.svg",
+                "to": "icon.svg"
+            }
+        ],
+        "win": {
+            "artifactName": "${productName} Portable ${version} ${arch}.${ext}",
+            "icon": "build/icon.ico",
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": "x64"
+                },
+                {
+                    "target": "portable",
+                    "arch": "x64"
+                }
+            ]
+        },
+        "appx": {
+            "artifactName": "${productName}-MS-Store-${version}-${arch}.${ext}",
+            "applicationId": "AmpMod",
+            "displayName": "AmpMod",
+            "identityName": "45747ThomasWeber.TurboWarpDesktop",
+            "publisher": "CN=18FA7D4F-01BF-49F2-BF56-782DCEA49C69",
+            "publisherDisplayName": "AmpElectrecuted",
+            "backgroundColor": "#59c059",
+            "showNameOnTiles": true,
+            "languages": [
+                "en-US",
+                "nl",
+                "de",
+                "it",
+                "ko"
+            ]
+        },
+        "nsis": {
+            "artifactName": "${productName}-Setup-${version}-${arch}.${ext}",
+            "oneClick": false,
+            "deleteAppDataOnUninstall": false,
+            "allowToChangeInstallationDirectory": true
+        },
+        "mac": {
+            "artifactName": "${productName}-Setup-${version}.${ext}",
+            "icon": "build/icon.icns",
+            "category": "public.app-category.education",
+            "darkModeSupport": true,
+            "gatekeeperAssess": false,
+            "hardenedRuntime": true,
+            "entitlements": "build/entitlements.mac.plist",
+            "entitlementsInherit": "build/entitlements.mac.plist",
+            "extendInfo": {
+                "ITSAppUsesNonExemptEncryption": false,
+                "LSMultipleInstancesProhibited": true,
+                "NSCameraUsageDescription": "This app requires camera access when using the video sensing blocks.",
+                "NSMicrophoneUsageDescription": "This app requires microphone access when recording sounds or detecting loudness."
+            },
+            "target": [
+                {
+                    "arch": "universal",
+                    "target": "dmg"
+                }
+            ]
+        },
+        "mas": {
+            "hardenedRuntime": false,
+            "entitlements": "build/entitlements.mas.plist",
+            "entitlementsInherit": "build/entitlements.mas.inherit.plist",
+            "provisioningProfile": "build/distribution.provisionprofile"
+        },
+        "masDev": {
+            "type": "development",
+            "provisioningProfile": "build/development.provisionprofile"
+        },
+        "linux": {
+            "artifactName": "${productName}-${os}-${arch}-${version}.${ext}",
+            "icon": "./build/",
+            "synopsis": "Block-based programming. Amplified.",
+            "description": "AmpMod is a powerful block-based programming language built on Scratch 3.0 and TurboWarp, with many features to make advanced games, animations, experiments and more.",
+            "category": "Development",
+            "desktop": {
+                "entry": {
+                    "StartupWMClass": "ampmod",
+                    "Keywords": "scratch;turbowarp;"
+                }
+            },
+            "extraFiles": [
+                "linux-files"
+            ],
+            "target": [
+                {
+                    "target": "deb"
+                },
+                {
+                    "target": "appimage"
+                },
+                {
+                    "target": "tar.gz"
+                }
+            ]
+        },
+        "snap": {
+            "summary": "Scratch mod with a compiler, dark mode, a bunch of addons, and more.",
+            "allowNativeWayland": true,
+            "plugs": [
+                "default",
+                "camera",
+                "audio-record",
+                "joystick",
+                "removable-media"
+            ]
+        },
+        "appImage": {
+            "license": null
+        },
+        "fileAssociations": [
+            {
+                "ext": "sb3",
+                "name": "Scratch 3 Project",
+                "description": "Scratch 3 Project",
+                "role": "Editor",
+                "mimeType": "application/x.scratch.sb3"
+            },
+            {
+                "ext": "sb2",
+                "name": "Scratch 2 Project",
+                "description": "Scratch 2 Project",
+                "role": "Editor",
+                "mimeType": "application/x.scratch.sb2"
+            },
+            {
+                "ext": "sb",
+                "name": "Scratch 1 Project",
+                "description": "Scratch 1 Project",
+                "role": "Editor",
+                "mimeType": "application/x.scratch.sb"
+            }
+        ]
+    },
+    "private": true
+}

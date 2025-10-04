@@ -1,0 +1,3 @@
+Contact: mailto:ampelectrecuted@gmail.com
+Policy: https://codeberg.org/ampmod/ampmod/src/branch/develop/SECURITY.md
+Preferred-Languages: en

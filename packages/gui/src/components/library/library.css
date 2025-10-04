@@ -1,0 +1,69 @@
+@import "../../css/units.css";
+@import "../../css/colors.css";
+
+.sidebar-container {
+    display: flex;
+    flex-direction: row;
+    height: calc(100% - $library-header-height);
+    overflow-y: hidden;
+}
+.library-scroll-grid {
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    background: $ui-secondary;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    height: auto;
+    width: calc(100% - 600px);
+    padding: 0.5rem;
+}
+
+.filter-bar {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: $ui-tertiary;
+    border: $ui-black-transparent 1px solid;
+    border-radius: $space;
+    margin: $space;
+    font-size: 0.875rem;
+    height: calc(100% - calc($space - 2));
+    width: 600px;
+    padding: calc($space * 3);
+    overflow-y: scroll;
+}
+
+.filter-bar-item {
+    margin-bottom: 0.75rem;
+}
+
+.filter {
+    flex-grow: 0;
+}
+
+.filter-input {
+    width: 100%;
+    transition: 0.2s;
+}
+
+.divider {
+    height: 4px;
+}
+
+.tag-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.spinner-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

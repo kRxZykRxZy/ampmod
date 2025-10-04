@@ -1,0 +1,97 @@
+@import "../../css/colors.css";
+@import "../../css/default-colors.css";
+@import "../../css/units.css";
+
+.primary-button {
+    background-color: white;
+    color: $motion-tertiary !important;
+    border-radius: $space;
+    padding: 12px 18px;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 550;
+    font-size: 1.3em;
+    box-shadow: 0 0 0 0 $ui-white-transparent-default;
+    transition:
+        box-shadow 0.3s,
+        transform 0.4s,
+        font-weight 0.3s;
+    margin-top: $space;
+    transform-style: preserve-3d;
+}
+
+.primary-button:hover {
+    box-shadow: 0 0 0 $space $ui-white-transparent-default;
+    transform: scale(1.1);
+    font-weight: 850;
+}
+
+.button {
+    background-color: $motion-primary;
+    color: white;
+    border-radius: $space;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.button:hover {
+    background-color: $motion-tertiary;
+}
+
+.marginRight {
+    margin-right: 8px;
+}
+
+.main section,
+.wrap {
+    max-width: 1200px;
+    padding: 0em 2em;
+    margin: auto;
+}
+
+.spacing {
+    margin-bottom: 24px;
+}
+
+.column-item {
+    padding: 0 20px;
+    background-color: var(--badge-background);
+    border: 1px var(--badge-border) solid;
+    border-radius: $space; /* Using imported $space variable */
+}
+
+.main-content-grid {
+    display: grid;
+    /* Defines the two main columns: 60% (3fr) for intro, 40% (2fr) for features */
+    grid-template-columns: 3fr 2fr;
+    gap: 40px; /* Space between the two main columns */
+
+    /* Apply the standard content width and centering */
+    max-width: 1200px;
+    padding: 0em 2em;
+    margin: auto;
+}
+
+/* Optional: Clean up padding on sections inside the grid columns */
+.left-column section,
+.right-column section {
+    padding: 0; /* Remove the padding to keep columns aligned */
+    margin-bottom: 30px; /* Vertical spacing between sections in the left column */
+}
+
+.two-column-grid {
+    display: flex;
+    flex-direction: column;
+    /* Add space between the inner columns */
+    gap: 15px;
+    margin-top: 20px;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.4em;
+    gap: $space;
+}

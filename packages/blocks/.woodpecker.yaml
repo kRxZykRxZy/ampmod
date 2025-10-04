@@ -1,0 +1,34 @@
+steps:
+    - name: build
+      when:
+          event: [push, manual, cron]
+      # Use the official jekyll build container
+      image: node
+      environment:
+          # secrets must be set in Woodpecker configuration
+          CBTOKEN:
+              from_secret: cbtoken
+      commands:
+          # Am i even allowed to do this?
+          - apt-get update && apt-get install python3 default-jre-headless --no-install-recommends -y
+          # Avoid permission denied errors
+          - chmod -R a+w .
+          # Set up git in a working way
+          - git config --global --add safe.directory /woodpecker/src/codeberg.org/AmpMod/scratch-blocks
+          - git config --global user.email "no@thankyou.com"
+          - git config --global user.name "CI Builder"
+          # checkout the target repo
+          - git checkout developBuilds
+          - chmod -R a+w .
+          # Prepare for push
+          - git remote set-url origin https://$CBTOKEN@codeberg.org/AmpMod/scratch-blocks.git
+          - git rm -r -f ./**/*
+          - git commit -m 'Woodpecker CI - Clean up.'
+          # Run 11ty build stage
+          - npm install
+          - npm run translate
+          - npm run prepublish
+          # Push to target
+          - git add --all
+          - git commit -m "Woodpecker CI Build at $( env TZ=America/Chicago date +'%Y-%m-%d %X %Z' )"
+          - git push -u origin developBuilds

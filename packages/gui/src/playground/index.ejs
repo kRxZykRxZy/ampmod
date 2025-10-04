@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google" value="notranslate">
+    <% if (htmlWebpackPlugin.options.isCbp) { %>
+      <% /* If you are forkimg, you will need to remove or replace google-site-verification,
+        and if you don't use Simple Analytics you will want to remove or replace that script too. */ %>
+      <meta name="google-site-verification" content="xMC75_ZeQyXE1iaRV31N-hOLPJVubcfmiKfoiOqcNH8" /> 
+      <script>
+      (function() {
+        const optedOut = localStorage.getItem('amp:analytics-opted-out') === 'true';
+
+        if (!optedOut) {
+          const script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://scripts.simpleanalyticscdn.com/latest.js';
+          document.head.appendChild(script);
+        }
+      })();
+    </script>
+    <% } else { %>  
+      <meta name="robots" content="noindex, nofollow">
+    <% } %>
+    <meta name="description" content="<%= htmlWebpackPlugin.options.APP_NAME %> is a powerful block-based programming language built on Scratch 3.0 and TurboWarp." />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link rel="apple-touch-icon" href="<%= htmlWebpackPlugin.options.root %>images/apple-touch-icon.png">
+    <script>
+      (function() {
+        const optedOut = localStorage.getItem('amp:analytics-opted-out') === 'true';
+
+        if (!optedOut && <%= htmlWebpackPlugin.options.isCbp %>) {
+          const script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://scripts.simpleanalyticscdn.com/latest.js';
+          document.head.appendChild(script);
+        }
+      })();
+    </script>
+    <style>
+      .splash-screen {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-family: sans-serif;
+      }
+      .splash-main {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .ampmod-colour-scheme {
+        background-color: #59c059;
+        color: #fff;
+        z-index: 1000;
+      }
+      .splash-error-screen {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: left;
+        justify-content: left;
+        text-align: left;
+        width: 70%;
+      }
+      .splash-error-screen h1 img {
+        vertical-align: middle;
+      }
+      .splash-screen[hidden], .splash-main[hidden], .splash-error-screen[hidden] {
+        display: none;
+      }
+      .splash-screen > * {
+        max-width: 80%;
+      }
+      .splash-spinner:after {
+        content: " ";
+        display: block;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        border: 6px solid;
+        border-color: currentColor transparent currentColor transparent;
+        animation: splash-spinner 1.2s linear infinite;
+      }
+      @keyframes splash-spinner {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      .splash-screen a {
+        color: inherit;
+      }
+      .splash-errors {
+        font-family: monospace;
+      }
+      .splash-error-list {
+        white-space: pre-wrap;
+      }
+      .splash-reset, .splash-delete-data, .splash-copy {
+        color: inherit;
+        background: none;
+        padding: 0;
+        margin: 0;
+        border: none;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      .block-animation {
+        width: 125px;
+        height: 150px;
+      }
+      .block-animation img {
+        display: block;
+        position: relative;
+        height: 30%;
+        margin-top: -4px;
+      }
+      .top-block {
+        animation: top-slide-in 1.5s ease infinite;
+      }
+      .middle-block {
+        animation: middle-slide-in 1.5s ease infinite;
+      }
+      .bottom-block {
+        animation: bottom-slide-in 1.5s ease infinite;
+      }
+      @keyframes top-slide-in {
+        0% {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        33% {
+          transform: translateY(0px);
+          opacity: 1;
+        }
+      }
+      @keyframes middle-slide-in {
+        0% {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        33% {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        66% {
+          transform: translateY(0px);
+          opacity: 1;
+        }
+      }
+      @keyframes bottom-slide-in {
+        0% {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        66% {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0px);
+          opacity: 1;
+        }
+      }
+      .version {
+        position: absolute;
+        bottom: 0.5em;
+        text-align: center;
+        font-size: 1em;
+        opacity: 0.5;
+        padding: 20px;
+      }
+      .progress-bar-fake {
+        width: 256px;
+        height: 10px;
+        background-color: #ffffff33;
+        border-radius: 999px;
+        overflow: hidden;
+        margin-top: 1rem;
+      }
+      .progress-bar-fake-inner {
+        width: 50%;
+        height: 100%;
+        background-color: white;
+        animation: marquee 1.2s linear infinite;
+      }
+      @keyframes marquee {
+        0% {
+          transform: translateX(-130%);
+        }
+        100% {
+          transform: translateX(200%);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <div class="splash-screen ampmod-colour-scheme">
+        <div class="splash-error-screen">
+        <div>
+            <h1 class="splash-error-title"><img src="<%= htmlWebpackPlugin.options.root %>images/reload.svg" draggable="false" loading="lazy" /> Oops! JavaScript is disabled.</h1>
+            <p><%= htmlWebpackPlugin.options.APP_NAME %> requires JavaScript. Consider using <a href="https://desktop.turbowarp.org/">TurboWarp Desktop</a> if you are afraid of remote JavaScript.</p>
+          </div>
+        </div>
+      </div>
+    </noscript>
+
+    <div class="splash-screen spash-waiting-for-js">
+      <div class="splash-main">
+        <div class="version"><%= htmlWebpackPlugin.options.APP_NAME %> v<%= process.env.ampmod_version %></div>
+        <div class="block-animation">
+          <img class="top-block" src="<%= htmlWebpackPlugin.options.root %>images/top-block.svg" draggable="false" />
+          <img class="middle-block" src="<%= htmlWebpackPlugin.options.root %>images/middle-block.svg" draggable="false" />
+          <img class="bottom-block" src="<%= htmlWebpackPlugin.options.root %>images/bottom-block.svg" draggable="false" />
+        </div>
+        <div class="progress-bar-fake">
+          <div class="progress-bar-fake-inner"></div>
+        </div>
+        <% if (process.env.ampmod_is_canary) { %>
+          <div class="splash-canary-title">This is a canary build. Please expect bugs.</div>
+        <% } %>
+        <div class="splash-taking-too-long" hidden>
+          <%= htmlWebpackPlugin.options.APP_NAME %> is taking too long to load.
+          Try <a href="javascript:window.location.reload()">reloading</a> or wait longer.
+          <br />Older browsers may not be able to decompress <%= htmlWebpackPlugin.options.APP_NAME %> properly.
+          <% if (process.env.ampmod_is_cbp) { %>
+            <br />Consider checking <a href="https://status.codeberg.eu" target="_blank" rel="noreferrer">Codeberg's status page</a> to see if there are any ongoing issues.
+          <% } %>
+        </div>
+        <div class="splash-custom-info"></div>
+      </div>
+      <div class="splash-error-screen" hidden>
+        <h1 class="splash-error-title"><img src="<%= htmlWebpackPlugin.options.root %>images/reload.svg" draggable="false" loading="lazy" /> Oops! Something went wrong.</h1>
+        <p>This page has crashed. Please refresh your page to try again. If this continues, please report the error to the <a href="https://ampmod.flarum.cloud/t/bugs-and-glitches">forums</a> or <a href="https://codeberg.org/ampmod/ampmod/issues">issue tracker</a>.</p>
+        <div class="splash-errors"></div>
+        <p>Please provide the above backtrace. Click <button class="splash-copy">here</button> to copy it.</p>
+        <p>Try <button class="splash-reset">bypassing the cache</button> or <button class="splash-delete-data">erasing <%= htmlWebpackPlugin.options.APP_NAME %>'s data</button>, which may fix some issues.</p>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        'use strict';
+
+        var theme = '';
+        var canary = <%= process.env.ampmod_is_canary %>;
+        var accent = canary ? '#FF4C4C' : '#59C059';
+
+        const showTooLongMessage = setTimeout(function () {
+          var splashErrorScreen = document.querySelector('.splash-error-screen');
+          if (!splashErrorScreen.hidden) return; // already errored
+          var takingTooLong = document.querySelector('.splash-taking-too-long');
+          takingTooLong.hidden = false;
+        }, 20000);
+
+        try {
+          if (canary) {
+            var themeSetting = localStorage.getItem('canary:theme');
+          } else {
+            var themeSetting = localStorage.getItem('amp:theme');
+          }
+        } catch (e) {
+          // ignore
+        }
+        try {
+          var parsed = JSON.parse(themeSetting);
+          if (parsed.accent === 'purple') {
+            accent = '#855cd6';
+          } else if (parsed.accent === 'blue') {
+            accent = '#4c97ff';
+          } else if (parsed.accent === 'green') {
+            accent = '#59c059';
+          } else if (parsed.accent === 'grey') {
+            accent = '#333';
+          } else if (parsed.accent === 'red' || parsed.accent === 'rainbow') {
+            accent = '#FF4C4C';
+          }
+        } catch (e) {
+          // ignore
+        }
+
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        var splash = document.querySelector('.spash-waiting-for-js');
+        splash.setAttribute('data-theme', theme);
+        <% if (htmlWebpackPlugin.options.isEditor) { %>
+          splash.style.backgroundColor = accent;
+          splash.style.color = 'white';
+        <% } else { %>
+          splash.style.color = accent;
+        <% } %>
+        splash.hidden = false;
+
+        var splashErrorTitle = document.querySelector('.splash-error-title');
+        var splashCustomInfo = document.querySelector('.splash-custom-info');
+        var splashMain = document.querySelector('.splash-main');
+        var splashErrorScreen = document.querySelector('.splash-error-screen');
+        var splashError = document.querySelector('.splash-errors');
+        var splashReset = document.querySelector('.splash-reset');
+        var splashDeleteData = document.querySelector('.splash-delete-data');
+        var splashCopy = document.querySelector('.splash-copy');
+
+        var totalErrors = 0;
+        window.onerror = function (event, source, line, col, err) {
+          if (++totalErrors > 5) return; // dont bother logging more
+          splashMain.hidden = true;
+          splashErrorScreen.hidden = false;
+          var el = document.createElement('div');
+          el.textContent = 'Error (splash) in ' + source + ' (' + line + ':' + col + '): ' + err;
+          splashError.appendChild(el);
+        };
+
+        splashReset.onclick = function () {
+          splashReset.disabled = true;
+          function hardRefresh() {
+            var search = location.search.replace(/[?&]nocache=\d+/, '');
+            location.replace(location.pathname + search + (search ? '&' : '?') + 'nocache=' + Math.floor(Math.random() * 100000));
+          }
+          if ('serviceWorker' in navigator) {
+            setTimeout(hardRefresh, 5000);
+            navigator.serviceWorker.getRegistration(<%= JSON.stringify(htmlWebpackPlugin.options.root) %>)
+              .then(function(registration) {
+                if (registration) {
+                  return registration.unregister();
+                }
+              })
+              .then(hardRefresh)
+              .catch(hardRefresh);
+          } else {
+            hardRefresh();
+          }
+        };
+        splashDeleteData.onclick = function () {
+            try {
+            if (!confirm('Your backpack and restore points will be deleted. Continue?')) {
+              return;
+            }
+            <% if (process.env.ampmod_is_canary) { %>
+                  const storagePrefix = 'canary:';
+                  const databasePrefix = 'Canary';
+            <% } else { %>
+                  const storagePrefix = 'tw:';
+                  const databasePrefix = 'TW_';
+            <% } %>
+            window.localStorage.removeItem(storagePrefix + "theme");
+            window.indexedDB.deleteDatabase(databasePrefix + "RestorePoints");
+            window.indexedDB.deleteDatabase(databasePrefix + "Backpack");
+            window.localStorage.removeItem(storagePrefix + "username");
+            window.localStorage.removeItem(storagePrefix + "language");
+            location.reload();
+          } catch (e) {
+            // ignore
+          }
+        };
+
+        splashCopy.onclick = function () {
+          try {
+            navigator.clipboard.writeText(splashError.textContent);
+            splashCopy.textContent = 'Copied!';
+            setTimeout(function () {
+              splashCopy.textContent = 'here';
+            }, 2000);
+          } catch (e) {
+            splashCopy.textContent = 'Failed to copy';
+            setTimeout(function () {
+              splashCopy.textContent = 'here';
+            }, 2000);
+          }
+        };
+
+        window.SplashEnd = () => {
+          clearTimeout(showTooLongMessage);
+          splash.parentNode.removeChild(splash);
+          window.onerror = null;
+        };
+
+        window.SetCustomSplashInfo = (text) => {
+          splashCustomInfo.innerHTML = text;
+        }
+      })();
+    </script>
+
+    <div id="app"></div>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+@import "../../css/colors.css";
+@import "../../css/units.css";
+
+.tag-button {
+    font-family:
+        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    display: inline-flex;
+    align-items: center;
+}
+
+.tag-button-icon {
+    max-width: 1rem;
+    max-height: 1rem;
+}
+
+.checkbox {
+    width: 1.4rem;
+    height: 1.4rem;
+    border: 1px solid $motion-primary;
+    border-radius: 6px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    padding: 0;
+    background-position: center;
+}
+
+.tag-button:hover .checkbox {
+    box-shadow: 0 0 0 2px $looks-transparent;
+}
+
+.active .checkbox {
+    background: $motion-primary;
+    background-image: url("./checkbox.svg");
+    background-position: center;
+    background-size: 80%;
+    background-repeat: no-repeat;
+}

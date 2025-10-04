@@ -1,0 +1,16 @@
+{
+    "name": "@ampmod/branding",
+    "version": "0.3.0",
+    "description": "Branding files for AmpMod",
+    "repository": {
+        "type": "git",
+        "url": "https://codeberg.org/ampmod/ampmod"
+    },
+    "license": "0BSD",
+    "author": "AmpElectrecuted",
+    "type": "commonjs",
+    "main": "src/index.js",
+    "scripts": {
+        "prepare": "exit 0"
+    }
+}

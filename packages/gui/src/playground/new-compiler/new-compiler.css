@@ -1,0 +1,27 @@
+@import "../../css/colors.css";
+
+.styled-table {
+    border: 1px $ui-black-transparent solid;
+    background-color: $ui-secondary;
+    text-align: center;
+    line-height: 1.5em;
+    font-size: 0.95em;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    border-collapse: collapse;
+}
+
+.styled-table thead {
+    border-bottom: 2px $ui-black-transparent solid;
+    letter-spacing: 0.05em;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 16px;
+    transition: background-color 0.3s ease;
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background-color: $ui-tertiary;
+}

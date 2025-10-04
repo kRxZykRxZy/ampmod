@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title><%= htmlWebpackPlugin.options.title %></title>
+        <% if (htmlWebpackPlugin.options.description) { %>
+          <% /* SEO to try and battle outdated GitHub mirrors. */ %>
+          <meta name="description" content="<%= htmlWebpackPlugin.options.description %>" />
+          <meta property="og:title" content="<%= htmlWebpackPlugin.options.title %>">
+          <meta property="og:description" content="<%= htmlWebpackPlugin.options.description %>">
+          <meta property="og:type" content="website">
+          <meta name="twitter:card" content="summary_large_image">
+          <meta name="twitter:title" content="<%= htmlWebpackPlugin.options.title %>">
+          <meta name="twitter:description" content="<%= htmlWebpackPlugin.options.description %>">
+          <meta name="twitter:image" content="/images/card.png">
+        <% } %>
+        <link rel="canonical" href="https://ampmod.codeberg.page">
+        <% if (htmlWebpackPlugin.options.isCbp) { %>
+          <% /* If you are forkimg, you will need to remove or replace google-site-verification,
+           and if you don't use Simple Analytics you will want to remove or replace that script too. */ %>
+          <meta name="google-site-verification" content="xMC75_ZeQyXE1iaRV31N-hOLPJVubcfmiKfoiOqcNH8" /> 
+          <script>
+          (function() {
+            const optedOut = localStorage.getItem('amp:analytics-opted-out') === 'true';
+
+            if (!optedOut) {
+              const script = document.createElement('script');
+              script.async = true;
+              script.src = 'https://scripts.simpleanalyticscdn.com/latest.js';
+              document.head.appendChild(script);
+            }
+          })();
+        </script>
+        <% } else { %>  
+          <meta name="robots" content="noindex, nofollow">
+        <% } %>
+        <style>
+            body[data-splash-theme="dark"] {
+                background: #111;
+            }
+            body[data-splash-theme="amoled"], body[data-splash-theme="high-contrast"] {
+                background: #000;
+            }
+            .splash-custom-info[hidden] {
+                display: none;
+            }
+            .splash-custom-info {
+                padding: 20px;
+                border-radius: 8px;
+                margin: 10px;
+                background: #59c059;
+                color: white;
+                font-family: sans-serif;
+            }
+            .splash-custom-info a {
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <noscript>
+            <h1>This page requires JavaScript</h1>
+        </noscript>
+
+        <div class="splash-custom-info" hidden></div>
+
+        <div id="app"></div>
+
+        <script>
+            (function() {
+              var theme = '';
+
+              var canary = <%= process.env.ampmod_is_canary %>;
+
+              try {
+                if (canary) {
+                  var themeSetting = localStorage.getItem('canary:theme');
+                } else {
+                  var themeSetting = localStorage.getItem('amp:theme');
+                }
+              } catch (e) {
+                // ignore
+              }
+              if (themeSetting === 'light') {
+                theme = 'light';
+              } else if (themeSetting === 'dark') {
+                theme = 'dark';
+              } else if (themeSetting) {
+                try {
+                  var parsed = JSON.parse(themeSetting);
+                  theme = parsed.gui;
+                } catch (e) {
+                  // ignore
+                }
+              }
+
+              if (!theme) {
+                theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+              }
+
+              document.body.setAttribute('data-splash-theme', theme);
+            })();
+        </script>
+
+        <script>
+            // Check every 0.3 seconds if the app is in minimal-ui mode (PWA).
+            setInterval(function () {
+                if (window.matchMedia("(display-mode: minimal-ui)").matches) {
+                    // If in minimal-ui mode, redirect to /editor.html.
+                    window.location.href = "/editor.html";
+                }
+            }, 300);
+
+            var splashCustomInfo = document.querySelector(
+                ".splash-custom-info"
+            );
+            window.SetCustomSplashInfo = text => {
+                splashCustomInfo.hidden = false;
+                splashCustomInfo.innerHTML = text;
+            };
+            window.SplashEnd = () => {
+                splashCustomInfo.parentNode.removeChild(splashCustomInfo);
+            };
+        </script>
+    </body>
+</html>
