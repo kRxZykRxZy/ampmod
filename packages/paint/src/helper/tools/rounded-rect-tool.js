@@ -14,6 +14,7 @@ class RoundedRectTool extends paper.Tool {
     static get TOLERANCE() {
         return 2;
     }
+
     /**
      * @param {function} setSelectedItems Callback to set the set of selected items in the Redux state
      * @param {function} clearSelectedItems Callback to clear the set of selected items in the Redux state
@@ -42,7 +43,6 @@ class RoundedRectTool extends paper.Tool {
             this.boundingBoxTool,
             onUpdateImage
         );
-
         // We have to set these functions instead of just declaring them because
         // paper.js tools hook up the listeners in the setter functions.
         this.onMouseDown = this.handleMouseDown;
@@ -51,12 +51,10 @@ class RoundedRectTool extends paper.Tool {
         this.onMouseUp = this.handleMouseUp;
         this.onKeyUp = nudgeTool.onKeyUp;
         this.onKeyDown = nudgeTool.onKeyDown;
-
         this.rect = null;
         this.colorState = null;
         this.isBoundingBoxMode = null;
         this.active = false;
-
         // Default corner size
         this._cornerSize = new paper.Size(10, 10);
     }
@@ -74,10 +72,8 @@ class RoundedRectTool extends paper.Tool {
             log.warn(
                 "Invalid cornerSize provided to RoundedRectTool.setCornerSize"
             );
-            // Optionally, revert to default or handle error
             this._cornerSize = new paper.Size(10, 10);
         }
-
         // If a rectangle is currently selected, update its roundness
         if (this.boundingBoxTool && this.boundingBoxTool.selectedItems) {
             for (const item of this.boundingBoxTool.selectedItems) {
@@ -120,7 +116,6 @@ class RoundedRectTool extends paper.Tool {
     handleMouseDown(event) {
         if (event.event.button > 0) return; // only first mouse button
         this.active = true;
-
         if (
             this.boundingBoxTool.onMouseDown(
                 event,
@@ -139,16 +134,13 @@ class RoundedRectTool extends paper.Tool {
 
     handleMouseDrag(event) {
         if (event.event.button > 0 || !this.active) return; // only first mouse button
-
         if (this.isBoundingBoxMode) {
             this.boundingBoxTool.onMouseDrag(event);
             return;
         }
-
         if (this.rect) {
             this.rect.remove();
         }
-
         const rect = new paper.Rectangle(event.downPoint, event.point);
         const squareDimensions = getSquareDimensions(
             event.downPoint,
@@ -157,7 +149,6 @@ class RoundedRectTool extends paper.Tool {
         if (event.modifiers.shift) {
             rect.size = squareDimensions.size.abs();
         }
-
         this.rect = new paper.Path.Rectangle(rect, this._cornerSize);
         if (event.modifiers.alt) {
             this.rect.position = event.downPoint;
@@ -167,19 +158,16 @@ class RoundedRectTool extends paper.Tool {
             const dimensions = event.point.subtract(event.downPoint);
             this.rect.position = event.downPoint.add(dimensions.multiply(0.5));
         }
-
         styleShape(this.rect, this.colorState);
     }
 
     handleMouseUp(event) {
         if (event.event.button > 0 || !this.active) return; // only first mouse button
-
         if (this.isBoundingBoxMode) {
             this.boundingBoxTool.onMouseUp(event);
             this.isBoundingBoxMode = null;
             return;
         }
-
         if (this.rect) {
             if (this.rect.area < RoundedRectTool.TOLERANCE / paper.view.zoom) {
                 // Tiny rectangle created unintentionally?
