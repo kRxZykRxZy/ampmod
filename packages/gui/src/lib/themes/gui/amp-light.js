@@ -109,6 +109,7 @@ const guiColors = {
 
     "menu-bar-background": "white",
     "menu-bar-foreground": "black",
+    "menu-bar-background-image": "var(--menu-bar-background-image-modern)",
     "menu-bar-icon-filter": "invert(100%)",
     "menu-bar-hover": "var(--looks-transparent)",
     "progress-bar-outer": "var(--looks-transparent)",

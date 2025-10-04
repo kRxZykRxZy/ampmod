@@ -112,6 +112,7 @@ const guiColors = {
     "turbowarp-color": "#ff4c4c",
     "turbowarp-transparent": "#ff4c4c26",
 
+    "menu-bar-background-image": "var(--menu-bar-background-image-classic)",
     "menu-bar-bottom-border": "transparent",
     "high-contrast-border": "#00000000",
     "feedback-background": "var(--menu-bar-foreground)",

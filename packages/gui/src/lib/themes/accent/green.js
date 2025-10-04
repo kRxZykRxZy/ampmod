@@ -10,6 +10,8 @@ const guiColors = {
     "extensions-tertiary": "#2e742e",
     "extensions-transparent": "hsla(120, 100%, 30%, 0.35)",
     "drop-highlight": "#66bb6a",
+    "menu-bar-background-image-classic": "none",
+    "menu-bar-background-image-modern": "none",
 };
 
 const blockColors = {

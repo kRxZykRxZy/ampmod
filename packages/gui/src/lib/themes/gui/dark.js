@@ -1,4 +1,8 @@
+import { guiColors as lightGuiColors } from "./light";
+
 const guiColors = {
+    ...lightGuiColors,
+
     "color-scheme": "dark",
 
     "ui-primary": "#111111",
@@ -8,12 +12,6 @@ const guiColors = {
     "ui-modal-overlay": "#333333aa",
     "ui-modal-background": "#111111",
     "ui-modal-foreground": "#eeeeee",
-    "ui-modal-header-foreground": "#ffffff",
-
-    "menu-bar-background": "var(--looks-secondary)",
-    "menu-bar-background-image": "none",
-    "menu-bar-foreground": "#ffffff",
-    "menu-bar-icon-filter": "none",
 
     "ui-white": "#111111",
     "progress-bar-outer": "hsla(0, 100%, 100%, 0.25)",
@@ -47,8 +45,6 @@ const guiColors = {
     "filter-icon-white": "brightness(0) invert(100%)",
 
     "paint-filter-icon-gray": "brightness(1.7)",
-
-    "menu-bar-bottom-border": "transparent",
 };
 
 const blockColors = {
