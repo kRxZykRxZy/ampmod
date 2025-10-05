@@ -8,7 +8,7 @@ import { requestPersistentStorage } from "./tw-persistent-storage";
 const DATABASE_NAME = process.env.ampmod_is_canary
     ? "Canary_Backpack"
     : "Amp_Backpack";
-const DATABASE_VERSION = 2;
+const DATABASE_VERSION = process.env.ampmod_is_canary ? 1 : 2;
 const STORE_NAME = "backpack";
 
 const idbItemToBackpackItem = item => {
