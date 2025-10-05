@@ -40,7 +40,9 @@ const StageWrapperComponent = function (props) {
                     <Stage stageSize={stageSize} vm={vm} />
                 ) : null}
             </Box>
-            {loading ? <Loader isFullScreen={isFullScreen} /> : null}
+            {loading ? (
+                <Loader isFullScreen={isFullScreen} isEmbedded={isEmbedded} />
+            ) : null}
         </Box>
     );
 };

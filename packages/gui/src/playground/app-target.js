@@ -201,11 +201,7 @@ async function runAllMigrations() {
         }
     }
 
-    if (dbsToMigrate.length === 0) {
-        console.log(
-            `No IndexedDB databases found with prefix "${oldPrefix}" or migration already complete.`
-        );
-    } else {
+    if (dbsToMigrate.length !== 0) {
         for (const oldDbName of dbsToMigrate) {
             const newDbName = newPrefix + oldDbName.substring(oldPrefix.length);
             try {

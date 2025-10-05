@@ -8,7 +8,6 @@ import * as bowser from "bowser";
 import { APP_DESCRIPTION, APP_NAME, APP_SLOGAN } from "@ampmod/branding";
 import { applyGuiColors } from "../../lib/themes/guiHelpers";
 import { detectTheme } from "../../lib/themes/themePersistance";
-
 import Header from "../../components/amp-header/header.jsx";
 import Footer from "../../components/amp-footer/footer.jsx";
 import Clippy from "../../containers/amp-clippy.jsx";
@@ -66,10 +65,12 @@ const Home = () => (
                     <section>
                         <h2>What is {APP_NAME}?</h2>
                         <p>
-                            {APP_NAME} is a powerful block-based programming
-                            language, built on Scratch 3.0 and TurboWarp. It can
-                            be used for many things, from simple throwaway
-                            spaghetti scripts to large-scale calculations.
+                            {APP_NAME} is a
+                            {Math.random() < 0.01 ? "n awesome and" : null}{" "}
+                            powerful block-based programming language, built on
+                            Scratch 3.0 and TurboWarp. It can be used for many
+                            things, from simple throwaway spaghetti scripts to
+                            large-scale calculations.
                         </p>
                     </section>
                     <section>

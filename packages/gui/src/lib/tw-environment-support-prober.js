@@ -1,4 +1,5 @@
 import Renderer from "scratch-render";
+import * as bowser from "bowser";
 import log from "./log";
 
 let cachedRendererSupport = null;
@@ -54,7 +55,9 @@ export const findIncompatibleUserscripts = () => {
     return errors;
 };
 
-export const isBrowserSupported = () =>
+export const isBrowserSupported = isEmbedded =>
+    (!!isEmbedded ||
+        bowser.parse(navigator.userAgent).platform.type !== "mobile") &&
     isNewFunctionSupported() &&
     isRendererSupported() &&
     findIncompatibleUserscripts().length === 0;

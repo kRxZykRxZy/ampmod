@@ -182,7 +182,9 @@ class LoaderComponent extends React.Component {
                         />
                     </div>
 
-                    <div className={styles.funFact} ref={this.funFactRef} />
+                    {!this.props.isEmbedded && (
+                        <div className={styles.funFact} ref={this.funFactRef} />
+                    )}
                 </div>
             </div>
         );
@@ -191,6 +193,7 @@ class LoaderComponent extends React.Component {
 
 LoaderComponent.propTypes = {
     intl: intlShape,
+    isEmbedded: PropTypes.bool,
     isFullScreen: PropTypes.bool,
     isRemote: PropTypes.bool,
     messageId: PropTypes.string,
@@ -208,6 +211,7 @@ LoaderComponent.propTypes = {
 };
 LoaderComponent.defaultProps = {
     isFullScreen: false,
+    isEmbedded: false,
     messageId: "gui.loader.headline",
 };
 
