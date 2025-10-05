@@ -33,7 +33,7 @@
     font-weight: bold;
     background-color: $menu-bar-background;
     color: $menu-bar-foreground;
-    border-bottom: 1px solid $motion-tertiary;
+    border-bottom: 1px solid $menu-bar-bottom-border;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
