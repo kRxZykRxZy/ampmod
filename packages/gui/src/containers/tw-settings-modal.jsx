@@ -34,9 +34,12 @@ class UsernameModal extends React.Component {
             "handleStoreProjectOptions",
         ]);
     }
+
     handleFramerateChange(e) {
         this.props.vm.setFramerate(e.target.checked ? 60 : 30);
+        if (!this.props.isEmbedded) this.handleStoreProjectOptions();
     }
+
     async handleCustomizeFramerate() {
         // prompt() returns Promise in desktop app
         // eslint-disable-next-line no-alert
@@ -47,39 +50,55 @@ class UsernameModal extends React.Component {
         const parsed = parseFloat(newFramerate);
         if (isFinite(parsed)) {
             this.props.vm.setFramerate(parsed);
+            if (!this.props.isEmbedded) this.handleStoreProjectOptions();
         }
     }
+
     handleHighQualityPenChange(e) {
         this.props.vm.renderer.setUseHighQualityRender(e.target.checked);
+        if (!this.props.isEmbedded) this.handleStoreProjectOptions();
     }
+
     handleInterpolationChange(e) {
         this.props.vm.setInterpolation(e.target.checked);
+        if (!this.props.isEmbedded) this.handleStoreProjectOptions();
     }
+
     handleInfiniteClonesChange(e) {
         this.props.vm.setRuntimeOptions({
             maxClones: e.target.checked ? Infinity : 300,
         });
+        if (!this.props.isEmbedded) this.handleStoreProjectOptions();
     }
+
     handleRemoveFencingChange(e) {
         this.props.vm.setRuntimeOptions({
             fencing: !e.target.checked,
         });
+        if (!this.props.isEmbedded) this.handleStoreProjectOptions();
     }
+
     handleRemoveLimitsChange(e) {
         this.props.vm.setRuntimeOptions({
             miscLimits: !e.target.checked,
         });
+        if (!this.props.isEmbedded) this.handleStoreProjectOptions();
     }
+
     handleWarpTimerChange(e) {
         this.props.vm.setCompilerOptions({
             warpTimer: e.target.checked,
         });
+        // Do not store automatically
     }
+
     handleDisableCompilerChange(e) {
         this.props.vm.setCompilerOptions({
             enabled: !e.target.checked,
         });
+        // Do not store automatically
     }
+
     handleDisableSecmanChange(e) {
         // eslint-disable-next-line max-len
         if (
@@ -92,16 +111,23 @@ class UsernameModal extends React.Component {
                 secman: !e.target.checked,
             });
         }
+        // Do not store automatically
     }
+
     handleStageWidthChange(value) {
         this.props.vm.setStageSize(value, this.props.customStageSize.height);
+        if (!this.props.isEmbedded) this.handleStoreProjectOptions();
     }
+
     handleStageHeightChange(value) {
         this.props.vm.setStageSize(this.props.customStageSize.width, value);
+        if (!this.props.isEmbedded) this.handleStoreProjectOptions();
     }
+
     handleStoreProjectOptions() {
         this.props.vm.storeProjectOptions();
     }
+
     render() {
         const {
             /* eslint-disable no-unused-vars */

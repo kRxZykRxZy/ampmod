@@ -522,18 +522,6 @@ const SettingsModalComponent = props => (
                     onChange={props.onDisableSecmanChange}
                 />
             )}
-            {!props.isEmbedded && (
-                <>
-                    <Header>
-                        <FormattedMessage
-                            defaultMessage="Persistance"
-                            description="Settings modal section"
-                            id="amp.settingsModal.persistance"
-                        />
-                    </Header>
-                    <StoreProjectOptions {...props} />
-                </>
-            )}
         </Box>
     </Modal>
 );
