@@ -30,6 +30,7 @@ class UsernameModal extends React.Component {
             "handleStageWidthChange",
             "handleStageHeightChange",
             "handleDisableCompilerChange",
+            "handleDisableSecmanChange",
             "handleStoreProjectOptions",
         ]);
     }
@@ -79,6 +80,19 @@ class UsernameModal extends React.Component {
             enabled: !e.target.checked,
         });
     }
+    handleDisableSecmanChange(e) {
+        // eslint-disable-next-line max-len
+        if (
+            !e.target.checked ||
+            confirm(
+                "You are enabling a VERY DANGEROUS option that may allow dangerous third-party extensions to corrupt your project, phish for passwords, install malware, and more. Do not blindly enable this. The prompts may look annoying, but they will prevent malicious projects from going undercover. Really continue?"
+            )
+        ) {
+            this.props.vm.setRuntimeOptions({
+                secman: !e.target.checked,
+            });
+        }
+    }
     handleStageWidthChange(value) {
         this.props.vm.setStageSize(value, this.props.customStageSize.height);
     }
@@ -110,6 +124,7 @@ class UsernameModal extends React.Component {
                 onStageWidthChange={this.handleStageWidthChange}
                 onStageHeightChange={this.handleStageHeightChange}
                 onDisableCompilerChange={this.handleDisableCompilerChange}
+                onDisableSecmanChange={this.handleDisableSecmanChange}
                 stageWidth={this.props.customStageSize.width}
                 stageHeight={this.props.customStageSize.height}
                 customStageSizeEnabled={
@@ -152,6 +167,7 @@ UsernameModal.propTypes = {
         height: PropTypes.number,
     }),
     disableCompiler: PropTypes.bool,
+    disableSecman: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
@@ -166,6 +182,7 @@ const mapStateToProps = state => ({
     warpTimer: state.scratchGui.tw.compilerOptions.warpTimer,
     customStageSize: state.scratchGui.customStageSize,
     disableCompiler: !state.scratchGui.tw.compilerOptions.enabled,
+    disableSecman: !state.scratchGui.tw.runtimeOptions.secman,
 });
 
 const mapDispatchToProps = dispatch => ({

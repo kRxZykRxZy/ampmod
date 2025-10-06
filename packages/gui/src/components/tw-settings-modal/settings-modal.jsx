@@ -324,6 +324,30 @@ const DisableCompiler = props => (
     />
 );
 
+const DisableSecurityManager = props => (
+    <BooleanSetting
+        {...props}
+        label={
+            <FormattedMessage
+                defaultMessage="Disable Security Prompts"
+                description="Disable Security Prompts setting"
+                id="amp.settingsModal.disableSecman"
+            />
+        }
+        help={
+            <FormattedMessage
+                // eslint-disable-next-line max-len
+                defaultMessage="Disables security prompts from extensions. You may want to enable this while editing projects or running those from a trusted developer. Otherwise, DO NOT enable this. Review the project's code first."
+                description="Disable Security Prompts help"
+                id="amp.settingsModal.disableSecmanHelp"
+                values={{
+                    APP_NAME,
+                }}
+            />
+        }
+    />
+);
+
 const CustomStageSize = ({
     customStageSizeEnabled,
     stageWidth,
@@ -403,9 +427,18 @@ const StoreProjectOptions = ({ onStoreProjectOptions }) => (
                     id="tw.settingsModal.storeProjectOptions"
                 />
             </button>
+            <p>
+                <FormattedMessage
+                    // eslint-disable-next-line max-len
+                    defaultMessage="Warp timer, disable compiler, and disable security prompts will not be stored."
+                    description="Help text for the store settings in project button"
+                    id="amp.settingsModal.storeProjectOptionsHelp"
+                />
+            </p>
         </div>
     </div>
 );
+
 StoreProjectOptions.propTypes = {
     onStoreProjectOptions: PropTypes.func,
 };
@@ -483,7 +516,24 @@ const SettingsModalComponent = props => (
                 value={props.disableCompiler}
                 onChange={props.onDisableCompilerChange}
             />
-            {!props.isEmbedded && <StoreProjectOptions {...props} />}
+            {!props.isEmbedded && (
+                <DisableSecurityManager
+                    value={props.disableSecman}
+                    onChange={props.onDisableSecmanChange}
+                />
+            )}
+            {!props.isEmbedded && (
+                <>
+                    <Header>
+                        <FormattedMessage
+                            defaultMessage="Persistance"
+                            description="Settings modal section"
+                            id="amp.settingsModal.persistance"
+                        />
+                    </Header>
+                    <StoreProjectOptions {...props} />
+                </>
+            )}
         </Box>
     </Modal>
 );
@@ -509,6 +559,8 @@ SettingsModalComponent.propTypes = {
     onWarpTimerChange: PropTypes.func,
     disableCompiler: PropTypes.bool,
     onDisableCompilerChange: PropTypes.func,
+    disableSecman: PropTypes.bool,
+    onDisableSecmanChange: PropTypes.func,
 };
 
 export default injectIntl(SettingsModalComponent);
