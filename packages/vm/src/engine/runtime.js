@@ -467,6 +467,7 @@ class Runtime extends EventEmitter {
             maxClones: Runtime.MAX_CLONES,
             miscLimits: true,
             fencing: true,
+            secman: true,
         };
 
         this.compilerOptions = {
@@ -3198,8 +3199,28 @@ class Runtime extends EventEmitter {
         const difference = (oldObject, newObject) => {
             const result = {};
             for (const key of Object.keys(newObject)) {
+                // Skip runtimeOptions.secman entirely
+                if (
+                    key === "runtimeOptions" &&
+                    newObject.runtimeOptions?.secman !== undefined
+                ) {
+                    const { secman: _, ...runtimeRestNew } =
+                        newObject.runtimeOptions;
+                    const { secman: __, ...runtimeRestOld } =
+                        oldObject.runtimeOptions || {};
+                    const valueDiffering = difference(
+                        runtimeRestOld,
+                        runtimeRestNew
+                    );
+                    if (Object.keys(valueDiffering).length > 0) {
+                        result[key] = valueDiffering;
+                    }
+                    continue;
+                }
+
                 const newValue = newObject[key];
                 const oldValue = oldObject[key];
+
                 if (typeof newValue === "object" && newValue) {
                     const valueDiffering = difference(oldValue, newValue);
                     if (Object.keys(valueDiffering).length > 0) {
@@ -3211,6 +3232,7 @@ class Runtime extends EventEmitter {
             }
             return result;
         };
+
         return difference(
             this._defaultStoredSettings,
             this._generateAllProjectOptions()
