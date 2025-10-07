@@ -5,7 +5,6 @@ import log from "./log";
 
 import { setProjectTitle } from "../reducers/project-title";
 import { setAuthor, setDescription } from "../reducers/tw";
-import { getProjectMeta } from "./aw3-functions";
 
 export const fetchProjectMeta = async projectId => {
     const urls = [
@@ -16,11 +15,14 @@ export const fetchProjectMeta = async projectId => {
     for (const url of urls) {
         try {
             const res = await fetch(url);
-            const olddata = await res.json();
-            const data = await getProjectMeta(projectId);
-            if (data) {
+            const data = await res.json();
+            if (res.ok) {
                 return data;
             }
+            if (res.status === 404) {
+                throw new Error("Project is probably unshared");
+            }
+            throw new Error(`Unexpected status code: ${res.status}`);
         } catch (err) {
             if (!firstError) {
                 firstError = err;
@@ -58,7 +60,7 @@ const TWProjectMetaFetcherHOC = function (WrappedComponent) {
                 if (projectId === "0") {
                     // don't try to get metadata
                 } else {
-                    fetchProjectMeta(projectId);
+                    fetchProjectMeta(projectId)
                         .then(data => {
                             // If project ID changed, ignore the results.
                             if (this.props.reduxProjectId !== projectId) {
