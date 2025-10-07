@@ -19,11 +19,6 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Remove everything except .git and .github
-        run: |
-          shopt -s extglob dotglob
-          rm -rf !(.git|.github)
-
       - name: Clone Codeberg repo
         run: |
           git clone --depth=1 https://codeberg.org/ampmod/ampmod temp-src
