@@ -213,8 +213,8 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         vm: PropTypes.instanceOf(VM),
     };
     ProjectFetcherComponent.defaultProps = {
-        assetHost: "https://assets.scratch.mit.edu",
-        projectHost: "https://projects.scratch.mit.edu",
+        assetHost: "https://ampmod.vercel.app/internalapi/assets",
+        projectHost: "https://ampmod.vercel.app/internalapi",
     };
 
     const mapStateToProps = state => ({
