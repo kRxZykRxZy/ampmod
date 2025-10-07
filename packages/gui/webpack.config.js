@@ -8,8 +8,7 @@ const monorepoPackageJson = require("../../package.json");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const { EsbuildPlugin } = require("esbuild-loader");
 
 // PostCss
 const autoprefixer = require("autoprefixer");
@@ -120,27 +119,13 @@ const base = {
         rules: [
             {
                 test: /\.jsx?$/,
-                loader: "babel-loader",
+                loader: "esbuild-loader",
                 include: [
                     path.resolve(__dirname, "src"),
                     /node_modules[\\/]scratch-[^\\/]+[\\/]src/,
-                    /node_modules[\\/]pify/,
-                    /node_modules[\\/]@vernier[\\/]godirect/,
                 ],
                 options: {
-                    cacheDirectory: true,
-                    // Explicitly disable babelrc so we don't catch various config
-                    // in much lower dependencies.
-                    babelrc: false,
-                    plugins: [
-                        [
-                            "react-intl",
-                            {
-                                messagesDir: "./translations/messages/",
-                            },
-                        ],
-                    ],
-                    presets: ["@babel/preset-env", "@babel/preset-react"],
+                    target: "es2019",
                 },
             },
             {
@@ -169,6 +154,12 @@ const base = {
                                     autoprefixer,
                                 ];
                             },
+                        },
+                    },
+                    {
+                        loader: "esbuild-loader",
+                        options: {
+                            target: "es2019",
                         },
                     },
                 ],
@@ -282,69 +273,31 @@ module.exports = [
                 minSize: 50000,
                 maxInitialRequests: 5,
             },
-            minimizer:
-                process.env.NODE_ENV == "production"
-                    ? [
-                          new TerserPlugin({
-                              terserOptions: {
-                                  compress: {
-                                      drop_debugger: true,
-                                      toplevel: true,
-                                      unsafe: true,
-                                      unused: true,
-                                      sequences: true,
-                                      collapse_vars: true,
-                                      booleans: true,
-                                      comparisons: true,
-                                      dead_code: true,
-                                      evaluate: true,
-                                      inline: true,
-                                      if_return: true,
-                                      join_vars: true,
-                                      loops: true,
-                                      properties: true,
-                                      reduce_funcs: true,
-                                      reduce_vars: true,
-                                      side_effects: true,
-                                      switches: true,
-                                      typeofs: true,
-                                      unsafe_arrows: true,
-                                      unsafe_comps: true,
-                                      unsafe_Function: true,
-                                      unsafe_math: true,
-                                      unsafe_methods: true,
-                                      unsafe_proto: true,
-                                      unsafe_regexp: true,
-                                      unsafe_undefined: true,
-                                  },
-                                  output: {
-                                      comments: false,
-                                      beautify: false,
-                                  },
-                              },
-                              parallel: true,
-                          }),
-                          new OptimizeCSSAssetsPlugin({}),
-                      ]
-                    : [],
         },
         plugins: base.plugins.concat([
-            new webpack.DefinePlugin({
-                "process.env.NODE_ENV": `"${process.env.NODE_ENV}"`,
-                "process.env.DEBUG": Boolean(process.env.DEBUG),
-                "process.env.DISABLE_SERVICE_WORKER": JSON.stringify(
-                    process.env.DISABLE_SERVICE_WORKER || ""
-                ),
-                "process.env.ROOT": JSON.stringify(root),
-                "process.env.ROUTING_STYLE": JSON.stringify(
-                    process.env.ROUTING_STYLE || "filehash"
-                ),
-                "process.env.ampmod_version": JSON.stringify(
-                    monorepoPackageJson.version
-                ),
-                "process.env.ampmod_is_canary":
-                    process.env.BUILD_MODE === "canary",
-                "process.env.ampmod_is_cbp": IS_CBP_BUILD,
+            new EsbuildPlugin({
+                define: {
+                    "process.env.NODE_ENV": JSON.stringify(
+                        process.env.NODE_ENV || "development"
+                    ),
+                    "process.env.DEBUG": JSON.stringify(
+                        Boolean(process.env.DEBUG || false)
+                    ),
+                    "process.env.DISABLE_SERVICE_WORKER": JSON.stringify(
+                        process.env.DISABLE_SERVICE_WORKER || ""
+                    ),
+                    "process.env.ROOT": JSON.stringify(root),
+                    "process.env.ROUTING_STYLE": JSON.stringify(
+                        process.env.ROUTING_STYLE || "filehash"
+                    ),
+                    "process.env.ampmod_version": JSON.stringify(
+                        monorepoPackageJson.version
+                    ),
+                    "process.env.ampmod_is_canary": JSON.stringify(
+                        process.env.BUILD_MODE === "canary"
+                    ),
+                    "process.env.ampmod_is_cbp": JSON.stringify(IS_CBP_BUILD),
+                },
             }),
             new HtmlWebpackPlugin({
                 chunks: ["headeronly"],
