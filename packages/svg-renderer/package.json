@@ -21,7 +21,7 @@
         "url": "https://github.com/TurboWarp/scratch-svg-renderer.git"
     },
     "peerDependencies": {
-        "scratch-render-fonts": "*"
+        "scratch-render-fonts": "workspace:latest"
     },
     "dependencies": {
         "@turbowarp/nanolog": "^0.2.0",
@@ -44,7 +44,7 @@
         "lodash.defaultsdeep": "4.6.1",
         "mkdirp": "2.0.0",
         "rimraf": "3.0.2",
-        "scratch-render-fonts": "*",
+        "scratch-render-fonts": "workspace:latest",
         "tap": "^11.1.5",
         "webpack": "4.47.0",
         "webpack-cli": "3.3.12",

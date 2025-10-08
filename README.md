@@ -22,12 +22,14 @@ The following packages are included in this monorepo:
 | `svg-renderer` | A package for rendering SVG images. Unmodified from TurboWarp; forked due to dependency issues. |
 | `branding`     | Self-explanatory. See [Forking](#forking).                                                      |
 
-Most of these packages have been published to our NPM registry (public):
+Most of these packages have been published to our registry (public):
 https://codeberg.org/ampmod/-/packages
 
 ## Setup
 
-Run `npm i` in the root directory to install all packages needed.
+In AmpMod, `pnpm` is used instead of `npm`.
+
+Run `pnpm i` in the root directory to install all packages needed.
 
 ## Forking
 
