@@ -19,9 +19,10 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Clone Codeberg repo
+      - name: Clone public Codeberg repo (read-only)
         run: |
-          git clone --depth=1 https://codeberg.org/ampmod/ampmod temp-src
+          git clone --depth=1 https://codeberg.org/ampmod/ampmod.git temp-src || \
+          git clone --depth=1 git://codeberg.org/ampmod/ampmod.git temp-src
 
       - name: Copy new or updated files (non-destructive)
         run: |
@@ -34,7 +35,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # Find all changed or new files
           changed_files=$(git status --porcelain | awk '{print $2}')
 
           if [ -z "$changed_files" ]; then
@@ -42,7 +42,6 @@ jobs:
             exit 0
           fi
 
-          # Commit each file separately
           for file in $changed_files; do
             git add "$file"
             git commit -m "Sync from Codeberg: update $file" || echo "No changes in $file"
