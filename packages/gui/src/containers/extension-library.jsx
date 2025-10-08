@@ -63,9 +63,14 @@ const fetchLibrary = async () => {
         extensionURL: `https://ampmod.codeberg.page/extensions/${extension.slug}.js`,
         iconURL: `https://ampmod.codeberg.page/extensions/${extension.image || "images/unknown.svg"}`,
         tags: [
-            ...(extension.isAmpMod ? ["ampmod"] : ["tw"]),
+            ...(extension.id === "faceSensing"
+                ? ["scratch"]
+                : extension.isAmpMod
+                  ? ["ampmod"]
+                  : ["tw"]),
             ...(extension.tags || []),
         ],
+
         deprecated: extension.deprecated,
         credits: [...(extension.original || []), ...(extension.by || [])].map(
             credit => {
