@@ -3,7 +3,7 @@ import { APP_NAME } from "@ampmod/branding";
 
 const projects = [
     {
-        id: "box2d",
+        id: "griffpatch",
         title: "Box2D Physics Sample",
         by: "DNin01",
         img: Box2DIcon,
