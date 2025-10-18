@@ -11,39 +11,62 @@ export const createEditorModal = (tab, title, {isOpen = false} = {}) => {
     });
     container.style.display = isOpen ? '' : 'none';
     document.body.appendChild(container);
+
     const modal = Object.assign(document.createElement('div'), {
         className: tab.scratchClass('modal_modal-content')
     });
     modal.addEventListener('click', e => e.stopPropagation());
     container.appendChild(modal);
+
     const header = Object.assign(document.createElement('div'), {
         className: tab.scratchClass('modal_header')
     });
     modal.appendChild(header);
+
     header.appendChild(
         Object.assign(document.createElement('div'), {
             className: tab.scratchClass('modal_header-item', 'modal_header-item-title'),
             innerText: title
         })
     );
+
     const closeContainer = Object.assign(document.createElement('div'), {
         className: tab.scratchClass('modal_header-item', 'modal_header-item-close')
     });
     header.appendChild(closeContainer);
+
     const closeButton = Object.assign(document.createElement('div'), {
         className: tab.scratchClass('close-button_close-button', 'close-button_large')
     });
     closeContainer.appendChild(closeButton);
+
     closeButton.appendChild(
         Object.assign(document.createElement('img'), {
             className: tab.scratchClass('close-button_close-icon'),
             src: closeIcon
         })
     );
+
     const content = Object.assign(document.createElement('div'), {
         className: styles.modalContent
     });
     modal.appendChild(content);
+
+    // Override remove to optionally animate first
+    const originalRemove = container.remove.bind(container);
+    container.remove = () => {
+        const prefersMotion = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+        if (prefersMotion) {
+            // amp: We have a special modal closing class for addons
+            container.classList.add('amp-addon-modalclosing');
+            setTimeout(() => {
+                originalRemove();
+            }, 200);
+        } else {
+            originalRemove();
+        }
+    };
+
     return {
         container: modal,
         content,
@@ -53,9 +76,9 @@ export const createEditorModal = (tab, title, {isOpen = false} = {}) => {
             container.style.display = '';
         },
         close: () => {
-            container.style.display = 'none';
+            container.remove(); // now uses overridden version
         },
-        remove: container.remove.bind(container)
+        remove: container.remove
     };
 };
 

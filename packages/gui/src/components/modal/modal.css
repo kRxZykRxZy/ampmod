@@ -6,22 +6,25 @@
     0% {
         transform: scale(0.8);
         opacity: 0;
+        filter: blur(2px);
     }
     100% {
         transform: scale(1);
         opacity: 1;
+        filter: blur(0);
     }
 }
 
 @keyframes slideInFromBottom {
     0% {
-        /* Start much further down for more dramatic movement */
         transform: translateY(250px);
         opacity: 0;
+        filter: blur(2px);
     }
     100% {
         transform: translateY(0);
         opacity: 1;
+        filter: blur(0);
     }
 }
 
@@ -47,14 +50,16 @@
     0% {
         transform: translateY(0);
         opacity: 1;
+        filter: blur(0);
     }
     10% {
-        opacity: 1; /* Keep full opacity for the initial stage */
+        opacity: 1;
+        filter: blur(2px);
     }
     100% {
-        /* Use a fast-to-slow easing curve */
         transform: translateY(150px);
         opacity: 0;
+        filter: blur(0);
     }
 }
 
@@ -63,12 +68,21 @@
     0% {
         transform: scale(1);
         opacity: 1;
+        filter: blur(0);
+    }
+    10% {
+        filter: blur(2px);
     }
     100% {
         transform: scale(0.8);
         opacity: 0;
+        filter: blur(0);
     }
 }
+
+/* --------------------------------------------------------
+ * Modal Overlay and Content Styles (Unchanged from original)
+ * -------------------------------------------------------- */
 
 .modal-overlay {
     position: fixed;
@@ -86,25 +100,25 @@
     .modal-overlay {
         animation: fadeIn 0.15s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     }
-    .modal-overlay.closing {
+    .modal-overlay.closing,
+    :global(.amp-addon-modalclosing).modal-overlay {
         opacity: 0;
         animation: fadeOut 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
         pointer-events: none;
     }
     .modal-content {
-        animation: zoomFadeIn 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+        animation: zoomFadeIn 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .modal-content.closing,
+    :global(.amp-addon-modalclosing) .modal-content {
+        opacity: 0;
+        animation: zoomFadeOut 0.15s cubic-bezier(0.55, 0.085, 0.68, 0.53);
     }
     .modal-content.full-screen {
-        animation: slideInFromBottom 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+        animation: slideInFromBottom 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
-
-    .modal-content.closing {
-        opacity: 0;
-        animation: zoomFadeOut 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-    }
-
     .modal-content.full-screen.closing {
-        animation: slideOutToBottom 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+        animation: slideOutToBottom 0.2s cubic-bezier(0.6, 0.1, 0.8, 0.3);
     }
 }
 
@@ -117,7 +131,7 @@
     outline: none;
     border: 4px solid $ui-white-transparent;
     padding: 0;
-    border-radius: 1em;
+    border-radius: $space;
     user-select: none;
 
     font-family:
@@ -202,8 +216,9 @@ $sides: 20rem;
     cursor: default;
     font-family:
         "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 1.4rem;
-    font-weight: bold; /* Changed to bold */
+    font-size: 1.2rem;
+    font-weight: bold;
+    justify-content: center;
 }
 
 .modal-content.full-screen .header-item-title {

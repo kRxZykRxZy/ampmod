@@ -218,6 +218,9 @@ const GUIComponent = props => {
 
                 const alwaysEnabledModals = (
                     <React.Fragment>
+                        <div
+                            className={require("../modal/modal.css").closing}
+                        />
                         <TWSecurityManager securityManager={securityManager} />
                         <TWRestorePointManager />
                         {usernameModalVisible && <TWUsernameModal />}
