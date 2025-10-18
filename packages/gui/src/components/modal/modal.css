@@ -94,7 +94,7 @@
     .modal-content {
         animation: zoomFadeIn 0.3s ease-out;
     }
-    .modal-content.fullscreen {
+    .modal-content.full-screen {
         animation: slideInFromBottom 0.2s ease-out;
     }
 
