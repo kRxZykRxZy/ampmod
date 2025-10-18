@@ -16,7 +16,7 @@ const ExampleModal = props => {
 
         const blob = new Blob([buffer], { type: "application/x.scratch.sb3" });
         const url = URL.createObjectURL(blob);
-        return { url, filename: `${props.id}.apz` };
+        return { url, filename: `${props.title}.apz` };
     };
 
     const downloadLink = getDownloadLink();
@@ -35,21 +35,19 @@ const ExampleModal = props => {
                     width="386"
                     height="330"
                     allowtransparency="true"
-                    frameborder="0"
+                    frameBorder="0"
                     scrolling="no"
-                    allowfullscreen=""
+                    allowFullScreen=""
                     style={{ colorScheme: "auto", borderRadius: "8px" }}
                 ></iframe>
                 <div>{`Project created by ${props.by || "AmpMod developers"}.`}</div>
                 <div className={homeStyles.buttonRow}>
-                    <div
+                    <a
                         className={homeStyles.button}
-                        onClick={() => {
-                            location.href = `editor.html?example=${props.id}`;
-                        }}
+                        href={`editor.html?example=${props.id}`}
                     >
                         Open
-                    </div>
+                    </a>
                     {downloadLink && (
                         <a
                             className={homeStyles.button}
