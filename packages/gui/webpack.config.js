@@ -81,10 +81,11 @@ const base = {
                     from: /^\/\d+\/fullscreen\/?$/,
                     to: "/fullscreen/index.html",
                 },
-                { from: /^\/\d+\/editor\/?$/, to: "/editor/index.html" },
-                { from: /^\/\d+\/embed\/?$/, to: "/embed/index.html" },
-                { from: /^\/addons\/?$/, to: "/addons/index.html" },
-                { from: /^\/new-compiler\/?$/, to: "/new-compiler/index.html" },
+                { from: /^\/\d+\/editor\/?$/, to: "/editor.html" },
+                { from: /^\/\d+\/embed\/?$/, to: "/embed.html" },
+                { from: /^\/addons\/?$/, to: "/addons.html" },
+                { from: /^\/new-compiler\/?$/, to: "/new-compiler.html" },
+                { from: /^\/examples\/?$/, to: "/examples.html" },
                 { from: /./, to: "/404.html" },
             ],
         },
@@ -215,7 +216,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             "process.env.ampmod_lab_experiment_name_full": JSON.stringify(
                 process.env.LAB_EXPERIMENT_NAME_FULL || "AmpMod Lab"
             ),
-            // ...existing code...
         }),
         new CopyWebpackPlugin({
             patterns: [
@@ -283,6 +283,7 @@ module.exports = [
             home: "./src/playground/home/home.jsx",
             notfound: "./src/playground/not-found/not-found.jsx",
             newcompiler: "./src/playground/new-compiler/new-compiler.jsx",
+            examples: "./src/playground/examples/examples.jsx",
             headeronly: "./src/playground/header-only.jsx",
         },
         output: {
@@ -359,6 +360,16 @@ module.exports = [
                 // prettier-ignore
                 // eslint-disable-next-line max-len
                 description: `${APP_NAME} 0.3 includes a rewritten compiler to make projects run up to 2 times faster than in ${APP_NAME} 0.2.2.`,
+                ...htmlWebpackPluginCommon,
+            }),
+            new HtmlWebpackPlugin({
+                chunks: ["examples"],
+                template: "src/playground/simple.ejs",
+                filename: "examples.html",
+                title: `Examples - ${APP_NAME}`,
+                // prettier-ignore
+                // eslint-disable-next-line max-len
+                description: `Example projects for ${APP_NAME}.`,
                 ...htmlWebpackPluginCommon,
             }),
             new HtmlWebpackPlugin({

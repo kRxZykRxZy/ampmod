@@ -10,9 +10,9 @@ import {
 import PropTypes from "prop-types";
 import bindAll from "lodash.bindall";
 import React from "react";
-import Logo from "./ampmod.svg";
+import Logo from "../menu-bar/tw-advanced.svg";
 import FakeLogo from "./lampmod.svg";
-import CanaryLogo from "./ampmod-canary.svg";
+import CanaryLogo from "../menu-bar/ampmod-canary.svg";
 
 import Button from "../button/button.jsx";
 
@@ -61,13 +61,22 @@ const Header = () => {
                         />
                     </a>
                     <a
-                        href="/editor.html"
+                        href="editor.html"
                         className={classNames(
                             styles.headerItem,
                             styles.hoverable
                         )}
                     >
                         Create
+                    </a>
+                    <a
+                        href="examples.html"
+                        className={classNames(
+                            styles.headerItem,
+                            styles.hoverable
+                        )}
+                    >
+                        Examples
                     </a>
                     <a
                         href="https://ampmod.codeberg.page/manual"
@@ -78,37 +87,6 @@ const Header = () => {
                     >
                         Manual
                     </a>
-                    {APP_FORUMS && (
-                        <a
-                            href={APP_FORUMS}
-                            className={classNames(
-                                styles.headerItem,
-                                styles.hoverable
-                            )}
-                        >
-                            Forums
-                        </a>
-                    )}
-                    {APP_WIKI && (
-                        <a
-                            href={APP_WIKI}
-                            className={classNames(
-                                styles.headerItem,
-                                styles.hoverable
-                            )}
-                        >
-                            Wiki
-                        </a>
-                    )}
-                    <a
-                        href={APP_SOURCE}
-                        className={classNames(
-                            styles.headerItem,
-                            styles.hoverable
-                        )}
-                    >
-                        Source code
-                    </a>
                     <a
                         href="https://ampmod.codeberg.page/extensions"
                         className={classNames(
@@ -116,7 +94,7 @@ const Header = () => {
                             styles.hoverable
                         )}
                     >
-                        Extension gallery
+                        Extensions
                     </a>
                 </div>
             </div>

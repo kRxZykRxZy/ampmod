@@ -1,0 +1,41 @@
+@import "../../css/colors.css";
+@import "../../css/units.css";
+
+.examples-row {
+    display: flex;
+    gap: $space;
+}
+
+.example {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $ui-black-transparent;
+    border-radius: $space;
+    padding: $space;
+    cursor: pointer;
+    width: 200px;
+    gap: $space;
+}
+
+.example .example-title {
+    text-align: center;
+}
+
+.example:hover {
+    border: 1px solid $looks-secondary;
+}
+
+.example .example-thumbnail {
+    border-radius: $space;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+}
+
+.modalContent {
+    max-width: 600px;
+}
+
+.modal-body {
+    background: $ui-modal-background;
+    padding: 20px;
+}

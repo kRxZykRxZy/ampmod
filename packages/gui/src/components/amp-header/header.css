@@ -76,6 +76,7 @@
     color: $menu-bar-foreground;
     border-radius: 0.5rem;
     height: calc($menu-bar-height - 0.75rem);
+    font-size: 1.2em;
 }
 
 .header-item.hoverable {
@@ -104,8 +105,8 @@
 }
 
 .feedback-link {
-    color: $motion-primary;
-    background: white;
+    color: $feedback-foreground;
+    background: $feedback-background;
     text-decoration: none;
 }
 
@@ -195,25 +196,6 @@
     opacity: 0.5;
 }
 
-.mystuff > a {
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 45%;
-    padding-right: 10px;
-    padding-left: 10px;
-    width: 30px;
-    overflow: hidden;
-    text-indent: 50px;
-    white-space: nowrap;
-}
-.mystuff > a:hover {
-    background-size: 50%;
-}
-
-.mystuff > a {
-    /* background-image: url("/images/mystuff.png"); */
-}
-
 .about-icon {
     height: 1.25rem;
     margin: 0.5rem;
@@ -236,12 +218,13 @@
     text-decoration: none;
 }
 
-.ampmod-logo {
-    transition: transform 0.2s;
+.ampmod-logo img {
+    filter: var(--menu-bar-icon-filter);
+    transition: transform 0.3s;
 }
 
-.ampmod-logo:hover {
-    transform: scale(1.1);
+.ampmod-logo:hover img {
+    transform: rotateZ(360deg) scale(1.2);
 }
 
 .spacer {

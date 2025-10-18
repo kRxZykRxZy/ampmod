@@ -2,15 +2,25 @@ import "../import-first";
 import React from "react";
 import render from "../app-target";
 import styles from "../info.css";
-import homeStyles from "./home.css";
+import myStyles from "./home.css";
 import * as bowser from "bowser";
 
-import { APP_DESCRIPTION, APP_NAME, APP_SLOGAN } from "@ampmod/branding";
+import {
+    APP_DESCRIPTION,
+    APP_FORUMS,
+    APP_NAME,
+    APP_SLOGAN,
+    APP_WIKI,
+} from "@ampmod/branding";
 import { applyGuiColors } from "../../lib/themes/guiHelpers";
 import { detectTheme } from "../../lib/themes/themePersistance";
 import Header from "../../components/amp-header/header.jsx";
 import Footer from "../../components/amp-footer/footer.jsx";
 import Clippy from "../../containers/amp-clippy.jsx";
+
+import WelcomeBanner from "../../components/amp-welcome/welcome-banner.svg";
+
+import classNames from "classnames";
 
 /* eslint-disable react/jsx-no-literals */
 
@@ -22,34 +32,47 @@ const Home = () => (
         <Header />
         <Clippy isFixed messageSet="website" />
         <header className={styles.headerContainer}>
-            <h1 className={styles.headerText}>
-                {APP_NAME}{" "}
-                {process.env.ampmod_mode === "canary"
-                    ? " (canary build)"
-                    : `- ${APP_SLOGAN}`}
-            </h1>
-            {process.env.ampmod_mode === "canary" && (
-                <>
-                    <p className={styles.wrap}>
-                        <strong>
-                            This is a canary build. Bugs may be present, and
-                            your projects may break when the final version is
-                            released. You should not use this version for
-                            creating non-test projects.
-                        </strong>
-                    </p>
+            <div className={myStyles.headerContainerContainer}>
+                <div className={myStyles.headerContent}>
+                    <h1 className={styles.headerText}>{APP_SLOGAN}</h1>
+                    {process.env.ampmod_mode === "canary" && (
+                        <>
+                            <p className={styles.wrap}>
+                                <strong>
+                                    This is a canary build. Bugs may be present,
+                                    and your projects may break when the final
+                                    version is released. You should not use this
+                                    version for creating non-test projects.
+                                </strong>
+                            </p>
+                            <div className={styles.spacing}></div>
+                        </>
+                    )}
                     <div className={styles.spacing}></div>
-                </>
-            )}
-            <p className={styles.wrap}>{APP_DESCRIPTION}</p>
-            <div className={styles.spacing}></div>
-            <a href="editor.html" className={homeStyles.primaryButton}>
-                Try {APP_NAME} now!
-            </a>
-            <div className={styles.spacing}></div>
+                    <div className={myStyles.buttonRow}>
+                        <a
+                            href="editor.html"
+                            className={myStyles.primaryButton}
+                        >
+                            Try it out
+                        </a>
+                        <a
+                            href="examples.html"
+                            className={myStyles.primaryButton}
+                        >
+                            See examples
+                        </a>
+                    </div>
+                    <div className={styles.spacing}></div>
+                </div>
+
+                <div className={myStyles.headerImage}>
+                    <img src={WelcomeBanner}></img>
+                </div>
+            </div>
         </header>
         {/* <section>
-            <div className={homeStyles.notification}>
+            <div className={myStyles.notification}>
                 <h2>Contribute to AmpMod!</h2>
                 <p>
                     AmpMod is an open-source project. You can contribute to the project by visiting our Codeberg repository.
@@ -57,11 +80,11 @@ const Home = () => (
                 </p>
             </div>
         </section> */}
-        <main className={homeStyles.main}>
+        <main className={myStyles.main}>
             {/* START: Main two-column layout wrapper */}
-            <div className={homeStyles.mainContentGrid}>
+            <div className={myStyles.mainContentGrid}>
                 {/* LEFT COLUMN: Contains the introductory sections */}
-                <div className={homeStyles.leftColumn}>
+                <div className={myStyles.leftColumn}>
                     <section>
                         <h2>What is {APP_NAME}?</h2>
                         <p>
@@ -83,36 +106,26 @@ const Home = () => (
                         </p>
                     </section>
                     <section>
-                        <h2>{APP_NAME} is licenced under the GPL v3</h2>
-                        <a href="LICENSE.txt" className={homeStyles.button}>
-                            View the licence
-                        </a>
-                    </section>
-                    <section>
                         <h2>Need help?</h2>
                         {/* If you are modifying AmpMod, you should replace or remove these links */}
-                        <a
-                            href="https://ampmod.flarum.cloud"
-                            className={`${homeStyles.button} ${homeStyles.marginRight}`}
-                        >
-                            Visit the forums
-                        </a>
-                        <a
-                            href="https://ultiblocks.miraheze.org/wiki/Main_Page"
-                            className={homeStyles.button}
-                        >
-                            Visit the wiki
-                        </a>
+                        <div className={myStyles.buttonRow}>
+                            <a href={APP_FORUMS} className={myStyles.button}>
+                                Visit the forums
+                            </a>
+                            <a href={APP_WIKI} className={myStyles.button}>
+                                Visit the wiki
+                            </a>
+                        </div>
                     </section>
                 </div>
 
                 {/* RIGHT COLUMN: Contains the Features section */}
-                <div className={homeStyles.rightColumn}>
+                <div className={myStyles.rightColumn}>
                     <section>
                         <h2>Features</h2>
                         {/* Inner 2-column grid for the features list */}
-                        <div className={homeStyles.twoColumnGrid}>
-                            <div className={homeStyles.columnItem}>
+                        <div className={myStyles.twoColumnGrid}>
+                            <div className={myStyles.columnItem}>
                                 <h3>For programmers</h3>
                                 <ul>
                                     <li>
@@ -131,7 +144,7 @@ const Home = () => (
                                     </li>
                                 </ul>
                             </div>
-                            <div className={homeStyles.columnItem}>
+                            <div className={myStyles.columnItem}>
                                 <h3>For artists and animators</h3>
                                 <ul>
                                     <li>

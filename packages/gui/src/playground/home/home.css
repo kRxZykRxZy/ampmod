@@ -9,21 +9,16 @@
     padding: 12px 18px;
     text-decoration: none;
     display: inline-block;
-    font-weight: 550;
+    font-weight: 850;
     font-size: 1.3em;
     box-shadow: 0 0 0 0 $ui-white-transparent-default;
-    transition:
-        box-shadow 0.3s,
-        transform 0.4s,
-        font-weight 0.3s;
+    transition: box-shadow 0.3s;
     margin-top: $space;
     transform-style: preserve-3d;
 }
 
 .primary-button:hover {
     box-shadow: 0 0 0 $space $ui-white-transparent-default;
-    transform: scale(1.1);
-    font-weight: 850;
 }
 
 .button {
@@ -38,10 +33,6 @@
 
 .button:hover {
     background-color: $motion-tertiary;
-}
-
-.marginRight {
-    margin-right: 8px;
 }
 
 .main section,
@@ -94,4 +85,28 @@ ul {
     flex-direction: column;
     line-height: 1.4em;
     gap: $space;
+}
+
+.header-container-container {
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    text-align: left;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2em;
+}
+
+.header-content {
+    flex: 1;
+}
+
+.header-image {
+    flex-shrink: 0;
+    max-width: 40%;
+}
+
+.button-row {
+    display: flex;
+    gap: 16px;
 }

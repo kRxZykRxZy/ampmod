@@ -4,7 +4,7 @@ import render from "../app-target";
 import styles from "../info.css";
 import * as bowser from "bowser";
 
-import { APP_NAME } from "@ampmod/branding";
+import { APP_FORUMS, APP_NAME } from "@ampmod/branding";
 import { applyGuiColors } from "../../lib/themes/guiHelpers";
 import { detectTheme } from "../../lib/themes/themePersistance";
 
@@ -32,7 +32,7 @@ const Home = () => (
                 </p>
                 <p>
                     If you have any questions or concerns, you can post on the{" "}
-                    <a href={APP_NAME}>forums</a>.
+                    <a href={APP_FORUMS}>forums</a>.
                 </p>
             </section>
         </main>

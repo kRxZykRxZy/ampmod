@@ -48,8 +48,28 @@ const Footer = () => {
             <div className={styles.footerContent}>
                 <div className={styles.footerText}>
                     <FormattedMessage
+                        defaultMessage="© {year} {APP_NAME} developers. {APP_NAME} is {freeSoftware}."
+                        description="Copyright text noting AmpMod's licence."
+                        id="amp.footer.copyright"
+                        values={{
+                            APP_NAME,
+                            year: new Date().getFullYear(),
+                            freeSoftware: (
+                                <a href="LICENSE.txt">
+                                    <FormattedMessage
+                                        defaultMessage="free and open-source software"
+                                        description="Link saying 'free and open-source software' in amp.footer.copyright"
+                                        id="amp.footer.copyright.freeSoftware"
+                                    />
+                                </a>
+                            ),
+                        }}
+                    />
+                </div>
+                <div className={styles.footerText}>
+                    <FormattedMessage
                         // eslint-disable-next-line max-len
-                        defaultMessage="{APP_NAME} is not affiliated with {scratchLink} or {twLink}. Donate to the Scratch Foundation to support Scratch and its forks."
+                        defaultMessage="{APP_NAME} is not affiliated with {scratchLink} or {twLink}. Support Scratch by {supportScratch}."
                         description="Disclaimer that AmpMod is not connected to Scratch"
                         id="amp.footer.disclaimer"
                         values={{
@@ -72,10 +92,18 @@ const Footer = () => {
                                     {"TurboWarp"}
                                 </a>
                             ),
+                            supportScratch: (
+                                <a href="https://scratchfoundation.org/donate">
+                                    <FormattedMessage
+                                        defaultMessage="donating to the Scratch Foundation"
+                                        description="Link to donate to the Scratch Foundation"
+                                        id="amp.footer.disclaimer.supportScratch"
+                                    />
+                                </a>
+                            ),
                         }}
                     />
                 </div>
-
                 <div className={styles.footerColumns}>
                     <div className={styles.footerSection}>
                         <h3>About</h3>
@@ -95,13 +123,6 @@ const Footer = () => {
                                 />
                             </a>
                         )}
-                        <a href="https://scratchfoundation.org/donate/">
-                            <FormattedMessage
-                                defaultMessage="Donate to Scratch"
-                                description="Donation link in footer"
-                                id="tw.footer.donate"
-                            />
-                        </a>
                     </div>
                     <div className={styles.footerSection}>
                         <h3>Community</h3>
