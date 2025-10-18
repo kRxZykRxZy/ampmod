@@ -16,6 +16,7 @@ const ExampleModal = props => (
     >
         <Box className={styles.modalBody}>
             <div>{props.description || "No description."}</div>
+            <div>{`Project created by ${props.creator || "AmpMod developers"}.`}</div>
             <div
                 className={homeStyles.button}
                 style={{ minWidth: 0 }}
@@ -40,6 +41,7 @@ const Example = props => {
             {isOpen && (
                 <ExampleModal
                     title={props.title}
+                    creator={props.by}
                     description={props.description}
                     onCancel={() => setIsOpen(false)}
                     onButtonClick={props.onClick}
