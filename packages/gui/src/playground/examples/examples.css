@@ -3,8 +3,8 @@
 
 .examples-row {
     display: flex;
-    gap: $space;
-    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .example {
@@ -12,14 +12,26 @@
     flex-direction: column;
     border: 1px solid $ui-black-transparent;
     border-radius: $space;
-    padding: $space;
+    overflow: hidden;
     cursor: pointer;
-    width: 200px;
-    gap: $space;
+    width: 250px;
+    user-select: none;
 }
 
-.example .example-title {
-    text-align: center;
+.example-content {
+    display: flex;
+    flex-direction: column;
+    padding: calc($space * 1.2);
+    gap: 4px;
+}
+
+.example-title {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.example-author {
+    font-size: 0.8em;
 }
 
 .example:hover {
@@ -27,7 +39,6 @@
 }
 
 .example .example-thumbnail {
-    border-radius: $space;
     width: 100%;
     aspect-ratio: 4 / 3;
 }
@@ -44,8 +55,4 @@
     gap: $space;
     flex-direction: column;
     align-items: flex-start;
-}
-
-:global(.ReactModal__Body--open) {
-    overflow: hidden;
 }

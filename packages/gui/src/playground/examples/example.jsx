@@ -16,11 +16,11 @@ const ExampleModal = props => (
     >
         <Box className={styles.modalBody}>
             <div>{props.description || "No description."}</div>
-            <div>{`Project created by ${props.creator || "AmpMod developers"}.`}</div>
+            <div>{`Project created by ${props.by || "AmpMod developers"}.`}</div>
             <div
                 className={homeStyles.button}
                 style={{ minWidth: 0 }}
-                onClick={props.onButtonClick}
+                onClick={props.onClickOpen}
             >
                 Open
             </div>
@@ -34,18 +34,23 @@ const Example = props => {
     return (
         <>
             <div className={styles.example} onClick={() => setIsOpen(true)}>
-                <img className={styles.exampleThumbnail} src={props.img} />
-                <div className={styles.exampleTitle}>{props.title}</div>
+                <img
+                    className={styles.exampleThumbnail}
+                    src={props.img}
+                    draggable={false}
+                />
+                <div className={styles.exampleContent}>
+                    <div className={styles.exampleTitle}>{props.title}</div>
+                    {props.by && (
+                        <div className={styles.exampleAuthor}>
+                            by {props.by}
+                        </div>
+                    )}
+                </div>
             </div>
 
             {isOpen && (
-                <ExampleModal
-                    title={props.title}
-                    creator={props.by}
-                    description={props.description}
-                    onCancel={() => setIsOpen(false)}
-                    onButtonClick={props.onClick}
-                />
+                <ExampleModal {...props} onCancel={() => setIsOpen(false)} />
             )}
         </>
     );

@@ -47,10 +47,10 @@ const ExamplesPage = () => (
                 <div className={myStyles.examplesRow}>
                     <Example
                         title={"Box2D Demos"}
-                        by={"DNin01 for TurboWarp's extension gallery"}
+                        by={"DNin01"}
                         img={Box2DIcon}
                         description={`${APP_NAME}'s Box2D extension allows you to add 2D physics to your games!`}
-                        onClick={() => {
+                        onClickOpen={() => {
                             location.href = "editor.html?example=box2d";
                         }}
                     />
