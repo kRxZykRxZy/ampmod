@@ -13,8 +13,10 @@ const ExampleModal = props => (
         id="exampleModal"
     >
         <Box className={styles.modalBody}>
-            <Box className={styles.modalLabel}>Example</Box>
-            <Button onClick={props.onButtonClick}>Click me</Button>
+            <Box className={styles.modalLabel}>
+                {props.description || "No description."}
+            </Box>
+            <Button onClick={props.onButtonClick}>Open</Button>
         </Box>
     </Modal>
 );
@@ -32,10 +34,9 @@ const Example = props => {
             {isOpen && (
                 <ExampleModal
                     title={props.title}
+                    description={props.description}
                     onCancel={() => setIsOpen(false)}
-                    onButtonClick={() => {
-                        alert("LOL");
-                    }}
+                    onButtonClick={props.onClick}
                 />
             )}
         </>
