@@ -91,7 +91,7 @@ class FileHashRouter extends HashRouter {
             0,
             location.pathname.lastIndexOf("/") + 1
         );
-        this.playerPath =
+        this.compat_playerPath =
             process.env.ampmod_mode === "lab"
                 ? this.rootPath
                 : `${this.rootPath}editor.html`;
@@ -105,10 +105,10 @@ class FileHashRouter extends HashRouter {
     onpathchange() {
         const pathName = location.pathname;
 
-        if (pathName === this.playerPath) {
-            this.onSetIsPlayerOnly(true);
-            this.onSetIsFullScreen(false);
-        } else if (pathName === this.editorPath) {
+        if (
+            pathName === this.editorPath ||
+            pathName === this.compat_playerPath
+        ) {
             this.onSetIsPlayerOnly(false);
             this.onSetIsFullScreen(false);
         } else if (pathName === this.fullscreenPath) {

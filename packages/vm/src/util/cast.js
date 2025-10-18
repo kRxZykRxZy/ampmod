@@ -132,8 +132,28 @@ class Cast {
      * @return {Array} The value converted to an array.
      */
     static toList(value) {
-        // amp: This is hopelessly broken so just pass through.
-        return value;
+        if (Array.isArray(value)) {
+            return value;
+        }
+
+        if (typeof value === "string") {
+            try {
+                const parsed = JSON.parse(value);
+                if (Array.isArray(parsed)) {
+                    return parsed;
+                }
+                return [parsed];
+            } catch {
+                // not valid JSON
+                return [value];
+            }
+        }
+
+        if (!value && value !== 0) {
+            return [];
+        }
+
+        return [value];
     }
 
     /**
