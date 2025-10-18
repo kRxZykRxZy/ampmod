@@ -4,12 +4,13 @@ import render from "../playground/app-target.js";
 
 const Loading = () => <div className={styles.launching}></div>;
 
-export const lazyLaunch = component => {
+export const lazyLaunch = ({ component, ...props } = {}) => {
     const Editor =
         component || React.lazy(() => import("../playground/editor.jsx"));
+
     render(
         <Suspense fallback={<Loading />}>
-            <Editor />
+            <Editor {...props} />
         </Suspense>
     );
 };
