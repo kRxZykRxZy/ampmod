@@ -4,10 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 
 import { MenuItem } from "../menu/menu.jsx";
-import { GUI_DARK, GUI_LIGHT, Theme } from "../../lib/themes/index.js";
 import { closeSettingsMenu } from "../../reducers/menus.js";
-import { setTheme } from "../../reducers/theme.js";
-import { persistTheme } from "../../lib/themes/themePersistance.js";
 import styles from "./settings-menu.css";
 import { notScratchDesktop } from "../../lib/isScratchDesktop.js";
 
@@ -23,7 +20,7 @@ const handleClickPwaInstall = addonId => {
     deferredPrompt.prompt();
 };
 
-const GuiThemeMenu = () => {
+const InstallPWAButton = () => {
     if (showPwaButton && notScratchDesktop) {
         return (
             <MenuItem>
@@ -47,21 +44,4 @@ const GuiThemeMenu = () => {
     }
 };
 
-GuiThemeMenu.propTypes = {
-    onChangeTheme: PropTypes.func,
-    theme: PropTypes.instanceOf(Theme),
-};
-
-const mapStateToProps = state => ({
-    theme: state.scratchGui.theme.theme,
-});
-
-const mapDispatchToProps = dispatch => ({
-    onChangeTheme: theme => {
-        dispatch(setTheme(theme));
-        dispatch(closeSettingsMenu());
-        persistTheme(theme);
-    },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(GuiThemeMenu);
+export default InstallPWAButton;

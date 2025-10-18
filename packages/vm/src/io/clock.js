@@ -14,7 +14,7 @@ class Clock {
     }
 
     projectTimer() {
-        if (this._paused) {
+        if (this._paused || this.runtime.isPaused) {
             return this._pausedTime / 1000;
         }
         return this._projectTimer.timeElapsed() / 1000;

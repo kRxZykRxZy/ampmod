@@ -1106,6 +1106,12 @@ class ScriptTreeGenerator {
                     InputType.STRING
                 );
 
+            case "sensing_lastkeypressed":
+                return new IntermediateInput(
+                    InputOpcode.TW_KEY_LAST_PRESSED,
+                    InputType.STRING
+                );
+
             case "sound_sounds_menu":
                 // This menu is special compared to other menus -- it actually has an opcode function.
                 return this.createConstantInput(
@@ -1585,6 +1591,15 @@ class ScriptTreeGenerator {
                 });
             case "motion_changeyby":
                 return new IntermediateStackBlock(StackOpcode.MOTION_Y_CHANGE, {
+                    dy: this.descendInputOfBlock(block, "DY").toType(
+                        InputType.NUMBER
+                    ),
+                });
+            case "motion_changeallby": // amp: not in tw
+                return new IntermediateStackBlock(StackOpcode.MOTION_CHANGE, {
+                    dx: this.descendInputOfBlock(block, "DX").toType(
+                        InputType.NUMBER
+                    ),
                     dy: this.descendInputOfBlock(block, "DY").toType(
                         InputType.NUMBER
                     ),

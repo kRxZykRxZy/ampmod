@@ -19,6 +19,7 @@ import {
     closeCostumeLibrary,
     closeBackdropLibrary,
     closeTelemetryModal,
+    closeWelcomeModal,
     openExtensionLibrary,
 } from "../reducers/modals";
 
@@ -37,6 +38,7 @@ import GUIComponent from "../components/gui/gui.jsx";
 import { setIsScratchDesktop } from "../lib/isScratchDesktop.js";
 import TWFullScreenResizerHOC from "../lib/tw-fullscreen-resizer-hoc.jsx";
 import TWThemeManagerHOC from "./tw-theme-manager-hoc.jsx";
+import { lsNamespace } from "../lib/amp-localstorage-namespace.js";
 
 const { RequestMetadata, setMetadata, unsetMetadata } = storage.scratchFetch;
 
@@ -56,6 +58,15 @@ class GUI extends React.Component {
         this.props.onStorageInit(storage);
         this.props.onVmInit(this.props.vm);
         setProjectIdMetadata(this.props.projectId);
+        // Show welcome modal on first launch if not closed
+        if (!localStorage.getItem(`${lsNamespace}welcome-closed`)) {
+            if (
+                !this.props.welcomeModalVisible &&
+                this.props.onOpenWelcomeModal
+            ) {
+                this.props.onOpenWelcomeModal();
+            }
+        }
     }
     componentDidUpdate(prevProps) {
         if (this.props.projectId !== prevProps.projectId) {
@@ -129,6 +140,7 @@ GUI.propTypes = {
     projectHost: PropTypes.string,
     projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     telemetryModalVisible: PropTypes.bool,
+    welcomeModalVisible: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired,
 };
 
@@ -172,6 +184,7 @@ const mapStateToProps = state => {
             state.scratchGui.targets.stage.id ===
                 state.scratchGui.targets.editingTarget,
         telemetryModalVisible: state.scratchGui.modals.telemetryModal,
+        welcomeModalVisible: state.scratchGui.modals.welcomeModal,
         tipsLibraryVisible: state.scratchGui.modals.tipsLibrary,
         usernameModalVisible: state.scratchGui.modals.usernameModal,
         settingsModalVisible: state.scratchGui.modals.settingsModal,
@@ -193,6 +206,12 @@ const mapDispatchToProps = dispatch => ({
     onRequestCloseBackdropLibrary: () => dispatch(closeBackdropLibrary()),
     onRequestCloseCostumeLibrary: () => dispatch(closeCostumeLibrary()),
     onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal()),
+    onRequestCloseWelcomeModal: () => {
+        localStorage.setItem(`${lsNamespace}welcome-closed`, "true");
+        dispatch(closeWelcomeModal());
+    },
+    onOpenWelcomeModal: () =>
+        dispatch(require("../reducers/modals").openWelcomeModal()),
 });
 
 const ConnectedGUI = injectIntl(

@@ -1,11 +1,12 @@
 import { BLOCKS_CUSTOM, Theme } from ".";
+import { lsNamespace } from "../amp-localstorage-namespace.js";
 
 const matchMedia = query =>
     window.matchMedia ? window.matchMedia(query) : null;
 const PREFERS_HIGH_CONTRAST_QUERY = matchMedia("(prefers-contrast: more)");
 const PREFERS_DARK_QUERY = matchMedia("(prefers-color-scheme: dark)");
 
-const STORAGE_KEY = process.env.ampmod_is_canary ? "canary:theme" : "amp:theme";
+const STORAGE_KEY = `${lsNamespace}theme`;
 
 /**
  * @returns {Theme} detected theme

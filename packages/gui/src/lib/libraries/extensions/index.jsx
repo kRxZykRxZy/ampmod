@@ -46,7 +46,6 @@ import gdxforInsetIconURL from "./gdxfor/gdxfor-small.svg";
 import gdxforConnectionIconURL from "./gdxfor/gdxfor-illustration.svg";
 import gdxforConnectionSmallIconURL from "./gdxfor/gdxfor-small.svg";
 
-import twIcon from "./tw/tw.svg";
 import futureIcon from "./future/future.svg";
 import customExtensionIcon from "./custom/custom.svg";
 import legacyListsIcon from "./legacyLists/legacylists.svg";
@@ -242,7 +241,7 @@ export default [
         tags: ["scratch", "data"],
         featured: true,
         enabled:
-            process.env.ampmod_is_canary ||
+            process.env.ampmod_mode === "canary" ||
             process.env.NODE_ENV === "development",
     },
     {
@@ -267,7 +266,7 @@ export default [
         ),
         incompatibleWithScratch: true,
         docsURI: "https://ampmod.miraheze.org/wiki/Future",
-        tags: ["ampmod", "new", "catexp"],
+        tags: ["ampmod", "catexp"],
         featured: true,
     },
     {

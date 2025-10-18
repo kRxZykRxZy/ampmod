@@ -20,10 +20,11 @@ const TYPE_MANUAL = 1;
  * @property {Record<string, number>} assets maps md5exts to size in bytes
  */
 
-const DATABASE_NAME = process.env.ampmod_is_canary
-    ? "Canary_RestorePoints"
-    : "Amp_RestorePoints";
-const DATABASE_VERSION = process.env.ampmod_is_canary ? 1 : 2;
+const DATABASE_NAME =
+    process.env.ampmod_mode === "canary"
+        ? "Canary_RestorePoints"
+        : "Amp_RestorePoints";
+const DATABASE_VERSION = process.env.ampmod_mode === "canary" ? 1 : 2;
 const METADATA_STORE = "meta";
 const PROJECT_STORE = "projects";
 const ASSET_STORE = "assets";

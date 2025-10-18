@@ -17,7 +17,7 @@
     "devDependencies": {
         "esbuild-loader": "^4.4.0",
         "husky": "^9.1.7",
-        "lint-staged": "^16.1.6",
+        "lint-staged": "^16.2.4",
         "optimize-css-assets-webpack-plugin": "^6.0.1",
         "prettier": "^3.6.2",
         "terser-webpack-plugin": "^4.2.3",
@@ -27,6 +27,6 @@
     },
     "dependencies": {
         "@ampmod/branding": "workspace:*",
-        "@fontsource-variable/inter": "^5.2.7"
+        "@fontsource-variable/inter": "^5.2.8"
     }
 }

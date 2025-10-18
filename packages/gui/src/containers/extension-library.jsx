@@ -106,7 +106,7 @@ const fetchLibrary = async () => {
 const parseExtLocalStorage = async () => {
     const raw =
         localStorage[
-            `${process.env.ampmod_is_canary ? "canary" : "amp"}:saved-custom-extensions`
+            `${process.env.ampmod_mode === "canary" ? "canary" : "amp"}:saved-custom-extensions`
         ];
 
     if (!raw) return [];
@@ -272,7 +272,6 @@ class ExtensionLibrary extends React.PureComponent {
                 filterable
                 persistableKey="extensionId"
                 id="extensionLibrary"
-                noFaceSensing
                 tags={extensionTags}
                 title={this.props.intl.formatMessage(messages.extensionTitle)}
                 visible={this.props.visible}

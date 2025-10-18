@@ -6,7 +6,7 @@ export default async function ({ addon, console, msg }) {
     style.textContent = `
     .blocklyText {
         fill: ${Blockly.Colours.text};
-        font-family: "Inter Variable", "Helvetica Neue", Helvetica, sans-serif;
+        font-family: "Helvetica Neue", Helvetica, sans-serif;
         font-size: 12pt;
         font-weight: 500;
     }

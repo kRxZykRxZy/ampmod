@@ -6,6 +6,7 @@ import { defineMessages, injectIntl, intlShape } from "react-intl";
 import GreenFlag from "../green-flag/green-flag.jsx";
 import StopAll from "../stop-all/stop-all.jsx";
 import TurboMode from "../turbo-mode/turbo-mode.jsx";
+import Pause from "../amp-pause/pause.jsx";
 import FramerateIndicator from "../tw-framerate-indicator/framerate-indicator.jsx";
 
 import styles from "./controls.css";
@@ -15,6 +16,16 @@ const messages = defineMessages({
         id: "gui.controls.go",
         defaultMessage: "Go",
         description: "Green flag button title",
+    },
+    pauseTitle: {
+        id: "amp.controls.pause",
+        defaultMessage: "Pause",
+        description: "Pause button title",
+    },
+    playTitle: {
+        id: "amp.controls.play",
+        defaultMessage: "Play",
+        description: "Play button title (to unpause)",
     },
     stopTitle: {
         id: "gui.controls.stop",
@@ -26,10 +37,12 @@ const messages = defineMessages({
 const Controls = function (props) {
     const {
         active,
+        paused,
         className,
         intl,
         onGreenFlagClick,
         onStopAllClick,
+        onPauseClick,
         turbo,
         framerate,
         interpolation,
@@ -45,6 +58,13 @@ const Controls = function (props) {
                 active={active}
                 title={intl.formatMessage(messages.goTitle)}
                 onClick={onGreenFlagClick}
+            />
+            <Pause
+                paused={paused}
+                title={intl.formatMessage(
+                    paused ? messages.playTitle : messages.pauseTitle
+                )}
+                onClick={onPauseClick}
             />
             <StopAll
                 active={active}

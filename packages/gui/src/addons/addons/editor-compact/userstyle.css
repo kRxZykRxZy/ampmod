@@ -1,4 +1,7 @@
 /* Full page */
+[class*="gui_body-wrapper"] {
+  height: calc(100% - 2rem);
+}
 .sa-body-editor,
 .sa-body-editor * {
   scrollbar-width: thin;
@@ -20,7 +23,7 @@
 }
 
 /* Menu bar */
-[class*="menu-bar_file-group_"] [class*="menu-bar_hoverable_"] > img:not(.no-sa-compact-hide),
+[class*="menu-bar_file-group_"] [class*="menu-bar_hoverable_"] > img,
 [class*="menu-bar_divider"],
 [class*="menu-bar_help-icon"] {
   display: none;
@@ -37,12 +40,9 @@
   }
 }
 
-[class*="gui_menu-bar-position"][class*="menu-bar_menu-bar"][class*="box_box"] {
-  height: 2rem;
-}
-
+[class*="gui_menu-bar-position"][class*="menu-bar_menu-bar"][class*="box_box"],
 [class*="menu-bar_menu-bar-item"] {
-  height: 1.7rem;
+  height: 2rem;
 }
 
 [class*="menu-bar_file-group_"] [class*="menu-bar_menu-bar-item_"],
@@ -263,7 +263,7 @@ button[class*="action-menu_more-button"] {
 [class*="gui_tab_"] {
   padding-left: 1rem;
   padding-right: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 0.5rem 0.5rem 0 0;
 }
 [class*="gui_tab_"] > img {
   display: none;
@@ -509,9 +509,4 @@ body:not(.sa-columns-enabled) [class*="gui_tab-panel"] [class*="gui_extension-bu
 }
 [class*="custom-procedures_body"] [role="button"] {
   padding: 0.5rem;
-}
-
-/* AmpMod modifications */
-img.no-sa-compact-hide {
-  height: 18px;
 }

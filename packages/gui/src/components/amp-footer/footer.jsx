@@ -48,68 +48,28 @@ const Footer = () => {
             <div className={styles.footerContent}>
                 <div className={styles.footerText}>
                     <FormattedMessage
-                        defaultMessage="Version {APP_VERSION}"
-                        description="The current version of the application"
-                        id="tw.footer.version"
-                        values={{
-                            APP_VERSION: process.env.ampmod_version,
-                        }}
-                    />
-                    {process.env.ampmod_is_canary && (
-                        <>
-                            <span className={styles.separator}></span>
-                            <FormattedMessage
-                                defaultMessage="Canary build!!"
-                                description="Text to show that this is a canary build"
-                                id="tw.footer.canaryBuild"
-                            />
-                        </>
-                    )}
-                </div>
-                <div className={styles.footerText}>
-                    <FormattedMessage
-                        defaultMessage="{APP_NAME} is not affiliated with Scratch, the Scratch Team, the Scratch Foundation, or the TurboWarp developers."
-                        description="Disclaimer that TurboWarp is not connected to Scratch"
-                        id="tw.footer.disclaimer"
+                        // eslint-disable-next-line max-len
+                        defaultMessage="{APP_NAME} is not affiliated with {scratchLink} or {twLink}. Donate to the Scratch Foundation to support Scratch and its forks."
+                        description="Disclaimer that AmpMod is not connected to Scratch"
+                        id="amp.footer.disclaimer"
                         values={{
                             APP_NAME,
-                        }}
-                    />
-                </div>
-
-                <div className={styles.footerText}>
-                    <FormattedMessage
-                        defaultMessage="Scratch is a project of the Scratch Foundation. It is available for free at {scratchDotOrg}."
-                        description="A disclaimer that Scratch requires when referring to Scratch. {scratchDotOrg} is a link with text 'https://scratch.org/'"
-                        id="tw.footer.scratchDisclaimer"
-                        values={{
-                            scratchDotOrg: (
+                            scratchLink: (
                                 <a
-                                    href="https://scratch.org/"
+                                    href="https://scratch.mit.edu"
                                     target="_blank"
                                     rel="noreferrer"
                                 >
-                                    {"https://scratch.org/"}
+                                    {"Scratch"}
                                 </a>
                             ),
-                        }}
-                    />
-                </div>
-
-                <div className={styles.footerText}>
-                    <FormattedMessage
-                        defaultMessage="{APP_NAME} is based off TurboWarp. It is available for free at {turboWarpOrg}."
-                        description="Attribution to TurboWarp. {turboWarpOrg} is a link with text 'https://turbowarp.org'"
-                        id="tw.footer.basedOnTurboWarp"
-                        values={{
-                            APP_NAME,
-                            turboWarpOrg: (
+                            twLink: (
                                 <a
-                                    href="https://turbowarp.org/"
+                                    href="https://turbowarp.org"
                                     target="_blank"
                                     rel="noreferrer"
                                 >
-                                    {"https://turbowarp.org/"}
+                                    {"TurboWarp"}
                                 </a>
                             ),
                         }}
@@ -118,13 +78,7 @@ const Footer = () => {
 
                 <div className={styles.footerColumns}>
                     <div className={styles.footerSection}>
-                        <a href="credits.html">
-                            <FormattedMessage
-                                defaultMessage="Credits"
-                                description="Credits link in footer"
-                                id="tw.footer.credits"
-                            />
-                        </a>
+                        <h3>About</h3>
                         <a href="https://ampmod.netlify.app/faq">
                             <FormattedMessage
                                 defaultMessage="AmpMod FAQ"
@@ -150,35 +104,31 @@ const Footer = () => {
                         </a>
                     </div>
                     <div className={styles.footerSection}>
-                        <a href="https://desktop.turbowarp.org/">
-                            {/* Do not translate */}
-                            {"TurboWarp Desktop"}
-                        </a>
-                        <a href="https://packager.turbowarp.org/">
-                            {/* Do not translate */}
-                            {"TurboWarp Packager"}
-                        </a>
-                        <a href="https://docs.turbowarp.org/embedding">
-                            <FormattedMessage
-                                defaultMessage="Embedding"
-                                description="Link in footer to embedding documentation for embedding link"
-                                id="tw.footer.embed"
-                            />
-                        </a>
-                        <a href="https://docs.turbowarp.org/url-parameters">
-                            <FormattedMessage
-                                defaultMessage="URL Parameters"
-                                description="Link in footer to URL parameters documentation"
-                                id="tw.footer.parameters"
-                            />
-                        </a>
-                        <a href="https://ampmod.codeberg.page/extensions/">
-                            <FormattedMessage
-                                defaultMessage="Extension Gallery"
-                                description="Link in footer to extension gallery"
-                                id="tw.footer.extensions"
-                            />
-                        </a>
+                        <h3>Community</h3>
+                        {APP_FORUMS && (
+                            <>
+                                <a href="https://scratch.mit.edu/discuss/topic/806311/">
+                                    <FormattedMessage
+                                        defaultMessage="{APP_NAME} on Scratch"
+                                        description="Button to give feedback on Scratch in the menu bar"
+                                        id="amp.onScratch"
+                                        values={{
+                                            APP_NAME,
+                                        }}
+                                    />
+                                </a>
+                                <a href={APP_FORUMS}>
+                                    <FormattedMessage
+                                        defaultMessage="{APP_NAME} Forums"
+                                        description="Button to give feedback in the menu bar"
+                                        id="tw.topicButton"
+                                        values={{
+                                            APP_NAME,
+                                        }}
+                                    />
+                                </a>
+                            </>
+                        )}
                         {APP_WIKI && (
                             <a href={APP_WIKI}>
                                 <FormattedMessage
@@ -188,6 +138,23 @@ const Footer = () => {
                                 />
                             </a>
                         )}
+                        <a href="credits.html">
+                            <FormattedMessage
+                                defaultMessage="Credits"
+                                description="Credits link in footer"
+                                id="tw.footer.credits"
+                            />
+                        </a>
+                    </div>
+                    <div className={styles.footerSection}>
+                        <h3>Resources</h3>
+                        <a href="https://ampmod.codeberg.page/extensions/">
+                            <FormattedMessage
+                                defaultMessage="Extension Gallery"
+                                description="Link in footer to extension gallery"
+                                id="tw.footer.extensions"
+                            />
+                        </a>
                         <a href="https://ampmod.codeberg.page/manual/">
                             <FormattedMessage
                                 defaultMessage="Manual"
@@ -195,37 +162,6 @@ const Footer = () => {
                                 id="tw.footer.manual"
                             />
                         </a>
-                    </div>
-                    <div className={styles.footerSection}>
-                        {APP_FORUMS && (
-                            <a href={APP_FORUMS}>
-                                <FormattedMessage
-                                    defaultMessage="{APP_NAME} Forums"
-                                    description="Button to give feedback in the menu bar"
-                                    id="tw.topicButton"
-                                    values={{
-                                        APP_NAME,
-                                    }}
-                                />
-                            </a>
-                        )}
-                        {(!process.env.ampmod_is_canary && (
-                            <a href="https://ampmod.codeberg.page/canary/">
-                                <FormattedMessage
-                                    defaultMessage="Canary Build"
-                                    description="Link to the canary build of AmpMod"
-                                    id="tw.canary"
-                                />
-                            </a>
-                        )) || (
-                            <a href="https://ampmod.codeberg.page/">
-                                <FormattedMessage
-                                    defaultMessage="Production"
-                                    description="Link to the stable build of AmpMod"
-                                    id="tw.production"
-                                />
-                            </a>
-                        )}
                         <a href={APP_SOURCE}>
                             <FormattedMessage
                                 defaultMessage="Source Code"
@@ -233,6 +169,45 @@ const Footer = () => {
                                 id="tw.code"
                             />
                         </a>
+                        {process.env.ampmod_mode === "canary" ? (
+                            <a href="https://ampmod.codeberg.page/">
+                                <FormattedMessage
+                                    defaultMessage="Stable Build"
+                                    description="Link to the stable build of AmpMod"
+                                    id="amp.production"
+                                />
+                            </a>
+                        ) : (
+                            <a href="https://ampmod.codeberg.page/canary/">
+                                <FormattedMessage
+                                    defaultMessage="Canary Build"
+                                    description="Link to the canary build of AmpMod"
+                                    id="amp.canary"
+                                />
+                            </a>
+                        )}
+                        {/*<a href="https://desktop.turbowarp.org/">
+                            {"TurboWarp Desktop"}
+                        </a>
+                        <a href="https://packager.turbowarp.org/">
+                            {"TurboWarp Packager"}
+                        </a>                        <a href="https://docs.turbowarp.org/embedding">
+                            <FormattedMessage
+                                defaultMessage="Embedding"
+                                description="Link in footer to embedding documentation for embedding link"
+                                id="tw.footer.embed"
+                            />
+                        </a>*/}
+                        <a href="https://docs.turbowarp.org/url-parameters">
+                            <FormattedMessage
+                                defaultMessage="URL Parameters"
+                                description="Link in footer to URL parameters documentation"
+                                id="tw.footer.parameters"
+                            />
+                        </a>
+                    </div>
+                    <div className={styles.footerSection}>
+                        <h3>Legal</h3>
                         <a href="privacy.html">
                             <FormattedMessage
                                 defaultMessage="Privacy Policy"
@@ -243,7 +218,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            {isAprilFools() && ";"}
+            {isAprilFools() && <div className={styles.semicolon}>;</div>}
         </footer>
     );
 };

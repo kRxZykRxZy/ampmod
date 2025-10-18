@@ -95,7 +95,7 @@ export default async function ({ addon, msg, console }) {
       "sensing",
       "operators",
       "variables",
-      "arrays",
+      "lists",
       "myBlocks",
     ];
     const extensionsNodes = [];

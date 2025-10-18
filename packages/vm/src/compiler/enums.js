@@ -159,6 +159,7 @@ const StackOpcode = {
     MOTION_X_CHANGE: "motion.changeX",
     MOTION_Y_SET: "motion.setY",
     MOTION_Y_CHANGE: "motion.changeY",
+    MOTION_CHANGE: "motion.change",
     MOTION_XY_SET: "motion.setXY",
     MOTION_IF_ON_EDGE_BOUNCE: "motion.ifOnEdgeBounce",
     MOTION_STEP: "motion.step",

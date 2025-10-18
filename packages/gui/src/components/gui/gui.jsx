@@ -33,6 +33,7 @@ import Alerts from "../../containers/alerts.jsx";
 import DragLayer from "../../containers/drag-layer.jsx";
 import ConnectionModal from "../../containers/connection-modal.jsx";
 import TelemetryModal from "../telemetry-modal/telemetry-modal.jsx";
+import Welcome from "../amp-welcome/welcome.jsx";
 import TWUsernameModal from "../../containers/tw-username-modal.jsx";
 import TWSettingsModal from "../../containers/tw-settings-modal.jsx";
 import TWSecurityManager from "../../containers/tw-security-manager.jsx";
@@ -145,6 +146,7 @@ const GUIComponent = props => {
         onRequestCloseBackdropLibrary,
         onRequestCloseCostumeLibrary,
         onRequestCloseTelemetryModal,
+        onRequestCloseWelcomeModal,
         onSeeCommunity,
         onShare,
         onShowPrivacyPolicy,
@@ -160,6 +162,7 @@ const GUIComponent = props => {
         stageSizeMode,
         targetIsStage,
         telemetryModalVisible,
+        welcomeModalVisible,
         theme,
         tipsLibraryVisible,
         usernameModalVisible,
@@ -232,35 +235,7 @@ const GUIComponent = props => {
                     </React.Fragment>
                 );
 
-                return isPlayerOnly ? (
-                    <React.Fragment>
-                        {/* TW: When the window is fullscreen, use an element to display the background color */}
-                        {/* The default color for transparency is inconsistent between browsers and there isn't an existing */}
-                        {/* element for us to style that fills the entire screen. */}
-                        {isWindowFullScreen ? (
-                            <div
-                                className={styles.fullscreenBackground}
-                                style={{
-                                    backgroundColor: fullscreenBackgroundColor,
-                                }}
-                            />
-                        ) : null}
-                        <StageWrapper
-                            isFullScreen={isFullScreen}
-                            isEmbedded={isEmbedded}
-                            isRendererSupported={isRendererSupported()}
-                            isRtl={isRtl}
-                            loading={loading}
-                            stageSize={STAGE_SIZE_MODES.full}
-                            vm={vm}
-                        >
-                            {alertsVisible ? (
-                                <Alerts className={styles.alertsContainer} />
-                            ) : null}
-                        </StageWrapper>
-                        {alwaysEnabledModals}
-                    </React.Fragment>
-                ) : (
+                return (
                     <Box
                         className={styles.pageWrapper}
                         dir={isRtl ? "rtl" : "ltr"}
@@ -272,273 +247,323 @@ const GUIComponent = props => {
                         }}
                         {...componentProps}
                     >
-                        {alwaysEnabledModals}
-                        {telemetryModalVisible ? (
-                            <TelemetryModal
+                        {welcomeModalVisible ? (
+                            <Welcome
                                 isRtl={isRtl}
-                                isTelemetryEnabled={isTelemetryEnabled}
-                                onCancel={onTelemetryModalCancel}
-                                onOptIn={onTelemetryModalOptIn}
-                                onOptOut={onTelemetryModalOptOut}
-                                onRequestClose={onRequestCloseTelemetryModal}
-                                onShowPrivacyPolicy={onShowPrivacyPolicy}
+                                onContinue={onRequestCloseWelcomeModal}
                             />
-                        ) : null}
-                        {loading ? <Loader isFullScreen /> : null}
-                        {isCreating ? (
-                            <Loader
-                                isFullScreen
-                                messageId="gui.loader.creating"
-                            />
-                        ) : null}
-                        {tipsLibraryVisible ? <TipsLibrary /> : null}
-                        {cardsVisible ? <Cards /> : null}
-                        {alertsVisible ? (
-                            <Alerts className={styles.alertsContainer} />
-                        ) : null}
-                        {connectionModalVisible ? (
-                            <ConnectionModal vm={vm} />
-                        ) : null}
-                        {costumeLibraryVisible ? (
-                            <CostumeLibrary
-                                vm={vm}
-                                onRequestClose={onRequestCloseCostumeLibrary}
-                            />
-                        ) : null}
-                        {backdropLibraryVisible ? (
-                            <BackdropLibrary
-                                vm={vm}
-                                onRequestClose={onRequestCloseBackdropLibrary}
-                            />
-                        ) : null}
-                        <MenuBar
-                            accountNavOpen={accountNavOpen}
-                            authorId={authorId}
-                            authorThumbnailUrl={authorThumbnailUrl}
-                            authorUsername={authorUsername}
-                            canChangeLanguage={canChangeLanguage}
-                            canChangeTheme={canChangeTheme}
-                            canCreateCopy={canCreateCopy}
-                            canCreateNew={canCreateNew}
-                            canEditTitle={canEditTitle}
-                            canManageFiles={canManageFiles}
-                            canRemix={canRemix}
-                            canSave={canSave}
-                            canShare={canShare}
-                            className={styles.menuBarPosition}
-                            enableCommunity={enableCommunity}
-                            isShared={isShared}
-                            isTotallyNormal={isTotallyNormal}
-                            logo={logo}
-                            renderLogin={renderLogin}
-                            showComingSoon={showComingSoon}
-                            showOpenFilePicker={showOpenFilePicker}
-                            showSaveFilePicker={showSaveFilePicker}
-                            onClickAbout={onClickAbout}
-                            onClickAccountNav={onClickAccountNav}
-                            onClickDesktopSettings={onClickDesktopSettings}
-                            onClickNewWindow={onClickNewWindow}
-                            onClickPackager={onClickPackager}
-                            onClickLogo={onClickLogo}
-                            onCloseAccountNav={onCloseAccountNav}
-                            onLogOut={onLogOut}
-                            onOpenRegistration={onOpenRegistration}
-                            onProjectTelemetryEvent={onProjectTelemetryEvent}
-                            onSeeCommunity={onSeeCommunity}
-                            onShare={onShare}
-                            onStartSelectingFileUpload={
-                                onStartSelectingFileUpload
-                            }
-                            onToggleLoginOpen={onToggleLoginOpen}
-                        />
-                        <Box className={styles.bodyWrapper}>
-                            <Box className={styles.flexWrapper}>
-                                <Box className={styles.editorWrapper}>
-                                    <Tabs
-                                        forceRenderTabPanel
-                                        className={tabClassNames.tabs}
-                                        selectedIndex={activeTabIndex}
-                                        selectedTabClassName={
-                                            tabClassNames.tabSelected
-                                        }
-                                        selectedTabPanelClassName={
-                                            tabClassNames.tabPanelSelected
-                                        }
-                                        onSelect={onActivateTab}
-                                    >
-                                        <TabList
-                                            className={tabClassNames.tabList}
-                                        >
-                                            <Tab className={tabClassNames.tab}>
-                                                <img
-                                                    draggable={false}
-                                                    src={codeIcon()}
-                                                />
-                                                <FormattedMessage
-                                                    defaultMessage="Code"
-                                                    description="Button to get to the code panel"
-                                                    id="gui.gui.codeTab"
-                                                />
-                                            </Tab>
-                                            <Tab
-                                                className={tabClassNames.tab}
-                                                onClick={onActivateCostumesTab}
-                                            >
-                                                <img
-                                                    draggable={false}
-                                                    src={costumesIcon()}
-                                                />
-                                                {targetIsStage ? (
-                                                    <FormattedMessage
-                                                        defaultMessage="Backdrops"
-                                                        description="Button to get to the backdrops panel"
-                                                        id="gui.gui.backdropsTab"
-                                                    />
-                                                ) : (
-                                                    <FormattedMessage
-                                                        defaultMessage="Costumes"
-                                                        description="Button to get to the costumes panel"
-                                                        id="gui.gui.costumesTab"
-                                                    />
-                                                )}
-                                            </Tab>
-                                            <Tab
-                                                className={tabClassNames.tab}
-                                                onClick={onActivateSoundsTab}
-                                            >
-                                                <img
-                                                    draggable={false}
-                                                    src={soundsIcon()}
-                                                />
-                                                <FormattedMessage
-                                                    defaultMessage="Sounds"
-                                                    description="Button to get to the sounds panel"
-                                                    id="gui.gui.soundsTab"
-                                                />
-                                            </Tab>
-                                        </TabList>
-                                        <TabPanel
-                                            className={tabClassNames.tabPanel}
-                                        >
-                                            {blocksTabVisible ? (
-                                                <>
-                                                    <Box
-                                                        className={
-                                                            styles.blocksWrapper
-                                                        }
-                                                    >
-                                                        <Blocks
-                                                            key={`${blocksId}/${theme.id}`}
-                                                            canUseCloud={
-                                                                canUseCloud
-                                                            }
-                                                            grow={1}
-                                                            isVisible={
-                                                                blocksTabVisible
-                                                            }
-                                                            options={{
-                                                                media: `${basePath}static/${theme.getBlocksMediaFolder()}/`,
-                                                                trashcan: true,
-                                                            }}
-                                                            stageSize={
-                                                                stageSize
-                                                            }
-                                                            onOpenCustomExtensionModal={
-                                                                onOpenCustomExtensionModal
-                                                            }
-                                                            theme={theme}
-                                                            vm={vm}
-                                                        />
-                                                    </Box>
-                                                    <Box
-                                                        className={
-                                                            styles.extensionButtonContainer
-                                                        }
-                                                    >
-                                                        <button
-                                                            className={
-                                                                styles.extensionButton
-                                                            }
-                                                            title={intl.formatMessage(
-                                                                messages.addExtension
-                                                            )}
-                                                            onClick={
-                                                                onExtensionButtonClick
-                                                            }
-                                                        >
-                                                            <img
-                                                                className={
-                                                                    styles.extensionButtonIcon
-                                                                }
-                                                                draggable={
-                                                                    false
-                                                                }
-                                                                src={
-                                                                    addExtensionIcon
-                                                                }
-                                                            />
-                                                        </button>
-                                                    </Box>
-                                                    <Box
-                                                        className={
-                                                            styles.watermark
-                                                        }
-                                                    >
-                                                        <Watermark />
-                                                    </Box>
-                                                    <Clippy messageSet="codeMenu" />
-                                                </>
-                                            ) : null}
-                                        </TabPanel>
-                                        <TabPanel
-                                            className={tabClassNames.tabPanel}
-                                        >
-                                            {costumesTabVisible ? (
-                                                <>
-                                                    <Clippy messageSet="costMenu" />
-                                                    <CostumeTab vm={vm} />
-                                                </>
-                                            ) : null}
-                                        </TabPanel>
-                                        <TabPanel
-                                            className={tabClassNames.tabPanel}
-                                        >
-                                            {soundsTabVisible ? (
-                                                <>
-                                                    <Clippy messageSet="soundMenu" />{" "}
-                                                    <SoundTab vm={vm} />
-                                                </>
-                                            ) : null}
-                                        </TabPanel>
-                                    </Tabs>
-                                    {backpackVisible ? (
-                                        <Backpack host={backpackHost} />
-                                    ) : null}
-                                </Box>
-
-                                <Box
-                                    className={classNames(
-                                        styles.stageAndTargetWrapper,
-                                        styles[stageSize]
-                                    )}
-                                >
-                                    <StageWrapper
-                                        isFullScreen={isFullScreen}
-                                        isRendererSupported={isRendererSupported()}
+                        ) : (
+                            <>
+                                {alwaysEnabledModals}
+                                {telemetryModalVisible ? (
+                                    <TelemetryModal
                                         isRtl={isRtl}
-                                        stageSize={stageSize}
-                                        vm={vm}
+                                        isTelemetryEnabled={isTelemetryEnabled}
+                                        onCancel={onTelemetryModalCancel}
+                                        onOptIn={onTelemetryModalOptIn}
+                                        onOptOut={onTelemetryModalOptOut}
+                                        onRequestClose={
+                                            onRequestCloseTelemetryModal
+                                        }
+                                        onShowPrivacyPolicy={
+                                            onShowPrivacyPolicy
+                                        }
                                     />
-                                    <Box className={styles.targetWrapper}>
-                                        <TargetPane
-                                            stageSize={stageSize}
-                                            vm={vm}
-                                        />
+                                ) : null}
+                                {loading && !isCreating ? (
+                                    <Loader isFullScreen />
+                                ) : null}
+                                {isCreating ? (
+                                    <Loader
+                                        isFullScreen
+                                        messageId="gui.loader.creating"
+                                    />
+                                ) : null}
+                                {tipsLibraryVisible ? <TipsLibrary /> : null}
+                                {cardsVisible ? <Cards /> : null}
+                                {alertsVisible ? (
+                                    <Alerts
+                                        className={styles.alertsContainer}
+                                    />
+                                ) : null}
+                                {connectionModalVisible ? (
+                                    <ConnectionModal vm={vm} />
+                                ) : null}
+                                {costumeLibraryVisible ? (
+                                    <CostumeLibrary
+                                        vm={vm}
+                                        onRequestClose={
+                                            onRequestCloseCostumeLibrary
+                                        }
+                                    />
+                                ) : null}
+                                {backdropLibraryVisible ? (
+                                    <BackdropLibrary
+                                        vm={vm}
+                                        onRequestClose={
+                                            onRequestCloseBackdropLibrary
+                                        }
+                                    />
+                                ) : null}
+                                <MenuBar
+                                    accountNavOpen={accountNavOpen}
+                                    authorId={authorId}
+                                    authorThumbnailUrl={authorThumbnailUrl}
+                                    authorUsername={authorUsername}
+                                    canChangeLanguage={canChangeLanguage}
+                                    canChangeTheme={canChangeTheme}
+                                    canCreateCopy={canCreateCopy}
+                                    canCreateNew={canCreateNew}
+                                    canEditTitle={canEditTitle}
+                                    canManageFiles={canManageFiles}
+                                    canRemix={canRemix}
+                                    canSave={canSave}
+                                    canShare={canShare}
+                                    className={styles.menuBarPosition}
+                                    enableCommunity={enableCommunity}
+                                    isShared={isShared}
+                                    isTotallyNormal={isTotallyNormal}
+                                    logo={logo}
+                                    renderLogin={renderLogin}
+                                    showComingSoon={showComingSoon}
+                                    showOpenFilePicker={showOpenFilePicker}
+                                    showSaveFilePicker={showSaveFilePicker}
+                                    onClickAbout={onClickAbout}
+                                    onClickAccountNav={onClickAccountNav}
+                                    onClickDesktopSettings={
+                                        onClickDesktopSettings
+                                    }
+                                    onClickNewWindow={onClickNewWindow}
+                                    onClickPackager={onClickPackager}
+                                    onClickLogo={onClickLogo}
+                                    onCloseAccountNav={onCloseAccountNav}
+                                    onLogOut={onLogOut}
+                                    onOpenRegistration={onOpenRegistration}
+                                    onProjectTelemetryEvent={
+                                        onProjectTelemetryEvent
+                                    }
+                                    onSeeCommunity={onSeeCommunity}
+                                    onShare={onShare}
+                                    onStartSelectingFileUpload={
+                                        onStartSelectingFileUpload
+                                    }
+                                    onToggleLoginOpen={onToggleLoginOpen}
+                                />
+                                <Box className={styles.bodyWrapper}>
+                                    <Box className={styles.flexWrapper}>
+                                        <Box className={styles.editorWrapper}>
+                                            <Tabs
+                                                forceRenderTabPanel
+                                                className={tabClassNames.tabs}
+                                                selectedIndex={activeTabIndex}
+                                                selectedTabClassName={
+                                                    tabClassNames.tabSelected
+                                                }
+                                                selectedTabPanelClassName={
+                                                    tabClassNames.tabPanelSelected
+                                                }
+                                                onSelect={onActivateTab}
+                                            >
+                                                <TabList
+                                                    className={
+                                                        tabClassNames.tabList
+                                                    }
+                                                >
+                                                    <Tab
+                                                        className={
+                                                            tabClassNames.tab
+                                                        }
+                                                    >
+                                                        <img
+                                                            draggable={false}
+                                                            src={codeIcon()}
+                                                        />
+                                                        <FormattedMessage
+                                                            defaultMessage="Code"
+                                                            description="Button to get to the code panel"
+                                                            id="gui.gui.codeTab"
+                                                        />
+                                                    </Tab>
+                                                    <Tab
+                                                        className={
+                                                            tabClassNames.tab
+                                                        }
+                                                        onClick={
+                                                            onActivateCostumesTab
+                                                        }
+                                                    >
+                                                        <img
+                                                            draggable={false}
+                                                            src={costumesIcon()}
+                                                        />
+                                                        {targetIsStage ? (
+                                                            <FormattedMessage
+                                                                defaultMessage="Backdrops"
+                                                                description="Button to get to the backdrops panel"
+                                                                id="gui.gui.backdropsTab"
+                                                            />
+                                                        ) : (
+                                                            <FormattedMessage
+                                                                defaultMessage="Costumes"
+                                                                description="Button to get to the costumes panel"
+                                                                id="gui.gui.costumesTab"
+                                                            />
+                                                        )}
+                                                    </Tab>
+                                                    <Tab
+                                                        className={
+                                                            tabClassNames.tab
+                                                        }
+                                                        onClick={
+                                                            onActivateSoundsTab
+                                                        }
+                                                    >
+                                                        <img
+                                                            draggable={false}
+                                                            src={soundsIcon()}
+                                                        />
+                                                        <FormattedMessage
+                                                            defaultMessage="Sounds"
+                                                            description="Button to get to the sounds panel"
+                                                            id="gui.gui.soundsTab"
+                                                        />
+                                                    </Tab>
+                                                </TabList>
+                                                <TabPanel
+                                                    className={
+                                                        tabClassNames.tabPanel
+                                                    }
+                                                >
+                                                    {blocksTabVisible ? (
+                                                        <>
+                                                            <Box
+                                                                className={
+                                                                    styles.blocksWrapper
+                                                                }
+                                                            >
+                                                                <Blocks
+                                                                    key={`${blocksId}/${theme.id}`}
+                                                                    canUseCloud={
+                                                                        canUseCloud
+                                                                    }
+                                                                    grow={1}
+                                                                    isVisible={
+                                                                        blocksTabVisible
+                                                                    }
+                                                                    options={{
+                                                                        media: `${basePath}static/${theme.getBlocksMediaFolder()}/`,
+                                                                    }}
+                                                                    stageSize={
+                                                                        stageSize
+                                                                    }
+                                                                    onOpenCustomExtensionModal={
+                                                                        onOpenCustomExtensionModal
+                                                                    }
+                                                                    theme={
+                                                                        theme
+                                                                    }
+                                                                    vm={vm}
+                                                                />
+                                                            </Box>
+                                                            <Box
+                                                                className={
+                                                                    styles.extensionButtonContainer
+                                                                }
+                                                            >
+                                                                <button
+                                                                    className={
+                                                                        styles.extensionButton
+                                                                    }
+                                                                    title={intl.formatMessage(
+                                                                        messages.addExtension
+                                                                    )}
+                                                                    onClick={
+                                                                        onExtensionButtonClick
+                                                                    }
+                                                                >
+                                                                    <img
+                                                                        className={
+                                                                            styles.extensionButtonIcon
+                                                                        }
+                                                                        draggable={
+                                                                            false
+                                                                        }
+                                                                        src={
+                                                                            addExtensionIcon
+                                                                        }
+                                                                    />
+                                                                </button>
+                                                            </Box>
+                                                            <Box
+                                                                className={
+                                                                    styles.watermark
+                                                                }
+                                                            >
+                                                                <Watermark />
+                                                            </Box>
+                                                            <Clippy messageSet="codeMenu" />
+                                                        </>
+                                                    ) : null}
+                                                </TabPanel>
+                                                <TabPanel
+                                                    className={
+                                                        tabClassNames.tabPanel
+                                                    }
+                                                >
+                                                    {costumesTabVisible ? (
+                                                        <>
+                                                            <Clippy messageSet="costMenu" />
+                                                            <CostumeTab
+                                                                vm={vm}
+                                                            />
+                                                        </>
+                                                    ) : null}
+                                                </TabPanel>
+                                                <TabPanel
+                                                    className={
+                                                        tabClassNames.tabPanel
+                                                    }
+                                                >
+                                                    {soundsTabVisible ? (
+                                                        <>
+                                                            <Clippy messageSet="soundMenu" />{" "}
+                                                            <SoundTab vm={vm} />
+                                                        </>
+                                                    ) : null}
+                                                </TabPanel>
+                                            </Tabs>
+                                            {backpackVisible ? (
+                                                <Backpack host={backpackHost} />
+                                            ) : null}
+                                        </Box>
+
+                                        <Box
+                                            className={classNames(
+                                                styles.stageAndTargetWrapper,
+                                                styles[stageSize]
+                                            )}
+                                        >
+                                            <StageWrapper
+                                                isFullScreen={isFullScreen}
+                                                isRendererSupported={isRendererSupported()}
+                                                isRtl={isRtl}
+                                                stageSize={stageSize}
+                                                vm={vm}
+                                            />
+                                            <Box
+                                                className={styles.targetWrapper}
+                                            >
+                                                <TargetPane
+                                                    stageSize={stageSize}
+                                                    vm={vm}
+                                                />
+                                            </Box>
+                                        </Box>
                                     </Box>
                                 </Box>
-                            </Box>
-                        </Box>
-                        <DragLayer />
+                                <DragLayer />
+                            </>
+                        )}
                     </Box>
                 );
             }}

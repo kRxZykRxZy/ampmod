@@ -32,6 +32,7 @@ class Scratch3MotionBlocks {
             motion_setx: this.setX,
             motion_changeyby: this.changeY,
             motion_sety: this.setY,
+            motion_changeallby: this.changeAll,
             motion_xposition: this.getX,
             motion_yposition: this.getY,
             motion_direction: this.getDirection,
@@ -281,6 +282,12 @@ class Scratch3MotionBlocks {
     setY(args, util) {
         const y = Cast.toNumber(args.Y);
         util.target.setXY(util.target.x, y);
+    }
+
+    changeAll(args, util) {
+        const dx = Cast.toNumber(args.DX);
+        const dy = Cast.toNumber(args.DY);
+        util.target.setXY(util.target.x + dx, util.target.y + dy);
     }
 
     getX(args, util) {

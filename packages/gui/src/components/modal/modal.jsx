@@ -16,12 +16,21 @@ import styles from "./modal.css";
 const ModalComponent = props => {
     const [isClosing, setIsClosing] = useState(false);
 
+    // amp: We need to use this instead of simply closing immediately due
+    // to the closing animation.
     const handleRequestClose = () => {
         setIsClosing(true);
-        setTimeout(() => {
-            setIsClosing(false);
-            props.onRequestClose();
-        }, 300); // Match the duration of the closing animation
+        setTimeout(
+            () => {
+                setIsClosing(false);
+                props.onRequestClose();
+            },
+            // If the user chooses to disable animations in system settings,
+            // respect that setting.
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches
+                ? 0
+                : 300
+        );
     };
 
     return (

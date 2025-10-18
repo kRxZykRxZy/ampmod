@@ -46,14 +46,15 @@ const Header = () => {
                         <img
                             height="26px"
                             src={
-                                process.env.ampmod_is_canary
+                                process.env.ampmod_mode === "canary"
                                     ? CanaryLogo
                                     : showFakeLogo
                                       ? FakeLogo
                                       : Logo
                             }
                             alt={
-                                showFakeLogo && !process.env.ampmod_is_canary
+                                showFakeLogo &&
+                                !process.env.ampmod_mode === "canary"
                                     ? "LampMod Logo"
                                     : "AmpMod Logo"
                             }

@@ -38,8 +38,8 @@ const IS_CBP_BUILD = Boolean(process.env.IS_CBP_BUILD);
 const htmlWebpackPluginCommon = {
     root: root,
     meta: JSON.parse(process.env.EXTRA_META || "{}"),
-    isCbp: process.env.IS_CBP_BUILD || false,
     APP_NAME,
+    isCbp: process.env.IS_CBP_BUILD || false,
     minify:
         process.env.NODE_ENV === "production"
             ? {
@@ -94,7 +94,7 @@ const base = {
         library: "GUI",
         filename:
             process.env.NODE_ENV === "production"
-                ? `js/${CACHE_EPOCH}/[name].[contenthash].js`
+                ? `js/${CACHE_EPOCH}/[name].[hash].js`
                 : "js/[name].js",
         chunkFilename:
             process.env.NODE_ENV === "production"
@@ -208,17 +208,23 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             "process.env.ampmod_version": JSON.stringify(
                 monorepoPackageJson.version
             ),
-            "process.env.ampmod_is_canary": process.env.BUILD_MODE === "canary",
-            "process.env.ampmod_is_cbp": IS_CBP_BUILD,
+            "process.env.ampmod_mode": JSON.stringify(process.env.BUILD_MODE),
+            "process.env.ampmod_lab_experiment_name": JSON.stringify(
+                process.env.LAB_EXPERIMENT_NAME || "default"
+            ),
+            "process.env.ampmod_lab_experiment_name_full": JSON.stringify(
+                process.env.LAB_EXPERIMENT_NAME_FULL || "AmpMod Lab"
+            ),
+            // ...existing code...
         }),
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: "../../node_modules/scratch-blocks/media",
+                    from: "../blocks/media",
                     to: "static/blocks-media/default",
                 },
                 {
-                    from: "../../node_modules/scratch-blocks/media",
+                    from: "../blocks/media",
                     to: "static/blocks-media/high-contrast",
                 },
                 {
@@ -289,6 +295,7 @@ module.exports = [
                 minSize: 50000,
                 maxInitialRequests: 5,
             },
+            minimizer: [new EsbuildPlugin({ target: "es2019" })],
         },
         plugins: base.plugins.concat([
             new HtmlWebpackPlugin({
@@ -300,7 +307,11 @@ module.exports = [
             new HtmlWebpackPlugin({
                 chunks: ["editor"],
                 template: "src/playground/index.ejs",
-                filename: IS_CBP_BUILD ? "editor/index.html" : "editor.html",
+                // In lab, editor is the default page
+                filename:
+                    process.env.BUILD_MODE === "lab"
+                        ? "index.html"
+                        : "editor.html",
                 title: `${APP_NAME} - ${APP_SLOGAN}`,
                 isEditor: true,
                 ...htmlWebpackPluginCommon,
@@ -309,7 +320,7 @@ module.exports = [
             new HtmlWebpackPlugin({
                 chunks: ["editor"],
                 template: "src/playground/index.ejs",
-                filename: IS_CBP_BUILD ? "player/index.html" : "player.html",
+                filename: "player.html",
                 title: `${APP_NAME} - ${APP_SLOGAN}`,
                 isEditor: true,
                 ...htmlWebpackPluginCommon,
@@ -317,33 +328,33 @@ module.exports = [
             new HtmlWebpackPlugin({
                 chunks: ["fullscreen"],
                 template: "src/playground/index.ejs",
-                filename: IS_CBP_BUILD
-                    ? "fullscreen/index.html"
-                    : "fullscreen.html",
+                filename: "fullscreen.html",
                 title: `${APP_NAME} - ${APP_SLOGAN}`,
                 ...htmlWebpackPluginCommon,
             }),
             new HtmlWebpackPlugin({
                 chunks: ["embed"],
                 template: "src/playground/embed.ejs",
-                filename: IS_CBP_BUILD ? "embed/index.html" : "embed.html",
+                filename: "embed.html",
                 title: `Embedded Project - ${APP_NAME}`,
                 ...htmlWebpackPluginCommon,
             }),
-            new HtmlWebpackPlugin({
-                chunks: ["home"],
-                template: "src/playground/simple.ejs",
-                filename: "index.html",
-                title: `${APP_NAME} - ${APP_SLOGAN}`,
-                description: APP_DESCRIPTION,
-                ...htmlWebpackPluginCommon,
-            }),
+            ...(process.env.BUILD_MODE !== "lab"
+                ? [
+                      new HtmlWebpackPlugin({
+                          chunks: ["home"],
+                          template: "src/playground/simple.ejs",
+                          filename: "index.html",
+                          title: `${APP_NAME} - ${APP_SLOGAN}`,
+                          description: APP_DESCRIPTION,
+                          ...htmlWebpackPluginCommon,
+                      }),
+                  ]
+                : []),
             new HtmlWebpackPlugin({
                 chunks: ["newcompiler"],
                 template: "src/playground/simple.ejs",
-                filename: IS_CBP_BUILD
-                    ? "new-compiler/index.html"
-                    : "new-compiler.html",
+                filename: "new-compiler.html",
                 title: `New compiler - ${APP_NAME}`,
                 // prettier-ignore
                 // eslint-disable-next-line max-len
@@ -353,14 +364,14 @@ module.exports = [
             new HtmlWebpackPlugin({
                 chunks: ["addon-settings"],
                 template: "src/playground/simple.ejs",
-                filename: IS_CBP_BUILD ? "addons/index.html" : "addons.html",
+                filename: "addons.html",
                 title: `Addon Settings - ${APP_NAME}`,
                 ...htmlWebpackPluginCommon,
             }),
             new HtmlWebpackPlugin({
                 chunks: ["credits"],
                 template: "src/playground/simple.ejs",
-                filename: IS_CBP_BUILD ? "credits/index.html" : "credits.html",
+                filename: "credits.html",
                 title: `Credits - ${APP_NAME}`,
                 description: `Meet the development team of ${APP_NAME}.`,
                 ...htmlWebpackPluginCommon,

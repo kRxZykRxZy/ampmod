@@ -20,14 +20,14 @@ const manifest = {
       "name": "Separate List Category",
       "id": "separateListCategory",
       "type": "boolean",
-      "default": false
+      "default": true
     },
     {
       "dynamic": true,
       "name": "Separate Sprite-only Variables",
       "id": "separateLocalVariables",
       "type": "boolean",
-      "default": true
+      "default": false
     },
     {
       "dynamic": true,
@@ -40,6 +40,6 @@ const manifest = {
   "tags": [
     "recommended"
   ],
-  "enabledByDefault": true
+  "enabledByDefault": false
 };
 export default manifest;

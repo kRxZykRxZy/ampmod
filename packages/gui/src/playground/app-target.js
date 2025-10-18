@@ -234,7 +234,7 @@ if (new URLSearchParams(window.location.search).has("crash-accidentally")) {
 setAppElement(appTarget);
 
 const render = children => {
-    if (!process.env.ampmod_is_canary) {
+    if (!process.env.ampmod_mode === "canary") {
         runAllMigrations();
     }
     if (!migrationOccurred) {

@@ -13,6 +13,7 @@ import TWDesktopSettings from "./tw-desktop-settings.jsx";
 import AmpAddonSettings from "./amp-addon-settings.jsx";
 import AmpInstallPWA from "./amp-install-pwa.jsx";
 import AmpErase from "./amp-erase.jsx";
+import AmpShowWelcome from "./amp-show-welcome.jsx";
 
 import menuBarStyles from "./menu-bar.css";
 import styles from "./settings-menu.css";
@@ -164,6 +165,7 @@ class SettingsMenu extends React.Component {
                                 />
                             )}
                             <AmpInstallPWA />
+                            {/* <AmpShowWelcome /> */}
 
                             {showAmpErase && <AmpErase />}
                         </MenuSection>

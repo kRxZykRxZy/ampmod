@@ -81,7 +81,7 @@ Here's how to link your local `scratch-gui` code to another project's `node_modu
 
 1. In your local `scratch-gui` repository's top level:
     1. Make sure you have run `npm install`
-    2. Build the `dist` directory by running `BUILD_MODE=dist npm run build`
+    2. Build the `dist` directory by running `BUILD_MODE=dist pnpm run build`
     3. Establish a link to this repository by running `npm link`
 
 2. From the top level of each repository (such as `scratch-www`) that depends on `scratch-gui`:
@@ -89,9 +89,9 @@ Here's how to link your local `scratch-gui` code to another project's `node_modu
     2. Run `npm link scratch-gui`
     3. Build or run the repository
 
-#### Using `npm run watch`
+#### Using `pnpm run watch`
 
-Instead of `BUILD_MODE=dist npm run build`, you can use `BUILD_MODE=dist npm run watch` instead. This will watch for changes to your `scratch-gui` code, and automatically rebuild when there are changes. Sometimes this has been unreliable; if you are having problems, try going back to `BUILD_MODE=dist npm run build` until you resolve them.
+Instead of `BUILD_MODE=dist pnpm run build`, you can use `BUILD_MODE=dist pnpm run watch` instead. This will watch for changes to your `scratch-gui` code, and automatically rebuild when there are changes. Sometimes this has been unreliable; if you are having problems, try going back to `BUILD_MODE=dist pnpm run build` until you resolve them.
 
 #### Oh no! It didn't work!
 
@@ -125,12 +125,12 @@ npm test
 
 To run unit tests in isolation:
 ```bash
-npm run test:unit
+pnpm run test:unit
 ```
 
 To run unit tests in watch mode (watches for code changes and continuously runs tests):
 ```bash
-npm run test:unit -- --watch
+pnpm run test:unit -- --watch
 ```
 
 You can run a single file of integration tests (in this example, the `button` tests):
@@ -147,13 +147,13 @@ produces. You will not see this activity (though you can hear it when sounds are
 Note that integration tests require you to first create a build that can be loaded in a browser:
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 Then, you can run all integration tests:
 
 ```bash
-npm run test:integration
+pnpm run test:integration
 ```
 
 Or, you can run a single file of integration tests (in this example, the `backpack` tests):

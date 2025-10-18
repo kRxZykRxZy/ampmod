@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import log from "./log";
-import { getProjectMeta } from "./aw3-functions";
 
 import { setProjectTitle } from "../reducers/project-title";
 import { setAuthor, setDescription } from "../reducers/tw";
@@ -15,12 +14,15 @@ export const fetchProjectMeta = async projectId => {
     let firstError;
     for (const url of urls) {
         try {
-            const data = await getProjetMeta(projectId);
-            if (data) {
+            const res = await fetch(url);
+            const data = await res.json();
+            if (res.ok) {
                 return data;
-            } else {
-                firstError = "Failed To Fetch Project Meta";
-            } 
+            }
+            if (res.status === 404) {
+                throw new Error("Project is probably unshared");
+            }
+            throw new Error(`Unexpected status code: ${res.status}`);
         } catch (err) {
             if (!firstError) {
                 firstError = err;

@@ -17,8 +17,9 @@
 import addons from './generated/addon-manifests';
 import upstreamMeta from './generated/upstream-meta.json';
 import EventTargetShim from './event-target';
+import { lsNamespace } from '../lib/amp-localstorage-namespace';
 
-const SETTINGS_KEY = process.env.ampmod_is_canary ? 'canary:addons' : 'amp:addons';
+const SETTINGS_KEY = `${lsNamespace}addons`;
 const VERSION = 5;
 
 const migrateSettings = settings => {

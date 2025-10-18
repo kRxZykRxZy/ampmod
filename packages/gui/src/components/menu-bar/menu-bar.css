@@ -68,7 +68,6 @@
     white-space: nowrap;
     height: calc($menu-bar-height - $space * 1.7);
     border-radius: $space;
-    transition: background-color 0.15s;
 }
 
 .menu-bar-item.hoverable,
@@ -93,22 +92,31 @@
     transition: transform 0.35s ease;
 }
 
-.menu-bar-item.logo:hover img {
-    transform: translateX(14px) rotateZ(360deg);
+.menu-bar-item.logo:hover {
+    background-color: $menu-bar-hover;
 }
 
-.menu-bar-item.logo .logo-ground {
-    position: absolute;
-    transform: translateX(-15px);
-    height: 28px;
-    opacity: 0;
-    border-bottom: 2px white solid;
-    width: 52px;
-    transition: opacity 0.35s linear;
-}
+@media (prefers-reduced-motion: no-preference) {
+    .menu-bar-item.logo:hover {
+        background-color: transparent;
+    }
+    .menu-bar-item.logo:hover img {
+        transform: translateX(14px) rotateZ(360deg);
+    }
 
-.menu-bar-item.logo:hover .logo-ground {
-    opacity: 1;
+    .menu-bar-item.logo .logo-ground {
+        position: absolute;
+        transform: translateX(-15px);
+        height: 28px;
+        opacity: 0;
+        border-bottom: 2px white solid;
+        width: 52px;
+        transition: opacity 0.35s linear;
+    }
+
+    .menu-bar-item.logo:hover .logo-ground {
+        opacity: 1;
+    }
 }
 
 .menu-bar-item.growable {
@@ -252,24 +260,31 @@
     text-decoration: none;
 }
 
-.settings-button .button-icon,
-.file-button .button-icon,
-.edit-button .button-icon {
-    transition: transform 0.25s ease;
-    filter: var(--menu-bar-icon-filter);
-}
+@media (prefers-reduced-motion: no-preference) {
+    .menu-bar-item,
+    :global(.sa-record) {
+        transition: background-color 0.15s;
+    }
 
-.settings-button:hover .button-icon,
-.settings-button .menu-bar-item.active .button-icon {
-    transform: rotateZ(180deg) scale(1.1);
-}
+    .settings-button .button-icon,
+    .file-button .button-icon,
+    .edit-button .button-icon {
+        transition: transform 0.25s ease;
+        filter: var(--menu-bar-icon-filter);
+    }
 
-.file-button:hover .button-icon,
-.file-button .menu-bar-item.active .button-icon {
-    transform: rotateY(-25deg) rotateX(-30deg) scale(1.1);
-}
+    .settings-button:hover .button-icon,
+    .settings-button .menu-bar-item.active .button-icon {
+        transform: rotateZ(180deg) scale(1.1);
+    }
 
-.edit-button:hover .button-icon,
-.edit-button .menu-bar-item.active .button-icon {
-    transform: rotateZ(-25deg) scale(1.1);
+    .file-button:hover .button-icon,
+    .file-button .menu-bar-item.active .button-icon {
+        transform: rotateY(-25deg) rotateX(-30deg) scale(1.1);
+    }
+
+    .edit-button:hover .button-icon,
+    .edit-button .menu-bar-item.active .button-icon {
+        transform: rotateZ(-25deg) scale(1.1);
+    }
 }

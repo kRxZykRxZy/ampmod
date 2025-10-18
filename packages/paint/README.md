@@ -8,7 +8,7 @@ Modified version of scratch-paint for TurboWarp
 git clone https://github.com/TurboWarp/scratch-paint.git
 npm ci
 npm start
-npm run build
+pnpm run build
 ```
 
 Development playground runs on http://localhost:8078/playground/. Note that http://localhost:8078/ gives you the **built** playground, not the development playground.
@@ -82,13 +82,13 @@ You can try out your own copy of the paint editor by running the development ser
 
 In the cloned `scratch-paint` directory, run:
 ```bash
-npm run build
+pnpm run build
 npm start
 ```
 
 Then go to [http://localhost:8078/playground/](http://localhost:8078/playground/). 8078 is BLOB upside-down. The True Name of this repo is scratch-blobs.
 
-*(Note that the `npm run build` step above seems like it's only necessary for some user and environments, and not others; check for yourself if the server that `npm start` starts is hot-reloading correctly.)*
+*(Note that the `pnpm run build` step above seems like it's only necessary for some user and environments, and not others; check for yourself if the server that `npm start` starts is hot-reloading correctly.)*
 
 ### Running locally (as part of Scratch)
 So you've tried out your edits in the playground and they look good. You should now test with the rest of Scratch, to make sure that everything hooks up right, and so that you can use your custom paint editor to make costumes and sprites!
@@ -177,12 +177,12 @@ We use React and Redux. If you're just getting started with them, here are some 
 
 ### Testing
 ```bash
-npm run test
+pnpm run test
 ```
 
 Just unit tests:
 ```bash
-npm run unit
+pnpm run unit
 ```
 
 An individual unit test: (run from `scratch-paint` directory)

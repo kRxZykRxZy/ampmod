@@ -10,41 +10,74 @@ const LoadScratchBlocksHOC = function (WrappedComponent) {
             super(props);
             this.state = {
                 loaded: LazyScratchBlocks.isLoaded(),
+                fontLoaded: document.fonts
+                    ? document.fonts.check('1em "Inter Variable"')
+                    : true,
                 error: null,
             };
-            if (!this.state.loaded) {
-                LazyScratchBlocks.load()
-                    .then(() => {
-                        this.setState({
-                            loaded: true,
-                        });
-                    })
-                    .catch(e => {
-                        log.error(e);
-                        this.setState({
-                            error: e,
-                        });
-                    });
-            }
         }
+
+        componentDidMount() {
+            const promises = [];
+            const urlParams = new URLSearchParams(window.location.search);
+            const delayLazyBlocks = urlParams.has("delaylazyblocks");
+
+            // Wait for "Inter Variable" font
+            if (!this.state.fontLoaded && document.fonts) {
+                promises.push(
+                    document.fonts
+                        .load('1em "Inter Variable"')
+                        .then(() => this.setState({ fontLoaded: true }))
+                        .catch(e => {
+                            log.warn("Font load failed:", e);
+                            this.setState({ fontLoaded: true }); // fallback
+                        })
+                );
+            }
+
+            // Load scratch-blocks if not yet loaded
+            if (!this.state.loaded) {
+                const loadPromise = (async () => {
+                    if (delayLazyBlocks) {
+                        await new Promise(res => setTimeout(res, 2000));
+                    }
+                    await LazyScratchBlocks.load();
+                    this.setState({ loaded: true });
+                })();
+
+                promises.push(loadPromise);
+            }
+
+            Promise.all(promises).catch(e => {
+                log.error(e);
+                this.setState({ error: e });
+            });
+        }
+
         handleReload() {
             location.reload();
         }
+
         render() {
-            if (this.state.error !== null) {
+            const { error, loaded, fontLoaded } = this.state;
+
+            if (error) {
                 return (
                     <CrashMessage
-                        errorMessage={`lazy scratch-blocks: ${this.state.error}`}
+                        errorMessage={`lazy scratch-blocks: ${error}`}
                         onReload={this.handleReload}
                     />
                 );
             }
-            if (!this.state.loaded) {
+
+            if (!loaded || !fontLoaded) {
                 return <LoadingSpinner />;
             }
+
             return <WrappedComponent {...this.props} />;
         }
     }
+
     return LoadScratchBlocks;
 };
 

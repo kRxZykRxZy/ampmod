@@ -22,7 +22,7 @@
  * @fileoverview English strings.
  * @author ascii@media.mit.edu (Andrew Sliwinski)
  *
- * After modifying this file, run `npm run translate` from the root directory
+ * After modifying this file, run `pnpm run translate` from the root directory
  * to regenerate `./msg/json/en.json`.
  * IMPORTANT:
  * All message strings must use single quotes for the scripts to work properly
@@ -278,6 +278,7 @@ Blockly.Msg.SENSING_CURRENT_SECOND = "second";
 Blockly.Msg.SENSING_DAYSSINCE2000 = "days since 2000";
 Blockly.Msg.SENSING_USERNAME = "username";
 Blockly.Msg.SENSING_USERID = "user id";
+Blockly.Msg.SENSING_LASTKEYPRESSED = "last key pressed";
 
 // Sound blocks
 Blockly.Msg.SOUND_PLAY = "start sound %1";
@@ -301,6 +302,7 @@ Blockly.Msg.CATEGORY_EVENTS = "Events";
 Blockly.Msg.CATEGORY_CONTROL = "Control";
 Blockly.Msg.CATEGORY_SENSING = "Sensing";
 Blockly.Msg.CATEGORY_OPERATORS = "Operators";
+Blockly.Msg.CATEGORY_STRINGS = "Strings";
 Blockly.Msg.CATEGORY_VARIABLES = "Variables";
 Blockly.Msg.CATEGORY_MYBLOCKS = "My Blocks";
 

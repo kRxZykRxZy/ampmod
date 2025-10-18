@@ -80,8 +80,6 @@
     "debugger/thread": "Nit {id}",
     "debugger/unknown-sprite": "(neznana figura)",
     "debugger/unpause": "Nadaljuj",
-    "pause/pause": "Premor",
-    "pause/play": "Nadaljuj",
     "clones/clones": "dvojniki: {cloneCount}",
     "color-picker/hex": "barva",
     "remove-sprite-confirm/confirm": "Želite izbrisati figuro?",

@@ -24,11 +24,11 @@ const Home = () => (
         <header className={styles.headerContainer}>
             <h1 className={styles.headerText}>
                 {APP_NAME}{" "}
-                {process.env.ampmod_is_canary
+                {process.env.ampmod_mode === "canary"
                     ? " (canary build)"
                     : `- ${APP_SLOGAN}`}
             </h1>
-            {process.env.ampmod_is_canary && (
+            {process.env.ampmod_mode === "canary" && (
                 <>
                     <p className={styles.wrap}>
                         <strong>

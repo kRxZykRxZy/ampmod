@@ -19,6 +19,6 @@ const manifest = {
       "url": "style.css"
     }
   ],
-  "enabledByDefault": true
+  "enabledByDefault": false
 };
 export default manifest;

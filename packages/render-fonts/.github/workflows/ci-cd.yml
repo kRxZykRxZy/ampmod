@@ -38,9 +38,9 @@ jobs:
             - name: Setup
               run: npm ci
             - name: Lint
-              run: npm run lint
+              run: pnpm run lint
             - name: Build
-              run: npm run build
+              run: pnpm run build
             - name: Release
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

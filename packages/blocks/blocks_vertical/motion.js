@@ -639,3 +639,28 @@ Blockly.Blocks["motion_yscroll"] = {
         });
     },
 };
+
+Blockly.Blocks["motion_changeallby"] = {
+    /**
+     * Block to change X and Y.
+     * @this Blockly.Block
+     */
+    init: function () {
+        this.jsonInit({
+            message0: "change by x: %1 y: %2",
+            args0: [
+                {
+                    type: "input_value",
+                    name: "DX",
+                },
+                {
+                    type: "input_value",
+                    name: "DY",
+                },
+            ],
+            category: Blockly.Categories.motion,
+            extensions: ["colours_motion", "shape_statement"],
+            helpUrl: "https://ampmod.miraheze.org/wiki/Change_by_x:_()_y:_()",
+        });
+    },
+};

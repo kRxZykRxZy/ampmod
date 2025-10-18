@@ -452,6 +452,14 @@ class Runtime extends EventEmitter {
          */
         this.platform = Object.assign({}, platform);
 
+        /**
+         * amp: A boolean indicating whether the project can step or not.
+         */
+        this.isPaused = false;
+
+        this._pauseTasksDone = false;
+        this._unpauseTasksDone = true;
+
         this._initScratchLink();
 
         this.resetRunId();
@@ -756,6 +764,22 @@ class Runtime extends EventEmitter {
      */
     static get PROJECT_CHANGED() {
         return "PROJECT_CHANGED";
+    }
+
+    /**
+     * Event name for project being paused.
+     * @const {string}
+     */
+    static get RUNTIME_PAUSED() {
+        return "RUNTIME_PAUSED";
+    }
+
+    /**
+     * Event name for project being unpaused.
+     * @const {string}
+     */
+    static get RUNTIME_UNPAUSED() {
+        return "RUNTIME_UNPAUSED";
     }
 
     /**
@@ -2705,6 +2729,9 @@ class Runtime extends EventEmitter {
      * Stop "everything."
      */
     _stopAll() {
+        // amp: Clean up pause state.
+        this.isPaused = false;
+
         // Emit stop event to allow blocks to clean up any state.
         this.emit(Runtime.PROJECT_STOP_ALL);
 
@@ -2776,6 +2803,26 @@ class Runtime extends EventEmitter {
      * inactive threads after each iteration.
      */
     _step() {
+        // amp: listen for pauses and prepare
+        if (this.isPaused && !this._pauseTasksDone) {
+            this.audioEngine.audioContext.suspend();
+            this._unpauseTasksDone = false;
+            this._pauseTasksDone = true;
+            this.emit(Runtime.RUNTIME_PAUSED);
+            return;
+        } else if (this.isPaused) {
+            return;
+        } else if (
+            !this.isPaused &&
+            this._pauseTasksDone &&
+            !this._unpauseTasksDone
+        ) {
+            this._pauseTasksDone = false;
+            this.ioDevices.clock.resume();
+            this.emit(Runtime.RUNTIME_UNPAUSED);
+            this._unpauseTasksDone = true;
+        }
+
         if (this.interpolationEnabled) {
             interpolate.setupInitialState(this);
         }

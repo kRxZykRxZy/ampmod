@@ -32,7 +32,8 @@ const ACCENT_MAP = {
     [ACCENT_GREY]: accentGrey,
     [ACCENT_RAINBOW]: accentRainbow,
 };
-const ACCENT_DEFAULT = process.env.ampmod_is_canary ? ACCENT_RED : ACCENT_GREEN;
+const ACCENT_DEFAULT =
+    process.env.ampmod_mode === "canary" ? ACCENT_RED : ACCENT_GREEN;
 
 const GUI_AMP_LIGHT = "light";
 const GUI_LIGHT = "light-classic";

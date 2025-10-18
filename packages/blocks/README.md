@@ -23,7 +23,7 @@ Open tests/vertical_playground.html in a browser for development. You don't need
 To re-build compressed versions, run:
 
 ```sh
-npm run prepublish
+pnpm run prepublish
 ```
 
 scratch-gui development server must be restarted to update linked scratch-blocks.

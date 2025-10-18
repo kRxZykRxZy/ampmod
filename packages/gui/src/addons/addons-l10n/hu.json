@@ -80,7 +80,6 @@
     "debugger/thread": "Szál {id}",
     "debugger/unknown-sprite": "(névtelen szereplő)",
     "debugger/unpause": "Visszatérés",
-    "pause/pause": "Megállítás",
     "clones/clones": "másolatok: {cloneCount}",
     "color-picker/hex": "hex szín",
     "remove-sprite-confirm/confirm": "Ki szeretnéd törölni a szereplőt?",

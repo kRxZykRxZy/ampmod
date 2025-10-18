@@ -4,7 +4,7 @@ import { isScratchDesktop } from "../../lib/isScratchDesktop";
 import CloseButton from "../close-button/close-button.jsx";
 import styles from "./tw-news.css";
 
-const LOCAL_STORAGE_KEY = `${process.env.ampmod_is_canary ? "canary" : "amp"}:closedNews`;
+const LOCAL_STORAGE_KEY = `${process.env.ampmod_mode === "canary" ? "canary" : "amp"}:closedNews`;
 const NEWS_ID = "privacy-1";
 
 const getIsClosedInLocalStorage = () => {
@@ -45,7 +45,12 @@ class TWNews extends React.Component {
     render() {
         const today = new Date();
         const is911 = today.getMonth() === 8 && today.getDate() === 11; // September is month 8 (0-indexed)
-        if (this.state.closed || isScratchDesktop() || is911) {
+        if (
+            this.state.closed ||
+            isScratchDesktop() ||
+            is911 ||
+            process.env.ampmod_mode === "lab"
+        ) {
             return null;
         }
         return (

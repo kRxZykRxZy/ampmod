@@ -5,13 +5,13 @@
     "main": "./dist/scratch-paint.js",
     "browser": "./src/index.js",
     "scripts": {
-        "build": "npm run clean && webpack --progress --colors --bail",
+        "build": "pnpm run clean && webpack --progress --colors --bail",
         "clean": "rimraf ./dist && mkdirp dist && rimraf ./playground && mkdirp playground",
         "i18n:push": "tx-push-src scratch-editor paint-editor ./translations/en.json",
         "i18n:src": "rimraf ./translations/messages && babel src > tmp.js && rimraf tmp.js && ./scripts/build-i18n-source.js ./translations/messages/ ./translations/",
         "lint": "eslint . --ext .js,.jsx",
         "start": "webpack-dev-server",
-        "test": "npm run unit",
+        "test": "pnpm run unit",
         "unit": "jest --reporters=default",
         "watch": "webpack --progress --colors --watch",
         "prepare": "# There is no prepare script for scratch-paint"
@@ -25,13 +25,13 @@
     },
     "dependencies": {
         "@turbowarp/nanolog": "^0.2.0",
-        "@turbowarp/paper": "^0.12.202407161743",
+        "@turbowarp/paper": "^0.12.202505131813",
         "classnames": "2.2.5",
         "keymirror": "0.1.1",
         "lodash.bindall": "4.4.0",
         "lodash.omit": "4.5.0",
         "parse-color": "1.0.0",
-        "prop-types": "^15.5.10"
+        "prop-types": "^15.8.1"
     },
     "peerDependencies": {
         "react": "^16",
@@ -47,11 +47,11 @@
         "scratch-render-fonts": "workspace:latest"
     },
     "devDependencies": {
-        "@babel/cli": "^7.23.0",
-        "@babel/core": "^7.23.2",
-        "@babel/node": "^7.22.19",
-        "@babel/preset-env": "^7.23.2",
-        "@babel/preset-react": "^7.22.15",
+        "@babel/cli": "^7.28.3",
+        "@babel/core": "^7.28.4",
+        "@babel/node": "^7.28.0",
+        "@babel/preset-env": "^7.28.3",
+        "@babel/preset-react": "^7.27.1",
         "autoprefixer": "9.7.4",
         "babel-eslint": "10.1.0",
         "babel-jest": "29.7.0",
@@ -67,7 +67,7 @@
         "eslint-plugin-react": "7.33.2",
         "gh-pages": "3.2.3",
         "html-webpack-plugin": "3.2.0",
-        "jest": "^27.0.5",
+        "jest": "^27.5.1",
         "jest-junit": "13.0.0",
         "json": "9.0.6",
         "lodash.defaultsdeep": "4.6.1",
@@ -92,7 +92,7 @@
         "regenerator-runtime": "0.13.9",
         "rimraf": "2.7.1",
         "scratch-l10n": "3.16.20231222031921",
-        "scratch-render-fonts": "workspace:latest",
+        "scratch-render-fonts": "workspace:^",
         "style-loader": "1.3.0",
         "svg-url-loader": "3.0.3",
         "tap": "14.11.0",

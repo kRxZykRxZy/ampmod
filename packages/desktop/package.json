@@ -17,13 +17,13 @@
         "electron:package:dir": "electron-builder --dir"
     },
     "dependencies": {
-        "semver": "^7.7.2"
+        "semver": "^7.7.3"
     },
     "devDependencies": {
-        "@babel/core": "^7.28.0",
-        "@babel/preset-env": "^7.12.16",
-        "@babel/preset-react": "^7.13.13",
-        "@electron/fuses": "^1.7.0",
+        "@babel/core": "^7.28.4",
+        "@babel/preset-env": "^7.28.3",
+        "@babel/preset-react": "^7.27.1",
+        "@electron/fuses": "^1.8.0",
         "@turbowarp/extensions": "github:TurboWarp/extensions#master",
         "adm-zip": "^0.5.16",
         "autoprefixer": "^9.8.8",
@@ -31,15 +31,15 @@
         "copy-webpack-plugin": "^6.4.1",
         "cross-env": "^7.0.3",
         "css-loader": "^1.0.1",
-        "electron": "^37.2.6",
-        "electron-builder": "^26.0.19",
+        "electron": "^37.6.1",
+        "electron-builder": "^26.1.0",
         "file-loader": "^6.2.0",
-        "postcss": "^8.4.13",
-        "postcss-import": "^14.0.0",
-        "postcss-loader": "^4.2.0",
+        "postcss": "^8.5.6",
+        "postcss-import": "^14.1.0",
+        "postcss-loader": "^4.3.0",
         "postcss-simple-vars": "^6.0.3",
-        "scratch-gui": "workspace:latest",
-        "style-loader": "^0.23.0",
+        "scratch-gui": "workspace:^",
+        "style-loader": "^0.23.1",
         "url-loader": "^4.1.1"
     },
     "overrides": {

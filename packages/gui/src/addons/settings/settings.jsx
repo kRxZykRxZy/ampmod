@@ -37,6 +37,7 @@ import styles from "./settings.css";
 import { detectTheme } from "../../lib/themes/themePersistance.js";
 import { applyGuiColors } from "../../lib/themes/guiHelpers.js";
 import { APP_FORUMS, APP_NAME } from "@ampmod/branding";
+import "@fontsource-variable/inter";
 import "modern-normalize";
 
 /* eslint-disable no-alert */
@@ -250,6 +251,11 @@ const Tags = ({ manifest }) => (
         {manifest.tags.includes("danger") && (
             <span className={classNames(styles.tag, styles.tagDanger)}>
                 {settingsTranslations.tagDanger}
+            </span>
+        )}
+        {manifest.tags.includes("ampmod") && (
+            <span className={classNames(styles.tag, styles.tagAmp)}>
+                {APP_NAME}
             </span>
         )}
     </span>

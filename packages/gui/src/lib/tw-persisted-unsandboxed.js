@@ -2,7 +2,8 @@
 // User still has to manually confirm loading the extension and has
 // every opportunity to uncheck the box.
 
-const PERSISTED_UNSANDBOXED_KEY = "amp:persisted_unsandboxed";
+import { lsNamespace } from "./amp-localstorage-namespace.js";
+const PERSISTED_UNSANDBOXED_KEY = `${lsNamespace}persisted_unsandboxed`;
 
 /**
  * @returns {boolean} True if persistence enabled

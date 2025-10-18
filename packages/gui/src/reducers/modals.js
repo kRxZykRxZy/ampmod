@@ -6,6 +6,7 @@ const MODAL_COSTUME_LIBRARY = "costumeLibrary";
 const MODAL_EXTENSION_LIBRARY = "extensionLibrary";
 const MODAL_LOADING_PROJECT = "loadingProject";
 const MODAL_TELEMETRY = "telemetryModal";
+const MODAL_WELCOME = "welcomeModal";
 const MODAL_SOUND_LIBRARY = "soundLibrary";
 const MODAL_SPRITE_LIBRARY = "spriteLibrary";
 const MODAL_SOUND_RECORDER = "soundRecorder";
@@ -25,6 +26,12 @@ const initialState = {
     [MODAL_EXTENSION_LIBRARY]: false,
     [MODAL_LOADING_PROJECT]: false,
     [MODAL_TELEMETRY]: false,
+    [MODAL_WELCOME]: false,
+    [MODAL_SOUND_LIBRARY]: false,
+    [MODAL_SPRITE_LIBRARY]: false,
+    [MODAL_SOUND_RECORDER]: false,
+    [MODAL_CONNECTION]: false,
+    [MODAL_TIPS_LIBRARY]: false,
     [MODAL_SOUND_LIBRARY]: false,
     [MODAL_SPRITE_LIBRARY]: false,
     [MODAL_SOUND_RECORDER]: false,
@@ -80,6 +87,12 @@ const openLoadingProject = function () {
 };
 const openTelemetryModal = function () {
     return openModal(MODAL_TELEMETRY);
+};
+const openWelcomeModal = function () {
+    return openModal(MODAL_WELCOME);
+};
+const closeWelcomeModal = function () {
+    return closeModal(MODAL_WELCOME);
 };
 const openSoundLibrary = function () {
     return openModal(MODAL_SOUND_LIBRARY);
@@ -179,6 +192,7 @@ export {
     openSpriteLibrary,
     openSoundRecorder,
     openTelemetryModal,
+    openWelcomeModal,
     openTipsLibrary,
     openConnectionModal,
     openUsernameModal,
@@ -196,6 +210,7 @@ export {
     closeSoundLibrary,
     closeSoundRecorder,
     closeTelemetryModal,
+    closeWelcomeModal,
     closeTipsLibrary,
     closeConnectionModal,
     closeUsernameModal,

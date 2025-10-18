@@ -80,13 +80,31 @@
     background-color: hsla(0, 0%, 0%, 0.3);
     color: $ui-modal-foreground;
     transition: background-color 0.3s ease-out;
-    animation: fadeIn 0.2s ease-in; /* Apply fade-in animation */
     backdrop-filter: blur(1px) contrast(0.8);
 }
 
-.modal-overlay.closing {
-    animation: fadeOut 0.35s ease-out; /* Apply fade-out animation when closing */
-    pointer-events: none;
+@media (prefers-reduced-motion: no-preference) {
+    .modal-overlay {
+        animation: fadeIn 0.2s ease-in; /* Apply fade-in animation */
+    }
+    .modal-overlay.closing {
+        animation: fadeOut 0.35s ease-out; /* Apply fade-out animation when closing */
+        pointer-events: none;
+    }
+    .modal-content {
+        animation: zoomFadeIn 0.3s ease-out;
+    }
+    .modal-content.fullscreen {
+        animation: slideInFromBottom 0.2s ease-out;
+    }
+
+    .modal-content.closing {
+        animation: zoomFadeOut 0.35s ease-out; /* Apply zoom-out animation when closing */
+    }
+
+    .modal-content.full-screen.closing {
+        animation: slideOutToBottom 0.35s ease-out; /* Apply slide-out animation when closing if fullscreen */
+    }
 }
 
 .modal-content * {
@@ -104,7 +122,6 @@
     font-family:
         "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
     overflow: hidden;
-    animation: zoomFadeIn 0.3s ease-out;
 }
 
 .modal-content.full-screen {
@@ -124,15 +141,6 @@
     margin: 0;
     border: none;
     border-radius: 0;
-    animation: slideInFromBottom 0.2s ease-out;
-}
-
-.modal-content.closing {
-    animation: zoomFadeOut 0.35s ease-out; /* Apply zoom-out animation when closing */
-}
-
-.modal-content.full-screen.closing {
-    animation: slideOutToBottom 0.35s ease-out; /* Apply slide-out animation when closing if fullscreen */
 }
 
 /*

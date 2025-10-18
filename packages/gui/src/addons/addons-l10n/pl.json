@@ -73,8 +73,6 @@
     "debugger/thread": "Wątek {id}",
     "debugger/unknown-sprite": "(nieznany duszek)",
     "debugger/unpause": "Wznów",
-    "pause/pause": "Zatrzymaj",
-    "pause/play": "Wznów",
     "clones/clones": "klony:{cloneCount}",
     "color-picker/hex": "hex kolor",
     "remove-sprite-confirm/confirm": "Czy chcesz usunąć duszka?",

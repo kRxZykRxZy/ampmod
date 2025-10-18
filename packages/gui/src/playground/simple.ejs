@@ -71,7 +71,7 @@
             (function() {
               var theme = '';
 
-              var canary = <%= process.env.ampmod_is_canary %>;
+              var canary = <%= process.env.ampmod_mode === "canary" %>;
 
               try {
                 if (canary) {

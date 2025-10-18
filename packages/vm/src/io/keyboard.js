@@ -177,6 +177,13 @@ class Keyboard {
      * @param  {object} data Data from DOM event.
      */
     postData(data) {
+        // amp: Clear keys pressed when we're paused.
+        // We do this to prevent inputs pressed during pause from freezing
+        // even after they are lifted during pause.
+        if (this.runtime.isPaused) {
+            this._keysPressed = [];
+            return;
+        }
         if (!data.key) return;
         // tw: convert single letter keys to uppercase because of changes in _keyStringToScratchKey
         const scratchKeyCased = this._keyStringToScratchKey(data.key);

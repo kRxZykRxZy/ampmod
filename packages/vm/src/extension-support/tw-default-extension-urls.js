@@ -12,6 +12,12 @@ defaults.set("tw", "https://ampmod.codeberg.page/extensions/turbowarp/tw.js");
 // Scratch Lab Animated Text - https://lab.scratch.mit.edu/text/
 defaults.set("text", "https://ampmod.codeberg.page/extensions/lab/text.js");
 
+// Face sensing
+defaults.set(
+    "faceSensing",
+    "https://ampmod.codeberg.page/extensions/lab/face-sensing.js"
+);
+
 // Turboloader's AudioStream
 defaults.set(
     "audiostr",

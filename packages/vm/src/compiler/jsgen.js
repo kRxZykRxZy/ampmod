@@ -902,6 +902,9 @@ class JSGenerator {
             case StackOpcode.MOTION_Y_CHANGE:
                 this.source += `target.setXY(target.x, target.y + ${this.descendInput(node.dy)});\n`;
                 break;
+            case StackOpcode.MOTION_CHANGE:
+                this.source += `target.setXY(target.x + ${this.descendInput(node.dx)}, target.y + ${this.descendInput(node.dy)});\n`;
+                break;
             case StackOpcode.MOTION_IF_ON_EDGE_BOUNCE:
                 this.source += `runtime.ext_scratch3_motion._ifOnEdgeBounce(target);\n`;
                 break;

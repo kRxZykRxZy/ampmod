@@ -22,7 +22,7 @@ import {
  * @param {object} options - Options object that can contain either jsText or uri.
  */
 const saveExtensionToLocalStorage = async (name, description, options) => {
-    const key = `${process.env.ampmod_is_canary ? "canary" : "amp"}:saved-custom-extensions`;
+    const key = `${process.env.ampmod_mode === "canary" ? "canary" : "amp"}:saved-custom-extensions`;
     let data = { extensions: [] };
 
     try {

@@ -23,9 +23,9 @@ jobs:
             - name: Install dependencies
               run: npm ci
             - name: Build playground
-              run: npm run build
+              run: pnpm run build
             - name: Build docs
-              run: npm run docs
+              run: pnpm run docs
               # We expect to see syntax errors from the old jsdoc cli not understanding some of our syntax
               # It will still generate what it can, so it's safe to ignore the error
               continue-on-error: true

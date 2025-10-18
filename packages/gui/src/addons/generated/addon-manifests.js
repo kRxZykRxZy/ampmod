@@ -10,14 +10,15 @@ import _data_category_tweaks_v2 from "../addons/data-category-tweaks-v2/_manifes
 import _block_palette_icons from "../addons/block-palette-icons/_manifest_entry.js";
 import _hide_flyout from "../addons/hide-flyout/_manifest_entry.js";
 import _mediarecorder from "../addons/mediarecorder/_manifest_entry.js";
+import _asset_conflict_dialog from "../addons/asset-conflict-dialog/_manifest_entry.js";
 import _drag_drop from "../addons/drag-drop/_manifest_entry.js";
 import _debugger from "../addons/debugger/_manifest_entry.js";
-import _pause from "../addons/pause/_manifest_entry.js";
 import _mute_project from "../addons/mute-project/_manifest_entry.js";
 import _vol_slider from "../addons/vol-slider/_manifest_entry.js";
 import _clones from "../addons/clones/_manifest_entry.js";
 import _mouse_pos from "../addons/mouse-pos/_manifest_entry.js";
 import _color_picker from "../addons/color-picker/_manifest_entry.js";
+import _delete_others from "../addons/delete-others/_manifest_entry.js";
 import _remove_sprite_confirm from "../addons/remove-sprite-confirm/_manifest_entry.js";
 import _block_count from "../addons/block-count/_manifest_entry.js";
 import _onion_skinning from "../addons/onion-skinning/_manifest_entry.js";
@@ -73,6 +74,7 @@ import _script_snap from "../addons/script-snap/_manifest_entry.js";
 import _fullscreen from "../addons/fullscreen/_manifest_entry.js";
 import _hide_stage from "../addons/hide-stage/_manifest_entry.js";
 import _tw_straighten_comments from "../addons/tw-straighten-comments/_manifest_entry.js";
+import _hide_backpack from "../addons/hide-backpack/_manifest_entry.js";
 import _tw_remove_backpack from "../addons/tw-remove-backpack/_manifest_entry.js";
 import _tw_remove_feedback from "../addons/tw-remove-feedback/_manifest_entry.js";
 import _tw_disable_cloud_variables from "../addons/tw-disable-cloud-variables/_manifest_entry.js";
@@ -90,14 +92,15 @@ export default {
   "block-palette-icons": _block_palette_icons,
   "hide-flyout": _hide_flyout,
   "mediarecorder": _mediarecorder,
+  "asset-conflict-dialog": _asset_conflict_dialog,
   "drag-drop": _drag_drop,
   "debugger": _debugger,
-  "pause": _pause,
   "mute-project": _mute_project,
   "vol-slider": _vol_slider,
   "clones": _clones,
   "mouse-pos": _mouse_pos,
   "color-picker": _color_picker,
+  "delete-others": _delete_others,
   "remove-sprite-confirm": _remove_sprite_confirm,
   "block-count": _block_count,
   "onion-skinning": _onion_skinning,
@@ -153,6 +156,7 @@ export default {
   "fullscreen": _fullscreen,
   "hide-stage": _hide_stage,
   "tw-straighten-comments": _tw_straighten_comments,
+  "hide-backpack": _hide_backpack,
   "tw-remove-backpack": _tw_remove_backpack,
   "tw-remove-feedback": _tw_remove_feedback,
   "tw-disable-cloud-variables": _tw_disable_cloud_variables,

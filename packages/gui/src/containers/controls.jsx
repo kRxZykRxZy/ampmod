@@ -9,7 +9,11 @@ import ControlsComponent from "../components/controls/controls.jsx";
 class Controls extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["handleGreenFlagClick", "handleStopAllClick"]);
+        bindAll(this, [
+            "handleGreenFlagClick",
+            "handleStopAllClick",
+            "handlePauseClick",
+        ]);
     }
     handleGreenFlagClick(e) {
         e.preventDefault();
@@ -36,11 +40,16 @@ class Controls extends React.Component {
         e.preventDefault();
         this.props.vm.stopAll();
     }
+    handlePauseClick(e) {
+        e.preventDefault();
+        this.props.vm.runtime.isPaused = !this.props.vm.runtime.isPaused;
+    }
     render() {
         const {
             vm, // eslint-disable-line no-unused-vars
             isStarted, // eslint-disable-line no-unused-vars
             projectRunning,
+            paused,
             turbo,
             ...props
         } = this.props;
@@ -48,9 +57,11 @@ class Controls extends React.Component {
             <ControlsComponent
                 {...props}
                 active={projectRunning && isStarted}
+                paused={paused}
                 turbo={turbo}
                 onGreenFlagClick={this.handleGreenFlagClick}
                 onStopAllClick={this.handleStopAllClick}
+                onPauseClick={this.handlePauseClick}
             />
         );
     }
@@ -59,6 +70,7 @@ class Controls extends React.Component {
 Controls.propTypes = {
     isStarted: PropTypes.bool.isRequired,
     projectRunning: PropTypes.bool.isRequired,
+    paused: PropTypes.bool.isRequired,
     turbo: PropTypes.bool.isRequired,
     framerate: PropTypes.number.isRequired,
     interpolation: PropTypes.bool.isRequired,

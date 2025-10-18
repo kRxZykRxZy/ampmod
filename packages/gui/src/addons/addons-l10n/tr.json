@@ -84,8 +84,6 @@
     "debugger/thread": "{id} numaralı blok dizesi",
     "debugger/unknown-sprite": "(bilinmeyen kukla)",
     "debugger/unpause": "Devam Et",
-    "pause/pause": "Duraklat",
-    "pause/play": "Devam",
     "clones/clones": "ikiz sayısı: {cloneCount}",
     "color-picker/hex": "hex rengi",
     "remove-sprite-confirm/confirm": "Kuklayı silmek istediğinizden emin misiniz?",

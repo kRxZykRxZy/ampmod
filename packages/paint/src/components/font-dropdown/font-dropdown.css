@@ -3,16 +3,16 @@
 
 .mod-menu-item {
     display: flex;
-    margin: 0 -$grid-unit;
-    min-width: 6.25rem;
-    padding: calc(2 * $grid-unit);
-    padding-left: calc(3 * $grid-unit);
-    padding-right: calc(3 * $grid-unit);
-    width: 8.5rem;
+    align-items: center;
+    margin: 2px;
+    border-radius: 2px;
+    padding: calc(2 * $grid-unit) calc(3 * $grid-unit);
     cursor: pointer;
     transition: 0.1s ease;
-    align-items: center;
-    overflow-wrap: anywhere;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    min-width: 0;
 }
 
 .mod-menu-item:hover {
@@ -21,8 +21,9 @@
 }
 
 .mod-context-menu {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 10rem);
+    gap: $grid-unit;
 }
 
 .mod-unselect {

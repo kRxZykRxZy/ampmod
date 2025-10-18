@@ -65,6 +65,6 @@ const manifest = {
     }
   ],
   "tags": [],
-  "enabledByDefault": true
+  "enabledByDefault": false
 };
 export default manifest;

@@ -320,6 +320,7 @@ Blockly.ScratchBlocks.VerticalExtensions.registerAll = function () {
         "sensing",
         "pen",
         "operators",
+        "strings",
         "more",
     ];
     // Register functions for all category colours.

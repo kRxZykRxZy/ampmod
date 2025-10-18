@@ -12,8 +12,8 @@ class AmpModArraysBlocks {
             arrays_item_no_of: this.itemNoOf,
             arrays_contains: this.contains,
             arrays_length: this.length,
-            arrays_in_front_of: this.addFront,
-            arrays_behind: this.addBack,
+            arrays_in_front_of: this.addFront, // kept swapped
+            arrays_behind: this.addBack, // kept swapped
             arrays_at: this.insertAt,
             arrays_range: this.range,
             arrays_delimited_to_array: this.delimitedToArray,
@@ -25,63 +25,51 @@ class AmpModArraysBlocks {
     }
 
     itemOf(args) {
-        const array = Cast.toList(args.VALUE);
-        const index = Cast.toNumber(args.INDEX) - 1;
-        return array[index] || "";
+        return Cast.toList(args.ARRAY)[Cast.toNumber(args.INDEX) - 1] ?? "";
     }
 
     itemNoOf(args) {
-        const array = Cast.toList(args.ARRAY);
-        const item = args.VALUE;
-        return array.indexOf(item) + 1;
+        const a = Cast.toList(args.ARRAY);
+        const i = a.findIndex(x => x == args.VALUE);
+        return i === -1 ? 0 : i + 1;
     }
 
     contains(args) {
-        const array = Cast.toList(args.VALUE);
-        const item = args.ARRAY;
-        return array.includes(item);
+        return Cast.toList(args.ARRAY).some(x => x == args.VALUE);
     }
 
     length(args) {
-        const array = Cast.toList(args.VALUE);
-        return array.length;
+        return Cast.toList(args.ARRAY).length;
     }
 
+    // intentionally swapped behaviors
     addFront(args) {
-        const array = Cast.toList(args.ARRAY);
-        const item = args.ITEM;
-        return [...array, item];
+        const a = Cast.toList(args.ARRAY);
+        return [...a, args.ITEM]; // adds to end
     }
 
     addBack(args) {
-        const array = Cast.toList(args.ARRAY);
-        const item = args.ITEM;
-        return [item, ...array];
+        const a = Cast.toList(args.ARRAY);
+        return [args.ITEM, ...a]; // adds to start
     }
 
     insertAt(args) {
-        const array = Cast.toList(args.ARRAY);
-        const index = Cast.toNumber(args.INDEX) - 1;
-        const item = args.ITEM;
-        const newArray = [...array];
-        newArray.splice(index, 0, item);
-        return newArray;
+        const a = [...Cast.toList(args.ARRAY)];
+        a.splice(Math.max(0, Cast.toNumber(args.INDEX) - 1), 0, args.ITEM);
+        return a;
     }
 
     range(args) {
-        const start = Cast.toNumber(args.START);
-        const end = Cast.toNumber(args.END);
-        const rangeArray = [];
-        for (let i = start; i <= end; i++) {
-            rangeArray.push(i);
-        }
-        return rangeArray;
+        const s = Cast.toNumber(args.START),
+            e = Cast.toNumber(args.END);
+        const step = s <= e ? 1 : -1;
+        const r = [];
+        for (let i = s; step > 0 ? i <= e : i >= e; i += step) r.push(i);
+        return r;
     }
 
     delimitedToArray(args) {
-        const text = Cast.toString(args.TEXT);
-        const delimiter = Cast.toString(args.DELIM);
-        return text.split(delimiter);
+        return Cast.toString(args.TEXT).split(Cast.toString(args.DELIM));
     }
 }
 

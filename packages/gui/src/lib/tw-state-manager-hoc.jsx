@@ -12,6 +12,7 @@ import { setPlayer, setFullScreen } from "../reducers/mode";
 import { generateRandomUsername } from "./tw-username";
 import { setSearchParams } from "./tw-navigation-utils";
 import { defaultStageSize } from "../reducers/custom-stage-size";
+import { lsNamespace } from "./amp-localstorage-namespace";
 
 /* eslint-disable no-alert */
 
@@ -28,7 +29,7 @@ const messages = defineMessages({
     },
 });
 
-const USERNAME_KEY = "amp:addons";
+const USERNAME_KEY = `${lsNamespace}username`;
 
 /**
  * The State Manager is responsible for managing persistent state and the URL.
@@ -86,16 +87,19 @@ class HashRouter extends Router {
 class FileHashRouter extends HashRouter {
     constructor(callbacks) {
         super(callbacks);
-        this.rootPath = `${location.pathname.substring(0, location.pathname.lastIndexOf("/") + 1)}`;
-        this.playerPath = process.env.ampmod_is_cbp
-            ? `${this.rootPath}editor`
-            : `${this.rootPath}editor.html`;
-        this.editorPath = process.env.ampmod_is_cbp
-            ? `${this.rootPath}editor`
-            : `${this.rootPath}editor.html`;
-        this.fullscreenPath = process.env.ampmod_is_cbp
-            ? `${this.rootPath}fullscreen`
-            : `${this.rootPath}fullscreen.html`;
+        this.rootPath = location.pathname.substring(
+            0,
+            location.pathname.lastIndexOf("/") + 1
+        );
+        this.playerPath =
+            process.env.ampmod_mode === "lab"
+                ? this.rootPath
+                : `${this.rootPath}editor.html`;
+        this.editorPath =
+            process.env.ampmod_mode === "lab"
+                ? this.rootPath
+                : `${this.rootPath}editor.html`;
+        this.fullscreenPath = `${this.rootPath}fullscreen.html`;
     }
 
     onpathchange() {

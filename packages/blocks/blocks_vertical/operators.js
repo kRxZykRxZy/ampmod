@@ -335,7 +335,7 @@ Blockly.Blocks["operator_join"] = {
                 },
             ],
             category: Blockly.Categories.operators,
-            extensions: ["colours_operators", "output_string"],
+            extensions: ["colours_strings", "output_string"],
         });
     },
 };
@@ -359,7 +359,7 @@ Blockly.Blocks["operator_letter_of"] = {
                 },
             ],
             category: Blockly.Categories.operators,
-            extensions: ["colours_operators", "output_string"],
+            extensions: ["colours_strings", "output_string"],
         });
     },
 };
@@ -379,7 +379,7 @@ Blockly.Blocks["operator_length"] = {
                 },
             ],
             category: Blockly.Categories.operators,
-            extensions: ["colours_operators", "output_string"],
+            extensions: ["colours_strings", "output_string"],
         });
     },
 };
@@ -403,7 +403,7 @@ Blockly.Blocks["operator_contains"] = {
                 },
             ],
             category: Blockly.Categories.operators,
-            extensions: ["colours_operators", "output_boolean"],
+            extensions: ["colours_strings", "output_boolean"],
         });
     },
 };
@@ -501,7 +501,7 @@ Blockly.Blocks["operator_newline"] = {
         this.jsonInit({
             message0: Blockly.Msg.OPERATORS_NEWLINE,
             category: Blockly.Categories.operators,
-            extensions: ["colours_operators", "output_string"],
+            extensions: ["colours_strings", "output_string"],
         });
     },
 };

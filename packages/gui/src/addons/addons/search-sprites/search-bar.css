@@ -7,19 +7,16 @@
 input.sa-search-sprites-box {
   width: 100%;
   box-sizing: border-box;
-  background-color: var(--ui-white);
-  border: 1px solid var(--ui-black-transparent);
+  background-color: transparent;
+  border: 0px;
+  border-bottom: 1px solid var(--ui-black-transparent);
   outline: none;
-  padding: 6px 20px 6px 20px;
-  margin: 0.3rem;
-  border-radius: 0.6rem;
-  font-weight: bold;
-  font-size: 15px;
+  padding: 5px 20px 5px 10px;
 }
 
 .sa-search-sprites-reset {
   display: none;
-  margin: 0.1rem 1rem 0.5rem 1rem;
+  margin: 0;
   padding: 0;
   background: none;
   border: none;

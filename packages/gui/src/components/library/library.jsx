@@ -12,9 +12,9 @@ import TagButton from "../../containers/tag-button.jsx";
 import Spinner from "../spinner/spinner.jsx";
 import Separator from "../tw-extension-separator/separator.jsx";
 import RemovedTrademarks from "../tw-removed-trademarks/removed-trademarks.jsx";
-import NoFaceSensing from "../amp-no-face-sensing/no-face-sensing.jsx";
 import { APP_NAME } from "@ampmod/branding";
-import Clippy from "../../containers/amp-clippy.jsx"; // ADDED THIS LINE
+import Clippy from "../../containers/amp-clippy.jsx";
+import { lsNamespace } from "../../lib/amp-localstorage-namespace.js";
 
 import styles from "./library.css";
 
@@ -109,7 +109,7 @@ class LibraryComponent extends React.Component {
         return data;
     }
     getFavoriteStorageKey() {
-        return `amp:library-favorites:${this.props.id}`;
+        return `${lsNamespace}library-favorites:${this.props.id}`;
     }
     handleFavorite(id) {
         const data = this.getFilteredData()[id];
@@ -464,12 +464,6 @@ class LibraryComponent extends React.Component {
                                 <RemovedTrademarks />
                             </React.Fragment>
                         )}
-                        {filteredData && this.props.noFaceSensing && (
-                            <React.Fragment>
-                                {filteredData.length > 0 && <Separator />}
-                                <NoFaceSensing />
-                            </React.Fragment>
-                        )}
                         {!filteredData && (
                             <div className={styles.spinnerWrapper}>
                                 <Spinner large level="primary" />
@@ -516,7 +510,6 @@ LibraryComponent.propTypes = {
     tags: PropTypes.arrayOf(PropTypes.shape(TagButton.propTypes)),
     title: PropTypes.string.isRequired,
     removedTrademarks: PropTypes.bool,
-    noFaceSensing: PropTypes.bool,
 };
 
 LibraryComponent.defaultProps = {

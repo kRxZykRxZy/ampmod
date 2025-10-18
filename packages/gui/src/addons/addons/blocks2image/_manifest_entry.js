@@ -15,6 +15,6 @@ const manifest = {
       "url": "userscript.js"
     }
   ],
-  "enabledByDefault": true
+  "enabledByDefault": false
 };
 export default manifest;

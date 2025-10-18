@@ -73,8 +73,6 @@
     "debugger/thread": "Hilo {id}",
     "debugger/unknown-sprite": "(objeto desconocido)",
     "debugger/unpause": "Continuar",
-    "pause/pause": "Pausar",
-    "pause/play": "Reanudar",
     "color-picker/hex": "color hex",
     "remove-sprite-confirm/confirm": "¿Quiere borrar este objeto?",
     "block-count/blocks": "{num, plural, one {1 bloques} many {# bloques} other {# bloques}}",
