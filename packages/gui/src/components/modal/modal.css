@@ -79,31 +79,30 @@
     z-index: $z-index-modal;
     background-color: hsla(0, 0%, 0%, 0.3);
     color: $ui-modal-foreground;
-    transition: background-color 0.3s ease-out;
     backdrop-filter: blur(1px) contrast(0.8);
 }
 
 @media (prefers-reduced-motion: no-preference) {
     .modal-overlay {
-        animation: fadeIn 0.2s ease-in; /* Apply fade-in animation */
+        animation: fadeIn 0.15s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     }
     .modal-overlay.closing {
-        animation: fadeOut 0.35s ease-out; /* Apply fade-out animation when closing */
+        animation: fadeOut 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
         pointer-events: none;
     }
     .modal-content {
-        animation: zoomFadeIn 0.3s ease-out;
+        animation: zoomFadeIn 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     }
     .modal-content.full-screen {
-        animation: slideInFromBottom 0.2s ease-out;
+        animation: slideInFromBottom 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     }
 
     .modal-content.closing {
-        animation: zoomFadeOut 0.35s ease-out; /* Apply zoom-out animation when closing */
+        animation: zoomFadeOut 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     }
 
     .modal-content.full-screen.closing {
-        animation: slideOutToBottom 0.35s ease-out; /* Apply slide-out animation when closing if fullscreen */
+        animation: slideOutToBottom 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     }
 }
 

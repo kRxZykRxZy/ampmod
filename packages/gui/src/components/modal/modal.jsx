@@ -29,7 +29,7 @@ const ModalComponent = props => {
             // respect that setting.
             window.matchMedia("(prefers-reduced-motion: reduce)").matches
                 ? 0
-                : 300
+                : 200
         );
     };
 
