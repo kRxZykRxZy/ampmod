@@ -15,6 +15,8 @@ import Example from "./example.jsx";
 import Loader from "../../components/loader/loader.jsx";
 import { lazyLaunch } from "../../lib/amp-lazy-launch.jsx";
 
+import Box2DIcon from "./images/box2dlogo.png";
+
 /* eslint-disable react/jsx-no-literals */
 
 applyGuiColors(detectTheme());
@@ -44,16 +46,11 @@ const ExamplesPage = () => (
                 </p>
                 <div className={myStyles.examplesRow}>
                     <Example
-                        title={"Apple Cat Clicker"}
+                        title={"Box2D Demos"}
+                        img={Box2DIcon}
+                        description={`${APP_NAME}'s Box2D extension allows you to add 2D physics to your games! (Based off a sample from extensions.turbowarp.org.)`}
                         onClick={() => {
-                            alert("We have better examples lol");
-                        }}
-                    />
-                    <Example
-                        title={"Box2D Sample"}
-                        description={`${APP_NAME}'s Box2D extension allows you to add 2D physics to your projects. It is useful for various types of games.`}
-                        onClick={() => {
-                            lazyLaunch();
+                            location.href = "editor.html?example=box2d";
                         }}
                     />
                 </div>

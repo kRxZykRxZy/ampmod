@@ -235,7 +235,35 @@ const GUIComponent = props => {
                     </React.Fragment>
                 );
 
-                return (
+                return isPlayerOnly ? (
+                    <React.Fragment>
+                        {/* TW: When the window is fullscreen, use an element to display the background color */}
+                        {/* The default color for transparency is inconsistent between browsers and there isn't an existing */}
+                        {/* element for us to style that fills the entire screen. */}
+                        {isWindowFullScreen ? (
+                            <div
+                                className={styles.fullscreenBackground}
+                                style={{
+                                    backgroundColor: fullscreenBackgroundColor,
+                                }}
+                            />
+                        ) : null}
+                        <StageWrapper
+                            isFullScreen={isFullScreen}
+                            isEmbedded={isEmbedded}
+                            isRendererSupported={isRendererSupported()}
+                            isRtl={isRtl}
+                            loading={loading}
+                            stageSize={STAGE_SIZE_MODES.full}
+                            vm={vm}
+                        >
+                            {alertsVisible ? (
+                                <Alerts className={styles.alertsContainer} />
+                            ) : null}
+                        </StageWrapper>
+                        {alwaysEnabledModals}
+                    </React.Fragment>
+                ) : (
                     <Box
                         className={styles.pageWrapper}
                         dir={isRtl ? "rtl" : "ltr"}

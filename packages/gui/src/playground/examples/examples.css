@@ -38,5 +38,14 @@
 
 .modal-body {
     background: $ui-modal-background;
+    color: $page-foreground;
     padding: 20px;
+    display: flex;
+    gap: $space;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+:global(.ReactModal__Body--open) {
+    overflow: hidden;
 }

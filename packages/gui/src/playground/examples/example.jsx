@@ -1,9 +1,11 @@
 import "../import-first";
 import React, { useState } from "react";
 import styles from "./examples.css";
+import homeStyles from "../home/home.css";
 import Box from "../../components/box/box.jsx";
 import Modal from "../../components/modal/modal.jsx";
 import Button from "../../components/button/button.jsx";
+import { APP_NAME } from "@ampmod/branding";
 
 const ExampleModal = props => (
     <Modal
@@ -13,10 +15,14 @@ const ExampleModal = props => (
         id="exampleModal"
     >
         <Box className={styles.modalBody}>
-            <Box className={styles.modalLabel}>
-                {props.description || "No description."}
-            </Box>
-            <Button onClick={props.onButtonClick}>Open</Button>
+            <div>{props.description || "No description."}</div>
+            <div
+                className={homeStyles.button}
+                style={{ minWidth: 0 }}
+                onClick={props.onButtonClick}
+            >
+                Open
+            </div>
         </Box>
     </Modal>
 );

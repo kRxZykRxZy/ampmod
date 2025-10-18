@@ -29,6 +29,7 @@
     text-decoration: none;
     display: inline-block;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .button:hover {
