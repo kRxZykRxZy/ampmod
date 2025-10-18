@@ -87,6 +87,7 @@
         animation: fadeIn 0.15s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     }
     .modal-overlay.closing {
+        opacity: 0;
         animation: fadeOut 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
         pointer-events: none;
     }
@@ -98,6 +99,7 @@
     }
 
     .modal-content.closing {
+        opacity: 0;
         animation: zoomFadeOut 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     }
 
