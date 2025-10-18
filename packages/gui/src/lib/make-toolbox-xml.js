@@ -642,10 +642,12 @@ const strings = function (isInitialSetup, isStage, targetId, colors) {
     const apple = translate("OPERATORS_JOIN_APPLE", "apple");
     const banana = translate("OPERATORS_JOIN_BANANA", "banana");
     const letter = translate("OPERATORS_LETTEROF_APPLE", "a");
+    // Note: The ID is ampmodstrings instead of just strings due to conflicts
+    // with the Text extension in the gallery
     return `
     <category
         name="%{BKY_CATEGORY_STRINGS}"
-        id="strings"
+        id="ampmodstrings"
         colour="${colors.primary}"
         secondaryColour="${colors.tertiary}">
         <block type="operator_join">
@@ -1050,7 +1052,7 @@ const makeToolboxXML = function (
         moveCategory("operators") ||
         operators(isInitialSetup, isStage, targetId, colors.operators);
     const stringsXML =
-        moveCategory("strings") ||
+        moveCategory("ampmodstrings") ||
         strings(isInitialSetup, isStage, targetId, colors.strings);
     const variablesXML =
         moveCategory("data") ||
