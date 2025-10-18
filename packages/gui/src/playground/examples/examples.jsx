@@ -1,5 +1,5 @@
 import "../import-first";
-import React, { Suspense } from "react";
+import React from "react";
 import render from "../app-target";
 import styles from "../info.css";
 import myStyles from "./examples.css";
@@ -13,20 +13,12 @@ import Header from "../../components/amp-header/header.jsx";
 import Footer from "../../components/amp-footer/footer.jsx";
 import Example from "./example.jsx";
 import Loader from "../../components/loader/loader.jsx";
+import { lazyLaunch } from "../../lib/amp-lazy-launch.jsx";
 
 /* eslint-disable react/jsx-no-literals */
 
 applyGuiColors(detectTheme());
 document.documentElement.lang = "en";
-
-// Dynamic import for Interface
-const Interface = React.lazy(() => import("../render-interface.jsx"));
-
-const Loading = () => (
-    <div className={myStyles.launching}>
-        <p>Launching... This may take a few seconds.</p>
-    </div>
-);
 
 const ExamplesPage = () => (
     <>
@@ -61,11 +53,7 @@ const ExamplesPage = () => (
                         title={"Box2D Sample"}
                         description={`${APP_NAME}'s Box2D extension allows you to add 2D physics to your projects. It is useful for various types of games.`}
                         onClick={() => {
-                            render(
-                                <Suspense fallback={<Loading />}>
-                                    <Interface />
-                                </Suspense>
-                            );
+                            lazyLaunch();
                         }}
                     />
                 </div>

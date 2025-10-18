@@ -1,0 +1,15 @@
+@import "../css/colors.css";
+.launching {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: $menu-bar-background;
+    color: $menu-bar-foreground;
+    display: flex;
+    flex-direction: column;
+    vertical-align: center;
+    align-items: center;
+    justify-content: center;
+}
