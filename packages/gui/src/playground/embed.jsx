@@ -6,7 +6,7 @@ import AppStateHOC from "../lib/app-state-hoc.jsx";
 import TWEmbedFullScreenHOC from "../lib/tw-embed-fullscreen-hoc.jsx";
 import TWStateManagerHOC from "../lib/tw-state-manager-hoc.jsx";
 import runAddons from "../addons/entry";
-import { Theme } from "../lib/themes/index.js";
+import { Theme, GUI_MAP } from "../lib/themes/index.js";
 
 import GUI from "./render-gui.jsx";
 import render from "./app-target";
@@ -56,7 +56,7 @@ render(
         onVmInit={onVmInit}
         onProjectLoaded={onProjectLoaded}
         routingStyle="none"
-        theme={Theme.light}
+        {...(!urlParams.has("use-user-theme") ? { theme: Theme.light } : {})}
     />
 );
 

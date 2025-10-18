@@ -7,26 +7,63 @@ import Modal from "../../components/modal/modal.jsx";
 import Button from "../../components/button/button.jsx";
 import { APP_NAME } from "@ampmod/branding";
 
-const ExampleModal = props => (
-    <Modal
-        className={styles.modalContent}
-        contentLabel={props.title}
-        onRequestClose={props.onCancel}
-        id="exampleModal"
-    >
-        <Box className={styles.modalBody}>
-            <div>{props.description || "No description."}</div>
-            <div>{`Project created by ${props.by || "AmpMod developers"}.`}</div>
-            <div
-                className={homeStyles.button}
-                style={{ minWidth: 0 }}
-                onClick={props.onClickOpen}
-            >
-                Open
-            </div>
-        </Box>
-    </Modal>
-);
+import examples from "../../lib/default-project/examples/index.js";
+
+const ExampleModal = props => {
+    const getDownloadLink = () => {
+        const buffer = examples[props.id];
+        if (!buffer) return null;
+
+        const blob = new Blob([buffer], { type: "application/x.scratch.sb3" });
+        const url = URL.createObjectURL(blob);
+        return { url, filename: `${props.id}.apz` };
+    };
+
+    const downloadLink = getDownloadLink();
+
+    return (
+        <Modal
+            className={styles.modalContent}
+            contentLabel={props.title}
+            onRequestClose={props.onCancel}
+            id="exampleModal"
+        >
+            <Box className={styles.modalBody}>
+                <div>{props.description || "No description."}</div>
+                <iframe
+                    src={`embed.html?example=${props.id}&use-user-theme`}
+                    width="386"
+                    height="330"
+                    allowtransparency="true"
+                    frameborder="0"
+                    scrolling="no"
+                    allowfullscreen=""
+                    style={{ colorScheme: "auto", borderRadius: "8px" }}
+                ></iframe>
+                <div>{`Project created by ${props.by || "AmpMod developers"}.`}</div>
+                <div className={homeStyles.buttonRow}>
+                    <div
+                        className={homeStyles.button}
+                        onClick={() => {
+                            location.href = `editor.html?example=${props.id}`;
+                        }}
+                    >
+                        Open
+                    </div>
+                    {downloadLink && (
+                        <a
+                            className={homeStyles.button}
+                            href={downloadLink.url}
+                            download={downloadLink.filename}
+                        >
+                            Download .apz
+                        </a>
+                    )}
+                </div>
+            </Box>
+        </Modal>
+    );
+};
 
 const Example = props => {
     const [isOpen, setIsOpen] = useState(false);
