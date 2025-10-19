@@ -7,19 +7,42 @@ import Modal from "../../components/modal/modal.jsx";
 import Button from "../../components/button/button.jsx";
 import { APP_NAME } from "@ampmod/branding";
 
-import examples from "../../lib/examples/index.js";
+import examples from "../../lib/examples";
 
 const ExampleModal = props => {
-    const getDownloadLink = () => {
-        const buffer = examples[props.id];
-        if (!buffer) return null;
+    const [downloadLink, setDownloadLink] = useState(null);
 
-        const blob = new Blob([buffer], { type: "application/x.scratch.sb3" });
-        const url = URL.createObjectURL(blob);
-        return { url, filename: `${props.title}.apz` };
-    };
+    React.useEffect(() => {
+        const fetchDownloadLink = async (id, title) => {
+            try {
+                const module = await examples[id](); // fetch module
+                if (!module) return;
 
-    const downloadLink = getDownloadLink();
+                // unwrap default export if exists
+                const buffer = module.default || module;
+
+                // ensure it's ArrayBuffer / Uint8Array
+                if (
+                    !(
+                        buffer instanceof ArrayBuffer ||
+                        buffer instanceof Uint8Array
+                    )
+                ) {
+                    console.error("Invalid buffer type for download:", buffer);
+                    return;
+                }
+
+                const blob = new Blob([buffer], {
+                    type: "application/x.scratch.sb3",
+                });
+                const url = URL.createObjectURL(blob);
+                setDownloadLink({ url, filename: `${title}.apz` });
+            } catch (err) {
+                console.error("Failed to fetch download link:", err);
+            }
+        };
+        fetchDownloadLink(props.id, props.title);
+    }, [props.id, props.title]);
 
     return (
         <Modal
@@ -46,7 +69,7 @@ const ExampleModal = props => {
                     scrolling="no"
                     allowFullScreen=""
                     style={{ colorScheme: "auto", borderRadius: "8px" }}
-                ></iframe>
+                />
                 <div>{`Project created by ${props.by || "AmpMod developers"}.`}</div>
                 <div className={homeStyles.buttonRow}>
                     <a

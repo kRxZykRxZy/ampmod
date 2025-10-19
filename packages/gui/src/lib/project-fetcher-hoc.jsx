@@ -20,6 +20,8 @@ import { activateTab, BLOCKS_TAB_INDEX } from "../reducers/editor-tab";
 import log from "./log";
 import storage from "./storage";
 
+import examples from "./examples";
+
 import VM from "scratch-vm";
 import { fetchProjectMeta } from "./tw-project-meta-fetcher-hoc.jsx";
 
@@ -107,6 +109,26 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             // the project shouldn't be running while fetching the new project
             this.props.vm.clear();
             this.props.vm.quit();
+
+            let exampleId =
+                typeof URLSearchParams === "undefined"
+                    ? null
+                    : new URLSearchParams(location.search).get("example");
+
+            if (exampleId && examples.hasOwnProperty(exampleId)) {
+                return examples[exampleId]()
+                    .then(module => {
+                        const exampleData = module.default; // ArrayBuffer from loader
+                        this.props.onFetchedProjectData(
+                            exampleData,
+                            loadingState
+                        );
+                    })
+                    .catch(err => {
+                        log.error(err);
+                        this.props.onError(err);
+                    });
+            }
 
             let assetPromise;
             // In case running in node...
