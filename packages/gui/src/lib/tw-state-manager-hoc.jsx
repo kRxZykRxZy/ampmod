@@ -291,6 +291,15 @@ const TWStateManager = function (WrappedComponent) {
         componentDidMount() {
             const urlParams = new URLSearchParams(location.search);
 
+            if (
+                process.env.NODE_ENV !== "production" ||
+                (urlParams.has("nerd_mode") &&
+                    urlParams.get("nerd_mode") ===
+                        "i_will_not_ask_for_help_if_this_breaks")
+            ) {
+                this.props.vm.extensionManager.loadExtensionURL("electroTest");
+            }
+
             if (urlParams.has("fps")) {
                 const fps = +urlParams.get("fps");
                 if (Number.isNaN(fps) || fps < 0) {

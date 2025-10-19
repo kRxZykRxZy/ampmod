@@ -57,25 +57,6 @@ import { APP_NAME } from "@ampmod/branding";
 
 export default [
     {
-        name: "Electro Test",
-        extensionId: "electroTest",
-        iconURL: customExtensionIcon,
-        insetIconURL: penIconURL,
-        insetIconBgColor: "#59c059",
-        description:
-            "This is a test extension for ampmod, once called ultiblocks! ABC,アジア語テスト 亚洲语言测试 아시아 언어 시험 If you are a normal user and are seeing this, we ran into an oversight. Please report this as a bug",
-        featured: true,
-        docsURI: "https://example.com",
-        deprecated: "This extension is currently in a cryonic lab.",
-        tags: ["ampmod", "new"],
-        internetConnectionRequired: true,
-        bluetoothRequired: true,
-        collaborator: "AmpMod Wiki Inc.",
-        credits: ["AmpMod Wiki Inc.", "AmpElectrecuted", "friends"],
-        // Don't show this to the end user
-        hidden: process.env.NODE_ENV == "production",
-    },
-    {
         name: (
             <FormattedMessage
                 defaultMessage="Pen"

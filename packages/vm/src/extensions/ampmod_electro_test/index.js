@@ -6,10 +6,6 @@ const {
 } = require("../../extension-support/tw-extension-api-common");
 const { startHats } = require("../../compiler/compat-block-utility");
 
-if (process.env.NODE_ENV === "production") {
-    throw Error("Electro Test cannot be used in production");
-}
-
 /**
  * Class for Electro Test blocks
  * @constructor
