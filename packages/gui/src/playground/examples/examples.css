@@ -3,12 +3,14 @@
 
 .examples-row {
     display: flex;
-    gap: 8px;
     flex-wrap: wrap;
+    gap: 4px;
 }
 
 .example {
     display: flex;
+    flex: 1 1 calc((100% - 12px) / 4);
+    max-width: calc((100% - 12px) / 4);
     flex-direction: column;
     border: 1px solid $ui-black-transparent;
     border-radius: $space;
