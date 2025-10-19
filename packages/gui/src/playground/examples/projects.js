@@ -1,4 +1,5 @@
 import Box2DIcon from "./images/box2dlogo.png";
+import BatteryIcon from "./images/battery.svg";
 import { APP_NAME } from "@ampmod/branding";
 
 export default [
@@ -13,7 +14,7 @@ export default [
         id: "battery",
         title: "What's my battery on?",
         by: "8to16",
-        img: Box2DIcon,
+        img: BatteryIcon,
         description:
             "The Battery extension can get the battery percentage of your device.",
         isSupported: "getBattery" in navigator,
