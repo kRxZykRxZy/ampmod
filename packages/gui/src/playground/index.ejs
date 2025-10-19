@@ -314,7 +314,11 @@
         var splashReset = document.querySelector('.splash-reset');
         var splashDeleteData = document.querySelector('.splash-delete-data');
         var splashCopy = document.querySelector('.splash-copy');
-
+        var enableSplashAnimation = false;
+        const autoEnableSplashAnimation = setTimeout(function () {
+          enableSplashAnimation = true;
+        }, 200);
+      
         var totalErrors = 0;
         window.onerror = function (event, source, line, col, err) {
           if (++totalErrors > 5) return; // dont bother logging more
@@ -385,18 +389,23 @@
 
         window.SplashEnd = () => {
           clearTimeout(showTooLongMessage);
+          clearTimeout(autoEnableSplashAnimation);
           window.onerror = null;
 
-          splash.style.transition = "transform 0.6s ease, opacity 0.6s ease";
-          splash.style.transform = "translateY(-100%)";
-          splash.style.opacity = "0";
+          if (enableSplashAnimation && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+            splash.style.transition = "transform 0.6s ease, opacity 0.6s ease";
+            splash.style.transform = "translateY(-100%)";
+            splash.style.opacity = "0";
 
-          // Wait for animation to finish, then remove
-          setTimeout(() => {
-            if (splash && splash.parentNode) {
-              splash.parentNode.removeChild(splash);
-            }
-          }, 600);
+            // Wait for animation to finish, then remove
+            setTimeout(() => {
+              if (splash && splash.parentNode) {
+                splash.parentNode.removeChild(splash);
+              }
+            }, 600);
+          } else {
+            splash.parentNode.removeChild(splash);
+          }
         };
 
         window.SetCustomSplashInfo = (text) => {
