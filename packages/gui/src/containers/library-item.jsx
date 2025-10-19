@@ -169,6 +169,7 @@ class LibraryItem extends React.PureComponent {
                 icons={this.props.icons}
                 id={this.props.id}
                 insetIconURL={this.props.insetIconURL}
+                insetIconBgColor={this.props.insetIconBgColor}
                 internetConnectionRequired={
                     this.props.internetConnectionRequired
                 }

@@ -432,6 +432,9 @@ class LibraryComponent extends React.Component {
                                         )}
                                         onFavorite={this.handleFavorite}
                                         insetIconURL={dataItem.insetIconURL}
+                                        insetIconBgColor={
+                                            dataItem.insetIconBgColor
+                                        }
                                         internetConnectionRequired={
                                             dataItem.internetConnectionRequired
                                         }

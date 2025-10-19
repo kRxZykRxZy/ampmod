@@ -784,6 +784,7 @@ class Scratch3MusicBlocks {
      */
     getInfo() {
         return {
+            globalExtensions: ["colours_sounds"],
             id: "music",
             name: formatMessage({
                 id: "music.categoryName",

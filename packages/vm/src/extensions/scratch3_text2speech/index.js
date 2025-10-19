@@ -421,6 +421,7 @@ class Scratch3Text2SpeechBlocks {
         }
 
         return {
+            globalExtensions: ["colours_looks"],
             id: "text2speech",
             name: formatMessage({
                 id: "text2speech.categoryName",

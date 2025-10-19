@@ -1347,6 +1347,7 @@ class Runtime extends EventEmitter {
                 colour: categoryInfo.color1,
                 colourSecondary: categoryInfo.color2,
                 colourTertiary: categoryInfo.color3,
+                extensions: categoryInfo.globalExtensions,
                 outputShape: menuInfo.acceptReporters
                     ? ScratchBlocksConstants.OUTPUT_SHAPE_ROUND
                     : ScratchBlocksConstants.OUTPUT_SHAPE_SQUARE,

@@ -174,6 +174,7 @@ class Scratch3MakeyMakeyBlocks {
      */
     getInfo() {
         return {
+            globalExtensions: ["colours_data_lists"],
             id: "makeymakey",
             name: "Makey Makey",
             blockIconURI: blockIconURI,

@@ -106,6 +106,7 @@ class Scratch3TranslateBlocks {
             ].value;
 
         return {
+            globalExtensions: ["colours_sensing"],
             id: "translate",
             name: formatMessage({
                 id: "translate.categoryName",

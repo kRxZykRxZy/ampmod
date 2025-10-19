@@ -438,6 +438,7 @@ class Scratch3VideoSensingBlocks {
 
         // Return extension definition
         return {
+            globalExtensions: ["colours_sensing"],
             id: "videoSensing",
             name: formatMessage({
                 id: "videoSensing.categoryName",
