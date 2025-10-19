@@ -9,4 +9,13 @@ export default [
         img: Box2DIcon,
         description: `${APP_NAME}'s Box2D extension allows you to add 2-dimensional physics to your games.`,
     },
+    {
+        id: "battery",
+        title: "What's my battery on?",
+        by: "8to16",
+        img: Box2DIcon,
+        description:
+            "The Battery extension can get the battery percentage of your device.",
+        isSupported: "getBattery" in navigator,
+    },
 ];

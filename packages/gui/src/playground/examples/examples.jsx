@@ -46,6 +46,7 @@ const ExamplesPage = () => (
                             by={proj.by}
                             img={proj.img}
                             description={proj.description}
+                            isSupported={proj.isSupported ?? true}
                         />
                     ))}
                 </div>
