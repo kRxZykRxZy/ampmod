@@ -64,3 +64,10 @@
 :global(.ReactModal__Body--open) {
     overflow: hidden;
 }
+
+.unsupported {
+    border: 1px solid #ff52526e;
+    background-color: #ff525240;
+    padding: 8px;
+    border-radius: 4px;
+}

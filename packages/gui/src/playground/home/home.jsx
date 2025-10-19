@@ -5,22 +5,15 @@ import styles from "../info.css";
 import myStyles from "./home.css";
 import * as bowser from "bowser";
 
-import {
-    APP_DESCRIPTION,
-    APP_FORUMS,
-    APP_NAME,
-    APP_SLOGAN,
-    APP_WIKI,
-} from "@ampmod/branding";
+import { APP_FORUMS, APP_NAME, APP_WIKI } from "@ampmod/branding";
 import { applyGuiColors } from "../../lib/themes/guiHelpers";
 import { detectTheme } from "../../lib/themes/themePersistance";
 import Header from "../../components/amp-header/header.jsx";
 import Footer from "../../components/amp-footer/footer.jsx";
 import Clippy from "../../containers/amp-clippy.jsx";
 
-import WelcomeBanner from "../../components/amp-welcome/welcome-banner.svg";
-
 import classNames from "classnames";
+import { Hero } from "../components/hero/hero.jsx";
 
 /* eslint-disable react/jsx-no-literals */
 
@@ -31,46 +24,6 @@ const Home = () => (
     <>
         <Header />
         <Clippy isFixed messageSet="website" />
-        <header className={styles.headerContainer}>
-            <div className={myStyles.headerContainerContainer}>
-                <div className={myStyles.headerContent}>
-                    <h1 className={styles.headerText}>{APP_SLOGAN}</h1>
-                    {process.env.ampmod_mode === "canary" && (
-                        <>
-                            <p className={styles.wrap}>
-                                <strong>
-                                    This is a canary build. Bugs may be present,
-                                    and your projects may break when the final
-                                    version is released. You should not use this
-                                    version for creating non-test projects.
-                                </strong>
-                            </p>
-                            <div className={styles.spacing}></div>
-                        </>
-                    )}
-                    <div className={styles.spacing}></div>
-                    <div className={myStyles.buttonRow}>
-                        <a
-                            href="editor.html"
-                            className={myStyles.primaryButton}
-                        >
-                            Try it out
-                        </a>
-                        <a
-                            href="examples.html"
-                            className={myStyles.primaryButton}
-                        >
-                            See examples
-                        </a>
-                    </div>
-                    <div className={styles.spacing}></div>
-                </div>
-
-                <div className={myStyles.headerImage}>
-                    <img src={WelcomeBanner}></img>
-                </div>
-            </div>
-        </header>
         {/* <section>
             <div className={myStyles.notification}>
                 <h2>Contribute to AmpMod!</h2>
@@ -80,6 +33,7 @@ const Home = () => (
                 </p>
             </div>
         </section> */}
+        <Hero />
         <main className={myStyles.main}>
             {/* START: Main two-column layout wrapper */}
             <div className={myStyles.mainContentGrid}>

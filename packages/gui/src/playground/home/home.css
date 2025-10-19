@@ -2,25 +2,6 @@
 @import "../../css/default-colors.css";
 @import "../../css/units.css";
 
-.primary-button {
-    background-color: white;
-    color: $motion-tertiary !important;
-    border-radius: $space;
-    padding: 12px 18px;
-    text-decoration: none;
-    display: inline-block;
-    font-weight: 850;
-    font-size: 1.3em;
-    box-shadow: 0 0 0 0 $ui-white-transparent-default;
-    transition: box-shadow 0.3s;
-    margin-top: $space;
-    transform-style: preserve-3d;
-}
-
-.primary-button:hover {
-    box-shadow: 0 0 0 $space $ui-white-transparent-default;
-}
-
 .button {
     background-color: $motion-primary;
     color: white;
@@ -86,25 +67,6 @@ ul {
     flex-direction: column;
     line-height: 1.4em;
     gap: $space;
-}
-
-.header-container-container {
-    max-width: 1000px;
-    margin: auto;
-    display: flex;
-    text-align: left;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2em;
-}
-
-.header-content {
-    flex: 1;
-}
-
-.header-image {
-    flex-shrink: 0;
-    max-width: 40%;
 }
 
 .button-row {

@@ -30,6 +30,16 @@ const ExampleModal = props => {
         >
             <Box className={styles.modalBody}>
                 <div>{props.description || "No description."}</div>
+                {
+                    /* Not using ! because it causes projects without isSupported to always be unsupported. */
+                    props.isSupported === false && (
+                        <div className={styles.unsupported}>
+                            This project is not supported on your browser or
+                            system. It, or parts of it, may not work. The
+                            description may provide more context.
+                        </div>
+                    )
+                }
                 <iframe
                     src={`embed.html?example=${props.id}&use-user-theme`}
                     width="386"
