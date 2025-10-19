@@ -47,7 +47,7 @@ Blockly.Blocks["data_variable"] = {
             ],
             category: Blockly.Categories.data,
             checkboxInFlyout: true,
-            // UltiBlocks: Variable blocks are now allowed to go into any slot.
+            // amp: Variable blocks are now allowed to go into any slot.
             output: null,
             extensions: [
                 "contextMenu_getVariableBlock",
