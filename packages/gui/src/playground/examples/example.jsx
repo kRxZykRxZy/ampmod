@@ -7,7 +7,7 @@ import Modal from "../../components/modal/modal.jsx";
 import Button from "../../components/button/button.jsx";
 import { APP_NAME } from "@ampmod/branding";
 
-import examples from "../../lib/default-project/examples/index.js";
+import examples from "../../lib/examples/index.js";
 
 const ExampleModal = props => {
     const getDownloadLink = () => {
