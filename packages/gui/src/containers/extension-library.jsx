@@ -241,6 +241,30 @@ class ExtensionLibrary extends React.PureComponent {
     }
     render() {
         let library = extensionLibraryContent.map(toLibraryItem);
+
+        // Prepare gallery items safely
+        const galleryItems = this.state.gallery || [];
+        const locale = this.props.intl.locale;
+
+        // Find faceSensing in the gallery
+        const faceSensingItem = galleryItems.find(
+            ext => ext.extensionId === "faceSensing"
+        );
+
+        // Insert faceSensing after videoSensing in the main library
+        if (faceSensingItem) {
+            const videoIndex = library.findIndex(
+                item => item.extensionId === "videoSensing"
+            );
+            if (videoIndex !== -1) {
+                library.splice(
+                    videoIndex + 1,
+                    0,
+                    toLibraryItem(translateGalleryItem(faceSensingItem, locale))
+                );
+            }
+        }
+
         library.push("---");
 
         // Add saved custom extensions from state
@@ -251,13 +275,13 @@ class ExtensionLibrary extends React.PureComponent {
             library.push("---");
         }
 
-        // Add gallery extensions or loading/error indicators
-        if (this.state.gallery) {
+        // Add gallery extensions, but exclude faceSensing to avoid duplicates
+        if (galleryItems.length > 0) {
             library.push(toLibraryItem(galleryMore));
-            const locale = this.props.intl.locale;
             library.push(
-                ...this.state.gallery
-                    .map(i => translateGalleryItem(i, locale))
+                ...galleryItems
+                    .filter(ext => ext.extensionId !== "faceSensing")
+                    .map(ext => translateGalleryItem(ext, locale))
                     .map(toLibraryItem)
             );
         } else if (this.state.galleryError) {
