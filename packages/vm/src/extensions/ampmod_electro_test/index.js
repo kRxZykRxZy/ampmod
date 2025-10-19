@@ -49,6 +49,19 @@ class ElectroTestBlocks {
                     },
                 },
                 {
+                    blockType: BlockType.ARRAY,
+                    opcode: "itemOf",
+                    text: "my item [ITEM] of [ARRAY]",
+                    arguments: {
+                        ITEM: {
+                            menu: "awesomeMenu",
+                        },
+                        ARRAY: {
+                            type: ArgumentType.ARRAY,
+                        },
+                    },
+                },
+                {
                     blockType: BlockType.REPORTER,
                     opcode: "ampApiObject",
                     text: "AmpMod API object",
@@ -92,6 +105,14 @@ class ElectroTestBlocks {
                     text: "enable pause",
                 },
             ],
+            menus: {
+                awesomeMenu: {
+                    acceptCustom: "number",
+                    acceptReporters: true,
+                    items: ["1", "last", "random"],
+                    defaultValue: 1,
+                },
+            },
         };
     }
 
