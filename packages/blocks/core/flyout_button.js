@@ -71,7 +71,7 @@ Blockly.FlyoutButton = function (workspace, targetWorkspace, xml, isLabel) {
 /**
  * The margin around the text in the button.
  */
-Blockly.FlyoutButton.MARGIN = 40;
+Blockly.FlyoutButton.MARGIN = 20;
 
 /**
  * The width of the button's rect.
