@@ -6,7 +6,13 @@ import QuestionComponent from "../components/question/question.jsx";
 class Question extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["handleChange", "handleKeyPress", "handleSubmit"]);
+        bindAll(this, [
+            "handleChange",
+            "handleKeyPress",
+            "handleSubmit",
+            "handleYes",
+            "handleNo",
+        ]);
         this.state = {
             answer: "",
         };
@@ -16,6 +22,14 @@ class Question extends React.Component {
     }
     handleKeyPress(event) {
         if (event.key === "Enter") this.handleSubmit();
+    }
+    handleYes(e) {
+        this.setState({ answer: "Yes" });
+        this.handleSubmit();
+    }
+    handleNo(e) {
+        this.setState({ answer: "No" });
+        this.handleSubmit();
     }
     handleSubmit() {
         this.props.onQuestionAnswered(this.state.answer);
@@ -28,6 +42,8 @@ class Question extends React.Component {
                 onChange={this.handleChange}
                 onClick={this.handleSubmit}
                 onKeyPress={this.handleKeyPress}
+                onYes={this.handleYes}
+                onNo={this.handleNo}
             />
         );
     }

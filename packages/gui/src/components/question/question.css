@@ -25,7 +25,9 @@
     position: relative;
 }
 
-.question-submit-button {
+.question-submit-button,
+.yes-icon,
+.no-icon {
     position: absolute;
     top: calc($space / 2);
 
@@ -33,7 +35,7 @@
     height: calc(2rem - $space);
 
     border: none;
-    border-radius: 100%;
+    border-radius: 9999em;
 
     color: white;
     background: $looks-secondary;
@@ -72,10 +74,25 @@
     box-shadow: 0px 0px 0px 3px $looks-transparent;
 }
 
-.question-submit-button-icon {
+.question-submit-button-icon,
+.yes-icon,
+.no-icon {
     width: calc(2rem - $space);
     height: calc(2rem - $space);
     position: relative;
     right: -7px;
     left: -7px;
+    padding: 3px;
+}
+
+.no-icon {
+    background: $data-primary;
+    transform: rotateZ(45deg);
+    padding: 5px;
+}
+
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
 }
