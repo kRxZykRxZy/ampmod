@@ -1,12 +1,11 @@
-const examples = {
-    griffpatch: () =>
-        import(
-            /* webpackChunkName: "examples-griffpatch" */ "!arraybuffer-loader!./Box2D.sb3"
-        ),
-    battery: () =>
-        import(
-            /* webpackChunkName: "examples-battery" */ "!arraybuffer-loader!./Battery.apz"
-        ),
-};
-
-export default examples;
+export default require
+    .context("./", false, /\.apz$/)
+    .keys()
+    .reduce((acc, filePath) => {
+        const key = filePath.replace(/^.\//, "").replace(/\.apz$/, "");
+        acc[key] = () =>
+            import(
+                /* webpackChunkName: "apb" */ `!arraybuffer-loader!./${key}.apz`
+            );
+        return acc;
+    }, {});
