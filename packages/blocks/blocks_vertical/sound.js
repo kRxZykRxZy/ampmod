@@ -59,24 +59,12 @@ Blockly.Blocks["sound_sounds_menu"] = {
                     ],
                 },
             ],
+            colour: Blockly.Colours.sounds.secondary,
+            colourSecondary: Blockly.Colours.sounds.secondary,
+            colourTertiary: Blockly.Colours.sounds.tertiary,
+            colourQuaternary: Blockly.Colours.sounds.quaternary,
             extensions: ["output_string"],
         });
-    },
-    onchange: function () {
-        const parent = this.getParent();
-        if (parent) {
-            const primary = parent.getColour();
-            const secondary = parent.colourSecondary;
-            const tertiary = parent.colourTertiary || secondary;
-            const quaternary = parent.colourQuaternary || secondary;
-
-            this.setColour(secondary, secondary, tertiary, quaternary);
-
-            const dropdown = this.getField("SOUND_MENU");
-            if (dropdown && dropdown.dropdownCreate) {
-                Blockly.DropDownDiv.setColour(primary, secondary);
-            }
-        }
     },
 };
 

@@ -75,7 +75,7 @@ const BLOCKS_MAP = {
         useForStage: true,
     },
     [BLOCKS_DARK]: {
-        blocksMediaFolder: "blocks-media/default",
+        blocksMediaFolder: "blocks-media/dark",
         colors: defaultsDeep({}, blocksDark.blockColors, defaultBlockColors),
         extensions: blocksDark.extensions,
         customExtensionColors: blocksDark.customExtensionColors,

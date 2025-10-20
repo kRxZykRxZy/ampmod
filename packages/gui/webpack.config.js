@@ -232,6 +232,15 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                     to: "static/blocks-media/high-contrast",
                     force: true,
                 },
+                {
+                    from: "../blocks/media",
+                    to: "static/blocks-media/dark",
+                },
+                {
+                    from: "src/lib/themes/blocks/dark-media/blocks-media",
+                    to: "static/blocks-media/dark",
+                    force: true,
+                },
             ],
         }),
         /* new CompressionPlugin({

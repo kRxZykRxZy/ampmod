@@ -346,6 +346,10 @@ Blockly.Blocks["looks_setstretchto"] = {
 };
 
 Blockly.Blocks["looks_costume"] = {
+    /**
+     * Costumes drop-down menu.
+     * @this Blockly.Block
+     */
     init: function () {
         this.jsonInit({
             message0: "%1",
@@ -360,25 +364,11 @@ Blockly.Blocks["looks_costume"] = {
                 },
             ],
             colour: Blockly.Colours.looks.secondary,
+            colourSecondary: Blockly.Colours.looks.secondary,
+            colourTertiary: Blockly.Colours.looks.tertiary,
+            colourQuaternary: Blockly.Colours.looks.quaternary,
             extensions: ["output_string"],
         });
-    },
-
-    onchange: function () {
-        const parent = this.getParent();
-        if (parent) {
-            const primary = parent.getColour();
-            const secondary = parent.colourSecondary;
-            const tertiary = parent.colourTertiary || secondary;
-            const quaternary = parent.colourQuaternary || secondary;
-
-            this.setColour(secondary, secondary, tertiary, quaternary);
-
-            const dropdown = this.getField("COSTUME");
-            if (dropdown && dropdown.dropdownCreate) {
-                Blockly.DropDownDiv.setColour(primary, secondary);
-            }
-        }
     },
 };
 
@@ -437,8 +427,13 @@ Blockly.Blocks["looks_switchbackdropto"] = {
 };
 
 Blockly.Blocks["looks_backdrops"] = {
+    /**
+     * Backdrop list
+     * @this Blockly.Block
+     */
     init: function () {
         this.jsonInit({
+            id: "looks_backdrops",
             message0: "%1",
             args0: [
                 {
@@ -447,25 +442,12 @@ Blockly.Blocks["looks_backdrops"] = {
                     options: [["backdrop1", "BACKDROP1"]],
                 },
             ],
+            colour: Blockly.Colours.looks.secondary,
+            colourSecondary: Blockly.Colours.looks.secondary,
+            colourTertiary: Blockly.Colours.looks.tertiary,
+            colourQuaternary: Blockly.Colours.looks.quaternary,
             extensions: ["output_string"],
         });
-    },
-
-    onchange: function () {
-        const parent = this.getParent();
-        if (parent) {
-            const primary = parent.getColour();
-            const secondary = parent.colourSecondary;
-            const tertiary = parent.colourTertiary || secondary;
-            const quaternary = parent.colourQuaternary || secondary;
-
-            this.setColour(secondary, secondary, tertiary, quaternary);
-
-            const dropdown = this.getField("COSTUME");
-            if (dropdown && dropdown.dropdownCreate) {
-                Blockly.DropDownDiv.setColour(primary, secondary);
-            }
-        }
     },
 };
 
