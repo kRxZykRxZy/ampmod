@@ -28,20 +28,6 @@ const ExamplesPage = () => (
         </header>
         <main className={styles.main}>
             <section>
-                <p>
-                    These examples are licenced under a{" "}
-                    <a href="https://creativecommons.org/licenses/by/4.0/deed.en">
-                        Creative Commons Attribution 4.0
-                    </a>{" "}
-                    licence. Therefore, if you distribute these examples on
-                    another website, you must provide credit to the AmpMod
-                    developers.
-                </p>
-                <p>
-                    <a href="https://codeberg.org/ampmod/ampmod/src/branch/develop/packages/gui/src/playground/examples/images/README.md">
-                        Image atrribution...
-                    </a>
-                </p>
                 <div className={myStyles.examplesRow}>
                     {projects.map(proj => (
                         <Example
@@ -55,6 +41,21 @@ const ExamplesPage = () => (
                         />
                     ))}
                 </div>
+            </section>
+            <section>
+                <p>
+                    <small>
+                        These examples are licenced under a{" "}
+                        <a href="https://creativecommons.org/licenses/by/4.0/deed.en">
+                            Creative Commons Attribution 4.0
+                        </a>{" "}
+                        licence. Therefore, if you distribute these examples on
+                        another website, you must provide credit to the creator.{" "}
+                        <a href="https://codeberg.org/ampmod/ampmod/src/branch/develop/packages/gui/src/playground/examples/images/README.md">
+                            Image atrribution...
+                        </a>
+                    </small>
+                </p>
             </section>
         </main>
         <Footer />
