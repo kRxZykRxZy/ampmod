@@ -1,3 +1,5 @@
+import examplesList from "../examples/projects";
+
 const shuffle = list => {
     for (let i = list.length - 1; i > 0; i--) {
         const random = Math.floor(Math.random() * (i + 1));
@@ -357,8 +359,8 @@ const docs = [
 
 const ubContributors = [
     {
-        userID: "149550011",
-        username: "AmpElectrecuted",
+        userID: "141263923",
+        username: "8to16",
     },
     {
         userID: "82953483",
@@ -370,10 +372,18 @@ const ubContributors = [
     },
 ].map(fromHardcoded);
 
+const examples = Object.values(examplesList)
+    .map(example => ({
+        username: example.by,
+        userID: example.scratchuserid,
+    }))
+    .map(fromHardcoded);
+
 export default {
     contributors: shuffle(contributors),
     addonDevelopers: shuffle(addonDevelopers),
     extensionDevelopers: shuffle(extensionDevelopers),
     docs: shuffle(docs),
     ubContributors: shuffle(ubContributors),
+    examples: shuffle(examples),
 };

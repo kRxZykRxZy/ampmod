@@ -18,5 +18,6 @@ export default [
         description:
             "The Battery extension can get the battery percentage of your device.",
         isSupported: "getBattery" in navigator,
+        scratchuserid: "141263923",
     },
 ];

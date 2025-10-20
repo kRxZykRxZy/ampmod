@@ -156,6 +156,10 @@ const Credits = () => (
                 <UserList users={UserData.extensionDevelopers} />
             </section>
             <section>
+                <h2>Example Projects</h2>
+                <UserList users={UserData.examples} />
+            </section>
+            <section>
                 <h2>Translators</h2>
                 <p>
                     Unfortunately, AmpMod's only three developers only speak
