@@ -1,4 +1,4 @@
-import Box2DIcon from "./images/box2dlogo.png";
+import Box2DIcon from "./images/box2d.svg";
 import BatteryIcon from "./images/battery.svg";
 import { APP_NAME } from "@ampmod/branding";
 
