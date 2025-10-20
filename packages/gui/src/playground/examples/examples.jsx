@@ -37,6 +37,11 @@ const ExamplesPage = () => (
                     another website, you must provide credit to the AmpMod
                     developers.
                 </p>
+                <p>
+                    <a href="https://codeberg.org/ampmod/ampmod/src/branch/develop/packages/gui/src/playground/examples/images/README.md">
+                        Image atrribution...
+                    </a>
+                </p>
                 <div className={myStyles.examplesRow}>
                     {projects.map(proj => (
                         <Example
