@@ -1,7 +1,7 @@
 // This addon is different from the implementation in SA. This will NOT work on scratch.mit.edu
 // because it hooks heavily into AmpMod internals.
 
-import { GUI_CUSTOM, GUI_MAP, GUI_LIGHT, GUI_DARK, ACCENT_GREEN } from "../../../lib/themes";
+import { GUI_CUSTOM, GUI_MAP, GUI_AMP_LIGHT, GUI_LIGHT, GUI_DARK, ACCENT_GREEN } from "../../../lib/themes";
 import { detectTheme } from "../../../lib/themes/themePersistance";
 
 function darkenHex(hex, factor = 0.8) {
@@ -26,9 +26,24 @@ export default async function ({ addon }) {
     const accent = addon.settings.get("accent");
     const workspace = addon.settings.get("workspace");
     const ui = addon.settings.get("ui");
+    const baseOption = addon.settings.get("base");
 
     // Decide base theme
-    const baseGUI = isDark(workspace) && isDark(ui) ? GUI_DARK : GUI_LIGHT;
+    let baseGUI;
+    switch (baseOption) {
+      case "dark":
+        baseGUI = GUI_MAP[GUI_DARK];
+        break;
+      case "light-classic":
+        baseGUI = GUI_MAP[GUI_LIGHT];
+        break;
+      case "light":
+      default:
+        baseGUI = GUI_MAP[GUI_AMP_LIGHT];
+        break;
+    }
+    // debug
+    console.log(baseGUI);
 
     // Merge gui colors
     const guiColors = {
