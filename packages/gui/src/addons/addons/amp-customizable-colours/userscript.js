@@ -43,8 +43,8 @@ export default async function ({ addon }) {
       "assets-background": sidebar,
       "workspace-background": workspace,
       "ui-primary": ui,
-      "ui-secondary": darkenHex(ui, 0.2),
-      "ui-tertiary": darkenHex(ui, 0.6),
+      "ui-secondary": darkenHex(ui, 0.95),
+      "ui-tertiary": darkenHex(ui, 0.8),
     };
 
     const blockColors = {

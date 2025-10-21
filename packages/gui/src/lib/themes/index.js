@@ -48,7 +48,7 @@ const GUI_MAP = {
     [GUI_AMOLED]: guiAmoled,
     [GUI_HIGH_CONTRAST]: guiHighContrast,
     // amp-customizable-colours addon
-    [GUI_CUSTOM]: { ...guiLight },
+    [GUI_CUSTOM]: {},
 };
 const GUI_DEFAULT = GUI_AMP_LIGHT;
 
