@@ -28,7 +28,7 @@ export default async function ({ addon }) {
     const ui = addon.settings.get("ui");
 
     // Decide base theme
-    const baseGUI = isDark(workspace) && isDark(ui) && isDark(sidebar) ? GUI_DARK : GUI_LIGHT;
+    const baseGUI = isDark(workspace) && isDark(ui) ? GUI_DARK : GUI_LIGHT;
 
     // Merge gui colors
     const guiColors = {
@@ -41,8 +41,8 @@ export default async function ({ addon }) {
       "looks-transparent": accent + "26",
       "looks-light-transparent": darkenHex(accent, -0.2) + "26",
       "ui-primary": ui,
-      "ui-secondary": darkenHex(ui, 0.95),
-      "ui-tertiary": darkenHex(ui, 0.8),
+      "ui-secondary": darkenHex(ui, 0.96),
+      "ui-tertiary": darkenHex(ui, 0.87),
     };
 
     const blockColors = {

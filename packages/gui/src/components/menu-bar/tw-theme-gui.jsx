@@ -14,20 +14,18 @@ import {
     GUI_DARK,
     GUI_AMOLED,
     GUI_HIGH_CONTRAST,
-    Theme,
     GUI_CUSTOM,
+    Theme,
 } from "../../lib/themes/index.js";
 import { closeSettingsMenu } from "../../reducers/menus.js";
 import { setTheme } from "../../reducers/theme.js";
 import { persistTheme } from "../../lib/themes/themePersistance.js";
 import lightModeIcon from "./tw-sun.svg";
 import darkModeIcon from "./tw-moon.svg";
-import {
-    openGuiThemeMenu,
-    guiThemeMenuOpen,
-    closeGuiThemeMenu,
-} from "../../reducers/menus.js";
+import customIcon from "./tw-blocks-custom.svg";
+import { openGuiThemeMenu, guiThemeMenuOpen } from "../../reducers/menus.js";
 import styles from "./settings-menu.css";
+import openLinkIcon from "./tw-open-link.svg";
 
 const options = defineMessages({
     [GUI_AMP_LIGHT]: {
@@ -47,7 +45,7 @@ const options = defineMessages({
     },
     [GUI_AMOLED]: {
         defaultMessage: "AMOLED (Beta)",
-        description: "AMOLED theme option with true black",
+        description: "AMOLED theme option",
         id: "amp.gui.amoled",
     },
     [GUI_HIGH_CONTRAST]: {
@@ -57,9 +55,8 @@ const options = defineMessages({
     },
     [GUI_CUSTOM]: {
         defaultMessage: "Customize in Addon Settings",
-        description:
-            "Link in block color list to open addon settings for more customization",
-        id: "tw.blockColors.custom",
+        description: "Link to addon settings",
+        id: "amp.gui.custom",
     },
 });
 
@@ -70,8 +67,19 @@ const icons = {
     [GUI_HIGH_CONTRAST]: darkModeIcon,
 };
 
-const GuiIcon = ({ id }) => (
-    <>
+const GuiIcon = ({ id }) => {
+    if (id === GUI_CUSTOM) {
+        return (
+            <img
+                src={customIcon}
+                className={styles.paintbrushIcon}
+                width={24}
+                draggable={false}
+            />
+        );
+    }
+
+    return (
         <div
             className={styles.guiThemeIconOuter}
             style={{
@@ -100,16 +108,18 @@ const GuiIcon = ({ id }) => (
                 }}
             />
         </div>
-    </>
-);
-
-GuiIcon.propTypes = {
-    id: PropTypes.string,
+    );
 };
 
-const GuiThemeItem = ({ id, isSelected, onClick }) => (
-    <MenuItem onClick={onClick}>
-        <div className={styles.option}>
+GuiIcon.propTypes = { id: PropTypes.string };
+
+const GuiThemeItem = ({ id, isSelected, onClick, disabled }) => (
+    <MenuItem onClick={disabled ? null : onClick}>
+        <div
+            className={classNames(styles.option, {
+                [styles.disabled]: disabled,
+            })}
+        >
             <img
                 className={classNames(styles.check, {
                     [styles.selected]: isSelected,
@@ -121,6 +131,15 @@ const GuiThemeItem = ({ id, isSelected, onClick }) => (
             />
             <GuiIcon id={id} />
             <FormattedMessage {...options[id]} />
+            {id === GUI_CUSTOM && (
+                <img
+                    width={20}
+                    height={20}
+                    className={styles.openLink}
+                    src={openLinkIcon}
+                    draggable={false}
+                />
+            )}
         </div>
     </MenuItem>
 );
@@ -129,18 +148,34 @@ GuiThemeItem.propTypes = {
     id: PropTypes.string,
     isSelected: PropTypes.bool,
     onClick: PropTypes.func,
+    disabled: PropTypes.bool,
 };
 
-const GuiThemeMenu = ({ isOpen, isRtl, onChangeTheme, onOpen, theme }) => (
+const GuiThemeMenu = ({
+    isOpen,
+    isRtl,
+    onChangeTheme,
+    onOpenCustomSettings,
+    onOpen,
+    theme,
+}) => (
     <MenuItem expanded={isOpen}>
         <div className={styles.option} onClick={onOpen}>
             <GuiIcon id={theme.gui} />
             <div className={styles.menuItemTitleAndSubtitle}>
                 <span className={styles.submenuLabel}>
                     <FormattedMessage
-                        defaultMessage="Theme"
-                        description="Label for menu to choose GUI theme (light, dark, AMOLED)"
-                        id="amp.menuBar.guiTheme"
+                        defaultMessage={
+                            theme.gui === GUI_CUSTOM
+                                ? "Theme and Accent"
+                                : "Theme"
+                        }
+                        description="Label for menu to choose GUI theme or theme + accent if custom"
+                        id={
+                            theme.gui === GUI_CUSTOM
+                                ? "amp.menuBar.guiThemeCustom"
+                                : "amp.menuBar.guiTheme"
+                        }
                     />
                 </span>
                 <span className={styles.menuItemSubtitle}>
@@ -160,12 +195,18 @@ const GuiThemeMenu = ({ isOpen, isRtl, onChangeTheme, onOpen, theme }) => (
                 GUI_DARK,
                 GUI_AMOLED,
                 GUI_HIGH_CONTRAST,
+                ...(onOpenCustomSettings ? [GUI_CUSTOM] : []),
             ].map(id => (
                 <GuiThemeItem
                     key={id}
                     id={id}
                     isSelected={theme.gui === id}
-                    onClick={() => onChangeTheme(theme.set("gui", id))}
+                    onClick={
+                        id === GUI_CUSTOM
+                            ? onOpenCustomSettings
+                            : () => onChangeTheme(theme.set("gui", id))
+                    }
+                    disabled={id !== GUI_CUSTOM && theme.gui === GUI_CUSTOM}
                 />
             ))}
         </Submenu>
@@ -177,6 +218,7 @@ GuiThemeMenu.propTypes = {
     isRtl: PropTypes.bool,
     onOpen: PropTypes.func,
     onChangeTheme: PropTypes.func,
+    onOpenCustomSettings: PropTypes.func,
 };
 
 const mapStateToProps = state => ({

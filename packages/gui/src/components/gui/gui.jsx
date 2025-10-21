@@ -130,7 +130,9 @@ const GUIComponent = props => {
         onClickAbout,
         onClickAccountNav,
         onCloseAccountNav,
+        onClickAddonSettings,
         onClickDesktopSettings,
+        onOpenAddonSettings,
         onClickNewWindow,
         onClickPackager,
         onLogOut,
@@ -361,6 +363,7 @@ const GUIComponent = props => {
                                     showSaveFilePicker={showSaveFilePicker}
                                     onClickAbout={onClickAbout}
                                     onClickAccountNav={onClickAccountNav}
+                                    onClickAddonSettings={onClickAddonSettings}
                                     onClickDesktopSettings={
                                         onClickDesktopSettings
                                     }
@@ -648,6 +651,7 @@ GUIComponent.propTypes = {
     onActivateSoundsTab: PropTypes.func,
     onActivateTab: PropTypes.func,
     onClickAccountNav: PropTypes.func,
+    onClickAddonSettings: PropTypes.func,
     onClickDesktopSettings: PropTypes.func,
     onClickNewWindow: PropTypes.func,
     onClickPackager: PropTypes.func,

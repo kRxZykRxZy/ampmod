@@ -60,7 +60,14 @@ const icons = {
 };
 
 const ThemeIcon = ({ id }) => (
-    <img src={icons[id]} draggable={false} width={24} />
+    <img
+        src={icons[id]}
+        draggable={false}
+        width={24}
+        className={classNames({
+            [styles.paintbrushIcon]: id === BLOCKS_CUSTOM,
+        })}
+    />
 );
 
 ThemeIcon.propTypes = {

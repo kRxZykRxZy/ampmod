@@ -140,8 +140,10 @@
 
 .open-link {
     margin-left: 0.5rem;
+    filter: var(--menu-bar-icon-filter);
 }
 
-.icon {
+.icon,
+.paintbrush-icon {
     filter: var(--menu-bar-icon-filter);
 }

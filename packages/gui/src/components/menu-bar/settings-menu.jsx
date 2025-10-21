@@ -101,6 +101,7 @@ class SettingsMenu extends React.Component {
             isRtl,
             onClickDesktopSettings,
             onOpenCustomSettings,
+            onOpenAltCustomSettings,
             onRequestClose,
             onRequestOpen,
             settingsMenuOpen,
@@ -149,7 +150,11 @@ class SettingsMenu extends React.Component {
                             )}
                             {canChangeTheme && (
                                 <>
-                                    <TWGuiThemeMenu />
+                                    <TWGuiThemeMenu
+                                        onOpenCustomSettings={
+                                            onOpenAltCustomSettings
+                                        }
+                                    />
                                     <TWBlocksThemeMenu
                                         onOpenCustomSettings={
                                             onOpenCustomSettings
