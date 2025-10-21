@@ -178,7 +178,8 @@ const normalizeManifest = (id, manifest) => {
         'recommended',
         'theme',
         'beta',
-        'danger'
+        'danger',
+        'ampmod'
     ];
     manifest.tags = manifest.tags.filter(i => KEEP_TAGS.includes(i));
     if (newAddons.includes(id)) {

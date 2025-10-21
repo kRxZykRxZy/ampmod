@@ -12,13 +12,26 @@ function darkenHex(hex, factor = 0.8) {
   return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
 }
 
-function isDark(hex) {
+function getLuminance(hex) {
   const c = hex.replace("#", "");
   const r = parseInt(c.substring(0, 2), 16);
   const g = parseInt(c.substring(2, 4), 16);
   const b = parseInt(c.substring(4, 6), 16);
-  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  return luminance < 150;
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function decideBaseTheme(accent, workspace, ui, menubar) {
+  const uiLum = getLuminance(ui);
+  const accentLum = getLuminance(accent);
+  const workspaceLum = getLuminance(workspace);
+  const menubarLum = getLuminance(menubar);
+
+  // Dark check: if any main color is quite dark, use dark theme
+  if (uiLum < 80 || accentLum < 80 || workspaceLum < 80) return "dark";
+
+  // Menu bar special rule
+  if (menubarLum > 230) return "light"; // very bright = light theme
+  return "light-classic"; // otherwise, light-classic
 }
 
 export default async function ({ addon }) {
@@ -26,9 +39,14 @@ export default async function ({ addon }) {
     const accent = addon.settings.get("accent");
     const workspace = addon.settings.get("workspace");
     const ui = addon.settings.get("ui");
-    const baseOption = addon.settings.get("base");
+    const menubar = addon.settings.get("menubar");
+    let baseOption = addon.settings.get("base");
 
-    // Decide base theme
+    if (baseOption === "auto" || !baseOption) {
+      baseOption = decideBaseTheme(accent, workspace, ui, menubar);
+    }
+
+    // Pick base GUI
     let baseGUI;
     switch (baseOption) {
       case "dark":
@@ -42,8 +60,6 @@ export default async function ({ addon }) {
         baseGUI = GUI_MAP[GUI_AMP_LIGHT];
         break;
     }
-    // debug
-    console.log(baseGUI);
 
     // Merge gui colors
     const guiColors = {
@@ -54,10 +70,10 @@ export default async function ({ addon }) {
       "looks-secondary": accent,
       "looks-secondary-dark": darkenHex(accent, 0.7),
       "looks-transparent": accent + "26",
-      "looks-light-transparent": darkenHex(accent, -0.2) + "26",
       "ui-primary": ui,
       "ui-secondary": darkenHex(ui, 0.96),
       "ui-tertiary": darkenHex(ui, 0.87),
+      "menu-bar-background": menubar,
     };
 
     const blockColors = {
@@ -67,10 +83,7 @@ export default async function ({ addon }) {
       checkboxActiveBorder: darkenHex(accent, 0.7),
     };
 
-    GUI_MAP[GUI_CUSTOM] = {
-      guiColors,
-      blockColors,
-    };
+    GUI_MAP[GUI_CUSTOM] = { guiColors, blockColors };
 
     const newTheme = addon.tab.redux.state.scratchGui.theme.theme.set("gui", GUI_CUSTOM);
 
@@ -82,7 +95,6 @@ export default async function ({ addon }) {
 
   const disable = () => {
     const defaultTheme = detectTheme().gui;
-
     addon.tab.redux.dispatch({
       type: "scratch-gui/theme/SET_THEME",
       theme: defaultTheme,
