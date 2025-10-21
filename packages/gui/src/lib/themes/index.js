@@ -40,12 +40,15 @@ const GUI_LIGHT = "light-classic";
 const GUI_DARK = "dark";
 const GUI_AMOLED = "amoled";
 const GUI_HIGH_CONTRAST = "high-contrast";
+const GUI_CUSTOM = "custom";
 const GUI_MAP = {
     [GUI_AMP_LIGHT]: guiAmpLight,
     [GUI_LIGHT]: guiLight,
     [GUI_DARK]: guiDark,
     [GUI_AMOLED]: guiAmoled,
     [GUI_HIGH_CONTRAST]: guiHighContrast,
+    // amp-customizable-colours addon
+    [GUI_CUSTOM]: { ...guiLight },
 };
 const GUI_DEFAULT = GUI_AMP_LIGHT;
 
@@ -195,6 +198,7 @@ export {
     GUI_AMOLED,
     GUI_HIGH_CONTRAST,
     GUI_MAP,
+    GUI_CUSTOM,
     BLOCKS_THREE,
     BLOCKS_DARK,
     BLOCKS_HIGH_CONTRAST,

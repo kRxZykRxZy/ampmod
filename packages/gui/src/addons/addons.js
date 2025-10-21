@@ -1,6 +1,7 @@
 // This file is only used by pull.js to generate files. It is not used at runtime.
 
 const addons = [
+    'amp-customizable-colours',
     'cat-blocks',
     'editor-devtools',
     'find-bar',
@@ -85,6 +86,7 @@ const addons = [
 ];
 
 const newAddons = [
+    'amp-customizable-colours',
     'delete-others',
     'asset-conflict-dialog',
     'hide-backpack',
