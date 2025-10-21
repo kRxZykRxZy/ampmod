@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import bindAll from "lodash.bindall";
 import { applyGuiColors } from "../lib/themes/guiHelpers";
-import { BLOCKS_CUSTOM, Theme } from "../lib/themes";
+import { BLOCKS_CUSTOM, GUI_CUSTOM, Theme } from "../lib/themes";
 import {
     detectTheme,
     onSystemPreferenceChange,
@@ -34,6 +34,9 @@ const TWThemeManagerHOC = function (WrappedComponent) {
             let newTheme = detectTheme();
             if (this.props.reduxTheme.blocks === BLOCKS_CUSTOM) {
                 newTheme = newTheme.set("blocks", BLOCKS_CUSTOM);
+            }
+            if (this.props.reduxTheme.gui === GUI_CUSTOM) {
+                newTheme = newTheme.set("gui", GUI_CUSTOM);
             }
             this.props.onChangeTheme(newTheme);
         }

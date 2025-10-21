@@ -120,7 +120,7 @@ AccentMenuItem.propTypes = {
 
 const AccentThemeMenu = ({ isOpen, isRtl, onChangeTheme, onOpen, theme }) => {
     // Check if the GUI theme is "high-contrast" and return null if it is.
-    if (theme.gui === "high-contrast") {
+    if (theme.gui === "high-contrast" || theme.gui === "custom") {
         return null;
     }
 

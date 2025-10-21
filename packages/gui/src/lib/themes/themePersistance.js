@@ -1,4 +1,4 @@
-import { BLOCKS_CUSTOM, Theme } from ".";
+import { BLOCKS_CUSTOM, GUI_CUSTOM, Theme } from ".";
 import { lsNamespace } from "../amp-localstorage-namespace.js";
 
 const matchMedia = query =>
@@ -86,7 +86,7 @@ const persistTheme = theme => {
     if (theme.accent !== systemPreferences.accent) {
         nonDefaultSettings.accent = theme.accent;
     }
-    if (theme.gui !== systemPreferences.gui) {
+    if (theme.gui !== systemPreferences.gui && theme.gui !== BLOCKS_CUSTOM) {
         nonDefaultSettings.gui = theme.gui;
     }
     // custom blocks are managed by addon at runtime, don't save here

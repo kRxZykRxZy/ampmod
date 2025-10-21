@@ -141,7 +141,7 @@ class Theme {
     getGuiColors() {
         return defaultsDeep(
             {},
-            this.gui === "high-contrast"
+            this.gui === "high-contrast" || this.gui === "custom"
                 ? null
                 : ACCENT_MAP[this.accent].guiColors,
             GUI_MAP[this.gui].guiColors,

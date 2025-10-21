@@ -15,6 +15,7 @@ import {
     GUI_AMOLED,
     GUI_HIGH_CONTRAST,
     Theme,
+    GUI_CUSTOM,
 } from "../../lib/themes/index.js";
 import { closeSettingsMenu } from "../../reducers/menus.js";
 import { setTheme } from "../../reducers/theme.js";
@@ -53,6 +54,12 @@ const options = defineMessages({
         defaultMessage: "High Contrast (Alpha)",
         description: "High contrast theme option",
         id: "amp.gui.highContrast",
+    },
+    [GUI_CUSTOM]: {
+        defaultMessage: "Customize in Addon Settings",
+        description:
+            "Link in block color list to open addon settings for more customization",
+        id: "tw.blockColors.custom",
     },
 });
 
