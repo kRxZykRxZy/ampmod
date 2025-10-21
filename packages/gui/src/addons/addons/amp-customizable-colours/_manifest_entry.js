@@ -7,6 +7,7 @@ const manifest = {
       "url": "userscript.js"
     }
   ],
+  "dynamicDisable": true,
   "settings": [
     {
       "name": "Accent color",
@@ -23,12 +24,6 @@ const manifest = {
     {
       "name": "UI color",
       "id": "ui",
-      "type": "color",
-      "default": "#202020"
-    },
-    {
-      "name": "Sidebar color",
-      "id": "sidebar",
       "type": "color",
       "default": "#202020"
     }
