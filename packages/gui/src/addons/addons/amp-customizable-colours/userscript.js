@@ -1,7 +1,7 @@
 // This addon is different from the implementation in SA. This will NOT work on scratch.mit.edu
-// because it hooks heavily into AmpMod internals.
+// or even turbowarp.org because it hooks heavily into AmpMod internals.
 
-import { GUI_CUSTOM, GUI_MAP, GUI_AMP_LIGHT, GUI_LIGHT, GUI_DARK, ACCENT_GREEN } from "../../../lib/themes";
+import { GUI_CUSTOM, GUI_MAP, GUI_AMP_LIGHT, GUI_LIGHT, GUI_DARK, ACCENT_MAP, ACCENT_GREEN } from "../../../lib/themes";
 import { detectTheme } from "../../../lib/themes/themePersistance";
 
 function darkenHex(hex, factor = 0.8) {
@@ -9,6 +9,14 @@ function darkenHex(hex, factor = 0.8) {
   const r = Math.floor(parseInt(c.substring(0, 2), 16) * factor);
   const g = Math.floor(parseInt(c.substring(2, 4), 16) * factor);
   const b = Math.floor(parseInt(c.substring(4, 6), 16) * factor);
+  return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+}
+
+function lightenHex(hex, factor = 0.2) {
+  const c = hex.replace("#", "");
+  const r = Math.min(255, Math.floor(parseInt(c.substring(0, 2), 16) + 255 * factor));
+  const g = Math.min(255, Math.floor(parseInt(c.substring(2, 4), 16) + 255 * factor));
+  const b = Math.min(255, Math.floor(parseInt(c.substring(4, 6), 16) + 255 * factor));
   return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
 }
 
@@ -20,14 +28,12 @@ function getLuminance(hex) {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
-function decideBaseTheme(accent, workspace, ui, menubar) {
+function decideBaseTheme(workspace, ui, menubar) {
   const uiLum = getLuminance(ui);
-  const accentLum = getLuminance(accent);
   const workspaceLum = getLuminance(workspace);
   const menubarLum = getLuminance(menubar);
 
-  // Dark check: if any main color is quite dark, use dark theme
-  if (uiLum < 80 || accentLum < 80 || workspaceLum < 80) return "dark";
+  if (uiLum < 50 || workspaceLum < 50) return "dark";
 
   // Menu bar special rule
   if (menubarLum > 230) return "light"; // very bright = light theme
@@ -43,7 +49,7 @@ export default async function ({ addon }) {
     let baseOption = addon.settings.get("base");
 
     if (baseOption === "auto" || !baseOption) {
-      baseOption = decideBaseTheme(accent, workspace, ui, menubar);
+      baseOption = decideBaseTheme(workspace, ui, menubar);
     }
 
     // Pick base GUI
@@ -61,18 +67,19 @@ export default async function ({ addon }) {
         break;
     }
 
-    // Merge gui colors
     const guiColors = {
       ...baseGUI.guiColors,
-      ...ACCENT_GREEN.guiColors,
+      ...ACCENT_MAP[ACCENT_GREEN].guiColors,
       "motion-primary": accent,
       "motion-tertiary": darkenHex(accent, 0.7),
       "looks-secondary": accent,
       "looks-secondary-dark": darkenHex(accent, 0.7),
       "looks-transparent": accent + "26",
+      "looks-light-transparent": lightenHex(accent, 0.4) + "2f",
       "ui-primary": ui,
-      "ui-secondary": darkenHex(ui, 0.96),
-      "ui-tertiary": darkenHex(ui, 0.87),
+      "ui-secondary": darkenHex(ui, 0.92),
+      "ui-tertiary": darkenHex(ui, 0.88),
+      "ui-transparent": ui + "26",
       "menu-bar-background": menubar,
     };
 
@@ -94,6 +101,7 @@ export default async function ({ addon }) {
   };
 
   const disable = () => {
+    console.log(detectTheme()); // bruh this is to fix an error
     const defaultTheme = detectTheme().gui;
     addon.tab.redux.dispatch({
       type: "scratch-gui/theme/SET_THEME",
