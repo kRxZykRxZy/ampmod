@@ -3,6 +3,7 @@ const log = require("../util/log");
 const maybeFormatMessage = require("../util/maybe-format-message");
 const BlockType = require("./block-type");
 const SecurityManager = require("./tw-security-manager");
+const PenExtension = require("../extensions/scratch3_pen");
 
 /**
  * Built-in extensions to the VM. These are loaded dynamically using async `import()`.
@@ -13,10 +14,7 @@ const defaultBuiltinExtensions = {
         import(
             /* webpackChunkName: "extension-coreExample" */ "../blocks/scratch3_core_example"
         ),
-    pen: () =>
-        import(
-            /* webpackChunkName: "extension-pen" */ "../extensions/scratch3_pen"
-        ),
+    pen: () => PenExtension,
     wedo2: () =>
         import(
             /* webpackChunkName: "extension-wedo2" */ "../extensions/scratch3_wedo2"

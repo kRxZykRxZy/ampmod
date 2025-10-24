@@ -1077,6 +1077,9 @@ const makeToolboxXML = function (
     // Always display future blocks as the first extension, if it exists.
     let futureXML = moveCategory("future");
 
+    // Always display pen blocks as a normal category, if it exists.
+    let penXML = moveCategory("pen");
+
     const everything = [
         xmlOpen,
         motionXML,
@@ -1094,11 +1097,13 @@ const makeToolboxXML = function (
         operatorsXML,
         gap,
         stringsXML,
-        gap,
-        variablesXML,
-        gap,
-        arraysXML,
     ];
+
+    if (penXML) {
+        everything.push(gap, penXML);
+    }
+
+    everything.push(variablesXML, gap, arraysXML, gap, myBlocksXML);
 
     if (futureXML) {
         everything.push(gap, futureXML);
@@ -1111,8 +1116,6 @@ const makeToolboxXML = function (
     for (const extensionCategory of categoriesXML) {
         everything.push(gap, extensionCategory.xml);
     }
-
-    everything.push(gap, myBlocksXML);
 
     everything.push(xmlClose);
     return everything.join();

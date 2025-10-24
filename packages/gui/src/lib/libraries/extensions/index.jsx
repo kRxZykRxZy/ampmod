@@ -56,7 +56,7 @@ import { APP_NAME } from "@ampmod/branding";
 //import listInsetIconURL from './list/list-small.svg';
 
 export default [
-    {
+    /* {
         name: (
             <FormattedMessage
                 defaultMessage="Pen"
@@ -76,7 +76,7 @@ export default [
         ),
         tags: ["scratch", "graphics"],
         featured: true,
-    },
+    }, */
     {
         name: (
             <FormattedMessage

@@ -289,6 +289,8 @@ const TWStateManager = function (WrappedComponent) {
             ]);
         }
         componentDidMount() {
+            this.props.vm.extensionManager.loadExtensionURL("pen");
+
             const urlParams = new URLSearchParams(location.search);
 
             if (
