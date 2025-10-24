@@ -300,11 +300,12 @@ module.exports = [
             path: path.resolve(__dirname, "build"),
         },
         optimization: {
+            runtimeChunk: "single",
             splitChunks: {
-                chunks: "async",
-                minChunks: 2,
-                minSize: 50000,
-                maxInitialRequests: 5,
+                chunks: "all",
+                minChunks: 3,
+                minSize: 100000,
+                maxInitialRequests: 7,
             },
             minimizer: [new EsbuildPlugin({ target: "es2019" })],
         },
