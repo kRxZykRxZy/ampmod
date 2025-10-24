@@ -26,18 +26,6 @@
     <meta name="description" content="<%= htmlWebpackPlugin.options.APP_NAME %> is a powerful block-based programming language built on Scratch 3.0 and TurboWarp." />
     <title><%= htmlWebpackPlugin.options.title %></title>
     <link rel="apple-touch-icon" href="<%= htmlWebpackPlugin.options.root %>images/apple-touch-icon.png">
-    <script>
-      (function() {
-        const optedOut = localStorage.getItem('amp:analytics-opted-out') === 'true';
-
-        if (!optedOut && <%= htmlWebpackPlugin.options.isCbp %>) {
-          const script = document.createElement('script');
-          script.async = true;
-          script.src = 'https://scripts.simpleanalyticscdn.com/latest.js';
-          document.head.appendChild(script);
-        }
-      })();
-    </script>
     <style>
       .splash-screen {
         position: absolute;
