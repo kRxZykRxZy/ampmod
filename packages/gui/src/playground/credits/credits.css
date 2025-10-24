@@ -1,10 +1,40 @@
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap");
+@import "../../css/colors.css";
+@import "../../css/units.css";
 
-h2 {
-    text-align: center;
+.users {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
 }
 
-.signature {
-    font-size: 1.5em;
-    font-family: "Caveat", cursive, sans-serif;
+.user-image {
+    border-radius: 4px;
+    margin-bottom: 4px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: inherit !important;
+    text-decoration: none;
+    border: 1px solid $ui-black-transparent;
+    overflow: hidden;
+}
+
+.user:link:hover {
+    background: $ui-black-transparent;
+}
+
+.spacing {
+    margin-bottom: 12px;
+}
+
+.user-role {
+    font-size: 0.7em;
+    margin-top: 2px;
 }

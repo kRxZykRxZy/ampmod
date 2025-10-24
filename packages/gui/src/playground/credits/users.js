@@ -1,4 +1,5 @@
 import examplesList from "../examples/projects";
+import defaultPfp from "./default-pfp.svg";
 
 const shuffle = list => {
     for (let i = list.length - 1; i > 0; i--) {
@@ -10,13 +11,24 @@ const shuffle = list => {
     return list;
 };
 
-const fromHardcoded = ({ userID = "0", username }) => {
+const fromHardcoded = ({
+    userID = "0",
+    username,
+    img = defaultPfp,
+    href = null,
+    role = null,
+}) => {
     const result = {
-        image: `https://trampoline.turbowarp.org/avatars/${userID}`,
+        image: img,
         text: username,
+        role: role,
     };
     if (username && userID !== "0") {
+        result.image = `https://trampoline.turbowarp.org/avatars/${userID}`;
         result.href = `https://scratch.mit.edu/users/${username}/`;
+    }
+    if (username && href) {
+        result.href = href;
     }
     return result;
 };
@@ -24,6 +36,30 @@ const fromHardcoded = ({ userID = "0", username }) => {
 // The lists below are in no particular order.
 
 const contributors = [
+    {
+        username: "8to16",
+        href: "https://scratch.mit.edu/users/8to16",
+        img: "https://codeberg.org/avatars/1ad3f7a52bee3f23fafe7944d16aca46cd76f7045fe14dbd255536fa0180466d?size=48",
+        role: "Lead developer",
+    },
+    {
+        userID: "82953483",
+        username: "50_scratch_tabs",
+        role: "Developer",
+    },
+    {
+        userID: "38055575",
+        username: "o97doge",
+        role: "Bugfixer",
+    },
+    {
+        userID: "157650703",
+        username: "unconstructable13",
+        role: "Image contributor",
+    },
+].map(fromHardcoded);
+
+const tw = [
     {
         userID: "41219524",
         username: "CubesterYT",
@@ -357,33 +393,10 @@ const docs = [
     },
 ].map(fromHardcoded);
 
-const ubContributors = [
-    {
-        userID: "141263923",
-        username: "8to16",
-    },
-    {
-        userID: "82953483",
-        username: "50_scratch_tabs",
-    },
-    {
-        userID: "38055575",
-        username: "o97doge",
-    },
-].map(fromHardcoded);
-
-const examples = Object.values(examplesList)
-    .map(example => ({
-        username: example.by,
-        userID: example.scratchuserid,
-    }))
-    .map(fromHardcoded);
-
 export default {
-    contributors: shuffle(contributors),
+    tw: shuffle(tw),
     addonDevelopers: shuffle(addonDevelopers),
     extensionDevelopers: shuffle(extensionDevelopers),
     docs: shuffle(docs),
-    ubContributors: shuffle(ubContributors),
-    examples: shuffle(examples),
+    contributors: shuffle(contributors),
 };

@@ -26,11 +26,15 @@
     flex-direction: column;
     padding: calc($space * 1.2);
     gap: 8px;
+    align-items: center;
 }
 
 .example-title {
     font-weight: bold;
-    font-size: 1.1em;
+    font-size: 1.05em;
+    white-space: nowrap; /* prevent wrapping */
+    overflow: hidden; /* hide overflow */
+    text-overflow: ellipsis; /* add "..." if too long */
 }
 
 .example-author {

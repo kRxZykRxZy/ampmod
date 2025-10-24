@@ -20,16 +20,23 @@ import appleCat from "./apple-cat-pleased.svg";
 applyGuiColors(detectTheme());
 document.documentElement.lang = "en";
 
-const User = ({ image, text, href }) => (
-    <a href={href} target="_blank" rel="noreferrer" className={styles.user}>
+const totalContributors =
+    (UserData.contributors?.length || 0) +
+    (UserData.addonDevelopers?.length || 0) +
+    (UserData.extensionDevelopers?.length || 0) +
+    (UserData.tw?.length || 0);
+
+const User = ({ image, text, href, role }) => (
+    <a href={href} target="_blank" rel="noreferrer" className={myStyles.user}>
         <img
             loading="lazy"
-            className={styles.userImage}
+            className={myStyles.userImage}
             src={image}
             width="60"
             height="60"
         />
-        <div className={styles.userInfo}>{text}</div>
+        <div className={myStyles.userInfo}>{text}</div>
+        {role && <div className={myStyles.userRole}>{role}</div>}
     </a>
 );
 User.propTypes = {
@@ -39,7 +46,7 @@ User.propTypes = {
 };
 
 const UserList = ({ users }) => (
-    <div className={styles.users}>
+    <div className={myStyles.users}>
         {users.map((data, index) => (
             <User key={index} {...data} />
         ))}
@@ -55,12 +62,8 @@ const Credits = () => (
         <header className={styles.headerContainer}>
             <h1 className={styles.headerText}>{APP_NAME} Credits</h1>
             <p className={styles.wrap}>
-                To start off, we would like to thank the developers of Scratch.
-                Without them, none of this would be possible, and people would
-                be learning complicated text-based programming languages. It
-                grew from a simple tool for kids at the Computer Clubhouse, to
-                the most popular block-based programming language in the world.
-                So truly, thank you.
+                There are {totalContributors} contributors to {APP_NAME} in
+                total, and this is growing!
             </p>
             <div className={styles.spacing}></div>
         </header>
@@ -69,8 +72,28 @@ const Credits = () => (
                 <p>
                     <i>
                         Individual contributors are listed in no particular
-                        order. The order is randomized each visit.
+                        order. The order is randomized each visit. Users who
+                        only made very minor contributions are not included.
                     </i>
+                </p>
+            </section>
+            <section>
+                <h2>Contributors</h2>
+                <UserList users={UserData.contributors} />
+            </section>
+            <section>
+                <h2>Addons</h2>
+                <UserList users={UserData.addonDevelopers} />
+            </section>
+            <section>
+                <h2>TurboWarp Extension Gallery</h2>
+                <UserList users={UserData.extensionDevelopers} />
+            </section>
+            <section>
+                <h2>Example Projects</h2>
+                <p>
+                    You can find information about who created an example on the
+                    page for that example.
                 </p>
             </section>
             {/* Please don't remove this. Be nice! */}
@@ -95,6 +118,7 @@ const Credits = () => (
                     </a>{" "}
                     but is not endorsed by TurboWarp in any way.
                 </p>
+                <UserList users={UserData.tw} />
             </section>
             <section>
                 <h2>Scratch</h2>
@@ -140,26 +164,6 @@ const Credits = () => (
                 </p>
             </section>
             <section>
-                <h2>Contributors</h2>
-                <UserList users={UserData.ubContributors} />
-            </section>
-            <section>
-                <h2>TurboWarp Contributors</h2>
-                <UserList users={UserData.contributors} />
-            </section>
-            <section>
-                <h2>Addons</h2>
-                <UserList users={UserData.addonDevelopers} />
-            </section>
-            <section>
-                <h2>TurboWarp Extension Gallery</h2>
-                <UserList users={UserData.extensionDevelopers} />
-            </section>
-            <section>
-                <h2>Example Projects</h2>
-                <UserList users={UserData.examples} />
-            </section>
-            <section>
                 <h2>Translators</h2>
                 <p>
                     Unfortunately, AmpMod's only three developers only speak
@@ -188,13 +192,6 @@ const Credits = () => (
                     Pixelify Sans is also available in the editor as the
                     "Amplification" font.
                 </p>
-                <p>
-                    The Apple Cat signature below uses the{" "}
-                    <a href="https://fonts.google.com/specimen/Caveat+Brush">
-                        Caveat Brush
-                    </a>{" "}
-                    font under the same licence.
-                </p>
             </section>
             <section>
                 <h2>Art</h2>
@@ -204,15 +201,6 @@ const Credits = () => (
                     under the CC0 license. Even though the images are public
                     domain, we would still like to attribute.
                 </p>
-            </section>
-            <section>
-                <h2>You</h2>
-                <p>
-                    Most importantly, thank you for using {APP_NAME}, or at
-                    least trying it out. You're awesome!
-                </p>
-                <img src={appleCat} width="64" height="64" />
-                <p className={myStyles.signature}>-Apple Cat</p>
             </section>
             <Footer />
         </main>

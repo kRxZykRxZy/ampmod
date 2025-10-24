@@ -26,6 +26,7 @@ a {
 .wrap {
     max-width: 900px;
     margin: auto;
+    padding: 0 1em; /* default horizontal padding */
 }
 
 .header-container {
@@ -43,10 +44,13 @@ a {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    gap: 8px;
 }
+
 .user-image {
     margin-right: 12px;
 }
+
 .user {
     display: flex;
     align-items: center;
@@ -58,10 +62,28 @@ a {
     text-decoration: none;
     transition: background 0.2s;
 }
+
 .user:link:hover {
     background: $ui-black-transparent;
 }
 
 .spacing {
     margin-bottom: 12px;
+}
+
+/* ----------------------- */
+/* Mobile responsiveness   */
+/* ----------------------- */
+@media (max-width: 768px) {
+    .main section,
+    .wrap {
+        padding: 0 1.5em; /* increase horizontal padding on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .main section,
+    .wrap {
+        padding: 0 1em;
+    }
 }

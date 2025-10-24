@@ -44,3 +44,42 @@
     display: flex;
     gap: 16px;
 }
+
+/* ----------------------- */
+/* Mobile responsiveness   */
+/* ----------------------- */
+@media (max-width: 768px) {
+    .header-container-container {
+        flex-direction: column; /* stack content vertically */
+        text-align: center;
+        gap: 1em;
+        padding: 0 1em;
+    }
+
+    .header-image {
+        display: none;
+    }
+
+    .primary-button {
+        width: 100%; /* full-width buttons */
+        padding: 10px 0;
+        font-size: 1.1em;
+    }
+
+    .button-row {
+        flex-direction: column;
+        gap: 10px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-image {
+        max-width: 90%; /* almost full width on very small screens */
+    }
+
+    .primary-button {
+        font-size: 1em;
+        padding: 8px 0;
+    }
+}
