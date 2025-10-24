@@ -319,7 +319,7 @@ module.exports = [
                     vm: {
                         test: /[\\/]node_modules[\\/]scratch-vm/,
                         name: "vm",
-                        chunks: "all",
+                        chunks: "initial",
                         enforce: true,
                     },
                 },
