@@ -1,25 +1,12 @@
 import classNames from "classnames";
-import { connect } from "react-redux";
-import { compose } from "redux";
-import {
-    defineMessages,
-    FormattedMessage,
-    injectIntl,
-    intlShape,
-} from "react-intl";
-import PropTypes from "prop-types";
-import bindAll from "lodash.bindall";
 import React from "react";
-import Logo from "../menu-bar/tw-advanced.svg";
+import Logo from "../../../components/menu-bar/tw-advanced.svg";
 import FakeLogo from "./lampmod.svg";
-import CanaryLogo from "../menu-bar/ampmod-canary.svg";
-
-import Button from "../button/button.jsx";
+import CanaryLogo from "../../../components/menu-bar/ampmod-canary.svg";
 
 import styles from "./header.css";
 
-import { APP_FORUMS, APP_WIKI, APP_NAME, APP_SOURCE } from "@ampmod/branding";
-import TWNews from "../menu-bar/tw-news.jsx";
+import TWNews from "../../../components/menu-bar/tw-news.jsx";
 
 function isAprilFools() {
     const now = new Date();

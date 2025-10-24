@@ -1,18 +1,18 @@
 import "../import-first";
 import React from "react";
 import render from "../app-target";
-import styles from "../info.css";
-import myStyles from "./home.css";
-import * as bowser from "bowser";
+
+// This page diverges significantly from other pages and thus uses its own independent styles altogether.
+// info.css is only used for the hero in a separate component.
+import styles from "./home.css";
 
 import { APP_FORUMS, APP_NAME, APP_WIKI } from "@ampmod/branding";
 import { applyGuiColors } from "../../lib/themes/guiHelpers";
 import { detectTheme } from "../../lib/themes/themePersistance";
-import Header from "../../components/amp-header/header.jsx";
-import Footer from "../../components/amp-footer/footer.jsx";
+import Header from "../components/header/header.jsx";
+import Footer from "../components/footer/footer.jsx";
 import Clippy from "../../containers/amp-clippy.jsx";
 
-import classNames from "classnames";
 import { Hero } from "../components/hero/hero.jsx";
 
 /* eslint-disable react/jsx-no-literals */
@@ -24,30 +24,19 @@ const Home = () => (
     <>
         <Header />
         <Clippy isFixed messageSet="website" />
-        {/* <section>
-            <div className={myStyles.notification}>
-                <h2>Contribute to AmpMod!</h2>
-                <p>
-                    AmpMod is an open-source project. You can contribute to the project by visiting our Codeberg repository.
-                    Even if you don't know JavaScript, your help is appreciated!
-                </p>
-            </div>
-        </section> */}
         <Hero />
-        <main className={myStyles.main}>
+        <main className={styles.main}>
             {/* START: Main two-column layout wrapper */}
-            <div className={myStyles.mainContentGrid}>
+            <div className={styles.mainContentGrid}>
                 {/* LEFT COLUMN: Contains the introductory sections */}
-                <div className={myStyles.leftColumn}>
+                <div className={styles.leftColumn}>
                     <section>
                         <h2>What is {APP_NAME}?</h2>
                         <p>
-                            {APP_NAME} is a
-                            {Math.random() < 0.01 ? "n awesome and" : null}{" "}
-                            powerful block-based programming language, built on
-                            Scratch 3.0 and TurboWarp. It can be used for many
-                            things, from simple throwaway spaghetti scripts to
-                            large-scale calculations.
+                            {APP_NAME} is a powerful block-based programming
+                            language, built on Scratch 3.0 and TurboWarp. It can
+                            be used for many things, from simple throwaway
+                            spaghetti scripts to large-scale calculations.
                         </p>
                     </section>
                     <section>
@@ -62,11 +51,11 @@ const Home = () => (
                     <section>
                         <h2>Need help?</h2>
                         {/* If you are modifying AmpMod, you should replace or remove these links */}
-                        <div className={myStyles.buttonRow}>
-                            <a href={APP_FORUMS} className={myStyles.button}>
+                        <div className={styles.buttonRow}>
+                            <a href={APP_FORUMS} className={styles.button}>
                                 Visit the forums
                             </a>
-                            <a href={APP_WIKI} className={myStyles.button}>
+                            <a href={APP_WIKI} className={styles.button}>
                                 Visit the wiki
                             </a>
                         </div>
@@ -74,12 +63,12 @@ const Home = () => (
                 </div>
 
                 {/* RIGHT COLUMN: Contains the Features section */}
-                <div className={myStyles.rightColumn}>
+                <div className={styles.rightColumn}>
                     <section>
                         <h2>Features</h2>
                         {/* Inner 2-column grid for the features list */}
-                        <div className={myStyles.twoColumnGrid}>
-                            <div className={myStyles.columnItem}>
+                        <div className={styles.twoColumnGrid}>
+                            <div className={styles.columnItem}>
                                 <h3>For programmers</h3>
                                 <ul>
                                     <li>
@@ -98,7 +87,7 @@ const Home = () => (
                                     </li>
                                 </ul>
                             </div>
-                            <div className={myStyles.columnItem}>
+                            <div className={styles.columnItem}>
                                 <h3>For artists and animators</h3>
                                 <ul>
                                     <li>

@@ -17,47 +17,38 @@
     background-color: $motion-tertiary;
 }
 
-.main section,
-.wrap {
+/* Keep this because .main is used around all main content */
+.main section {
     max-width: 1200px;
     padding: 0em 2em;
     margin: auto;
-}
-
-.spacing {
-    margin-bottom: 24px;
 }
 
 .column-item {
     padding: 0 20px;
     background-color: var(--badge-background);
     border: 1px var(--badge-border) solid;
-    border-radius: $space; /* Using imported $space variable */
+    border-radius: $space;
 }
 
 .main-content-grid {
     display: grid;
-    /* Defines the two main columns: 60% (3fr) for intro, 40% (2fr) for features */
     grid-template-columns: 3fr 2fr;
-    gap: 40px; /* Space between the two main columns */
-
-    /* Apply the standard content width and centering */
+    gap: 40px;
     max-width: 1200px;
     padding: 0em 2em;
     margin: auto;
 }
 
-/* Optional: Clean up padding on sections inside the grid columns */
 .left-column section,
 .right-column section {
-    padding: 0; /* Remove the padding to keep columns aligned */
-    margin-bottom: 30px; /* Vertical spacing between sections in the left column */
+    padding: 0;
+    margin-bottom: 30px;
 }
 
 .two-column-grid {
     display: flex;
     flex-direction: column;
-    /* Add space between the inner columns */
     gap: 15px;
     margin-top: 20px;
 }

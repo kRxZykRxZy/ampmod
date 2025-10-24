@@ -104,7 +104,7 @@ class UsernameModal extends React.Component {
         if (
             !e.target.checked ||
             confirm(
-                "You are enabling a VERY DANGEROUS option that may allow dangerous third-party extensions to corrupt your project, phish for passwords, install malware, and more. Do not blindly enable this. The prompts may look annoying, but they will prevent malicious projects from going undercover. Really continue?"
+                'This *dangerous* option allows potentially malicious third-party extensions to corrupt your project, phish for passwords, install malware, and more.\n\nDo not blindly enable this. The prompts may look annoying, but they will prevent malicious projects from going undercover.\n\nIf you don\'t understand what "security" means, you should not enable this option.'
             )
         ) {
             this.props.vm.setRuntimeOptions({

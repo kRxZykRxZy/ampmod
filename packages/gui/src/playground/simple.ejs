@@ -24,7 +24,7 @@
           (function() {
             const optedOut = localStorage.getItem('amp:analytics-opted-out') === 'true';
 
-            if (!optedOut) {
+            if (!optedOut && <%= !htmlWebpackPlugin.options.skipSimpleAnalytics %>) {
               const script = document.createElement('script');
               script.async = true;
               script.src = 'https://scripts.simpleanalyticscdn.com/latest.js';

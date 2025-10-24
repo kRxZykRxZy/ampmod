@@ -9,6 +9,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const { EsbuildPlugin } = require("esbuild-loader");
+const HtmlInlineScriptPlugin = require("html-inline-script-webpack-plugin");
 
 // PostCss
 const autoprefixer = require("autoprefixer");
@@ -290,10 +291,10 @@ module.exports = [
             "addon-settings": "./src/playground/addon-settings.jsx",
             credits: "./src/playground/credits/credits.jsx",
             home: "./src/playground/home/home.jsx",
-            notfound: "./src/playground/not-found/not-found.jsx",
+            notfound: "./src/playground/not-found.js",
             newcompiler: "./src/playground/new-compiler/new-compiler.jsx",
             examples: "./src/playground/examples/examples.jsx",
-            headeronly: "./src/playground/header-only.jsx",
+            privacy: "./src/playground/privacy.jsx",
         },
         output: {
             path: path.resolve(__dirname, "build"),
@@ -309,9 +310,11 @@ module.exports = [
         },
         plugins: base.plugins.concat([
             new HtmlWebpackPlugin({
-                chunks: ["headeronly"],
-                template: "src/playground/privacy.ejs",
+                chunks: ["privacy"],
+                title: `Privacy Policy - ${APP_NAME}`,
+                template: "src/playground/simple.ejs",
                 filename: "privacy.html",
+                skipSimpleAnalytics: true,
                 ...htmlWebpackPluginCommon,
             }),
             new HtmlWebpackPlugin({
@@ -403,6 +406,9 @@ module.exports = [
                 title: `Not Found - ${APP_NAME}`,
                 ...htmlWebpackPluginCommon,
             }),
+            new HtmlInlineScriptPlugin([
+                /(.*)(notfound|privacy|examples|newcompiler|credits|home)\.js(.*)/,
+            ]),
             new CopyWebpackPlugin({
                 patterns: [
                     {

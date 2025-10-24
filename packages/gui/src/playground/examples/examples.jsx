@@ -8,8 +8,8 @@ import { APP_NAME } from "@ampmod/branding";
 import { applyGuiColors } from "../../lib/themes/guiHelpers";
 import { detectTheme } from "../../lib/themes/themePersistance";
 
-import Header from "../../components/amp-header/header.jsx";
-import Footer from "../../components/amp-footer/footer.jsx";
+import Header from "../components/header/header.jsx";
+import Footer from "../components/footer/footer.jsx";
 import Example from "./example.jsx";
 import projects from "./projects.js";
 

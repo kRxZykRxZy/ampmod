@@ -26,17 +26,6 @@ import { FormattedMessage } from "react-intl";
 
 import styles from "./footer.css";
 
-const hardRefresh = () => {
-    var search = location.search.replace(/[?&]nocache=\d+/, "");
-    location.replace(
-        location.pathname +
-            search +
-            (search ? "&" : "?") +
-            "nocache=" +
-            Math.floor(Math.random() * 100000)
-    );
-};
-
 const Footer = () => {
     const isAprilFools = () => {
         const now = new Date();

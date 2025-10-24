@@ -4,8 +4,6 @@ import styles from "./examples.css";
 import homeStyles from "../home/home.css";
 import Box from "../../components/box/box.jsx";
 import Modal from "../../components/modal/modal.jsx";
-import Button from "../../components/button/button.jsx";
-import { APP_NAME } from "@ampmod/branding";
 
 import examples from "../../lib/examples";
 
