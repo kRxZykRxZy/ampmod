@@ -1,15 +1,12 @@
 const defaultsDeep = require("lodash.defaultsdeep");
 const path = require("path");
 const webpack = require("webpack");
-const zlib = require("zlib");
 const monorepoPackageJson = require("../../package.json");
 
 // Plugins
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CompressionPlugin = require("compression-webpack-plugin");
 const { EsbuildPlugin } = require("esbuild-loader");
-const HtmlInlineScriptPlugin = require("html-inline-script-webpack-plugin");
 
 // PostCss
 const autoprefixer = require("autoprefixer");
@@ -23,6 +20,7 @@ const {
     APP_DESCRIPTION,
     APP_SOURCE,
 } = require("@ampmod/branding");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const root = process.env.ROOT || "";
 if (root.length > 0 && !root.endsWith("/")) {
@@ -67,7 +65,7 @@ const base = {
         process.env.SOURCEMAP ||
         (process.env.NODE_ENV === "production"
             ? false
-            : "cheap-module-source-map"),
+            : "eval-cheap-module-source-map"),
     devServer: {
         contentBase: path.resolve(__dirname, "build"),
         host: "0.0.0.0",
@@ -120,13 +118,14 @@ const base = {
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
+                test: /\.[jt]sx?$/,
                 loader: "esbuild-loader",
                 include: [
                     path.resolve(__dirname, "src"),
                     /node_modules[\\/]scratch-[^\\/]+[\\/]src/,
                 ],
                 options: {
+                    loader: "tsx",
                     target: "es2019",
                 },
             },
@@ -278,13 +277,17 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 if (!process.env.CI) {
     base.plugins.push(new webpack.ProgressPlugin());
-    base.plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 
 module.exports = [
     // to run editor examples
     defaultsDeep({}, base, {
         entry: {
+            info: [
+                "./src/playground/components/header/header.jsx",
+                "./src/playground/components/footer/footer.jsx",
+                "./src/playground/info.css",
+            ],
             editor: "./src/playground/editor.jsx",
             fullscreen: "./src/playground/fullscreen.jsx",
             embed: "./src/playground/embed.jsx",
@@ -303,19 +306,33 @@ module.exports = [
             runtimeChunk: "single",
             splitChunks: {
                 chunks: "all",
-                minChunks: 3,
-                minSize: 100000,
-                maxInitialRequests: 7,
+                minChunks: 1,
+                minSize: 10000,
+                maxInitialRequests: 3,
+                cacheGroups: {
+                    reactRuntime: {
+                        test: /[\\/]node_modules[\\/]react(\-dom)?[\\/](.*)/,
+                        name: "react",
+                        chunks: "all",
+                        enforce: true,
+                    },
+                    vm: {
+                        test: /[\\/]node_modules[\\/]scratch-vm/,
+                        name: "vm",
+                        chunks: "all",
+                        enforce: true,
+                    },
+                },
             },
-            minimizer: [new EsbuildPlugin({ target: "es2019" })],
+            minimizer: [new EsbuildPlugin({ css: true, target: "es2019" })],
         },
         plugins: base.plugins.concat([
+            new OptimizeCssAssetsPlugin(),
             new HtmlWebpackPlugin({
                 chunks: ["privacy"],
                 title: `Privacy Policy - ${APP_NAME}`,
                 template: "src/playground/simple.ejs",
                 filename: "privacy.html",
-                inject: "body",
                 skipSimpleAnalytics: true,
                 ...htmlWebpackPluginCommon,
             }),
@@ -367,7 +384,7 @@ module.exports = [
                   ]
                 : []),
             new HtmlWebpackPlugin({
-                chunks: ["newcompiler"],
+                chunks: ["info", "newcompiler"],
                 template: "src/playground/simple.ejs",
                 filename: "new-compiler.html",
                 title: `New compiler - ${APP_NAME}`,
@@ -377,7 +394,7 @@ module.exports = [
                 ...htmlWebpackPluginCommon,
             }),
             new HtmlWebpackPlugin({
-                chunks: ["examples"],
+                chunks: ["info", "examples"],
                 template: "src/playground/simple.ejs",
                 filename: "examples.html",
                 title: `Examples - ${APP_NAME}`,
@@ -394,7 +411,7 @@ module.exports = [
                 ...htmlWebpackPluginCommon,
             }),
             new HtmlWebpackPlugin({
-                chunks: ["credits"],
+                chunks: ["info", "credits"],
                 template: "src/playground/simple.ejs",
                 filename: "credits.html",
                 title: `Credits - ${APP_NAME}`,
@@ -406,13 +423,8 @@ module.exports = [
                 template: "src/playground/simple.ejs",
                 filename: "404.html",
                 title: `Not Found - ${APP_NAME}`,
-                inject: "body", // if you go to skbiditoilet/index.html it will load skibiditoilet/js/not-found.js but it should load just js/not-found.js. this fixes that
                 ...htmlWebpackPluginCommon,
             }),
-            new HtmlInlineScriptPlugin([
-                /.*notfound.*\.js$/,
-                /.*privacy.*\.js$/,
-            ]),
             new CopyWebpackPlugin({
                 patterns: [
                     {

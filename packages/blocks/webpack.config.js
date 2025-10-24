@@ -6,7 +6,7 @@ gracefulFs.gracefulify(realFs);
 
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 var path = require("path");
-var UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const { EsbuildPlugin } = require("esbuild-loader");
 
 module.exports = [
     {
@@ -63,13 +63,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             filename: "[name].js",
         },
         optimization: {
-            minimizer: [
-                new UglifyJsPlugin({
-                    uglifyOptions: {
-                        mangle: false,
-                    },
-                }),
-            ],
+            minimizer: [new EsbuildPlugin({ target: "es2019" })],
         },
         plugins: [],
     },
