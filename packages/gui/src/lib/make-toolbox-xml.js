@@ -1100,7 +1100,7 @@ const makeToolboxXML = function (
     ];
 
     if (penXML) {
-        everything.push(gap, penXML);
+        everything.push(gap, penXML, gap);
     }
 
     everything.push(variablesXML, gap, arraysXML, gap, myBlocksXML);

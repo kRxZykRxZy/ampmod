@@ -56,27 +56,6 @@ import { APP_NAME } from "@ampmod/branding";
 //import listInsetIconURL from './list/list-small.svg';
 
 export default [
-    /* {
-        name: (
-            <FormattedMessage
-                defaultMessage="Pen"
-                description="Name for the 'Pen' extension"
-                id="gui.extension.pen.name"
-            />
-        ),
-        extensionId: "pen",
-        iconURL: penIconURL,
-        insetIconURL: penInsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Draw with your sprites."
-                description="Description for the 'Pen' extension"
-                id="gui.extension.pen.description"
-            />
-        ),
-        tags: ["scratch", "graphics"],
-        featured: true,
-    }, */
     {
         name: (
             <FormattedMessage

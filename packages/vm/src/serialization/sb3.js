@@ -61,6 +61,7 @@ const CORE_EXTENSIONS = [
     "sound",
     // amp: arrays
     "arrays",
+    "pen",
 ];
 
 // Constants referring to 'primitive' blocks that are usually shadows,
@@ -657,7 +658,10 @@ const serializeTarget = function (target, extensions) {
 
     // Add found extensions to the extensions object
     targetExtensions.forEach(extensionId => {
-        extensions.add(extensionId);
+        // amp: We always load pen as a core extension so no need to save it.
+        if (extensionId !== "pen") {
+            extensions.add(extensionId);
+        }
     });
     return obj;
 };

@@ -103,9 +103,6 @@ const extensions = {
     music: {
         blockIconURI: musicIcon,
     },
-    pen: {
-        blockIconURI: penIcon,
-    },
     text2speech: {
         blockIconURI: text2speechIcon,
     },

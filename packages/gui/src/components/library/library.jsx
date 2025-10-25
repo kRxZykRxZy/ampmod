@@ -12,6 +12,7 @@ import TagButton from "../../containers/tag-button.jsx";
 import Spinner from "../spinner/spinner.jsx";
 import Separator from "../tw-extension-separator/separator.jsx";
 import RemovedTrademarks from "../tw-removed-trademarks/removed-trademarks.jsx";
+import PenIsCategory from "../tw-removed-trademarks/pen-is-category.jsx";
 import { APP_NAME } from "@ampmod/branding";
 import Clippy from "../../containers/amp-clippy.jsx";
 import { lsNamespace } from "../../lib/amp-localstorage-namespace.js";
@@ -399,6 +400,12 @@ class LibraryComponent extends React.Component {
                         })}
                         ref={this.setFilteredDataRef}
                     >
+                        {filteredData && this.props.penIsCategory && (
+                            <React.Fragment>
+                                <PenIsCategory />
+                                {filteredData.length > 0 && <Separator />}
+                            </React.Fragment>
+                        )}{" "}
                         {filteredData &&
                             this.getFilteredData().map((dataItem, index) =>
                                 dataItem === "---" ? (
