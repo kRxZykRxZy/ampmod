@@ -969,10 +969,6 @@ const myBlocks = function (isInitialSetup, isStage, targetId, colors) {
     `;
 };
 
-// eslint-disable-next-line max-len
-const extraTurboWarpBlocks = `
-<block type="argument_reporter_boolean"><field name="VALUE">is TurboWarp?</field></block>
-`;
 /* eslint-enable no-unused-vars */
 
 const xmlOpen = '<xml style="display: none">';
@@ -1064,16 +1060,6 @@ const makeToolboxXML = function (
         moveCategory("procedures") ||
         myBlocks(isInitialSetup, isStage, targetId, colors.more);
 
-    // Always display TurboWarp blocks as the first extension, if it exists,
-    // and also add an "is compiled?" block to the top.
-    let turbowarpXML = moveCategory("tw");
-    if (turbowarpXML && !turbowarpXML.includes(extraTurboWarpBlocks)) {
-        turbowarpXML = turbowarpXML.replace(
-            "<block",
-            `${extraTurboWarpBlocks}<block`
-        );
-    }
-
     // Always display future blocks as the first extension, if it exists.
     let futureXML = moveCategory("future");
 
@@ -1107,10 +1093,6 @@ const makeToolboxXML = function (
 
     if (futureXML) {
         everything.push(gap, futureXML);
-    }
-
-    if (turbowarpXML) {
-        everything.push(gap, turbowarpXML);
     }
 
     for (const extensionCategory of categoriesXML) {

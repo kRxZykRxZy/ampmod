@@ -221,11 +221,6 @@ class VirtualMachine extends EventEmitter {
         this.securityManager = this.extensionManager.securityManager;
         this.runtime.extensionManager = this.extensionManager;
 
-        // Load core extensions
-        for (const id of CORE_EXTENSIONS) {
-            this.extensionManager.loadExtensionIdSync(id);
-        }
-
         this.blockListener = this.blockListener.bind(this);
         this.flyoutBlockListener = this.flyoutBlockListener.bind(this);
         this.monitorBlockListener = this.monitorBlockListener.bind(this);
@@ -819,6 +814,10 @@ class VirtualMachine extends EventEmitter {
      * @param {Map<string, string>} extensionURLs A map of extension ID to URL
      */
     async _loadExtensions(extensionIDs, extensionURLs = new Map()) {
+        // Load core extensions
+        for (const id of CORE_EXTENSIONS) {
+            await this.extensionManager.loadExtensionIdAsync(id);
+        }
         const defaultExtensionURLs = require("./extension-support/tw-default-extension-urls");
         const extensionPromises = [];
         for (const extensionID of extensionIDs) {

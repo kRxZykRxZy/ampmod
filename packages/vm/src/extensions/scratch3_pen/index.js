@@ -340,6 +340,7 @@ class Scratch3PenBlocks {
                         description: "erase all pen trails and stamps",
                     }),
                 },
+                "---",
                 {
                     opcode: "stamp",
                     blockType: BlockType.COMMAND,
@@ -372,6 +373,19 @@ class Scratch3PenBlocks {
                     filter: [TargetType.SPRITE],
                 },
                 {
+                    opcode: "isPenDown",
+                    blockType: BlockType.BOOLEAN,
+                    text: formatMessage({
+                        id: "pen.isPenDown",
+                        default: "pen down?",
+                        description:
+                            "is the sprite leaving a trail when it moves?",
+                    }),
+                    disableMonitor: true,
+                    filter: [TargetType.SPRITE],
+                },
+                "---",
+                {
                     opcode: "setPenColorToColor",
                     blockType: BlockType.COMMAND,
                     text: formatMessage({
@@ -387,6 +401,7 @@ class Scratch3PenBlocks {
                     },
                     filter: [TargetType.SPRITE],
                 },
+                "---",
                 {
                     opcode: "changePenColorParamBy",
                     blockType: BlockType.COMMAND,
@@ -432,6 +447,25 @@ class Scratch3PenBlocks {
                     filter: [TargetType.SPRITE],
                 },
                 {
+                    opcode: "getPenColorParam",
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: "pen.getColorParam",
+                        default: "pen [COLOR_PARAM]",
+                        description:
+                            "get the state for a pen color parameter e.g. saturation",
+                    }),
+                    arguments: {
+                        COLOR_PARAM: {
+                            type: ArgumentType.STRING,
+                            menu: "colorParam",
+                            defaultValue: ColorParam.COLOR,
+                        },
+                    },
+                    filter: [TargetType.SPRITE],
+                },
+                "---",
+                {
                     opcode: "changePenSizeBy",
                     blockType: BlockType.COMMAND,
                     text: formatMessage({
@@ -465,7 +499,17 @@ class Scratch3PenBlocks {
                     },
                     filter: [TargetType.SPRITE],
                 },
-                /* Legacy blocks, should not be shown in flyout */
+                {
+                    opcode: "getPenSize",
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: "pen.getSize",
+                        default: "pen size",
+                        description: "get the size of the pen",
+                    }),
+                    filter: [TargetType.SPRITE],
+                    disableMonitor: true,
+                } /* Legacy blocks, should not be shown in flyout */,
                 {
                     opcode: "setPenShadeToNumber",
                     blockType: BlockType.COMMAND,
@@ -597,6 +641,10 @@ class Scratch3PenBlocks {
             );
             this.runtime.requestRedraw();
         }
+    }
+
+    isPenDown(args, util) {
+        return this._getPenState(util.target).penDown;
     }
 
     /**
@@ -742,6 +790,24 @@ class Scratch3PenBlocks {
         );
     }
 
+    getPenColorParam(args, util) {
+        const penState = this._getPenState(util.target);
+        switch (args.COLOR_PARAM) {
+            case ColorParam.COLOR:
+                return penState.color;
+                break;
+            case ColorParam.SATURATION:
+                return penState.saturation;
+                break;
+            case ColorParam.BRIGHTNESS:
+                return penState.brightness;
+                break;
+            case ColorParam.TRANSPARENCY:
+                return penState.transparency;
+                break;
+        }
+    }
+
     /**
      * The pen "change pen size by {number}" block changes the pen size by the given amount.
      * @param {object} args - the block arguments.
@@ -772,6 +838,10 @@ class Scratch3PenBlocks {
         // used by compiler
         const penAttributes = this._getPenState(target).penAttributes;
         penAttributes.diameter = this._clampPenSize(size);
+    }
+
+    getPenSize(args, util) {
+        return this._getPenState(util.target).penAttributes.diameter;
     }
 
     /* LEGACY OPCODES */
