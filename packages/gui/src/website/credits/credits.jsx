@@ -154,7 +154,7 @@ const Credits = () => (
             <section>
                 <h2>Favicon</h2>
                 <p>
-                    The AmpMod favicon is from the{" "}
+                    The AmpMod favicon is based off an emoji from the{" "}
                     <a href="https://gh.vercte.net/forumoji/">Forumoji</a>{" "}
                     project by{" "}
                     <a href="https://https://scratch.mit.edu/users/lolecksdeehaha/">
