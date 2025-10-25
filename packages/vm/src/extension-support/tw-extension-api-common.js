@@ -3,6 +3,7 @@ const BlockType = require("./block-type");
 const BlockShape = require("./tw-block-shape");
 const TargetType = require("./target-type");
 const Cast = require("../util/cast");
+const external = require("./tw-external");
 
 const Scratch = {
     ArgumentType,
@@ -10,6 +11,7 @@ const Scratch = {
     BlockShape,
     TargetType,
     Cast,
+    external,
 };
 
 module.exports = Scratch;

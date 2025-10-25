@@ -828,9 +828,16 @@ class VirtualMachine extends EventEmitter {
                 await this.extensionManager.loadExtensionIdAsync(extensionID);
             } else {
                 // Custom extension
-                const url =
-                    extensionURLs.get(extensionID) ||
-                    defaultExtensionURLs.get(extensionID);
+                let url = extensionURLs.get(extensionID);
+                if (
+                    !url &&
+                    Object.prototype.hasOwnProperty.call(
+                        defaultExtensionURLs,
+                        extensionID
+                    )
+                ) {
+                    url = defaultExtensionURLs[extensionID];
+                }
                 if (!url) {
                     throw new Error(`Unknown extension: ${extensionID}`);
                 }

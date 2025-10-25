@@ -1,6 +1,7 @@
 // @ts-check
 
 const { StackOpcode, InputOpcode, InputType } = require("./enums.js");
+const log = require("../util/log");
 
 // These imports are used by jsdoc comments but eslint doesn't know that
 /* eslint-disable no-unused-vars */
@@ -16,7 +17,7 @@ const {
 class TypeState {
     constructor() {
         /** @type {Object.<string, InputType | 0>}*/
-        this.variables = {};
+        this.variables = Object.create(null);
     }
 
     /**
@@ -30,7 +31,7 @@ class TypeState {
                 break;
             }
         }
-        this.variables = {};
+        this.variables = Object.create(null);
         return modified;
     }
 
@@ -92,9 +93,20 @@ class TypeState {
     after(other) {
         return this.mutate(other, varId => {
             const otherType = other.variables[varId];
-            if (otherType !== 0) return otherType;
+            if (otherType) return otherType;
             return this.variables[varId] ?? InputType.ANY;
         });
+    }
+
+    /**
+     * @param {TypeState} other
+     * @returns {boolean}
+     */
+    overwrite(other) {
+        return this.mutate(
+            other,
+            varId => other.variables[varId] ?? InputType.ANY
+        );
     }
 
     /**
@@ -251,87 +263,6 @@ class IROptimizer {
                         return true;
                 };
                 if (canBeNegZero()) resultType |= InputType.NUMBER_NEG_ZERO;
-
-                return resultType;
-            }
-
-            case InputOpcode.OP_EXPO: {
-                const leftType = inputs.left.type; // base
-                const rightType = inputs.right.type; // exponent
-
-                let resultType = 0;
-
-                const canBeNaN = () => {
-                    // 0 ** 0 = NaN
-                    if (
-                        leftType & InputType.NUMBER_ZERO &&
-                        rightType & InputType.NUMBER_ZERO
-                    )
-                        return true;
-                    // Negative base with fractional exponent = NaN
-                    if (
-                        leftType & InputType.NUMBER_NEG &&
-                        rightType & InputType.NUMBER_FRACT
-                    )
-                        return true;
-                    // Infinity ** 0 = NaN
-                    if (
-                        (leftType & InputType.NUMBER_POS_INF ||
-                            leftType & InputType.NUMBER_NEG_INF) &&
-                        rightType & InputType.NUMBER_ZERO
-                    )
-                        return true;
-                };
-                if (canBeNaN()) resultType |= InputType.NUMBER_NAN;
-
-                const canBeZero = () => {
-                    // 0 ** positive = 0
-                    if (
-                        leftType & InputType.NUMBER_ZERO &&
-                        rightType & InputType.NUMBER_POS
-                    )
-                        return true;
-                };
-                if (canBeZero()) resultType |= InputType.NUMBER_ZERO;
-
-                const canBeFractional = () => {
-                    // Fractional base or fractional exponent can yield fractional result
-                    if (leftType & InputType.NUMBER_FRACT) return true;
-                    if (rightType & InputType.NUMBER_FRACT) return true;
-                };
-                const canBeFract = canBeFractional();
-
-                const canBePos = () => {
-                    // Positive base to any exponent is positive
-                    if (leftType & InputType.NUMBER_POS_REAL) return true;
-                    // Negative base to even integer exponent is positive
-                    if (
-                        leftType & InputType.NUMBER_NEG &&
-                        rightType & InputType.NUMBER_POS_INT
-                    )
-                        return true;
-                };
-                if (canBePos()) {
-                    resultType |=
-                        InputType.NUMBER_POS_INT | InputType.NUMBER_POS_INF;
-                    if (canBeFract) resultType |= InputType.NUMBER_POS_FRACT;
-                }
-
-                const canBeInf = () => {
-                    // Positive base > 1 raised to positive infinity = positive infinity
-                    if (
-                        leftType & InputType.NUMBER_POS_REAL &&
-                        rightType & InputType.NUMBER_POS_INF
-                    )
-                        return true;
-                    // 0 raised to negative exponent = positive infinity
-                    if (
-                        leftType & InputType.NUMBER_ZERO &&
-                        rightType & InputType.NUMBER_NEG
-                    )
-                        return true;
-                };
-                if (canBeInf()) resultType |= InputType.NUMBER_POS_INF;
 
                 return resultType;
             }
@@ -611,10 +542,10 @@ class IROptimizer {
                 let resultType = 0;
 
                 const canBeNaN = function () {
-                    // REAL / 0 = NaN
+                    // (-)0 / (-)0 = NaN
                     if (
-                        leftType & InputType.NUMBER_REAL &&
-                        rightType & InputType.NUMBER_ZERO
+                        leftType & InputType.NUMBER_ANY_ZERO &&
+                        rightType & InputType.NUMBER_ANY_ZERO
                     )
                         return true;
                     // (-)Infinity / (-)Infinity = NaN
@@ -649,50 +580,56 @@ class IROptimizer {
                 if (canBePos()) resultType |= InputType.NUMBER_POS;
 
                 const canBeNegInfinity = function () {
-                    // -Infinity / 0 = -Infinity
+                    // NEG / 0 = -Infinity
                     if (
-                        leftType & InputType.NUMBER_NEG_INF &&
+                        leftType & InputType.NUMBER_NEG &&
                         rightType & InputType.NUMBER_ZERO
                     )
                         return true;
-                    // Infinity / -0 = -Infinity
+                    // POS / -0 = -Infinity
                     if (
-                        leftType & InputType.NUMBER_POS_INF &&
+                        leftType & InputType.NUMBER_POS &&
                         rightType & InputType.NUMBER_NEG_ZERO
                     )
                         return true;
-                    // NEG_REAL / NaN = -Infinity
+                    // NEG_REAL / POS_REAL ~= -Infinity
                     if (
                         leftType & InputType.NUMBER_NEG_REAL &&
-                        rightType & InputType.NUMBER_NAN
+                        rightType & InputType.NUMBER_POS_REAL
                     )
                         return true;
-                    // NEG_REAL / NUMBER_OR_NAN ~= -Infinity
+                    // POS_REAL / NEG_REAL ~= -Infinity
                     if (
-                        leftType & InputType.NUMBER_NEG_REAL &&
-                        rightType & InputType.NUMBER_OR_NAN
+                        leftType & InputType.NUMBER_POS_REAL &&
+                        rightType & InputType.NUMBER_NEG_REAL
                     )
                         return true;
                 };
                 if (canBeNegInfinity()) resultType |= InputType.NUMBER_NEG_INF;
 
                 const canBeInfinity = function () {
-                    // Infinity / 0 = Infinity
+                    // POS / 0 = Infinity
                     if (
-                        leftType & InputType.NUMBER_POS_INF &&
+                        leftType & InputType.NUMBER_POS &&
                         rightType & InputType.NUMBER_ZERO
                     )
                         return true;
-                    // -Infinity / -0 = Infinity
+                    // NEG / -0 = Infinity
                     if (
-                        leftType & InputType.NUMBER_NEG_INF &&
+                        leftType & InputType.NUMBER_NEG &&
                         rightType & InputType.NUMBER_NEG_ZERO
                     )
                         return true;
-                    // POS_REAL / NUMBER_OR_NAN ~= Infinity
+                    // POS_REAL / POS_REAL ~= Infinity
                     if (
                         leftType & InputType.NUMBER_POS_REAL &&
-                        rightType & InputType.NUMBER_OR_NAN
+                        rightType & InputType.NUMBER_POS_REAL
+                    )
+                        return true;
+                    // NEG_REAL / NEG_REAL ~= Infinity
+                    if (
+                        leftType & InputType.NUMBER_NEG_REAL &&
+                        rightType & InputType.NUMBER_NEG_REAL
                     )
                         return true;
                 };
@@ -825,6 +762,10 @@ class IROptimizer {
 
                 if (!script || !script.cachedAnalysisEndState) {
                     modified = state.clear() || modified;
+                } else if (script.yields) {
+                    modified =
+                        state.overwrite(script.cachedAnalysisEndState) ||
+                        modified;
                 } else {
                     modified =
                         state.after(script.cachedAnalysisEndState) || modified;
@@ -878,10 +819,9 @@ class IROptimizer {
             state = state.clone();
         }
 
-        modified = this.analyzeInputs(inputs, state) || modified;
-
         switch (stackBlock.opcode) {
             case StackOpcode.VAR_SET:
+                modified = this.analyzeInputs(inputs, state) || modified;
                 modified =
                     state.setVariableType(inputs.variable, inputs.value.type) ||
                     modified;
@@ -889,11 +829,13 @@ class IROptimizer {
             case StackOpcode.CONTROL_WHILE:
             case StackOpcode.CONTROL_FOR:
             case StackOpcode.CONTROL_REPEAT:
+                modified = this.analyzeInputs(inputs, state) || modified;
                 modified =
                     this.analyzeLoopedStack(inputs.do, state, stackBlock) ||
                     modified;
                 break;
             case StackOpcode.CONTROL_IF_ELSE: {
+                modified = this.analyzeInputs(inputs, state) || modified;
                 const trueState = state.clone();
                 modified =
                     this.analyzeStack(inputs.whenTrue, trueState) || modified;
@@ -903,15 +845,26 @@ class IROptimizer {
                 break;
             }
             case StackOpcode.CONTROL_STOP_SCRIPT: {
+                modified = this.analyzeInputs(inputs, state) || modified;
                 this.addPossibleExitState(state);
                 break;
             }
+            case StackOpcode.CONTROL_WAIT_UNTIL: {
+                modified = state.clear() || modified;
+                modified = this.analyzeInputs(inputs, state) || modified;
+                break;
+            }
             case StackOpcode.PROCEDURE_CALL: {
+                modified = this.analyzeInputs(inputs, state) || modified;
                 modified = this.analyzeInputs(inputs.inputs, state) || modified;
                 const script = this.ir.procedures[inputs.variant];
 
                 if (!script || !script.cachedAnalysisEndState) {
                     modified = state.clear() || modified;
+                } else if (script.yields) {
+                    modified =
+                        state.overwrite(script.cachedAnalysisEndState) ||
+                        modified;
                 } else {
                     modified =
                         state.after(script.cachedAnalysisEndState) || modified;
@@ -919,6 +872,7 @@ class IROptimizer {
                 break;
             }
             case StackOpcode.COMPATIBILITY_LAYER: {
+                modified = this.analyzeInputs(inputs, state) || modified;
                 this.analyzeInputs(inputs.inputs, state);
                 for (const substackName in inputs.substacks) {
                     const newState = state.clone();
@@ -931,6 +885,9 @@ class IROptimizer {
                 }
                 break;
             }
+            default:
+                modified = this.analyzeInputs(inputs, state) || modified;
+                break;
         }
 
         return modified;
@@ -984,7 +941,7 @@ class IROptimizer {
         do {
             // If we are stuck in an apparent infinite loop, give up and assume the worst.
             if (iterations > 10000) {
-                console.error(
+                log.error(
                     "analyzeLoopedStack stuck in likely infinite loop; quitting",
                     block,
                     state
