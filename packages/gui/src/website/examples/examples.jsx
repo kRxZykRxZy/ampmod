@@ -16,7 +16,8 @@ import projects from "./projects.js";
 applyGuiColors(detectTheme());
 document.documentElement.lang = "en";
 
-const ExamplesPage = () => (
+// Exported so it works with desktop
+export const ExamplesPage = () => (
     <>
         <Header />
         <header className={styles.headerContainer}>
