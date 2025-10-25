@@ -93,7 +93,7 @@ export default () => {
                         When you load a project from another website, you are
                         subject to the privacy practices of that website. For
                         example, when loading projects from Scratch, you are
-                        subject to the
+                        subject to the{" "}
                         <a href="https://scratch.mit.edu/privacy_policy">
                             Scratch privacy policy
                         </a>
@@ -115,7 +115,7 @@ export default () => {
                         Some extensions must communicate with external APIs to
                         function. For example, the translate and text-to-speech
                         extensions rely on the Scratch API, which is covered by
-                        the
+                        the{" "}
                         <a href="https://scratch.mit.edu/privacy_policy">
                             Scratch privacy policy
                         </a>
@@ -125,10 +125,10 @@ export default () => {
                         the text being translated) and the result may be cached.
                     </p>
                     <p>
-                        Most extensions on the
+                        Most extensions on the{" "}
                         <a href="https://ampmod.codeberg.page/extensions">
                             official extension gallery
-                        </a>
+                        </a>{" "}
                         will ask for permission when the project attempts to use
                         the extension to access an untrusted website; however we
                         cannot guarantee this is 100% reliable.
@@ -151,7 +151,7 @@ export default () => {
                     <h2>Contact</h2>
                     <p>
                         Any concerns related to privacy or any other matter
-                        should be sent to:
+                        should be sent to:{" "}
                         <a href="mailto:ampelectrecuted@gmail.com">
                             ampelectrecuted@gmail.com
                         </a>
