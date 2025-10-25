@@ -61,10 +61,6 @@
         justify-content: center;
         text-align: center;
         font-family: "Inter Variable", sans-serif;
-        user-select: none;
-      }
-      .spash-waiting-for-js:not(:has(.splash-error-screen:not([hidden]))) {
-          cursor: wait;
       }
       .splash-main {
         display: flex;
@@ -82,11 +78,10 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        align-items: left;
+        align-items: flex-start;
         justify-content: left;
         text-align: left;
         width: 70%;
-        cursor: auto;
       }
       .splash-canary-title {
         font-weight: bold;
@@ -111,8 +106,8 @@
         background: black;
         color: white;
         max-height: 300px;
+        width: 100%;
         overflow: scroll;
-        user-select: auto;
       }
       .splash-error-list {
         white-space: pre-wrap;
@@ -171,7 +166,6 @@
         font-size: 1em;
         opacity: 0.5;
         padding: 20px;
-        user-select: all;
       }
       .progress-bar-fake {
         width: 256px;
@@ -216,6 +210,15 @@
 
       .ampmod-logo {
         margin-bottom: 18px;
+      }
+
+      .reload-button {
+        background: white;
+        color: black;
+        border: 1px black solid;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: bold;
       }
 
       @keyframes bounce {
@@ -270,6 +273,7 @@
         <div class="version">v<%= process.env.ampmod_version %></div>
         <h1 class="splash-error-title"><img src="<%= require('../components/menu-bar/tw-error.svg') %>" draggable="false" loading="lazy" height="48" /> Loading error</h1>
         <div class="splash-errors"></div>
+        <button onclick="window.location.reload()" class="reload-button">Reload</button>
         <p>Please provide the above backtrace and send it to the <a href="https://ampmod.flarum.cloud/t/bugs-and-glitches">forums</a> or <a href="https://codeberg.org/ampmod/ampmod/issues">issue tracker</a>. Click <button class="splash-copy">here</button> to copy the backtrace.</p>
         <p>Try <button class="splash-reset">bypassing the cache</button> or <button class="splash-delete-data">erasing the data</button>, which may fix some issues.</p>
       </div>
@@ -338,6 +342,9 @@
       
         var totalErrors = 0;
         window.onerror = function (event, source, line, col, err) {
+          var el = document.createElement('div');
+          el.textContent = "INFO FOR REPORTING: Version <%= process.env.ampmod_version %> with <%= process.env.ampmod_mode || 'default' %> mode.";
+          if (totalErrors === 0) splashError.appendChild(el);
           if (++totalErrors > 5) return; // dont bother logging more
           splashMain.hidden = true;
           splashErrorScreen.hidden = false;

@@ -1,4 +1,4 @@
-import "../../playground/import-first.js";
+import "../import-first.js";
 import React from "react";
 import Header from "../components/header/header.jsx";
 import Footer from "../components/footer/footer.jsx";

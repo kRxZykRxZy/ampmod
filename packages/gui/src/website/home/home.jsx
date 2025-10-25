@@ -1,4 +1,4 @@
-import "../../playground/import-first.js";
+import "../import-first.js";
 import React from "react";
 import render from "../../playground/app-target.js";
 
