@@ -65,6 +65,9 @@
         text-align: left;
         width: 70%;
       }
+      .splash-canary-title {
+        font-weight: bold;
+      }
       .splash-error-screen h1 img {
         vertical-align: middle;
       }
@@ -124,6 +127,9 @@
       }
       .bottom-block {
         animation: bottom-slide-in 1.5s ease infinite;
+      }
+      .spash-waiting-for-js[data-theme="light"] {
+        background: white;
       }
       @keyframes top-slide-in {
         0% {
@@ -193,6 +199,29 @@
           transform: translateX(200%);
         }
       }
+      .loading-dots {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+        vertical-align: bottom;
+      }
+      .loading-dots a {
+        width: 14px;
+        height: 14px;
+        background-color: currentColor;
+        border-radius: 50%;
+        display: inline-block;
+        animation: bounce 0.8s infinite ease-in-out;
+      }
+
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0px) scaleY(0.7); }
+        50% { transform: translateY(-20px) scaleY(1); }
+      }
+
+      .loading-dots a:nth-child(1) { animation-delay: 0s; }
+      .loading-dots a:nth-child(2) { animation-delay: 0.2s; }
+      .loading-dots a:nth-child(3) { animation-delay: 0.4s; }
     </style>
   </head>
   <body>
@@ -209,14 +238,8 @@
 
     <div class="splash-screen spash-waiting-for-js">
       <div class="splash-main">
-        <div class="version"><%= htmlWebpackPlugin.options.APP_NAME %> v<%= process.env.ampmod_version %></div>
-        <div class="block-animation">
-          <img class="top-block" src="<%= htmlWebpackPlugin.options.root %>images/top-block.svg" draggable="false" />
-          <img class="middle-block" src="<%= htmlWebpackPlugin.options.root %>images/middle-block.svg" draggable="false" />
-          <img class="bottom-block" src="<%= htmlWebpackPlugin.options.root %>images/bottom-block.svg" draggable="false" />
-        </div>
-        <div class="progress-bar-fake">
-          <div class="progress-bar-fake-inner"></div>
+        <div class="loading-dots">
+          <a></a><a></a><a></a>
         </div>
         <% if (process.env.ampmod_mode === "canary") { %>
           <div class="splash-canary-title">This is a canary build. Please expect bugs.</div>
@@ -261,6 +284,7 @@
 
         try {
           var parsed = JSON.parse(themeSetting);
+          theme = parsed.gui;
           if (parsed.accent === 'purple') {
             accent = '#855cd6';
           } else if (parsed.accent === 'blue') {
@@ -282,12 +306,13 @@
 
         var splash = document.querySelector('.spash-waiting-for-js');
         splash.setAttribute('data-theme', theme);
-        <% if (htmlWebpackPlugin.options.isEditor) { %>
+        if (theme === 'light') {
+          splash.style.backgroundColor = 'white';
+          splash.style.color = "black";
+        } else {
           splash.style.backgroundColor = accent;
           splash.style.color = 'white';
-        <% } else { %>
-          splash.style.color = accent;
-        <% } %>
+        }
         splash.hidden = false;
 
         var splashErrorTitle = document.querySelector('.splash-error-title');
@@ -298,10 +323,6 @@
         var splashReset = document.querySelector('.splash-reset');
         var splashDeleteData = document.querySelector('.splash-delete-data');
         var splashCopy = document.querySelector('.splash-copy');
-        var enableSplashAnimation = false;
-        const autoEnableSplashAnimation = setTimeout(function () {
-          enableSplashAnimation = true;
-        }, 200);
       
         var totalErrors = 0;
         window.onerror = function (event, source, line, col, err) {
@@ -373,23 +394,9 @@
 
         window.SplashEnd = () => {
           clearTimeout(showTooLongMessage);
-          clearTimeout(autoEnableSplashAnimation);
           window.onerror = null;
 
-          if (enableSplashAnimation && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-            splash.style.transition = "transform 0.6s ease, opacity 0.6s ease";
-            splash.style.transform = "translateY(-100%)";
-            splash.style.opacity = "0";
-
-            // Wait for animation to finish, then remove
-            setTimeout(() => {
-              if (splash && splash.parentNode) {
-                splash.parentNode.removeChild(splash);
-              }
-            }, 600);
-          } else {
-            splash.parentNode.removeChild(splash);
-          }
+          splash.parentNode.removeChild(splash);
         };
 
         window.SetCustomSplashInfo = (text) => {
