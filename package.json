@@ -6,7 +6,7 @@
     "packageManager": "pnpm@10.18.1",
     "scripts": {
         "test": "pnpm --recursive run test",
-        "prepare": "husky && pnpm --recursive run prepare",
+        "prepare": "husky",
         "build": "pnpm --filter ./packages/gui run build",
         "ci-build": "pnpm --filter ./packages/gui run ci-build",
         "start": "pnpm --filter ./packages/gui run start",

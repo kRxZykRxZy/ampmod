@@ -3,6 +3,7 @@
     "description": "Scratch mod with a compiler, dark mode, a bunch of addons, and more.",
     "version": "1.15.0",
     "license": "GPL-3.0",
+    "packageManager": "pnpm@10.18.1",
     "author": {
         "email": "contact@turbowarp.org",
         "name": "Thomas Weber"
@@ -151,7 +152,7 @@
             "provisioningProfile": "build/development.provisionprofile"
         },
         "linux": {
-            "executableName": "turbowarp-desktop",
+            "executableName": "ampmod",
             "artifactName": "${productName}-${os}-${arch}-${version}.${ext}",
             "icon": "./build/",
             "synopsis": "Mod of Scratch with a compiler and more features.",
@@ -159,7 +160,7 @@
             "category": "Development",
             "desktop": {
                 "entry": {
-                    "StartupWMClass": "turbowarp-desktop",
+                    "StartupWMClass": "ampmod",
                     "Keywords": "scratch;"
                 }
             },
@@ -214,7 +215,9 @@
                 "role": "Editor",
                 "mimeType": "application/x.scratch.sb"
             }
-        ]
+        ],
+        "npmRebuild": false,
+        "buildDependenciesFromSource": false
     },
     "private": true
 }
