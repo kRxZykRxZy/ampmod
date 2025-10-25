@@ -22,7 +22,8 @@
           <meta name="google-site-verification" content="xMC75_ZeQyXE1iaRV31N-hOLPJVubcfmiKfoiOqcNH8" /> 
           <script>
           (function() {
-            const optedOut = localStorage.getItem('amp:analytics-opted-out') === 'true';
+            var lsNamespace = "<%= require('../lib/amp-localstorage-namespace.js').lsNamespace %>";
+            const optedOut = localStorage.getItem(`${lsNamespace}:analytics-opted-out`) === 'true';
 
             if (!optedOut && <%= !htmlWebpackPlugin.options.skipSimpleAnalytics %>) {
               const script = document.createElement('script');
@@ -34,6 +35,11 @@
         </script>
         <% } else { %>  
           <meta name="robots" content="noindex, nofollow">
+        <% } %>
+        <% if (htmlWebpackPlugin.options.page) { %>
+        <script>
+          window.__PAGE__ = "<%= htmlWebpackPlugin.options.page %>";
+        </script>
         <% } %>
         <style>
             body[data-splash-theme="dark"] {
@@ -71,17 +77,10 @@
             (function() {
               var theme = '';
 
-              var canary = <%= process.env.ampmod_mode === "canary" %>;
+              var lsNamespace = "<%= require('../lib/amp-localstorage-namespace.js').lsNamespace %>";
 
-              try {
-                if (canary) {
-                  var themeSetting = localStorage.getItem('canary:theme');
-                } else {
-                  var themeSetting = localStorage.getItem('amp:theme');
-                }
-              } catch (e) {
-                // ignore
-              }
+              var themeSetting = localStorage.getItem(`${lsNamespace}theme`);
+
               if (themeSetting === 'light') {
                 theme = 'light';
               } else if (themeSetting === 'dark') {

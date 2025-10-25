@@ -1,14 +1,14 @@
-import "../import-first";
+import "../../playground/import-first.js";
 import React from "react";
-import render from "../app-target";
+import render from "../../playground/app-target.js";
 
 // This page diverges significantly from other pages and thus uses its own independent styles altogether.
-// info.css is only used for the hero in a separate component.
+// design.css is only used for the hero in a separate component.
 import styles from "./home.css";
 
 import { APP_FORUMS, APP_NAME, APP_WIKI } from "@ampmod/branding";
-import { applyGuiColors } from "../../lib/themes/guiHelpers";
-import { detectTheme } from "../../lib/themes/themePersistance";
+import { applyGuiColors } from "../../lib/themes/guiHelpers.js";
+import { detectTheme } from "../../lib/themes/themePersistance.js";
 import Header from "../components/header/header.jsx";
 import Footer from "../components/footer/footer.jsx";
 import Clippy from "../../containers/amp-clippy.jsx";

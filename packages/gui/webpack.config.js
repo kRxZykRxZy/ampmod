@@ -283,21 +283,20 @@ module.exports = [
     // to run editor examples
     defaultsDeep({}, base, {
         entry: {
-            info: [
-                "./src/playground/components/header/header.jsx",
-                "./src/playground/components/footer/footer.jsx",
-                "./src/playground/info.css",
+            website: [
+                "./src/website/components/header/header.jsx",
+                "./src/website/components/footer/footer.jsx",
+                "./src/website/design.css",
             ],
             editor: "./src/playground/editor.jsx",
             fullscreen: "./src/playground/fullscreen.jsx",
             embed: "./src/playground/embed.jsx",
             "addon-settings": "./src/playground/addon-settings.jsx",
-            credits: "./src/playground/credits/credits.jsx",
-            home: "./src/playground/home/home.jsx",
-            notfound: "./src/playground/not-found.js",
-            newcompiler: "./src/playground/new-compiler/new-compiler.jsx",
-            examples: "./src/playground/examples/examples.jsx",
-            privacy: "./src/playground/privacy.jsx",
+            credits: "./src/website/credits/credits.jsx",
+            home: "./src/website/home/home.jsx",
+            notfound: "./src/website/not-found.js",
+            minorpages: "./src/website/minor-pages/render.jsx",
+            examples: "./src/website/examples/examples.jsx",
         },
         output: {
             path: path.resolve(__dirname, "build"),
@@ -329,11 +328,12 @@ module.exports = [
         plugins: base.plugins.concat([
             new OptimizeCssAssetsPlugin(),
             new HtmlWebpackPlugin({
-                chunks: ["privacy"],
+                chunks: ["info", "minorpages"],
                 title: `Privacy Policy - ${APP_NAME}`,
                 template: "src/playground/simple.ejs",
                 filename: "privacy.html",
                 skipSimpleAnalytics: true,
+                page: "privacy",
                 ...htmlWebpackPluginCommon,
             }),
             new HtmlWebpackPlugin({
@@ -374,7 +374,7 @@ module.exports = [
             ...(process.env.BUILD_MODE !== "lab"
                 ? [
                       new HtmlWebpackPlugin({
-                          chunks: ["home"],
+                          chunks: ["info", "home"],
                           template: "src/playground/simple.ejs",
                           filename: "index.html",
                           title: `${APP_NAME} - ${APP_SLOGAN}`,
@@ -384,13 +384,14 @@ module.exports = [
                   ]
                 : []),
             new HtmlWebpackPlugin({
-                chunks: ["info", "newcompiler"],
+                chunks: ["info", "minorpages"],
                 template: "src/playground/simple.ejs",
                 filename: "new-compiler.html",
                 title: `New compiler - ${APP_NAME}`,
                 // prettier-ignore
                 // eslint-disable-next-line max-len
                 description: `${APP_NAME} 0.3 includes a rewritten compiler to make projects run up to 2 times faster than in ${APP_NAME} 0.2.2.`,
+                page: "newcompiler",
                 ...htmlWebpackPluginCommon,
             }),
             new HtmlWebpackPlugin({

@@ -1,11 +1,11 @@
-import "../import-first";
+import "../../playground/import-first.js";
 import React, { useState } from "react";
 import styles from "./examples.css";
 import homeStyles from "../home/home.css";
 import Box from "../../components/box/box.jsx";
 import Modal from "../../components/modal/modal.jsx";
 
-import examples from "../../lib/examples";
+import examples from "../../lib/examples/index.js";
 
 const ExampleModal = props => {
     const [downloadLink, setDownloadLink] = useState(null);

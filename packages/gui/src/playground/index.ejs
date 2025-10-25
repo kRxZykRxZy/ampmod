@@ -10,7 +10,8 @@
       <meta name="google-site-verification" content="xMC75_ZeQyXE1iaRV31N-hOLPJVubcfmiKfoiOqcNH8" /> 
       <script>
       (function() {
-        const optedOut = localStorage.getItem('amp:analytics-opted-out') === 'true';
+        var lsNamespace = "<%= require('../lib/amp-localstorage-namespace.js').lsNamespace %>";
+        const optedOut = localStorage.getItem(`${lsNamespace}:analytics-opted-out`) === 'true';
 
         if (!optedOut) {
           const script = document.createElement('script');
@@ -254,15 +255,10 @@
           takingTooLong.hidden = false;
         }, 20000);
 
-        try {
-          if (canary) {
-            var themeSetting = localStorage.getItem('canary:theme');
-          } else {
-            var themeSetting = localStorage.getItem('amp:theme');
-          }
-        } catch (e) {
-          // ignore
-        }
+        var lsNamespace = "<%= require('../lib/amp-localstorage-namespace.js').lsNamespace %>";
+
+        var themeSetting = localStorage.getItem(`${lsNamespace}theme`);
+
         try {
           var parsed = JSON.parse(themeSetting);
           if (parsed.accent === 'purple') {

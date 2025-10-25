@@ -1,8 +1,8 @@
 import "../import-first";
 import React from "react";
 import PropTypes from "prop-types";
-import render from "../app-target";
-import styles from "../info.css";
+import render from "../../playground/app-target.js";
+import styles from "../design.css";
 import myStyles from "./credits.css";
 
 import { APP_NAME } from "@ampmod/branding";

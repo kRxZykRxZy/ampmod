@@ -14,8 +14,8 @@ import {
 } from "../../lib/tw-environment-support-prober.js";
 import { APP_NAME } from "@ampmod/branding";
 import * as bowser from "bowser";
-import Header from "../../playground/components/header/header.jsx";
-import Footer from "../../playground/components/footer/footer.jsx";
+import Header from "../../website/components/header/header.jsx";
+import Footer from "../../website/components/footer/footer.jsx";
 import { notScratchDesktop } from "../../lib/isScratchDesktop.js";
 
 import styles from "./browser-modal.css";

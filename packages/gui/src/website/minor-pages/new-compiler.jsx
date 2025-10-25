@@ -1,24 +1,11 @@
-import "../import-first";
 import React from "react";
-import render from "../app-target";
-import styles from "../info.css";
-import newCompilerStyles from "./new-compiler.css";
+import styles from "../design.css";
+import newCompilerStyles from "./minor-pages.css";
 
 import { APP_NAME } from "@ampmod/branding";
-import { applyGuiColors } from "../../lib/themes/guiHelpers";
-import { detectTheme } from "../../lib/themes/themePersistance";
 
-import Header from "../components/header/header.jsx";
-import Footer from "../components/footer/footer.jsx";
-
-/* eslint-disable react/jsx-no-literals */
-
-applyGuiColors(detectTheme());
-document.documentElement.lang = "en";
-
-const Home = () => (
+export default () => (
     <>
-        <Header />
         <header className={styles.headerContainer}>
             <h1 className={styles.headerText}>New compiler</h1>
             <p className={styles.wrap}>
@@ -126,9 +113,6 @@ const Home = () => (
                     did the {APP_NAME}-specific work.
                 </p>
             </section>
-            <Footer />
         </main>
     </>
 );
-
-render(<Home />);

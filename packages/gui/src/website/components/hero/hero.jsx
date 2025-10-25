@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "../../info.css";
+import styles from "../../design.css";
 import myStyles from "./hero.css";
 import { APP_SLOGAN } from "@ampmod/branding";
 import WelcomeBanner from "../../../components/amp-welcome/welcome-banner.svg";
