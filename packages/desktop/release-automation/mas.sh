@@ -9,8 +9,8 @@ git checkout master
 git pull
 git submodule update
 npm ci
-pnpm run fetch
-pnpm run webpack:prod
+npm run fetch
+npm run webpack:prod
 
 echo ""
 echo "Packaging for MAS"

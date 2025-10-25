@@ -82,6 +82,9 @@ class GUI extends React.Component {
         }
     }
     render() {
+        if (new URLSearchParams(location.search).has("crash")) {
+            throw new Error("Test error");
+        }
         if (this.props.isError) {
             throw this.props.error;
         }

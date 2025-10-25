@@ -1,6 +1,6 @@
 # Release automation scripts
 
-These are the bespoke scripts that we use to automate various aspects of releasing new versions of the app. We publish these scripts because it's easier for us to just put them in the repository. They may be useful as a starting place for other mods. Expect to make changes.
+These are the bespoke scripts that we use to automate various aspects of releasing new versions of the app.  We publish these scripts because it's easier for us to just put them in the repository. They may be useful as a starting place for other mods. Expect to make changes.
 
 ## Build script
 
@@ -8,8 +8,8 @@ This is what creates most of the downloads that are up on our website and on Git
 
 Optional dependencies:
 
-- [Git](https://git-scm.com/) (used to get the time of the most recent commit)
-- [strip-nondeterminism](https://salsa.debian.org/reproducible-builds/strip-nondeterminism) (Linux only, used for tarballs)
+ * [Git](https://git-scm.com/) (used to get the time of the most recent commit)
+ * [strip-nondeterminism](https://salsa.debian.org/reproducible-builds/strip-nondeterminism) (Linux only, used for tarballs)
 
 You must specify which platform to build for:
 
@@ -38,6 +38,9 @@ You must specify which platform to build for:
 
 --mac-legacy-10.15
     Create app for macOS 10.15 (less secure than --mac).
+
+--mac-legacy-11
+    Create app for macOS 11 (less secure than --mac).
 
 --mac-dir
     Generate executables for macOS 10.15 and later but don't package into a complete DMG installer.
@@ -82,10 +85,10 @@ You can also specify which architecture you're building for:
 
 The script builds the full "matrix" of all options you give. For example, `--windows --windows-portable --x64 --arm64` will create four builds:
 
-- Windows installer for x64
-- Windows installer for ARM64
-- Windows portable for x64
-- Windows portable for ARM64
+ - Windows installer for x64
+ - Windows installer for ARM64
+ - Windows portable for x64
+ - Windows portable for ARM64
 
 Optionally you may also apply:
 
@@ -101,29 +104,29 @@ Optionally you may also apply:
 
 In addition to publishing builds on our website and GitHub, we also publish Linux builds on:
 
-- releases.turbowarp.org, our apt repository
-- flathub.org
-- snapcraft.io
-- aur.archlinux.org
+ - releases.turbowarp.org, our apt repository
+ - flathub.org
+ - snapcraft.io
+ - aur.archlinux.org
 
 Due to the variety of package managers needed to publish to this many places, this script only strives to support Arch Linux. It's probably not hard to make most of it work elsewhere, but that's not a priority for us. In addition to everything required to build turbowarp-desktop from source, you also need the following Arch packages:
 
-- base-devel
-- git
-- jq
-- gnupg
-- dpkg
-- rclone
-- gzip
-- python
-- pacman
-- pacman-contrib
-- flatpak
-- flatpak-builder
-- [flatpak-node-generator](https://github.com/flatpak/flatpak-builder-tools/tree/master/node) which also needs:
-    - python-pipx
-    - python-aiohttp
-- [snapd](https://aur.archlinux.org/packages/snapd)
+ - base-devel
+ - git
+ - jq
+ - gnupg
+ - dpkg
+ - rclone
+ - gzip
+ - python
+ - pacman
+ - pacman-contrib
+ - flatpak
+ - flatpak-builder
+ - [flatpak-node-generator](https://github.com/flatpak/flatpak-builder-tools/tree/master/node) which also needs:
+   - python-pipx
+   - python-aiohttp
+ - [snapd](https://aur.archlinux.org/packages/snapd)
 
 Then for snap uploads, you also need to install and log in to snapcraft:
 

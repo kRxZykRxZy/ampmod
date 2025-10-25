@@ -18,9 +18,9 @@ gpg --full-generate-key
 
 Use the options:
 
-- (4) RSA (sign only)
-- 4096 bits
-- 0 = key does not expire
+ - (4) RSA (sign only)
+ - 4096 bits
+ - 0 = key does not expire
 
 Then find the key's ID from:
 
