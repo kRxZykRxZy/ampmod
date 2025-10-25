@@ -44,7 +44,7 @@ const options = defineMessages({
         id: "amp.gui.dark",
     },
     [GUI_AMOLED]: {
-        defaultMessage: "AMOLED (Beta)",
+        defaultMessage: "AMOLED",
         description: "AMOLED theme option",
         id: "amp.gui.amoled",
     },
@@ -194,7 +194,7 @@ const GuiThemeMenu = ({
                 GUI_LIGHT,
                 GUI_DARK,
                 GUI_AMOLED,
-                GUI_HIGH_CONTRAST,
+                // GUI_HIGH_CONTRAST,
                 ...(onOpenCustomSettings ? [GUI_CUSTOM] : []),
             ].map(id => (
                 <GuiThemeItem

@@ -134,7 +134,8 @@
 .disabled {
     opacity: 0.5;
 }
-.disabled img {
+.disabled img,
+.disabled .gui-theme-icon-outer {
     filter: grayscale(100%);
 }
 

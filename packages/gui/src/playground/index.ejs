@@ -27,6 +27,25 @@
     <meta name="description" content="<%= htmlWebpackPlugin.options.APP_NAME %> is a powerful block-based programming language built on Scratch 3.0 and TurboWarp." />
     <title><%= htmlWebpackPlugin.options.title %></title>
     <link rel="apple-touch-icon" href="<%= htmlWebpackPlugin.options.root %>images/apple-touch-icon.png">
+    <% 
+      /* Stolen from librekitten lol
+        https://codeberg.org/LibreKitten/LibreKitten/commit/87f1b2d934aa228829ee3179fb226c411d969fba#diff-4913fa303beb5bc166ede94c92bb244f9ed68cef */
+      [
+        require('@fontsource-variable/inter/files/inter-latin-wght-normal.woff2'),
+        require('@fontsource-variable/inter/files/inter-greek-ext-wght-normal.woff2'),
+        require('@fontsource-variable/inter/files/inter-greek-wght-normal.woff2'),
+        require('@fontsource-variable/inter/files/inter-cyrillic-ext-wght-normal.woff2'),
+        require('@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2'),
+        require('@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2'),
+        require('@fontsource-variable/inter/files/inter-vietnamese-wght-normal.woff2')
+      ].map(font => { %>
+        <link 
+          rel="preload"
+          href="<%= font %>"
+          as="font"
+          type="font/woff2"
+        >
+    <% }); %>
     <style>
       .splash-screen {
         position: absolute;
@@ -41,7 +60,11 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        font-family: sans-serif;
+        font-family: "Inter Variable", sans-serif;
+        user-select: none;
+      }
+      .spash-waiting-for-js:not(:has(.splash-error-screen:not([hidden]))) {
+          cursor: wait;
       }
       .splash-main {
         display: flex;
@@ -52,9 +75,8 @@
         text-align: center;
       }
       .ampmod-colour-scheme {
-        background-color: #59c059;
-        color: #fff;
-        z-index: 1000;
+        background-color: white;
+        color:black;
       }
       .splash-error-screen {
         display: flex;
@@ -64,11 +86,12 @@
         justify-content: left;
         text-align: left;
         width: 70%;
+        cursor: auto;
       }
       .splash-canary-title {
         font-weight: bold;
       }
-      .splash-error-screen h1 img {
+      .splash-screen * img {
         vertical-align: middle;
       }
       .splash-screen[hidden], .splash-main[hidden], .splash-error-screen[hidden] {
@@ -77,25 +100,19 @@
       .splash-screen > * {
         max-width: 80%;
       }
-      .splash-spinner:after {
-        content: " ";
-        display: block;
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        border: 6px solid;
-        border-color: currentColor transparent currentColor transparent;
-        animation: splash-spinner 1.2s linear infinite;
-      }
-      @keyframes splash-spinner {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
       .splash-screen a {
         color: inherit;
       }
       .splash-errors {
         font-family: monospace;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 1.2em;
+        background: black;
+        color: white;
+        max-height: 300px;
+        overflow: scroll;
+        user-select: auto;
       }
       .splash-error-list {
         white-space: pre-wrap;
@@ -108,28 +125,6 @@
         border: none;
         text-decoration: underline;
         cursor: pointer;
-      }
-      .block-animation {
-        width: 125px;
-        height: 150px;
-      }
-      .block-animation img {
-        display: block;
-        position: relative;
-        height: 30%;
-        margin-top: -4px;
-      }
-      .top-block {
-        animation: top-slide-in 1.5s ease infinite;
-      }
-      .middle-block {
-        animation: middle-slide-in 1.5s ease infinite;
-      }
-      .bottom-block {
-        animation: bottom-slide-in 1.5s ease infinite;
-      }
-      .spash-waiting-for-js[data-theme="light"] {
-        background: white;
       }
       @keyframes top-slide-in {
         0% {
@@ -172,10 +167,11 @@
       .version {
         position: absolute;
         bottom: 0.5em;
-        text-align: center;
+        left: 0.5em;
         font-size: 1em;
         opacity: 0.5;
         padding: 20px;
+        user-select: all;
       }
       .progress-bar-fake {
         width: 256px;
@@ -206,17 +202,25 @@
         vertical-align: bottom;
       }
       .loading-dots a {
-        width: 14px;
-        height: 14px;
+        width: 12px;
+        height: 12px;
         background-color: currentColor;
         border-radius: 50%;
         display: inline-block;
         animation: bounce 0.8s infinite ease-in-out;
       }
 
+      .splash-screen[data-theme="light"] img, .ampmod-colour-scheme img {
+        filter: invert(100%);
+      }
+
+      .ampmod-logo {
+        margin-bottom: 18px;
+      }
+
       @keyframes bounce {
-        0%, 100% { transform: translateY(0px) scaleY(0.7); }
-        50% { transform: translateY(-20px) scaleY(1); }
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-15px); }
       }
 
       .loading-dots a:nth-child(1) { animation-delay: 0s; }
@@ -225,19 +229,26 @@
     </style>
   </head>
   <body>
-    <noscript>
-      <div class="splash-screen ampmod-colour-scheme">
-        <div class="splash-error-screen">
-        <div>
-            <h1 class="splash-error-title"><img src="<%= htmlWebpackPlugin.options.root %>images/reload.svg" draggable="false" loading="lazy" /> Oops! JavaScript is disabled.</h1>
-            <p><%= htmlWebpackPlugin.options.APP_NAME %> requires JavaScript. Consider using <a href="https://desktop.turbowarp.org/">TurboWarp Desktop</a> if you are afraid of remote JavaScript.</p>
-          </div>
-        </div>
+<noscript>
+  <div class="splash-screen ampmod-colour-scheme">
+    <div class="splash-error-screen">
+      <div>
+        <h1 class="splash-error-title">
+          <img src="<%= require('../components/menu-bar/tw-error.svg') %>" draggable="false" loading="lazy" height="48" /> JavaScript is disabled
+        </h1>
+        <p>
+          <%= htmlWebpackPlugin.options.APP_NAME %> requires JavaScript, but it is disabled or your browser doesn't support it. 
+          A desktop version of <%= htmlWebpackPlugin.options.APP_NAME %> will be available soon if you prefer not to load remote JavaScript.
+        </p>
       </div>
-    </noscript>
+    </div>
+  </div>
+</noscript>
 
-    <div class="splash-screen spash-waiting-for-js">
+
+    <div class="splash-screen spash-waiting-for-js" hidden>
       <div class="splash-main">
+        <img src="<%= require('../components/menu-bar/tw-advanced.svg') %>" draggable="false" loading="lazy" height="80" alt="AmpMod small logo" />
         <div class="loading-dots">
           <a></a><a></a><a></a>
         </div>
@@ -253,13 +264,14 @@
           <% } %>
         </div>
         <div class="splash-custom-info"></div>
+        <div class="version">v<%= process.env.ampmod_version %></div>
       </div>
       <div class="splash-error-screen" hidden>
-        <h1 class="splash-error-title"><img src="<%= htmlWebpackPlugin.options.root %>images/reload.svg" draggable="false" loading="lazy" /> Oops! Something went wrong.</h1>
-        <p>This page has crashed. Please refresh your page to try again. If this continues, please report the error to the <a href="https://ampmod.flarum.cloud/t/bugs-and-glitches">forums</a> or <a href="https://codeberg.org/ampmod/ampmod/issues">issue tracker</a>.</p>
+        <div class="version">v<%= process.env.ampmod_version %></div>
+        <h1 class="splash-error-title"><img src="<%= require('../components/menu-bar/tw-error.svg') %>" draggable="false" loading="lazy" height="48" /> Loading error</h1>
         <div class="splash-errors"></div>
-        <p>Please provide the above backtrace. Click <button class="splash-copy">here</button> to copy it.</p>
-        <p>Try <button class="splash-reset">bypassing the cache</button> or <button class="splash-delete-data">erasing <%= htmlWebpackPlugin.options.APP_NAME %>'s data</button>, which may fix some issues.</p>
+        <p>Please provide the above backtrace and send it to the <a href="https://ampmod.flarum.cloud/t/bugs-and-glitches">forums</a> or <a href="https://codeberg.org/ampmod/ampmod/issues">issue tracker</a>. Click <button class="splash-copy">here</button> to copy the backtrace.</p>
+        <p>Try <button class="splash-reset">bypassing the cache</button> or <button class="splash-delete-data">erasing the data</button>, which may fix some issues.</p>
       </div>
     </div>
 

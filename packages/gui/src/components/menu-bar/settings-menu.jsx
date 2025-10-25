@@ -14,6 +14,8 @@ import AmpAddonSettings from "./amp-addon-settings.jsx";
 import AmpInstallPWA from "./amp-install-pwa.jsx";
 import AmpErase from "./amp-erase.jsx";
 import AmpShowWelcome from "./amp-show-welcome.jsx";
+import { MenuItem } from "../menu/menu.jsx";
+import { APP_NAME } from "@ampmod/branding";
 
 import menuBarStyles from "./menu-bar.css";
 import styles from "./settings-menu.css";
@@ -173,6 +175,16 @@ class SettingsMenu extends React.Component {
                             {/* <AmpShowWelcome /> */}
 
                             {showAmpErase && <AmpErase />}
+
+                            <MenuItem>
+                                <div
+                                    className={`${styles.option} ${styles.disabled}`}
+                                >
+                                    <span className={styles.submenuLabel}>
+                                        {APP_NAME} v{process.env.ampmod_version}
+                                    </span>
+                                </div>
+                            </MenuItem>
                         </MenuSection>
                     </MenuBarMenu>
                 </MenuLabel>

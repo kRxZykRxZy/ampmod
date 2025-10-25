@@ -88,7 +88,6 @@ const base = {
                 { from: /./, to: "/404.html" },
             ],
         },
-        hot: true,
     },
     output: {
         library: "GUI",

@@ -119,7 +119,7 @@ class Theme {
     static dark = new Theme(ACCENT_DEFAULT, GUI_DARK, BLOCKS_DEFAULT);
     static highContrast = new Theme(
         ACCENT_DEFAULT,
-        GUI_HIGH_CONTRAST,
+        GUI_DEFAULT,
         BLOCKS_HIGH_CONTRAST
     );
 

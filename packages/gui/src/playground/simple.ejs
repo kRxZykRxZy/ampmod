@@ -4,6 +4,20 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title><%= htmlWebpackPlugin.options.title %></title>
+            <% 
+          /* Stolen from librekitten lol
+            https://codeberg.org/LibreKitten/LibreKitten/commit/87f1b2d934aa228829ee3179fb226c411d969fba#diff-4913fa303beb5bc166ede94c92bb244f9ed68cef */
+          [
+            require('@fontsource-variable/inter/files/inter-latin-wght-normal.woff2'),
+            require('@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2'),
+          ].map(font => { %>
+            <link 
+              rel="preload"
+              href="<%= font %>"
+              as="font"
+              type="font/woff2"
+            >
+        <% }); %>
         <% if (htmlWebpackPlugin.options.description) { %>
           <% /* SEO to try and battle outdated GitHub mirrors. */ %>
           <meta name="description" content="<%= htmlWebpackPlugin.options.description %>" />
@@ -52,12 +66,20 @@
                 display: none;
             }
             .splash-custom-info {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
                 padding: 20px;
                 border-radius: 8px;
-                margin: 10px;
                 background: #59c059;
                 color: white;
-                font-family: sans-serif;
+                font-family: "Inter Variable", sans-serif;
+                font-weight: bold;
+                text-align: center;
+            }
+            .splash-custom-info * {
+              vertical-align: middle;
             }
             .splash-custom-info a {
                 color: white;
@@ -66,10 +88,10 @@
     </head>
     <body>
         <noscript>
-            <h1>This page requires JavaScript</h1>
+            <div class="splash-custom-info"><img src="<%= require('../components/menu-bar/tw-error.svg') %>" draggable="false" loading="lazy" height="30" /> <%= htmlWebpackPlugin.options.APP_NAME %> requires JavaScript.</div>
         </noscript>
 
-        <div class="splash-custom-info" hidden></div>
+        <div class="splash-custom-info" hidden><img src="<%= require('../components/menu-bar/icon--settings.svg') %>" draggable="false" loading="lazy" height="30" /> <span class="splash-custom-info-text"></span></div>
 
         <div id="app"></div>
 
@@ -112,11 +134,14 @@
             }, 300);
 
             var splashCustomInfo = document.querySelector(
-                ".splash-custom-info"
+                ":not(noscript) .splash-custom-info"
+            );
+            var splashCustomInfoText = document.querySelector(
+                ".splash-custom-info-text"
             );
             window.SetCustomSplashInfo = text => {
                 splashCustomInfo.hidden = false;
-                splashCustomInfo.innerHTML = text;
+                splashCustomInfoText.innerHTML = text;
             };
             window.SplashEnd = () => {
                 splashCustomInfo.parentNode.removeChild(splashCustomInfo);
