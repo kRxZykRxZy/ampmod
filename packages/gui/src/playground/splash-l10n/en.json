@@ -14,5 +14,5 @@
     "errorCbLink": "issue tracker",
     "errorCopy": "here",
     "errorDidCopy": "Copied!",
-    "errorCopyFaile": "Failed to copy"
+    "errorCopyFailed": "Failed to copy"
 }

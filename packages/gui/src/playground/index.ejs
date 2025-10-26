@@ -289,6 +289,7 @@
         var storedLang = localStorage.getItem(lsNamespace + "language");
         var lang = storedLang;
         var t = translations[lang] || translations["en"];
+        document.documentElement.lang = lang;
 
         // Replace placeholders like {APP_NAME}, {reloading}, etc.
         function interpolate(str) {
