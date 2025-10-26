@@ -14,7 +14,7 @@ import { getIsLoadingWithId } from "../../reducers/project-state";
 import topBlock from "./top-block.svg";
 import middleBlock from "./middle-block.svg";
 import bottomBlock from "./bottom-block.svg";
-import { funFacts } from "../../lib/amp-fun-facts";
+import { facts, tips, jokes } from "../../lib/amp-fun-facts";
 
 const mainMessages = {
     "gui.loader.headline": (
@@ -90,13 +90,31 @@ class LoaderComponent extends React.Component {
         if (this.funFactEl) {
             this.funFactEl.classList.remove(styles.funFactSlideIn);
             void this.funFactEl.offsetWidth; // Trigger reflow
+
+            const rand = Math.random();
+            let pool;
+            if (rand < 0.78) {
+                pool = tips; // 78%
+            } else if (rand < 0.96) {
+                pool = facts; // 18%
+            } else {
+                pool = jokes; // 4%
+            }
+
             let randomIndex;
             do {
-                randomIndex = Math.floor(Math.random() * funFacts.length);
-            } while (randomIndex === this.lastFunFactIndex);
+                randomIndex = Math.floor(Math.random() * pool.length);
+            } while (
+                pool === this.lastPool &&
+                randomIndex === this.lastFunFactIndex &&
+                pool.length > 1
+            );
+
+            this.lastPool = pool;
             this.lastFunFactIndex = randomIndex;
-            const randomFact = funFacts[randomIndex];
-            this.funFactEl.textContent = randomFact;
+
+            const randomMessage = pool[randomIndex];
+            this.funFactEl.textContent = randomMessage;
             this.funFactEl.classList.add(styles.funFactSlideIn);
             this.funFactEl.classList.add(styles.funFactRoulette);
         }
