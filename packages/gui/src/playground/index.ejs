@@ -233,21 +233,21 @@
   </head>
   <body>
 <noscript>
-  <div class="splash-screen ampmod-colour-scheme">
-    <div class="splash-error-screen">
-      <div>
-        <h1 class="splash-error-title">
-          <img src="<%= require('../components/menu-bar/tw-error.svg') %>" draggable="false" loading="lazy" height="48" /> JavaScript is disabled
-        </h1>
-        <p>
-          <%= htmlWebpackPlugin.options.APP_NAME %> requires JavaScript, but it is disabled or your browser doesn't support it. 
-          A desktop version of <%= htmlWebpackPlugin.options.APP_NAME %> will be available soon if you prefer not to load remote JavaScript.
-        </p>
+      <!-- Text here is intentionally hardcoded to English since the translation loader relies on JavaScript. -->
+      <div class="splash-screen ampmod-colour-scheme">
+        <div class="splash-error-screen">
+          <div>
+            <h1 class="splash-error-title">
+              <img src="<%= require('../components/menu-bar/tw-error.svg') %>" draggable="false" loading="lazy" height="48" /> JavaScript is disabled
+            </h1>
+            <p>
+              <%= htmlWebpackPlugin.options.APP_NAME %> requires JavaScript, but it is disabled or your browser doesn't support it. 
+              A desktop version of <%= htmlWebpackPlugin.options.APP_NAME %> will be available soon if you prefer not to load remote JavaScript.
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</noscript>
-
+    </noscript>
 
     <div class="splash-screen spash-waiting-for-js" hidden>
       <div class="splash-main">
@@ -259,11 +259,9 @@
           <div class="splash-canary-title">This is a canary build. Please expect bugs.</div>
         <% } %>
         <div class="splash-taking-too-long" hidden>
-          <%= htmlWebpackPlugin.options.APP_NAME %> is taking too long to load.
-          Try <a href="javascript:window.location.reload()">reloading</a> or wait longer.
-          <br />Older browsers may not be able to decompress <%= htmlWebpackPlugin.options.APP_NAME %> properly.
+          <span data-amp-translation="tooLong1"></span>
           <% if (process.env.ampmod_is_cbp) { %>
-            <br />Consider checking <a href="https://status.codeberg.eu" target="_blank" rel="noreferrer">Codeberg's status page</a> to see if there are any ongoing issues.
+            <br /><span data-amp-translation="tooLong2"></span>
           <% } %>
         </div>
         <div class="splash-custom-info"></div>
@@ -271,17 +269,45 @@
       </div>
       <div class="splash-error-screen" hidden>
         <div class="version">v<%= process.env.ampmod_version %></div>
-        <h1 class="splash-error-title"><img src="<%= require('../components/menu-bar/tw-error.svg') %>" draggable="false" loading="lazy" height="48" /> Loading error</h1>
+        <h1 class="splash-error-title"><img src="<%= require('../components/menu-bar/tw-error.svg') %>" draggable="false" loading="lazy" height="48" /> <span data-amp-translation="error"></span></h1>
         <div class="splash-errors"></div>
-        <button onclick="window.location.reload()" class="reload-button">Reload</button>
-        <p>Please provide the above backtrace and send it to the <a href="https://ampmod.flarum.cloud/t/bugs-and-glitches">forums</a> or <a href="https://codeberg.org/ampmod/ampmod/issues">issue tracker</a>. Click <button class="splash-copy">here</button> to copy the backtrace.</p>
-        <p>Try <button class="splash-reset">bypassing the cache</button> or <button class="splash-delete-data">erasing the data</button>, which may fix some issues.</p>
+        <button onclick="window.location.reload()" class="reload-button"><span data-amp-translation="reload"></span></button>
+        <p><span data-amp-translation="errorText"></span></p>
+        <p><span data-amp-translation="errorTips"></span></p>
       </div>
     </div>
 
     <script>
       (function () {
         'use strict';
+
+        // Load translations
+        var translations = <%= JSON.stringify(require("./splash-translations").default) %>;
+
+        // Read preferred language from localStorage
+        var lsNamespace = "<%= require('../lib/amp-localstorage-namespace.js').lsNamespace %>";
+        var storedLang = localStorage.getItem(lsNamespace + "language");
+        var lang = storedLang;
+        var t = translations[lang] || translations["en"];
+
+        // Replace placeholders like {APP_NAME}, {reloading}, etc.
+        function interpolate(str) {
+          return str
+            .replace('{APP_NAME}', `<%= htmlWebpackPlugin.options.APP_NAME %>`)
+            .replace('{reloading}', `<a href="javascript:window.location.reload()">${t.tooLong1_reloading}</a>`)
+            .replace('{codebergStatus}', `<a href="https://status.codeberg.eu" target="_blank" rel="noreferrer">${t.codebergStatus}</a>`)
+            .replace('{forums}', `<a href="https://ampmod.flarum.cloud/t/bugs-and-glitches">${t.errorForumsLink}</a>`)
+            .replace('{issueTracker}', `<a href="https://codeberg.org/ampmod/ampmod/issues">${t.errorCbLink}</a>`)
+            .replace('{copy}', `<button class="splash-copy">${t.errorCopy}</button>`)
+            .replace('{nocache}', `<button class="splash-reset">${t.nocache}</button>`)
+            .replace('{eraseData}', `<button class="splash-delete-data">${t.eraseData}</button>`);
+        }
+
+        // Inject translations into all elements with data-amp-translation
+        document.querySelectorAll('[data-amp-translation]').forEach(function(el) {
+          var key = el.getAttribute('data-amp-translation');
+          el.innerHTML = interpolate(t[key]);
+        });
 
         var theme = '';
         var canary = <%= process.env.ampmod_mode === "canary" %>;
@@ -399,14 +425,14 @@
         splashCopy.onclick = function () {
           try {
             navigator.clipboard.writeText(splashError.textContent);
-            splashCopy.textContent = 'Copied!';
+            splashCopy.textContent = t.errorDidCopy;
             setTimeout(function () {
-              splashCopy.textContent = 'here';
+              splashCopy.textContent = t.errorCopy;
             }, 2000);
           } catch (e) {
-            splashCopy.textContent = 'Failed to copy';
+            splashCopy.textContent = t.errorCopyFailed;
             setTimeout(function () {
-              splashCopy.textContent = 'here';
+              splashCopy.textContent = t.errorCopy;
             }, 2000);
           }
         };

@@ -1,0 +1,18 @@
+{
+    "canaryBuild": "This is a canary build. Please expect bugs.",
+    "tooLong1": "{APP_NAME} is taking too long to load. Try {reloading} or wait longer.",
+    "tooLong1_reloading": "reloading",
+    "tooLong2": "Consider checking {codebergStatus} to see if there are any ongoing issues.",
+    "codebergStatus": "Codeberg's status page",
+    "error": "Loading error",
+    "reload": "Reload",
+    "errorText": "Please provide the above backtrace and send it to the {forums} or {issueTracker}. Click {copy} to copy the backtrace.",
+    "errorTips": "Try {nocache} or {eraseData}, which may fix some issues.",
+    "nocache": "bypassing the cache",
+    "eraseData": "erasing the data",
+    "errorForumsLink": "forums",
+    "errorCbLink": "issue tracker",
+    "errorCopy": "here",
+    "errorDidCopy": "Copied!",
+    "errorCopyFaile": "Failed to copy"
+}
