@@ -93,14 +93,6 @@
         text-decoration: underline;
         cursor: pointer;
       }
-      .version {
-        position: absolute;
-        bottom: 0.5em;
-        left: 0.5em;
-        font-size: 1em;
-        opacity: 0.5;
-        padding: 20px;
-      }
       .loading-dots {
         display: flex;
         gap: 1rem;
@@ -174,11 +166,9 @@
           <% } %>
         </div>
         <div class="splash-custom-info"></div>
-        <div class="version">v<%= process.env.ampmod_version %></div>
       </div>
 
       <div class="splash-error-screen" hidden>
-        <div class="version">v<%= process.env.ampmod_version %></div>
         <h1 class="splash-error-title"><img src="<%= require('../components/menu-bar/tw-error.svg') %>" draggable="false" loading="lazy" height="48" /> <span data-amp-translation="error"></span></h1>
         <div class="splash-errors"></div>
         <button onclick="window.location.reload()" class="reload-button"><span data-amp-translation="reload"></span></button>
