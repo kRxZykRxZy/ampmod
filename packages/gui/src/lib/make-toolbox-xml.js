@@ -1,5 +1,6 @@
 import LazyScratchBlocks from "./tw-lazy-scratch-blocks";
 import { defaultBlockColors } from "./themes";
+import futureIcon from "./libraries/extensions/future/future-iconuri.svg";
 
 const categorySeparator = '<sep gap="36"/>';
 
@@ -969,6 +970,26 @@ const myBlocks = function (isInitialSetup, isStage, targetId, colors) {
     `;
 };
 
+const futureToolbox = function (isInitialSetup, isStage, targetId, colors) {
+    return `
+    <category
+        name="Future"
+        colour="${colors.primary}"
+        secondaryColour="${colors.tertiary}"
+        iconURI="${futureIcon}"
+        id="future">
+        <block type="argument_reporter_string_number">
+            <field name="VALUE">project platform</field>
+        </block>
+        <block type="event_whentouchingobject">
+            <value name="TOUCHINGOBJECTMENU">
+                <shadow type="event_touchingobjectmenu"/>
+            </value>
+        </block>
+    </category>
+    `;
+};
+
 /* eslint-enable no-unused-vars */
 
 const xmlOpen = '<xml style="display: none">';
@@ -998,7 +1019,8 @@ const makeToolboxXML = function (
     costumeName = "",
     backdropName = "",
     soundName = "",
-    colors = defaultBlockColors
+    colors = defaultBlockColors,
+    futureEnabled = false
 ) {
     isStage = isInitialSetup || isStage;
     const gap = [categorySeparator];
@@ -1060,9 +1082,6 @@ const makeToolboxXML = function (
         moveCategory("procedures") ||
         myBlocks(isInitialSetup, isStage, targetId, colors.more);
 
-    // Always display future blocks as the first extension, if it exists.
-    let futureXML = moveCategory("future");
-
     // Always display pen blocks as a normal category, if it exists.
     let penXML = moveCategory("pen");
 
@@ -1091,7 +1110,11 @@ const makeToolboxXML = function (
 
     everything.push(variablesXML, gap, arraysXML, gap, myBlocksXML);
 
-    if (futureXML) {
+    if (futureEnabled) {
+        const futureXML =
+            moveCategory("future") ||
+            futureToolbox(isInitialSetup, isStage, targetId, colors.more);
+
         everything.push(gap, futureXML);
     }
 

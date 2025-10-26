@@ -56,10 +56,9 @@ const defaultBuiltinExtensions = {
             /* webpackChunkName: "extension-gdxfor" */ "../extensions/scratch3_gdx_for"
         ),
     // amp: exclusive extensions
-    future: () =>
-        import(
-            /* webpackChunkName: "future-toolbox" */ "../extensions/ampmod_future"
-        ),
+    future: () => {
+        /* compatibility */
+    },
     electroTest: () =>
         import(
             /* webpackChunkName: "electrotest" */ "../extensions/ampmod_electro_test"

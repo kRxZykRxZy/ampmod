@@ -222,6 +222,12 @@ class ExtensionLibrary extends React.PureComponent {
             return;
         }
 
+        if (extensionId === "future") {
+            this.props.onFutureClicked();
+            this.props.onCategorySelected("future");
+            return;
+        }
+
         const url = item.extensionURL ? item.extensionURL : extensionId;
         if (!item.disabled) {
             if (this.props.vm.extensionManager.isExtensionLoaded(extensionId)) {

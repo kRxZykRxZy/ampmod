@@ -101,6 +101,8 @@ class Blocks extends React.Component {
         super(props);
         this.ScratchBlocks = VMScratchBlocks(props.vm, false);
 
+        let futureEnabled = false;
+
         window.ScratchBlocks = this.ScratchBlocks;
         AddonHooks.blockly = this.ScratchBlocks;
         AddonHooks.blocklyCallbacks.forEach(i => i());
@@ -134,6 +136,7 @@ class Blocks extends React.Component {
             "setLocale",
             "handleEnableProcedureReturns",
             "handleEnableLegacyLists",
+            "handleFutureClicked",
         ]);
         this.ScratchBlocks.prompt = this.handlePromptStart;
         this.ScratchBlocks.statusButtonCallback =
@@ -566,7 +569,8 @@ class Blocks extends React.Component {
                 targetSounds.length > 0
                     ? targetSounds[targetSounds.length - 1].name
                     : "",
-                this.props.theme.getBlockColors()
+                this.props.theme.getBlockColors(),
+                this.futureEnabled
             );
         } catch {
             return null;
@@ -698,6 +702,13 @@ class Blocks extends React.Component {
         defineBlocks(categoryInfo.blocks);
 
         // Update the toolbox with new blocks if possible
+        const toolboxXML = this.getToolboxXML();
+        if (toolboxXML) {
+            this.props.updateToolboxState(toolboxXML);
+        }
+    }
+    handleFutureClicked() {
+        this.futureEnabled = true;
         const toolboxXML = this.getToolboxXML();
         if (toolboxXML) {
             this.props.updateToolboxState(toolboxXML);
@@ -881,6 +892,7 @@ class Blocks extends React.Component {
                             this.handleEnableProcedureReturns
                         }
                         onEnableLegacyLists={this.handleEnableLegacyLists}
+                        onFutureClicked={this.handleFutureClicked}
                         onRequestClose={onRequestCloseExtensionLibrary}
                         onOpenCustomExtensionModal={
                             onOpenCustomExtensionModal ||
