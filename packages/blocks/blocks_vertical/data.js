@@ -136,6 +136,7 @@ Blockly.Blocks["data_hidevariable"] = {
     init: function () {
         this.jsonInit({
             message0: Blockly.Msg.DATA_HIDEVARIABLE,
+            lastDummyAlign0: "CENTRE",
             args0: [
                 {
                     type: "field_variable",

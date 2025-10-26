@@ -1683,6 +1683,9 @@ class Runtime extends EventEmitter {
             ++outLineNum;
         }
 
+        blockJSON[`lastDummyAlign${outLineNum}`] =
+            blockInfo[`align${outLineNum}`] || "RIGHT";
+
         const mutation = blockInfo.isDynamic
             ? `<mutation blockInfo="${xmlEscape(JSON.stringify(blockInfo))}"/>`
             : "";
