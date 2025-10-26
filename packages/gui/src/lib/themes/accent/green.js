@@ -1,22 +1,22 @@
 const guiColors = {
-    "motion-primary": "#59C059",
-    "motion-primary-transparent": "#59C059e6",
-    "motion-tertiary": "#389438",
-    "looks-secondary": "#59C059",
-    "looks-transparent": "#59C05959",
-    "looks-light-transparent": "#59C05926",
-    "looks-secondary-dark": "hsla(120, 42%, 51%, 1)",
-    "extensions-primary": "#389438",
-    "extensions-tertiary": "#2e742e",
-    "extensions-transparent": "hsla(120, 100%, 30%, 0.35)",
-    "drop-highlight": "#66bb6a",
+    "motion-primary": "#4FA55C", // Main green
+    "motion-primary-transparent": "#4FA55CB3", // 70% opacity
+    "motion-tertiary": "#3E834A",
+    "looks-secondary": "#4FA55C",
+    "looks-transparent": "#4FA55C40",
+    "looks-light-transparent": "#4FA55C26",
+    "looks-secondary-dark": "#356C3F",
+    "extensions-primary": "#3E834A",
+    "extensions-tertiary": "#326B3C",
+    "extensions-transparent": "#356C3F59",
+    "drop-highlight": "#5FB56E",
     "menu-bar-background-image-classic": "none",
     "menu-bar-background-image-modern": "none",
 };
 
 const blockColors = {
-    checkboxActiveBackground: "#59C059",
-    checkboxActiveBorder: "#389438",
+    checkboxActiveBackground: "#4FA55C",
+    checkboxActiveBorder: "#3E834A",
 };
 
 export { guiColors, blockColors };

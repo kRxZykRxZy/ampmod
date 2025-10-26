@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import check from "../menu-bar/check.svg";
 import {
     ACCENT_GREEN,
+    ACCENT_GREEN_OLD,
     ACCENT_GREY,
     ACCENT_BLUE,
     ACCENT_MAP,
@@ -19,49 +20,9 @@ import { closeSettingsMenu } from "../../reducers/menus.js";
 import { setTheme } from "../../reducers/theme.js";
 import { persistTheme } from "../../lib/themes/themePersistance.js";
 import styles from "./welcome.css";
+import { options } from "../menu-bar/tw-theme-accent.jsx";
 
 import rainbowIcon from "../menu-bar/tw-accent-rainbow.svg";
-
-const options = defineMessages({
-    [ACCENT_GREEN]: {
-        defaultMessage: "Green",
-        description:
-            "Name of the green color scheme, used by UltiBlocks by default.",
-        id: "tw.accent.green",
-    },
-    [ACCENT_RED]: {
-        defaultMessage: "Red",
-        description:
-            "Name of the red color scheme, used by TurboWarp by default.",
-        id: "tw.accent.red",
-    },
-    [ACCENT_PURPLE]: {
-        defaultMessage: "Purple",
-        description: "Name of the purple color scheme. Matches modern Scratch.",
-        id: "tw.accent.purple",
-    },
-    [ACCENT_BLUE]: {
-        defaultMessage: "Blue",
-        description:
-            "Name of the blue color scheme. Matches Scratch before the high contrast update.",
-        id: "tw.accent.blue",
-    },
-    [ACCENT_GREY]: {
-        defaultMessage: "Grey",
-        description:
-            "Name of the grey color scheme. Matches the header of TurboWarp in dark mode.",
-        id: "tw.accent.grey",
-    },
-    [ACCENT_RAINBOW]: {
-        defaultMessage: "Rainbow",
-        description: "Name of color scheme that uses a rainbow.",
-        id: "tw.accent.rainbow",
-    },
-});
-
-const icons = {
-    [ACCENT_RAINBOW]: rainbowIcon,
-};
 
 const ColorIcon = props => (
     <div

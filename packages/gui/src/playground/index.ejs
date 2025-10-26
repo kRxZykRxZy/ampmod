@@ -215,7 +215,7 @@
 
         const splash = document.querySelector('.spash-waiting-for-js');
         const canary = <%= process.env.ampmod_mode === "canary" %>;
-        let accent = canary ? '#FF4C4C' : '#59C059';
+        let accent = canary ? '#FF4C4C' : '#4fa55c';
         let theme = '';
 
         const themeSetting = localStorage.getItem(`${lsNamespace}theme`);
@@ -224,7 +224,7 @@
           theme = parsed.gui;
           if (parsed.accent) {
              const accentMap = {
-                'purple': '#855cd6', 'blue': '#4c97ff', 'green': '#59c059', 
+                'purple': '#855cd6', 'blue': '#4c97ff', 'green-old': '#59c059', 
                 'grey': '#333', 'red': '#FF4C4C', 'rainbow': '#FF4C4C'
             };
             accent = accentMap[parsed.accent] || accent;

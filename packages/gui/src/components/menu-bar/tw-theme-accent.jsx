@@ -16,6 +16,7 @@ import {
     ACCENT_RED,
     ACCENT_RAINBOW,
     Theme,
+    ACCENT_GREEN_OLD,
 } from "../../lib/themes/index.js";
 import {
     openAccentMenu,
@@ -27,12 +28,18 @@ import { persistTheme } from "../../lib/themes/themePersistance.js";
 import rainbowIcon from "./tw-accent-rainbow.svg";
 import styles from "./settings-menu.css";
 
-const options = defineMessages({
+export const options = defineMessages({
     [ACCENT_GREEN]: {
         defaultMessage: "Green",
         description:
-            "Name of the green color scheme, used by UltiBlocks by default.",
+            "Name of the green color scheme, used by AmpMod by default.",
         id: "tw.accent.green",
+    },
+    [ACCENT_GREEN_OLD]: {
+        defaultMessage: "Green (Classic)",
+        description:
+            "Name of the old version of green color scheme, used by AmpMod until version 0.3.",
+        id: "tw.accent.green.old",
     },
     [ACCENT_RED]: {
         defaultMessage: "Red",

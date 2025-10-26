@@ -1,6 +1,7 @@
 import defaultsDeep from "lodash.defaultsdeep";
 
 import * as accentGreen from "./accent/green";
+import * as accentGreenOld from "./accent/green-old";
 import * as accentPurple from "./accent/purple";
 import * as accentBlue from "./accent/blue";
 import * as accentRed from "./accent/red";
@@ -22,6 +23,7 @@ const ACCENT_BLUE = "blue";
 const ACCENT_RED = "red";
 const ACCENT_RAINBOW = "rainbow";
 const ACCENT_GREEN = "green";
+const ACCENT_GREEN_OLD = "green-old";
 const ACCENT_GREY = "grey";
 
 const ACCENT_MAP = {
@@ -29,6 +31,7 @@ const ACCENT_MAP = {
     [ACCENT_BLUE]: accentBlue,
     [ACCENT_RED]: accentRed,
     [ACCENT_GREEN]: accentGreen,
+    [ACCENT_GREEN_OLD]: accentGreenOld,
     [ACCENT_GREY]: accentGrey,
     [ACCENT_RAINBOW]: accentRainbow,
 };
@@ -190,6 +193,7 @@ export {
     ACCENT_BLUE,
     ACCENT_RAINBOW,
     ACCENT_GREEN,
+    ACCENT_GREEN_OLD,
     ACCENT_GREY,
     ACCENT_MAP,
     GUI_AMP_LIGHT,
