@@ -60,13 +60,15 @@ const projectData = translateFunction => {
                 currentCostume: 0,
                 costumes: [
                     {
+                        // TODO: This is the asset ID for an older version of Apple Cat hosted on Scratch.
+                        // Get someone to upload a project with the new version. I'm banned from Scratch. :(
                         assetId: "1fe66020da00ba6c793c45d652e6b9cd",
                         name: translator(messages.costume, { index: 1 }),
                         bitmapResolution: 1,
-                        md5ext: "1fe66020da00ba6c793c45d652e6b9cd.svg",
+                        md5ext: "c24296f84d90fdbf1512f0ab80609ac4.svg",
                         dataFormat: "svg",
-                        rotationCenterX: 28.989415000000065,
-                        rotationCenterY: 29.324178162470673,
+                        rotationCenterX: 31.572246090665914,
+                        rotationCenterY: 31.73077782082143,
                     },
                 ],
                 sounds: [],
