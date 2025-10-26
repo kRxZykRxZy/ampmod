@@ -99,6 +99,7 @@
 .settings-button .button-icon,
 .file-button .button-icon,
 .edit-button .button-icon,
+.error-icon,
 .menu-bar-item.logo img {
     filter: var(--menu-bar-icon-filter);
 }

@@ -102,7 +102,7 @@ import aboutIcon from "./ampmod.svg";
 import fileIcon from "./icon--file.svg";
 import editIcon from "./icon--edit.svg";
 import addonsIcon from "./addons.svg";
-import errorIcon from "./tw-error.svg";
+import errorIcon from "./amp-error.svg";
 import advancedIcon from "./tw-advanced.svg";
 
 import prehistoricLogo from "./prehistoric-logo.svg";
@@ -114,7 +114,7 @@ import SeeInsideButton from "./tw-see-inside.jsx";
 import isScratchDesktop, {
     notScratchDesktop,
 } from "../../lib/isScratchDesktop.js";
-import { APP_FORUMS, APP_NAME } from "@ampmod/branding";
+import { APP_FORUMS, APP_FORUMS_BUGS, APP_NAME } from "@ampmod/branding";
 
 import ampmodIcon from "./tw-advanced.svg";
 import ampmodCanaryIcon from "./ampmod-canary.svg";
@@ -511,9 +511,13 @@ class MenuBar extends React.Component {
                                     <img
                                         src={errorIcon}
                                         draggable={false}
-                                        width={20}
-                                        height={20}
+                                        width={30}
+                                        height={30}
+                                        className={styles.errorIcon}
                                     />
+                                    <span className={styles.collapsibleLabel}>
+                                        Error
+                                    </span>
                                     <img
                                         className={styles.itemDropdownCaretIcon}
                                         src={dropdownCaret}
@@ -531,14 +535,18 @@ class MenuBar extends React.Component {
                                         }
                                     >
                                         <MenuSection>
-                                            <MenuItemLink href="https://scratch.mit.edu/users/GarboMuffin/#comments">
+                                            <MenuItemLink
+                                                href={APP_FORUMS_BUGS}
+                                            >
                                                 <FormattedMessage
                                                     defaultMessage="Some scripts encountered errors."
                                                     description="Link in error menu"
                                                     id="tw.menuBar.reportError1"
                                                 />
                                             </MenuItemLink>
-                                            <MenuItemLink href="https://scratch.mit.edu/users/GarboMuffin/#comments">
+                                            <MenuItemLink
+                                                href={APP_FORUMS_BUGS}
+                                            >
                                                 <FormattedMessage
                                                     defaultMessage="This is a bug. Please report it."
                                                     description="Link in error menu"
