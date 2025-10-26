@@ -234,6 +234,9 @@ class LibraryItemComponent extends React.PureComponent {
                                             <img
                                                 src={bluetoothIconURL}
                                                 draggable={false}
+                                                className={
+                                                    styles.requirementsIcon
+                                                }
                                             />
                                         ) : null}
                                         {this.props
@@ -241,6 +244,9 @@ class LibraryItemComponent extends React.PureComponent {
                                             <img
                                                 src={internetConnectionIconURL}
                                                 draggable={false}
+                                                className={
+                                                    styles.requirementsIcon
+                                                }
                                             />
                                         ) : null}
                                     </div>

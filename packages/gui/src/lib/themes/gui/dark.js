@@ -44,7 +44,7 @@ const guiColors = {
     "filter-icon-gray": "grayscale(100%) brightness(1.7)",
     "filter-icon-white": "brightness(0) invert(100%)",
 
-    "paint-filter-icon-gray": "brightness(1.7)",
+    "paint-filter-icon-gray": "brightness(0) invert(1)",
 };
 
 const blockColors = {

@@ -249,3 +249,7 @@
     font-weight: bold;
     color: $turbowarp-color;
 }
+
+.requirements-icon {
+    filter: var(--filter-icon-white);
+}
