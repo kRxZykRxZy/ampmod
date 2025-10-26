@@ -47,8 +47,10 @@ import gdxforConnectionIconURL from "./gdxfor/gdxfor-illustration.svg";
 import gdxforConnectionSmallIconURL from "./gdxfor/gdxfor-small.svg";
 
 import futureIcon from "./future/future.svg";
+import futureInsetIcon from "./future/future-small.svg";
 import customExtensionIcon from "./custom/custom.svg";
 import legacyListsIcon from "./legacyLists/legacylists.svg";
+import legacyListsInsetIcon from "./legacyLists/list_icon.svg";
 import galleryIcon from "./gallery/gallery.svg";
 import { APP_NAME } from "@ampmod/branding";
 
@@ -97,7 +99,7 @@ export default [
                 id="gui.extension.videosensing.description"
             />
         ),
-        tags: ["scratch", "graphics"],
+        tags: ["scratch", "hardware"],
         featured: true,
     },
     {
@@ -162,7 +164,7 @@ export default [
                 id="gui.extension.makeymakey.description"
             />
         ),
-        tags: ["scratch"], // TODO: Whether this should be a hardware extension is up for debate
+        tags: ["scratch", "hardware"],
         featured: true,
     },
     // Custom Reporters is commented out because it was moved to the base editor
@@ -191,29 +193,6 @@ export default [
     {
         name: (
             <FormattedMessage
-                defaultMessage="Legacy Lists"
-                description="Name for the 'Legacy Lists' extension"
-                id="gui.extension.legacyLists.name"
-            />
-        ),
-        extensionId: "data_enable_lists",
-        iconURL: legacyListsIcon,
-        description: (
-            <FormattedMessage
-                defaultMessage="Use the vanilla list system. Note that the Arrays blocks are more flexible and should be used instead if possible."
-                description="Description for the 'Legacy Lists' extension"
-                id="gui.extension.legacyLists.description"
-            />
-        ),
-        tags: ["scratch", "data"],
-        featured: true,
-        enabled:
-            process.env.ampmod_mode === "canary" ||
-            process.env.NODE_ENV === "development",
-    },
-    {
-        name: (
-            <FormattedMessage
                 defaultMessage="Future"
                 description="Name of the 'Future' extension"
                 id="ub.futureExtension.name"
@@ -221,18 +200,19 @@ export default [
         ),
         extensionId: "future",
         iconURL: futureIcon,
+        insetIconURL: futureInsetIcon,
+        insetIconBgColor: "#59c059",
         description: (
             <FormattedMessage
-                defaultMessage="Experimental core blocks that may or may not make it into a future release of {APP_NAME}."
-                description="Description of the 'TurboWarp Blocks' extension"
-                id="ub.futureExtension.description"
+                defaultMessage="Use beta-quality blocks that the {APP_NAME} developers are experimenting with."
+                description="Description of the 'Future' extension"
+                id="amp.futureExtension.description"
                 values={{
                     APP_NAME,
                 }}
             />
         ),
         incompatibleWithScratch: true,
-        docsURI: "https://ampmod.miraheze.org/wiki/Future",
         tags: ["ampmod", "catexp"],
         featured: true,
     },
@@ -396,6 +376,31 @@ export default [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Legacy Lists"
+                description="Name for the 'Legacy Lists' extension"
+                id="gui.extension.legacyLists.name"
+            />
+        ),
+        extensionId: "data_enable_lists",
+        iconURL: legacyListsIcon,
+        insetIconURL: legacyListsInsetIcon,
+        insetIconBgColor: "#ff661a",
+        description: (
+            <FormattedMessage
+                defaultMessage="Use Scratch's vanilla list system. For compatibility."
+                description="Description for the 'Legacy Lists' extension"
+                id="gui.extension.legacyLists.description"
+            />
+        ),
+        tags: ["scratch", "data"],
+        featured: true,
+        enabled:
+            process.env.ampmod_mode === "canary" ||
+            process.env.NODE_ENV === "development",
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Custom Extension"
                 description="Name of library item to load a custom extension from a remote source"
                 id="tw.customExtension.name"
@@ -461,7 +466,7 @@ export const galleryMore = {
             // eslint-disable-next-line max-len
             defaultMessage="Learn more about extensions at ampmod.codeberg.page/extensions."
             description="Appears after the extension list from the gallery was loaded successfully"
-            id="tw.extensionGalleryAmp.more"
+            id="amp.extensionGallery.more"
         />
     ),
     tags: ["tw", "ampmod"],
@@ -473,7 +478,7 @@ export const galleryError = {
         <FormattedMessage
             defaultMessage="{APP_NAME} Extension Gallery"
             description="Name of ampmod.codeberg.page/extensions in extension library"
-            id="tw.extensionGalleryAmp.name"
+            id="amp.extensionGallery.name"
             values={{
                 APP_NAME,
             }}
@@ -487,7 +492,7 @@ export const galleryError = {
             // eslint-disable-next-line max-len
             defaultMessage="Error loading extension gallery. Visit ampmod.codeberg.page/extensions to find more extensions."
             description="Appears when an error occurred loading extension list from the custom extension gallery"
-            id="tw.extensionGallery.error"
+            id="amp.extensionGallery.error"
         />
     ),
     tags: ["tw", "ampmod"],

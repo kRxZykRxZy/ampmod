@@ -227,6 +227,9 @@ const Footer = () => {
                         </a>
                     </div>
                 </div>
+                <div className={styles.footerText}>
+                    <small>{process.env.ampmod_version}</small>
+                </div>
             </div>
             {isAprilFools() && <div className={styles.semicolon}>;</div>}
         </footer>

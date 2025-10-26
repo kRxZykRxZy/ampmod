@@ -17,11 +17,11 @@
         "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: $text-primary;
     background: $ui-white;
-    box-shadow: 0 0 0 2px $ui-black-transparent;
     border-radius: $space;
     text-align: center;
     cursor: pointer;
-    transition: box-shadow 0.3s ease;
+    transition: border 0.1s ease;
+    border: 2px solid $ui-black-transparent;
 }
 
 .library-item-extension {
@@ -30,11 +30,11 @@
 }
 
 .library-item:hover {
-    box-shadow: 0 0 0 5px $looks-transparent;
+    border-color: $looks-secondary;
 }
 
 .library-item.new:hover {
-    box-shadow: 0 0 0 5px $turbowarp-transparent;
+    border-color: $data-primary;
 }
 
 .hidden {
@@ -194,47 +194,40 @@
 
 .coming-soon-text,
 .new-text {
-    font-size: 1.1rem;
-    padding: 0.25rem 0.5rem;
-    top: 0;
-    right: 0;
+    padding: 0.25rem 0.4rem;
+    top: 8px;
     position: absolute;
     font-weight: bold;
+    border-radius: 4px;
+    border: 1px solid $ui-black-transparent-default;
+    color: $ui-white-default;
+    background-color: $data-primary;
 }
 
 [dir="ltr"] .coming-soon-text,
 [dir="ltr"] .new-text {
-    right: 0rem;
-    border-bottom-left-radius: $space;
+    right: 8px;
     left: auto;
 }
 
 [dir="rtl"] .coming-soon-text,
 [dir="rtl"] .new-text {
-    left: 0rem;
-    border-bottom-left-radius: $space;
+    left: 8px;
     right: auto;
 }
 
-.new-text {
-    background-color: $turbowarp-color;
-    color: $ui-white-default;
-}
-
-.coming-soon-text {
-    background-color: $data-primary;
-    color: $ui-white-default;
-}
-
 .favorite-container {
-    display: none;
+    display: block;
     background: none;
     border: none;
     padding: 0;
     margin: 0;
+    opacity: 0;
     position: absolute;
     top: 0.5rem;
     left: 0.5rem;
+    pointer-events: none;
+    transition: opacity 0.1s ease;
 }
 .favorite-icon {
     width: 32px;
@@ -242,7 +235,8 @@
 }
 .favorite-container.active,
 .library-item:hover .favorite-container {
-    display: block;
+    opacity: 1;
+    pointer-events: all;
 }
 
 .deprecated-warning {

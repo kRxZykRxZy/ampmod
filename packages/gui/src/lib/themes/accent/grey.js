@@ -11,9 +11,9 @@ const guiColors = {
     "extensions-transparent": "#7e7e7e22",
     "extensions-light": "#7e7e7e",
     "drop-highlight": "#66bb6a",
-    "menu-bar-background": "#333333",
-    "ui-modal-header-background": "#333333",
-    "menu-bar-hover": "#ffffff26",
+    //    "menu-bar-background": "#333333",
+    //    "ui-modal-header-background": "#333333",
+    //    "menu-bar-hover": "#ffffff26",
 };
 
 const blockColors = {

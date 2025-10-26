@@ -368,7 +368,7 @@ class LibraryComponent extends React.Component {
                                             }
                                             if (tagProps["heading"]) {
                                                 return (
-                                                    <h3>{tagProps.heading}</h3>
+                                                    <h4>{tagProps.heading}</h4>
                                                 );
                                             }
                                             return (
