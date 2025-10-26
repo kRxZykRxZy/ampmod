@@ -402,7 +402,7 @@
         };
         splashDeleteData.onclick = function () {
             try {
-            if (!confirm('Your backpack and restore points will be deleted. Continue?')) {
+            if (!confirm(t.eraseDataConfirm)) {
               return;
             }
             <% if (process.env.ampmod_mode === "canary") { %>

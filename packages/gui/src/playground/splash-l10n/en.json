@@ -10,6 +10,7 @@
     "errorTips": "Try {nocache} or {eraseData}, which may fix some issues.",
     "nocache": "bypassing the cache",
     "eraseData": "erasing the data",
+    "eraseDataConfirm": "Your backpack and restore points will be deleted. Continue?",
     "errorForumsLink": "forums",
     "errorCbLink": "issue tracker",
     "errorCopy": "here",
