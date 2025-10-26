@@ -394,9 +394,6 @@ export default [
         ),
         tags: ["scratch", "data"],
         featured: true,
-        enabled:
-            process.env.ampmod_mode === "canary" ||
-            process.env.NODE_ENV === "development",
     },
     {
         name: (
