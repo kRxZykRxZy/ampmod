@@ -445,6 +445,7 @@ class LibraryComponent extends React.Component {
                                         internetConnectionRequired={
                                             dataItem.internetConnectionRequired
                                         }
+                                        requirements={dataItem.requirements}
                                         isPlaying={
                                             this.state.playingItem === index
                                         }

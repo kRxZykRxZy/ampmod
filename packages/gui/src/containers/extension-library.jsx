@@ -89,6 +89,7 @@ const fetchLibrary = async () => {
                 return credit.name;
             }
         ),
+        requirements: extension.requirements || "no requirements",
         docsURI: extension.docs
             ? `https://ampmod.codeberg.page/extensions/${extension.slug}`
             : null,

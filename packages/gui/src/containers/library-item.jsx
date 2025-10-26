@@ -173,6 +173,7 @@ class LibraryItem extends React.PureComponent {
                 internetConnectionRequired={
                     this.props.internetConnectionRequired
                 }
+                requirements={this.props.requirements}
                 isPlaying={this.props.isPlaying}
                 name={this.props.name}
                 credits={this.props.credits}

@@ -9,6 +9,8 @@ import classNames from "classnames";
 
 import bluetoothIconURL from "./bluetooth.svg";
 import internetConnectionIconURL from "./internet-connection.svg";
+import nfcIconURL from "./nfc.svg";
+import packagedIconURL from "./packaged.svg";
 import favoriteInactiveIcon from "./favorite-inactive.svg";
 import favoriteActiveIcon from "./favorite-active.svg";
 
@@ -210,11 +212,13 @@ class LibraryItemComponent extends React.PureComponent {
 
                 {this.props.bluetoothRequired ||
                 this.props.internetConnectionRequired ||
+                this.props.requirements ||
                 this.props.collaborator ? (
                     <div className={styles.featuredExtensionMetadata}>
                         <div className={styles.featuredExtensionRequirement}>
                             {this.props.bluetoothRequired ||
-                            this.props.internetConnectionRequired ? (
+                            this.props.internetConnectionRequired ||
+                            this.props.requirements ? (
                                 <div>
                                     <div>
                                         <FormattedMessage
@@ -228,20 +232,56 @@ class LibraryItemComponent extends React.PureComponent {
                                             styles.featuredExtensionMetadataDetail
                                         }
                                     >
-                                        {this.props.bluetoothRequired ? (
+                                        {this.props.bluetoothRequired ||
+                                        this.props.requirements?.includes(
+                                            "bluetooth"
+                                        ) ? (
                                             <img
                                                 src={bluetoothIconURL}
                                                 draggable={false}
+                                                title={"Bluetooth"}
+                                                height={16}
                                                 className={
                                                     styles.requirementsIcon
                                                 }
                                             />
                                         ) : null}
                                         {this.props
-                                            .internetConnectionRequired ? (
+                                            .internetConnectionRequired ||
+                                        this.props.requirements?.includes(
+                                            "internet"
+                                        ) ? (
                                             <img
                                                 src={internetConnectionIconURL}
                                                 draggable={false}
+                                                title={"Internet"}
+                                                height={16}
+                                                className={
+                                                    styles.requirementsIcon
+                                                }
+                                            />
+                                        ) : null}
+                                        {this.props.requirements?.includes(
+                                            "nfc"
+                                        ) ? (
+                                            <img
+                                                src={nfcIconURL}
+                                                draggable={false}
+                                                title={"NFC"}
+                                                height={16}
+                                                className={
+                                                    styles.requirementsIcon
+                                                }
+                                            />
+                                        ) : null}
+                                        {this.props.requirements?.includes(
+                                            "packaged"
+                                        ) ? (
+                                            <img
+                                                src={packagedIconURL}
+                                                draggable={false}
+                                                title={"Packaged project"}
+                                                height={16}
                                                 className={
                                                     styles.requirementsIcon
                                                 }
@@ -348,6 +388,7 @@ LibraryItemComponent.propTypes = {
     insetIconURL: PropTypes.string,
     insetIconBgColor: PropTypes.string,
     internetConnectionRequired: PropTypes.bool,
+    requirements: PropTypes.array,
     isPlaying: PropTypes.bool,
     name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     credits: PropTypes.arrayOf(
