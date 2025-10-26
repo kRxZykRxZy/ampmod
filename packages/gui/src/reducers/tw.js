@@ -18,6 +18,7 @@ const SET_HAS_CLOUD_VARIABLES = "tw/SET_HAS_CLOUD_VARIABLES";
 const SET_CLOUD_HOST = "tw/SET_CLOUD_HOST";
 const SET_PLATFORM_MISMATCH_DETAILS = "tw/SET_PLATFORM_MISMATCH_DETAILS";
 const SET_PROJECT_ERROR = "tw/SET_PROJECT_ERROR";
+const SET_FUTURE_ENABLED = "tw/SET_FUTURE_ENABLED";
 
 export const initialState = {
     framerate: 30,
@@ -55,6 +56,7 @@ export const initialState = {
         callback: null,
     },
     projectError: null,
+    futureEnabled: false,
 };
 
 const reducer = function (state, action) {
@@ -142,6 +144,8 @@ const reducer = function (state, action) {
             return Object.assign({}, state, {
                 projectError: action.projectError,
             });
+        case SET_FUTURE_ENABLED:
+            return { ...state, futureEnabled: action.enabled };
         default:
             return state;
     }
@@ -287,6 +291,11 @@ const setSecman = function (secman) {
     };
 };
 
+const setFutureEnabled = enabled => ({
+    type: SET_FUTURE_ENABLED,
+    enabled,
+});
+
 export {
     reducer as default,
     initialState as twInitialState,
@@ -310,4 +319,5 @@ export {
     setPlatformMismatchDetails,
     setProjectError,
     setSecman,
+    setFutureEnabled,
 };

@@ -31,6 +31,7 @@ import {
 import { connect } from "react-redux";
 import { updateToolbox } from "../reducers/toolbox";
 import { activateColorPicker } from "../reducers/color-picker";
+import { setFutureEnabled } from "../reducers/tw";
 import {
     closeExtensionLibrary,
     openSoundRecorder,
@@ -101,12 +102,12 @@ class Blocks extends React.Component {
         super(props);
         this.ScratchBlocks = VMScratchBlocks(props.vm, false);
 
-        let futureEnabled = false;
-
         window.ScratchBlocks = this.ScratchBlocks;
         AddonHooks.blockly = this.ScratchBlocks;
         AddonHooks.blocklyCallbacks.forEach(i => i());
         AddonHooks.blocklyCallbacks.length = [];
+
+        this.futureEnabled = false;
 
         bindAll(this, [
             "attachVM",
@@ -570,7 +571,7 @@ class Blocks extends React.Component {
                     ? targetSounds[targetSounds.length - 1].name
                     : "",
                 this.props.theme.getBlockColors(),
-                this.futureEnabled
+                this.props.futureEnabled || this.futureEnabled
             );
         } catch {
             return null;
@@ -709,10 +710,9 @@ class Blocks extends React.Component {
     }
     handleFutureClicked() {
         this.futureEnabled = true;
+        this.props.setFutureEnabled(true);
         const toolboxXML = this.getToolboxXML();
-        if (toolboxXML) {
-            this.props.updateToolboxState(toolboxXML);
-        }
+        if (toolboxXML) this.props.updateToolboxState(toolboxXML);
     }
     handleBlocksInfoUpdate(categoryInfo) {
         // @todo Later we should replace this to avoid all the warnings from redefining blocks.
@@ -993,6 +993,7 @@ const mapStateToProps = state => ({
     customProceduresVisible: state.scratchGui.customProcedures.active,
     workspaceMetrics: state.scratchGui.workspaceMetrics,
     useCatBlocks: isTimeTravel2020(state),
+    futureEnabled: state.scratchGui.tw.futureEnabled,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -1020,6 +1021,7 @@ const mapDispatchToProps = dispatch => ({
     updateMetrics: metrics => {
         dispatch(updateMetrics(metrics));
     },
+    setFutureEnabled: enabled => dispatch(setFutureEnabled(enabled)),
 });
 
 export default injectIntl(

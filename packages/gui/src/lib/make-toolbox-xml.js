@@ -970,12 +970,10 @@ const myBlocks = function (isInitialSetup, isStage, targetId, colors) {
     `;
 };
 
-const futureToolbox = function (isInitialSetup, isStage, targetId, colors) {
+const futureToolbox = function (isInitialSetup, isStage, targetId) {
     return `
     <category
         name="Future"
-        colour="${colors.primary}"
-        secondaryColour="${colors.tertiary}"
         iconURI="${futureIcon}"
         id="future">
         <block type="argument_reporter_string_number">
@@ -1113,7 +1111,7 @@ const makeToolboxXML = function (
     if (futureEnabled) {
         const futureXML =
             moveCategory("future") ||
-            futureToolbox(isInitialSetup, isStage, targetId, colors.more);
+            futureToolbox(isInitialSetup, isStage, targetId);
 
         everything.push(gap, futureXML);
     }
