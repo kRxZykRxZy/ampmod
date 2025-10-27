@@ -25,7 +25,7 @@
     max-width: 1000px;
     margin: auto;
     display: flex;
-    text-align: left;
+    text-align: start;
     justify-content: space-between;
     align-items: center;
     gap: 2em;
