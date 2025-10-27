@@ -21,9 +21,9 @@ import {
     APP_SOURCE,
     APP_WIKI,
 } from "@ampmod/branding";
-import LangSelect from "./lang-select.jsx";
+import LangSelect from "./lang-select";
 import styles from "./footer.css";
-import Localise from "../localise/localise.jsx";
+import Localise from "../localise/localise";
 
 const Footer = () => {
     const isAprilFools = () => {

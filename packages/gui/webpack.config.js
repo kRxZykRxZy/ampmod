@@ -103,6 +103,7 @@ const base = {
     },
     resolve: {
         symlinks: false,
+        extensions: [".jsx", ".js", ".ts", ".tsx"],
         alias: {
             "text-encoding$": path.resolve(
                 __dirname,

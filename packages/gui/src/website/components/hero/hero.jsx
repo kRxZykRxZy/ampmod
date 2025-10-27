@@ -3,7 +3,7 @@ import styles from "../../design.css";
 import myStyles from "./hero.css";
 import WelcomeBanner from "../../../components/amp-welcome/welcome-banner.svg";
 import * as Bowser from "bowser";
-import Localise from "../localise/localise.jsx";
+import Localise from "../localise/localise";
 
 export default () => {
     const [isPhone, setIsPhone] = useState(false);

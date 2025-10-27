@@ -1,6 +1,6 @@
 import examplesList from "../examples/projects";
 import defaultPfp from "./default-pfp.svg";
-import { localise } from "../components/localise/localise.jsx";
+import { localise } from "../components/localise/localise";
 
 const shuffle = list => {
     for (let i = list.length - 1; i > 0; i--) {

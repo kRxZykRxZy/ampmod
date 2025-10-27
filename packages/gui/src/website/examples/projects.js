@@ -1,7 +1,7 @@
 import Box2DIcon from "./images/box2d.svg";
 import BatteryIcon from "./images/battery.svg";
 import { APP_NAME } from "@ampmod/branding";
-import { localise } from "../components/localise/localise.jsx";
+import { localise } from "../components/localise/localise";
 
 export default [
     {

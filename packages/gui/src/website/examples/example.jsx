@@ -2,11 +2,11 @@ import "../../playground/import-first.js";
 import { useState, useEffect } from "react";
 import styles from "./examples.css";
 import homeStyles from "../home/home.css";
-import Box from "../../components/box/box.jsx";
-import Modal from "../../components/modal/modal.jsx";
+import Box from "../../components/box/box";
+import Modal from "../../components/modal/modal";
 
 import examples from "../../lib/examples/index.js";
-import Localise, { localise } from "../components/localise/localise.jsx";
+import Localise, { localise } from "../components/localise/localise";
 
 import { APP_NAME } from "@ampmod/branding";
 

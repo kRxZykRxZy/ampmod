@@ -10,10 +10,10 @@ import { applyGuiColors } from "../../lib/themes/guiHelpers";
 import { detectTheme } from "../../lib/themes/themePersistance";
 import UserData from "./users";
 
-import Header from "../components/header/header.jsx";
-import Footer from "../components/footer/footer.jsx";
+import Header from "../components/header/header";
+import Footer from "../components/footer/footer";
 
-import Localise, { setHtmlLang } from "../components/localise/localise.jsx";
+import Localise, { setHtmlLang } from "../components/localise/localise";
 import appleCat from "./apple-cat-pleased.svg";
 
 /* eslint-disable react/jsx-no-literals */

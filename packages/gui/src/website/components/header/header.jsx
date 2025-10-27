@@ -4,8 +4,8 @@ import Logo from "../../../components/menu-bar/tw-advanced.svg";
 import FakeLogo from "./lampmod.svg";
 import CanaryLogo from "../../../components/menu-bar/ampmod-canary.svg";
 import styles from "./header.css";
-import TWNews from "../../../components/menu-bar/tw-news.jsx";
-import Localise from "../localise/localise.jsx";
+import TWNews from "../../../components/menu-bar/tw-news";
+import Localise from "../localise/localise";
 
 // Determine if today is April Fools’ Day
 function isAprilFools() {

@@ -8,14 +8,14 @@ import { APP_NAME } from "@ampmod/branding";
 import { applyGuiColors } from "../../lib/themes/guiHelpers.js";
 import { detectTheme } from "../../lib/themes/themePersistance.js";
 
-import Header from "../components/header/header.jsx";
-import Footer from "../components/footer/footer.jsx";
-import Example from "./example.jsx";
+import Header from "../components/header/header";
+import Footer from "../components/footer/footer";
+import Example from "./example";
 import projects from "./projects.js";
 import Localise, {
     localise,
     setHtmlLang,
-} from "../components/localise/localise.jsx";
+} from "../components/localise/localise";
 
 applyGuiColors(detectTheme());
 setHtmlLang();

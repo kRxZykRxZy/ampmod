@@ -9,13 +9,13 @@ import styles from "./home.css";
 import { APP_FORUMS, APP_NAME, APP_WIKI, APP_SLOGAN } from "@ampmod/branding";
 import { applyGuiColors } from "../../lib/themes/guiHelpers.js";
 import { detectTheme } from "../../lib/themes/themePersistance.js";
-import Header from "../components/header/header.jsx";
-import Footer from "../components/footer/footer.jsx";
-import Clippy from "../../containers/amp-clippy.jsx";
-import Hero from "../components/hero/hero.jsx";
+import Header from "../components/header/header";
+import Footer from "../components/footer/footer";
+import Clippy from "../../containers/amp-clippy";
+import Hero from "../components/hero/hero";
 
 /* eslint-disable react/jsx-no-literals */
-import Localise, { setHtmlLang } from "../components/localise/localise.jsx";
+import Localise, { setHtmlLang } from "../components/localise/localise";
 
 applyGuiColors(detectTheme());
 setHtmlLang();
