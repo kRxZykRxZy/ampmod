@@ -4,26 +4,16 @@ import locales from "@turbowarp/scratch-l10n";
 
 const LANGUAGE_KEY = `${lsNamespace}language`;
 
-// Browser API for readable language names
-let languageNames;
-if (typeof Intl !== "undefined" && Intl.DisplayNames) {
-    languageNames = new Intl.DisplayNames([navigator.language], {
-        type: "language",
-    });
-}
-
 const LanguageSelect = () => {
     const [currentLocale, setCurrentLocale] = useState("en");
 
     useEffect(() => {
         try {
             const stored = localStorage.getItem(LANGUAGE_KEY);
-            if (stored && originalLocales[stored]) setCurrentLocale(stored);
+            if (stored && locales[stored]) setCurrentLocale(stored);
             else if (navigator) {
                 const browserLocale = navigator.language.split("-")[0];
-                setCurrentLocale(
-                    originalLocales[browserLocale] ? browserLocale : "en"
-                );
+                setCurrentLocale(locales[browserLocale] ? browserLocale : "en");
             }
         } catch {
             setCurrentLocale("en");
@@ -46,7 +36,7 @@ const LanguageSelect = () => {
         >
             {Object.keys(locales).map(locale => (
                 <option key={locale} value={locale}>
-                    {languageNames ? locales[locale].name : locale}
+                    {locales[locale].name || locale}
                 </option>
             ))}
         </select>
