@@ -55,7 +55,7 @@ const getTranslation = (id, values = {}) => {
     if (!translationObject) {
         translationObject = translations.en[id];
     }
-    const text = translationObject?.text || id;
+    const text = translationObject || id;
     return interpolate(text, values);
 };
 
