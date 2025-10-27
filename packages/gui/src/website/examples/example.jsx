@@ -1,5 +1,5 @@
 import "../../playground/import-first.js";
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./examples.css";
 import homeStyles from "../home/home.css";
 import Box from "../../components/box/box.jsx";
@@ -13,7 +13,7 @@ import { APP_NAME } from "@ampmod/branding";
 const ExampleModal = props => {
     const [downloadLink, setDownloadLink] = useState(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchDownloadLink = async (id, title) => {
             try {
                 const module = await examples[id](); // fetch module

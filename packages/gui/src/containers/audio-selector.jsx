@@ -42,14 +42,17 @@ class AudioSelector extends React.Component {
             distanceThreshold: 0,
         });
     }
-    componentWillReceiveProps(newProps) {
+    componentDidUpdate(prevProps) {
         const { trimStart, trimEnd } = this.props;
-        if (newProps.trimStart === trimStart && newProps.trimEnd === trimEnd)
-            return;
-        this.setState({
-            trimStart: newProps.trimStart,
-            trimEnd: newProps.trimEnd,
-        });
+        if (
+            prevProps.trimStart !== trimStart ||
+            prevProps.trimEnd !== trimEnd
+        ) {
+            this.setState({
+                trimStart,
+                trimEnd,
+            });
+        }
     }
     clearSelection() {
         this.props.onSetTrim(null, null);

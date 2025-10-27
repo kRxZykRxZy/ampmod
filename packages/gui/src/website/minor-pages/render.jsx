@@ -1,5 +1,4 @@
 import "../import-first.js";
-import React from "react";
 import Header from "../components/header/header.jsx";
 import Footer from "../components/footer/footer.jsx";
 import Privacy from "./privacy.jsx";
