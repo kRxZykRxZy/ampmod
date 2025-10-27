@@ -24,12 +24,9 @@ export default () => {
 
                     {process.env.ampmod_mode === "canary" && (
                         <>
-                            <p className={styles.wrap}>
-                                <strong>
-                                    <Localise id="hero.canaryWarning" />
-                                </strong>
-                            </p>
-                            <div className={styles.spacing}></div>
+                            <strong>
+                                <Localise id="hero.canaryWarning" />
+                            </strong>
                         </>
                     )}
 
