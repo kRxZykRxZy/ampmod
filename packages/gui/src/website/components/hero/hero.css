@@ -40,6 +40,10 @@
     max-width: 40%;
 }
 
+[dir="rtl"] .header-image {
+    transform: scaleX(-1);
+}
+
 .button-row {
     display: flex;
     gap: 16px;

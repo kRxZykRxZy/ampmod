@@ -230,3 +230,7 @@
 .spacer {
     height: $menu-bar-height;
 }
+
+[dir="rtl"] .ampmod-logo {
+    transform: scaleX(-1);
+}

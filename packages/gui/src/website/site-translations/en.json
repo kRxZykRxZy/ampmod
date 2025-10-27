@@ -1,0 +1,352 @@
+{
+    "hero.create": {
+        "text": "Try it out",
+        "context": "Hero section button linking to the editor page."
+    },
+    "hero.examples": {
+        "text": "See examples",
+        "context": "Hero section button linking to the examples page."
+    },
+    "hero.canaryWarning": {
+        "text": "This is a canary build. Bugs may be present, and your projects may break when the final version is released. You should not use this version for creating non-test projects.",
+        "context": "Warning message shown in Hero section for Canary builds."
+    },
+    "header.create": {
+        "text": "Create",
+        "context": "Header menu item linking to the editor page."
+    },
+    "header.manual": {
+        "text": "Manual",
+        "context": "Header menu item linking to the documentation/manual page."
+    },
+    "header.extensions": {
+        "text": "Extensions",
+        "context": "Header menu item linking to the extensions gallery."
+    },
+    "appSlogan": {
+        "text": "Block-based programming, amplified",
+        "context": "A slogan explaining the app informally in a few words."
+    },
+    "whatIsAppName": {
+        "text": "What is {APP_NAME}?",
+        "context": "Title for the section introducing the app, asking 'What is {APP_NAME}?'. {APP_NAME} is automatically replaced with the app's name, e.g., 'AmpMod'."
+    },
+    "appShortDescription": {
+        "text": "{APP_NAME} is a powerful block-based programming language built on Scratch 3.0 and TurboWarp.",
+        "context": "Shorter version of appDescription. {APP_NAME} is automatically replaced with the app's name."
+    },
+    "appDescription": {
+        "text": "{APP_NAME} is a powerful block-based programming language, built on Scratch 3.0 and TurboWarp. It can be used for many things, from simple throwaway spaghetti scripts to large-scale calculations.",
+        "context": "Paragraph describing what the app is and its capabilities, including that it's block-based and built on Scratch/TurboWarp. {APP_NAME} is automatically replaced with the app's name."
+    },
+    "notJustScratch": {
+        "text": "It's not just Scratch, it's {APP_NAME}!",
+        "context": "Title emphasizing that the app is more than just Scratch. {APP_NAME} is automatically replaced with the app's name."
+    },
+    "appConvenience": {
+        "text": "{APP_NAME} is designed to be a convenient package of features to make complex projects easily. From clicker games to scientific experiments, we have it all.",
+        "context": "Paragraph explaining the convenience features of the app and its usability for various project types. {APP_NAME} is automatically replaced with the app's name."
+    },
+    "needHelp": {
+        "text": "Need help?",
+        "context": "Heading for the support/help section."
+    },
+    "visitForums": {
+        "text": "Visit the forums",
+        "context": "Button or link text pointing to the app's community forums."
+    },
+    "visitWiki": {
+        "text": "Visit the wiki",
+        "context": "Button or link text pointing to the app's wiki/documentation."
+    },
+    "features": {
+        "text": "Features",
+        "context": "Heading for the features section."
+    },
+    "forProgrammers": {
+        "text": "For programmers",
+        "context": "Subheading describing features targeted at programmers."
+    },
+    "jsCompile": {
+        "text": "{APP_NAME} compiles projects to JavaScript to make them run faster than in vanilla Scratch.",
+        "context": "Feature description explaining that the app compiles projects to JavaScript for better performance. {APP_NAME} is automatically replaced with the app's name."
+    },
+    "arraysFeature": {
+        "text": "With arrays, you can create complex list structures and store them as variables.",
+        "context": "Feature description about creating and managing arrays/complex lists."
+    },
+    "extensionsFeature": {
+        "text": "{APP_NAME} adds over 100 new unsandboxed extensions to Scratch, opening access to various browser features.",
+        "context": "Feature description about the additional unsandboxed extensions provided by this application. {APP_NAME} is automatically replaced with the app's name."
+    },
+    "forArtists": {
+        "text": "For artists and animators",
+        "context": "Subheading describing features targeted at artists and animators."
+    },
+    "newFonts": {
+        "text": "{APP_NAME} features new fonts like Comic and Amplification to use in your costumes and backdrops.",
+        "context": "Feature description about new fonts available for costumes and backdrops. {APP_NAME} is automatically replaced with the app's name."
+    },
+    "roundedRectangle": {
+        "text": "Creating a rounded rectangle has never been easier with the Rounded Rectangle tool.",
+        "context": "Feature description for the rounded rectangle tool."
+    },
+    "customFonts": {
+        "text": "Custom fonts can be loaded from system font name or a font file.",
+        "context": "Feature description explaining that custom fonts can be loaded from system fonts or font files."
+    },
+    "footer.heading.about": {
+        "text": "About",
+        "context": "Heading for the 'About' section in the footer."
+    },
+    "footer.heading.community": {
+        "text": "Community",
+        "context": "Heading for the 'Community' section in the footer."
+    },
+    "footer.heading.resources": {
+        "text": "Resources",
+        "context": "Heading for the 'Resources' section in the footer."
+    },
+    "footer.heading.legal": {
+        "text": "Legal",
+        "context": "Heading for the 'Legal' section in the footer."
+    },
+    "amp.footer.copyright": {
+        "text": "© {year} {APP_NAME} developers. {APP_NAME} is {freeSoftware}.",
+        "context": "Copyright notice including year and app name. {year} and {APP_NAME} are replaced dynamically. {freeSoftware} becomes a link to the open-source licence."
+    },
+    "amp.footer.copyright.freeSoftware": {
+        "text": "free and open-source software",
+        "context": "Part of the amp.footer.copyright phrase describing that the software is free and open-source."
+    },
+    "amp.footer.disclaimer": {
+        "text": "{APP_NAME} is not affiliated with {scratchLink} or {twLink}. Support Scratch by {supportScratch}.",
+        "context": "Disclaimer stating that the developers are not affiliated with Scratch or TurboWarp. {APP_NAME}, {scratchLink}, and {twLink} are replaced dynamically."
+    },
+    "amp.footer.disclaimer.supportScratch": {
+        "text": "donating to the Scratch Foundation",
+        "context": "Text that links to a Scratch Foundation donation page."
+    },
+    "tw.footer.faq": {
+        "text": "AmpMod FAQ",
+        "context": "Label for the FAQ page link in the footer."
+    },
+    "tw.footer.blog": {
+        "text": "AmpMod Blog",
+        "context": "Label for the blog link in the footer."
+    },
+    "amp.onScratch": {
+        "text": "{APP_NAME} on Scratch",
+        "context": "Label for a link to {APP_NAME}'s forum topic on Scratch."
+    },
+    "tw.topicButton": {
+        "text": "{APP_NAME} Forums",
+        "context": "Label for the forums button linking to {APP_NAME} discussion forums."
+    },
+    "tw.footer.wiki": {
+        "text": "AmpMod Wiki",
+        "context": "Label for the wiki link in the footer."
+    },
+    "tw.footer.credits": {
+        "text": "Credits",
+        "context": "Label for the credits page link in the footer."
+    },
+    "tw.footer.extensions": {
+        "text": "Extension Gallery",
+        "context": "Label for the extension gallery page link in the footer."
+    },
+    "tw.footer.manual": {
+        "text": "Manual",
+        "context": "Label for the manual/documentation link in the footer."
+    },
+    "tw.code": {
+        "text": "Source Code",
+        "context": "Label for the source code link."
+    },
+    "amp.production": {
+        "text": "Stable Build",
+        "context": "Label for the stable build version of the app."
+    },
+    "amp.canary": {
+        "text": "Canary Build",
+        "context": "Label for the canary (experimental) build version of the app."
+    },
+    "tw.footer.parameters": {
+        "text": "URL Parameters",
+        "context": "Label for the URL parameters documentation link in the footer."
+    },
+    "tw.privacy": {
+        "text": "Privacy Policy",
+        "context": "Label for the privacy policy page link."
+    },
+    "credits.title": {
+        "text": "{APP_NAME} Credits",
+        "context": "Title of the Credits page, includes app name."
+    },
+    "credits.totalContributors": {
+        "text": "There are {totalContributors} contributors to {APP_NAME} in total, and this is growing!",
+        "context": "Text displaying total contributors dynamically."
+    },
+    "credits.disclaimer.general": {
+        "text": "Individual contributors are listed in no particular order. The order is randomized each visit. Users who only made very minor contributions are not included.",
+        "context": "Disclaimer about contributors listing order and omissions."
+    },
+    "credits.contributors": {
+        "text": "Contributors",
+        "context": "Heading for main contributors section."
+    },
+    "credits.addons": {
+        "text": "Addons",
+        "context": "Heading for addon developers section."
+    },
+    "credits.extensions": {
+        "text": "TurboWarp Extension Gallery",
+        "context": "Heading for extension developers section."
+    },
+    "credits.exampleProjects": {
+        "text": "Example Projects",
+        "context": "Heading for example projects section."
+    },
+    "credits.exampleProjectsDescription": {
+        "text": "You can find information about who created an example on the page for that example.",
+        "context": "Description about how to see example project authors."
+    },
+    "credits.ampmodSection": {
+        "text": "AmpMod",
+        "context": "Heading for AmpMod-specific credits."
+    },
+    "credits.ampmodDescription": {
+        "text": "{APP_NAME} is based on the work of the AmpMod contributors but is not endorsed by AmpMod in any way.",
+        "context": "Description of AmpMod work and non-endorsement."
+    },
+    "credits.turbowarpSection": {
+        "text": "TurboWarp",
+        "context": "Heading for TurboWarp-specific credits."
+    },
+    "credits.turbowarpDescription": {
+        "text": "{APP_NAME} is based on the work of the TurboWarp contributors but is not endorsed by TurboWarp in any way.",
+        "context": "Description of TurboWarp work and non-endorsement."
+    },
+    "credits.scratchSection": {
+        "text": "Scratch",
+        "context": "Heading for Scratch-specific credits."
+    },
+    "credits.scratchDescription": {
+        "text": "{APP_NAME} is based on the work of the Scratch contributors but is not endorsed by Scratch in any way.",
+        "context": "Description of Scratch work and non-endorsement."
+    },
+    "credits.scratchDonate": {
+        "text": "Donate to support TurboWarp and Scratch.",
+        "context": "Link text encouraging donation to Scratch and TurboWarp."
+    },
+    "credits.otherMods": {
+        "text": "Other Scratch Mods",
+        "context": "Heading for other mods credits section."
+    },
+    "credits.otherModsDescription": {
+        "text": "{APP_NAME} uses code from other open-source Scratch modifications but is not endorsed by any of them in any way.",
+        "context": "Description about other mods contributions and non-endorsement."
+    },
+    "credits.otherModsSummary": {
+        "text": "Modifications {APP_NAME} is based on",
+        "context": "Summary text inside details listing other mods."
+    },
+    "credits.favicon": {
+        "text": "Favicon",
+        "context": "Heading for favicon credits."
+    },
+    "credits.faviconDescription": {
+        "text": "The {APP_NAME} favicon is based off an emoji from the {forumoji} project by lolecksdeehaha.",
+        "context": "Description of favicon source and creator. {forumoji} is automatically replaced to a link to the Forumoji project. The link is always in English."
+    },
+    "credits.translators": {
+        "text": "Translators",
+        "context": "Heading for translators section."
+    },
+    "credits.translatorsDescription": {
+        "text": "Our community has helped translate {APP_NAME} into many languages. More information will be available soon.",
+        "context": "Information about translators."
+    },
+    "credits.art": { "text": "Art", "context": "Heading for art section." },
+    "credits.artDescription": {
+        "text": "Some images use content from Openclipart, licensed under the CC0 license. Even though the images are public domain, we would still like to attribute.",
+        "context": "Description about art sources and licensing."
+    },
+    "credits.roles.lead": {
+        "text": "Lead developer",
+        "context": "Role of the main or lead developer in the credits section."
+    },
+    "credits.roles.developer": {
+        "text": "Developer",
+        "context": "Role of a developer in the credits section."
+    },
+    "credits.roles.bugfixer": {
+        "text": "Bugfixer",
+        "context": "Role of someone who fixes bugs in the credits section."
+    },
+    "credits.roles.images": {
+        "text": "Image contributor",
+        "context": "Role of someone who contributes images in the credits section."
+    },
+    "credits.roles.tw-muffin": {
+        "text": "Creator of TurboWarp",
+        "context": "Role of GarboMuffin."
+    },
+    "credits.roles.tw-tacodiva": {
+        "text": "Compiler",
+        "context": "Role of Tacodiva7729."
+    },
+
+    "examples.title": {
+        "text": "Examples",
+        "context": "Title of the examples page."
+    },
+    "examples.introduction": {
+        "text": "Click an example to learn more about it. Then, click \"Open\" to open it and experiment with {APP_NAME}!",
+        "context": "Introduction paragraph on the examples page. {APP_NAME} is automatically replaced dynamically."
+    },
+    "examples.licenceText": {
+        "text": "These examples are licenced under a {ccLink} licence. Therefore, if you distribute these examples on another website, you must provide credit to the creator. {imageAttribution}",
+        "context": "Licence information at the bottom of the examples page. {ccLink} and {imageAttribution} are replaced with links."
+    },
+    "examples.licence.cc": {
+        "text": "Creative Commons Attribution 4.0",
+        "context": "Label for the Creative Commons licence link."
+    },
+    "examples.licence.images": {
+        "text": "Image attribution...",
+        "context": "Label for the image attribution link."
+    },
+    "examples.by": {
+        "text": "by {creator}",
+        "context": "A note stating who made the example project. {creator} is automatically replaced with the name of the project creator."
+    },
+    "examples.unsupported": {
+        "text": "This project is not supported on your browser or system. It, or parts of it, may not work. The description may provide more context.",
+        "context": "Text stating the project has been detected to likely be incompatible with the user's browser or system."
+    },
+    "examples.open": {
+        "text": "Open",
+        "context": "Button to open a project."
+    },
+    "examples.download": {
+        "text": "Download .apz",
+        "context": "Button to download a project as a .apz file."
+    },
+    "examples.apz.griffpatch": {
+        "text": "Box2D Physics Example",
+        "context": "Title for that example project. Don't translate Box2D."
+    },
+    "examples.apz.griffpatch.description": {
+        "text": "{APP_NAME}'s Box2D extension allows you to add 2-dimensional physics to your games.",
+        "context": "Title for that example project. Don't translate Box2D."
+    },
+    "examples.apz.battery": {
+        "text": "What's my battery on?",
+        "context": "Title for that example project."
+    },
+    "examples.apz.battery.description": {
+        "text": "The Battery extension can get the battery percentage of your device.",
+        "context": "Title for that example project."
+    }
+}

@@ -12,19 +12,25 @@ import Header from "../components/header/header.jsx";
 import Footer from "../components/footer/footer.jsx";
 import Example from "./example.jsx";
 import projects from "./projects.js";
+import Localise, {
+    localise,
+    setHtmlLang,
+} from "../components/localise/localise.jsx";
 
 applyGuiColors(detectTheme());
-document.documentElement.lang = "en";
+setHtmlLang();
+document.title = `${localise("examples.title")} - ${APP_NAME}`;
 
 // Exported so it works with desktop
 export const ExamplesPage = () => (
     <>
         <Header />
         <header className={styles.headerContainer}>
-            <h1 className={styles.headerText}>Examples</h1>
+            <h1 className={styles.headerText}>
+                <Localise id="examples.title" />
+            </h1>
             <p className={styles.headerText}>
-                Click an example to learn more about it. Then, click "Open" to
-                open it and experiment with {APP_NAME}!
+                <Localise id="examples.introduction" values={{ APP_NAME }} />
             </p>
         </header>
         <main className={styles.main}>
@@ -46,15 +52,21 @@ export const ExamplesPage = () => (
             <section>
                 <p>
                     <small>
-                        These examples are licenced under a{" "}
-                        <a href="https://creativecommons.org/licenses/by/4.0/deed.en">
-                            Creative Commons Attribution 4.0
-                        </a>{" "}
-                        licence. Therefore, if you distribute these examples on
-                        another website, you must provide credit to the creator.{" "}
-                        <a href="https://codeberg.org/ampmod/ampmod/src/branch/develop/packages/gui/src/playground/examples/images/README.md">
-                            Image atrribution...
-                        </a>
+                        <Localise
+                            id="examples.licenceText"
+                            values={{
+                                ccLink: (
+                                    <a href="https://creativecommons.org/licenses/by/4.0/deed.en">
+                                        <Localise id="examples.licence.cc" />
+                                    </a>
+                                ),
+                                imageAttribution: (
+                                    <a href="https://codeberg.org/ampmod/ampmod/src/branch/develop/packages/gui/src/playground/examples/images/README.md">
+                                        <Localise id="examples.licence.images" />
+                                    </a>
+                                ),
+                            }}
+                        />
                     </small>
                 </p>
             </section>

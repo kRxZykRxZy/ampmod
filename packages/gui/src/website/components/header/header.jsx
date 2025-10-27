@@ -3,21 +3,30 @@ import React from "react";
 import Logo from "../../../components/menu-bar/tw-advanced.svg";
 import FakeLogo from "./lampmod.svg";
 import CanaryLogo from "../../../components/menu-bar/ampmod-canary.svg";
-
 import styles from "./header.css";
-
 import TWNews from "../../../components/menu-bar/tw-news.jsx";
+import Localise from "../localise/localise.jsx";
 
+// Determine if today is April Fools’ Day
 function isAprilFools() {
     const now = new Date();
-    const month = now.getMonth();
-    const day = now.getDate();
-
-    return month === 3 && day === 1;
+    return now.getMonth() === 3 && now.getDate() === 1;
 }
 
 const Header = () => {
     const showFakeLogo = isAprilFools();
+
+    const logoSrc =
+        process.env.ampmod_mode === "canary"
+            ? CanaryLogo
+            : showFakeLogo
+              ? FakeLogo
+              : Logo;
+
+    const logoAlt =
+        showFakeLogo && process.env.ampmod_mode !== "canary"
+            ? "LampMod Logo"
+            : "AmpMod Logo";
 
     return (
         <React.Fragment>
@@ -29,24 +38,11 @@ const Header = () => {
                             styles.headerItem,
                             styles.ampmodLogo
                         )}
+                        aria-label={logoAlt}
                     >
-                        <img
-                            height="26px"
-                            src={
-                                process.env.ampmod_mode === "canary"
-                                    ? CanaryLogo
-                                    : showFakeLogo
-                                      ? FakeLogo
-                                      : Logo
-                            }
-                            alt={
-                                showFakeLogo &&
-                                !process.env.ampmod_mode === "canary"
-                                    ? "LampMod Logo"
-                                    : "AmpMod Logo"
-                            }
-                        />
+                        <img height={26} src={logoSrc} alt={logoAlt} />
                     </a>
+
                     <a
                         href="editor.html"
                         className={classNames(
@@ -54,8 +50,9 @@ const Header = () => {
                             styles.hoverable
                         )}
                     >
-                        Create
+                        <Localise id="header.create" />
                     </a>
+
                     <a
                         href="examples.html"
                         className={classNames(
@@ -63,28 +60,35 @@ const Header = () => {
                             styles.hoverable
                         )}
                     >
-                        Examples
+                        <Localise id="examples.title" />
                     </a>
+
                     <a
                         href="https://ampmod.codeberg.page/manual"
                         className={classNames(
                             styles.headerItem,
                             styles.hoverable
                         )}
+                        target="_blank"
+                        rel="noopener noreferrer"
                     >
-                        Manual
+                        <Localise id="header.manual" />
                     </a>
+
                     <a
                         href="https://ampmod.codeberg.page/extensions"
                         className={classNames(
                             styles.headerItem,
                             styles.hoverable
                         )}
+                        target="_blank"
+                        rel="noopener noreferrer"
                     >
-                        Extensions
+                        <Localise id="header.extensions" />
                     </a>
                 </div>
             </div>
+
             <div className={styles.spacer}></div>
             <TWNews />
         </React.Fragment>

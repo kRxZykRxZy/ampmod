@@ -5,7 +5,8 @@
  *
  * APP_WEBSITE - Your app's website on the internet.
  *
- * APP_SLOGAN - A slogan or short description of your mod. Appears in tab titles and homepage.
+ * APP_SLOGAN - A slogan or short description of your mod. Appears in tab titles and homepage. This also needs
+ * to be changed in gui/src/website/site-translations/en.json.
  *
  * @required APP_SOURCE - URL to your source code repository. Used for links and licence compliance checks.
  *
@@ -16,7 +17,8 @@
  *
  * APP_BLOG - Link to your blog or announcement page, if you have one.
  *
- * SEO_DESCRIPTION - SEO-friendly description used on main and editor pages.
+ * APP_DESCRIPTION - SEO-friendly description used on main and editor pages. This also needs to be changed in
+ * gui/src/website/site-translations/en.json.
  */
 
 module.exports.APP_NAME = "AmpMod"; // "canary build" will be appended; you shouldn't manually check for it.

@@ -1,5 +1,6 @@
 import examplesList from "../examples/projects";
 import defaultPfp from "./default-pfp.svg";
+import { localise } from "../components/localise/localise.jsx";
 
 const shuffle = list => {
     for (let i = list.length - 1; i > 0; i--) {
@@ -21,7 +22,7 @@ const fromHardcoded = ({
     const result = {
         image: img,
         text: username,
-        role: role,
+        role: role ? localise(role) : null,
     };
     if (username && userID !== "0") {
         result.image = `https://trampoline.turbowarp.org/avatars/${userID}`;
@@ -40,22 +41,22 @@ const contributors = [
         username: "8to16",
         href: "https://scratch.mit.edu/users/8to16",
         img: "https://codeberg.org/avatars/1ad3f7a52bee3f23fafe7944d16aca46cd76f7045fe14dbd255536fa0180466d?size=48",
-        role: "Lead developer",
+        role: "credits.roles.lead",
     },
     {
         userID: "82953483",
         username: "50_scratch_tabs",
-        role: "Developer",
+        role: "credits.roles.developer",
     },
     {
         userID: "38055575",
         username: "o97doge",
-        role: "Bugfixer",
+        role: "credits.roles.bugfixer",
     },
     {
         userID: "157650703",
         username: "unconstructable13",
-        role: "Image contributor",
+        role: "credits.roles.images",
     },
 ].map(fromHardcoded);
 
@@ -75,7 +76,7 @@ const tw = [
     {
         userID: "17340565",
         username: "GarboMuffin",
-        role: "Creator of TurboWarp",
+        role: "credits.roles.tw-muffin",
     },
     {
         userID: "12498592",
@@ -88,7 +89,7 @@ const tw = [
     {
         userID: "9636514",
         username: "Tacodiva7729",
-        role: "Compiler",
+        role: "credits.roles.tw-tacodiva",
     },
     {
         userID: "141930175",

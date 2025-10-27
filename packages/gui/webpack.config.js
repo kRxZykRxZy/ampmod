@@ -112,6 +112,11 @@ const base = {
                 __dirname,
                 "src/lib/tw-scratch-render-fonts"
             ),
+            "@ampmod/branding$": path.resolve(
+                __dirname,
+                "src/lib/amp-intercept-branding"
+            ),
+            "real-branding$": path.resolve(__dirname, "../branding"),
         },
     },
     module: {

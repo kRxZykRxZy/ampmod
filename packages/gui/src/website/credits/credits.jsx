@@ -5,7 +5,7 @@ import render from "../../playground/app-target.js";
 import styles from "../design.css";
 import myStyles from "./credits.css";
 
-import { APP_NAME } from "@ampmod/branding";
+import { APP_NAME, APP_FORUMS } from "@ampmod/branding";
 import { applyGuiColors } from "../../lib/themes/guiHelpers";
 import { detectTheme } from "../../lib/themes/themePersistance";
 import UserData from "./users";
@@ -13,12 +13,13 @@ import UserData from "./users";
 import Header from "../components/header/header.jsx";
 import Footer from "../components/footer/footer.jsx";
 
+import Localise, { setHtmlLang } from "../components/localise/localise.jsx";
 import appleCat from "./apple-cat-pleased.svg";
 
 /* eslint-disable react/jsx-no-literals */
 
 applyGuiColors(detectTheme());
-document.documentElement.lang = "en";
+setHtmlLang(); // Use helper instead of hardcoding <html lang>
 
 const totalContributors =
     (UserData.contributors?.length || 0) +
@@ -60,10 +61,14 @@ const Credits = () => (
     <>
         <Header />
         <header className={styles.headerContainer}>
-            <h1 className={styles.headerText}>{APP_NAME} Credits</h1>
+            <h1 className={styles.headerText}>
+                <Localise id="credits.title" values={{ APP_NAME }} />
+            </h1>
             <p className={styles.wrap}>
-                There are {totalContributors} contributors to {APP_NAME} in
-                total, and this is growing!
+                <Localise
+                    id="credits.totalContributors"
+                    values={{ totalContributors, APP_NAME }}
+                />
             </p>
             <div className={styles.spacing}></div>
         </header>
@@ -71,135 +76,136 @@ const Credits = () => (
             <section>
                 <p>
                     <i>
-                        Individual contributors are listed in no particular
-                        order. The order is randomized each visit. Users who
-                        only made very minor contributions are not included.
+                        <Localise id="credits.disclaimer.general" />
                     </i>
                 </p>
             </section>
             <section>
-                <h2>Contributors</h2>
+                <h2>
+                    <Localise id="credits.contributors" />
+                </h2>
                 <UserList users={UserData.contributors} />
             </section>
             <section>
-                <h2>Addons</h2>
+                <h2>
+                    <Localise id="credits.addons" />
+                </h2>
                 <UserList users={UserData.addonDevelopers} />
             </section>
             <section>
-                <h2>TurboWarp Extension Gallery</h2>
+                <h2>
+                    <Localise id="credits.extensions" />
+                </h2>
                 <UserList users={UserData.extensionDevelopers} />
             </section>
             <section>
-                <h2>Example Projects</h2>
+                <h2>
+                    <Localise id="credits.exampleProjects" />
+                </h2>
                 <p>
-                    You can find information about who created an example on the
-                    page for that example.
+                    <Localise id="credits.exampleProjectsDescription" />
                 </p>
             </section>
-            {/* Please don't remove this. Be nice! */}
             {APP_NAME !== "AmpMod" && (
                 <section>
-                    <h2>AmpMod</h2>
+                    <h2>
+                        <Localise id="credits.ampmodSection" />
+                    </h2>
                     <p>
-                        {APP_NAME} is based on the work of the{" "}
-                        <a href="https://ampmod.codeberg.page/credits.html">
-                            AmpMod contributors
-                        </a>{" "}
-                        but is not endorsed by AmpMod in any way.
+                        <Localise
+                            id="credits.ampmodDescription"
+                            values={{ APP_NAME }}
+                        />
                     </p>
                 </section>
             )}
             <section>
-                <h2>TurboWarp</h2>
+                <h2>
+                    <Localise id="credits.turbowarpSection" />
+                </h2>
                 <p>
-                    {APP_NAME} is based on the work of the{" "}
-                    <a href="https://turbowarp.org/credits.html">
-                        TurboWarp contributors
-                    </a>{" "}
-                    but is not endorsed by TurboWarp in any way.
+                    <Localise
+                        id="credits.turbowarpDescription"
+                        values={{ APP_NAME }}
+                    />
                 </p>
                 <UserList users={UserData.tw} />
             </section>
             <section>
-                <h2>Scratch</h2>
+                <h2>
+                    <Localise id="credits.scratchSection" />
+                </h2>
                 <p>
-                    {APP_NAME} is based on the work of the{" "}
-                    <a href="https://scratch.mit.edu/credits">
-                        Scratch contributors
-                    </a>{" "}
-                    but is not endorsed by Scratch in any way.
+                    <Localise
+                        id="credits.scratchDescription"
+                        values={{ APP_NAME }}
+                    />
                 </p>
                 <p>
                     <a href="https://scratch.mit.edu/donate">
-                        Donate to support TurboWarp and Scratch.
+                        <Localise id="credits.scratchDonate" />
                     </a>
                 </p>
             </section>
             <section>
-                <h2>Other Scratch Mods</h2>
+                <h2>
+                    <Localise id="credits.otherMods" />
+                </h2>
                 <p>
-                    {APP_NAME} uses code from other open-source Scratch
-                    modifications but is not endorsed by any them in any way.
+                    <Localise
+                        id="credits.otherModsDescription"
+                        values={{ APP_NAME }}
+                    />
                 </p>
                 <details>
-                    <summary>Modifications AmpMod is based on</summary>
+                    <summary>
+                        <Localise
+                            id="credits.otherModsSummary"
+                            values={{ APP_NAME }}
+                        />
+                    </summary>
                     <ul>
                         <li>
-                            <a href="https://librekitten.org">LibreKitten</a>{" "}
-                            (home page header)
+                            <a href="https://librekitten.org">LibreKitten</a>
                         </li>
                     </ul>
                 </details>
             </section>
             <section>
-                <h2>Favicon</h2>
+                <h2>
+                    <Localise id="credits.favicon" />
+                </h2>
                 <p>
-                    The AmpMod favicon is based off an emoji from the{" "}
-                    <a href="https://gh.vercte.net/forumoji/">Forumoji</a>{" "}
-                    project by{" "}
-                    <a href="https://https://scratch.mit.edu/users/lolecksdeehaha/">
-                        lolecksdeehaha
-                    </a>
-                    .
+                    <Localise
+                        id="credits.faviconDescription"
+                        values={{
+                            APP_NAME,
+                            forumoji: (
+                                <a href="https://gh.vercte.net/forumoji">
+                                    Forumoji
+                                </a>
+                            ),
+                        }}
+                    />
                 </p>
             </section>
             <section>
-                <h2>Translators</h2>
+                <h2>
+                    <Localise id="credits.translators" />
+                </h2>
                 <p>
-                    Unfortunately, AmpMod's only three developers only speak
-                    English. We are working on a way for you to translate
-                    AmpMod. While we set it up, you can register an account on{" "}
-                    <a href="https://translate.codeberg.org/">
-                        Codeberg Weblate
-                    </a>{" "}
-                    and stay tuned.
+                    <Localise
+                        id="credits.translatorsDescription"
+                        values={{ APP_NAME }}
+                    />
                 </p>
             </section>
             <section>
-                <h2>Fonts</h2>
+                <h2>
+                    <Localise id="credits.art" />
+                </h2>
                 <p>
-                    The AmpMod logo uses the{" "}
-                    <a href="https://fonts.google.com/specimen/Pixelify+Sans">
-                        Pixelify Sans
-                    </a>{" "}
-                    font. It is licenced under the{" "}
-                    <a href="https://fonts.google.com/specimen/Pixelify+Sans/license">
-                        SIL Open Font License
-                    </a>
-                    .
-                </p>
-                <p>
-                    Pixelify Sans is also available in the editor as the
-                    "Amplification" font.
-                </p>
-            </section>
-            <section>
-                <h2>Art</h2>
-                <p>
-                    Some images use content from{" "}
-                    <a href="https://openclipart.org">Openclipart</a>, licensed
-                    under the CC0 license. Even though the images are public
-                    domain, we would still like to attribute.
+                    <Localise id="credits.artDescription" />
                 </p>
             </section>
             <Footer />

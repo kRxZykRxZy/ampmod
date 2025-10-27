@@ -6,6 +6,9 @@ import Box from "../../components/box/box.jsx";
 import Modal from "../../components/modal/modal.jsx";
 
 import examples from "../../lib/examples/index.js";
+import Localise, { localise } from "../components/localise/localise.jsx";
+
+import { APP_NAME } from "@ampmod/branding";
 
 const ExampleModal = props => {
     const [downloadLink, setDownloadLink] = useState(null);
@@ -39,23 +42,24 @@ const ExampleModal = props => {
                 console.error("Failed to fetch download link:", err);
             }
         };
-        fetchDownloadLink(props.id, props.title);
-    }, [props.id, props.title]);
+        fetchDownloadLink(props.id, localise(`examples.apz.${props.id}`));
+    }, [props.id]);
 
     return (
         <Modal
             className={styles.modalContent}
-            contentLabel={props.title}
+            contentLabel={localise(`examples.apz.${props.id}`)}
             onRequestClose={props.onCancel}
             id="exampleModal"
         >
             <Box className={styles.modalBody}>
-                <div>{props.description || "No description."}</div>
+                <Localise
+                    id={`examples.apz.${props.id}.description`}
+                    values={{ APP_NAME }}
+                />
                 {!props.isSupported && (
                     <div className={styles.unsupported}>
-                        This project is not supported on your browser or system.
-                        It, or parts of it, may not work. The description may
-                        provide more context.
+                        <Localise id={"examples.unsupported"} />
                     </div>
                 )}
                 <iframe
@@ -74,7 +78,7 @@ const ExampleModal = props => {
                         className={homeStyles.button}
                         href={`editor.html?example=${props.id}`}
                     >
-                        Open
+                        <Localise id="examples.open" />
                     </a>
                     {downloadLink && (
                         <a
@@ -82,7 +86,7 @@ const ExampleModal = props => {
                             href={downloadLink.url}
                             download={downloadLink.filename}
                         >
-                            Download .apz
+                            <Localise id="examples.download" />
                         </a>
                     )}
                 </div>
@@ -103,10 +107,15 @@ const Example = props => {
                     draggable={false}
                 />
                 <div className={styles.exampleContent}>
-                    <div className={styles.exampleTitle}>{props.title}</div>
+                    <div className={styles.exampleTitle}>
+                        <Localise id={`examples.apz.${props.id}`} />
+                    </div>
                     {props.by && (
                         <div className={styles.exampleAuthor}>
-                            by {props.by}
+                            <Localise
+                                id="examples.by"
+                                values={{ creator: props.by }}
+                            />
                         </div>
                     )}
                 </div>

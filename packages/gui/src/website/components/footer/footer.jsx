@@ -22,44 +22,35 @@ import {
     APP_SOURCE,
     APP_WIKI,
 } from "@ampmod/branding";
-import { FormattedMessage } from "react-intl";
-
+import LangSelect from "./lang-select.jsx";
 import styles from "./footer.css";
+import Localise from "../localise/localise.jsx";
 
 const Footer = () => {
     const isAprilFools = () => {
         const now = new Date();
-        return now.getMonth() === 3 && now.getDate() === 1; // Month is 0-indexed (0 for January, 3 for April)
+        return now.getMonth() === 3 && now.getDate() === 1;
     };
 
     return (
         <footer className={styles.footer}>
             <div className={styles.footerContent}>
                 <div className={styles.footerText}>
-                    <FormattedMessage
-                        defaultMessage="© {year} {APP_NAME} developers. {APP_NAME} is {freeSoftware}."
-                        description="Copyright text noting AmpMod's licence."
+                    <Localise
                         id="amp.footer.copyright"
                         values={{
                             APP_NAME,
                             year: new Date().getFullYear(),
                             freeSoftware: (
                                 <a href="LICENSE.txt">
-                                    <FormattedMessage
-                                        defaultMessage="free and open-source software"
-                                        description="Link saying 'free and open-source software' in amp.footer.copyright"
-                                        id="amp.footer.copyright.freeSoftware"
-                                    />
+                                    <Localise id="amp.footer.copyright.freeSoftware" />
                                 </a>
                             ),
                         }}
                     />
                 </div>
                 <div className={styles.footerText}>
-                    <FormattedMessage
-                        // eslint-disable-next-line max-len
-                        defaultMessage="{APP_NAME} is not affiliated with {scratchLink} or {twLink}. Support Scratch by {supportScratch}."
-                        description="Disclaimer that AmpMod is not connected to Scratch"
+                    <Localise
                         id="amp.footer.disclaimer"
                         values={{
                             APP_NAME,
@@ -69,7 +60,7 @@ const Footer = () => {
                                     target="_blank"
                                     rel="noreferrer"
                                 >
-                                    {"Scratch"}
+                                    Scratch
                                 </a>
                             ),
                             twLink: (
@@ -78,16 +69,12 @@ const Footer = () => {
                                     target="_blank"
                                     rel="noreferrer"
                                 >
-                                    {"TurboWarp"}
+                                    TurboWarp
                                 </a>
                             ),
                             supportScratch: (
                                 <a href="https://scratchfoundation.org/donate">
-                                    <FormattedMessage
-                                        defaultMessage="donating to the Scratch Foundation"
-                                        description="Link to donate to the Scratch Foundation"
-                                        id="amp.footer.disclaimer.supportScratch"
-                                    />
+                                    <Localise id="amp.footer.disclaimer.supportScratch" />
                                 </a>
                             ),
                         }}
@@ -95,137 +82,84 @@ const Footer = () => {
                 </div>
                 <div className={styles.footerColumns}>
                     <div className={styles.footerSection}>
-                        <h3>About</h3>
+                        <h3>
+                            <Localise id="footer.heading.about" />
+                        </h3>
                         <a href="https://ampmod.netlify.app/faq">
-                            <FormattedMessage
-                                defaultMessage="AmpMod FAQ"
-                                description="FAQ link in footer"
-                                id="tw.footer.faq"
-                            />
+                            <Localise id="tw.footer.faq" />
                         </a>
                         {APP_BLOG && (
                             <a href={APP_BLOG}>
-                                <FormattedMessage
-                                    defaultMessage="AmpMod Blog"
-                                    description="Blog link in footer"
-                                    id="tw.footer.blog"
-                                />
+                                <Localise id="tw.footer.blog" />
                             </a>
                         )}
                     </div>
                     <div className={styles.footerSection}>
-                        <h3>Community</h3>
+                        <h3>
+                            <Localise id="footer.heading.community" />
+                        </h3>
                         {APP_FORUMS && (
                             <>
                                 <a href="https://scratch.mit.edu/discuss/topic/806311/">
-                                    <FormattedMessage
-                                        defaultMessage="{APP_NAME} on Scratch"
-                                        description="Button to give feedback on Scratch in the menu bar"
+                                    <Localise
                                         id="amp.onScratch"
-                                        values={{
-                                            APP_NAME,
-                                        }}
+                                        values={{ APP_NAME }}
                                     />
                                 </a>
                                 <a href={APP_FORUMS}>
-                                    <FormattedMessage
-                                        defaultMessage="{APP_NAME} Forums"
-                                        description="Button to give feedback in the menu bar"
+                                    <Localise
                                         id="tw.topicButton"
-                                        values={{
-                                            APP_NAME,
-                                        }}
+                                        values={{ APP_NAME }}
                                     />
                                 </a>
                             </>
                         )}
                         {APP_WIKI && (
                             <a href={APP_WIKI}>
-                                <FormattedMessage
-                                    defaultMessage="AmpMod Wiki"
-                                    description="Link in footer to wiki"
-                                    id="tw.footer.wiki"
-                                />
+                                <Localise id="tw.footer.wiki" />
                             </a>
                         )}
                         <a href="credits.html">
-                            <FormattedMessage
-                                defaultMessage="Credits"
-                                description="Credits link in footer"
-                                id="tw.footer.credits"
-                            />
+                            <Localise id="tw.footer.credits" />
                         </a>
                     </div>
                     <div className={styles.footerSection}>
-                        <h3>Resources</h3>
+                        <h3>
+                            <Localise id="footer.heading.resources" />
+                        </h3>
                         <a href="https://ampmod.codeberg.page/extensions/">
-                            <FormattedMessage
-                                defaultMessage="Extension Gallery"
-                                description="Link in footer to extension gallery"
-                                id="tw.footer.extensions"
-                            />
+                            <Localise id="tw.footer.extensions" />
                         </a>
                         <a href="https://ampmod.codeberg.page/manual/">
-                            <FormattedMessage
-                                defaultMessage="Manual"
-                                description="Link in footer to manual"
-                                id="tw.footer.manual"
-                            />
+                            <Localise id="tw.footer.manual" />
                         </a>
                         <a href={APP_SOURCE}>
-                            <FormattedMessage
-                                defaultMessage="Source Code"
-                                description="Link to source code"
-                                id="tw.code"
-                            />
+                            <Localise id="tw.code" />
                         </a>
                         {process.env.ampmod_mode === "canary" ? (
                             <a href="https://ampmod.codeberg.page/">
-                                <FormattedMessage
-                                    defaultMessage="Stable Build"
-                                    description="Link to the stable build of AmpMod"
-                                    id="amp.production"
-                                />
+                                <Localise id="amp.production" />
                             </a>
                         ) : (
                             <a href="https://ampmod.codeberg.page/canary/">
-                                <FormattedMessage
-                                    defaultMessage="Canary Build"
-                                    description="Link to the canary build of AmpMod"
-                                    id="amp.canary"
-                                />
+                                <Localise id="amp.canary" />
                             </a>
                         )}
-                        {/*<a href="https://desktop.turbowarp.org/">
-                            {"TurboWarp Desktop"}
-                        </a>
-                        <a href="https://packager.turbowarp.org/">
-                            {"TurboWarp Packager"}
-                        </a>                        <a href="https://docs.turbowarp.org/embedding">
-                            <FormattedMessage
-                                defaultMessage="Embedding"
-                                description="Link in footer to embedding documentation for embedding link"
-                                id="tw.footer.embed"
-                            />
-                        </a>*/}
                         <a href="https://docs.turbowarp.org/url-parameters">
-                            <FormattedMessage
-                                defaultMessage="URL Parameters"
-                                description="Link in footer to URL parameters documentation"
-                                id="tw.footer.parameters"
-                            />
+                            <Localise id="tw.footer.parameters" />
                         </a>
                     </div>
                     <div className={styles.footerSection}>
-                        <h3>Legal</h3>
+                        <h3>
+                            <Localise id="footer.heading.legal" />
+                        </h3>
                         <a href="privacy.html">
-                            <FormattedMessage
-                                defaultMessage="Privacy Policy"
-                                description="Link to privacy policy"
-                                id="tw.privacy"
-                            />
+                            <Localise id="tw.privacy" />
                         </a>
                     </div>
+                </div>
+                <div className={styles.footerText}>
+                    <LangSelect />
                 </div>
                 <div className={styles.footerText}>
                     <small>{process.env.ampmod_version}</small>

@@ -6,19 +6,20 @@ import render from "../../playground/app-target.js";
 // design.css is only used for the hero in a separate component.
 import styles from "./home.css";
 
-import { APP_FORUMS, APP_NAME, APP_WIKI } from "@ampmod/branding";
+import { APP_FORUMS, APP_NAME, APP_WIKI, APP_SLOGAN } from "@ampmod/branding";
 import { applyGuiColors } from "../../lib/themes/guiHelpers.js";
 import { detectTheme } from "../../lib/themes/themePersistance.js";
 import Header from "../components/header/header.jsx";
 import Footer from "../components/footer/footer.jsx";
 import Clippy from "../../containers/amp-clippy.jsx";
-
-import { Hero } from "../components/hero/hero.jsx";
+import Hero from "../components/hero/hero.jsx";
 
 /* eslint-disable react/jsx-no-literals */
+import Localise, { setHtmlLang } from "../components/localise/localise.jsx";
 
 applyGuiColors(detectTheme());
-document.documentElement.lang = "en";
+setHtmlLang();
+document.title = `${APP_NAME} - ${APP_SLOGAN}`;
 
 const Home = () => (
     <>
@@ -26,83 +27,95 @@ const Home = () => (
         <Clippy isFixed messageSet="website" />
         <Hero />
         <main className={styles.main}>
-            {/* START: Main two-column layout wrapper */}
             <div className={styles.mainContentGrid}>
-                {/* LEFT COLUMN: Contains the introductory sections */}
                 <div className={styles.leftColumn}>
                     <section>
-                        <h2>What is {APP_NAME}?</h2>
+                        <h2>
+                            <Localise
+                                id="whatIsAppName"
+                                values={{ APP_NAME }}
+                            />
+                        </h2>
                         <p>
-                            {APP_NAME} is a powerful block-based programming
-                            language, built on Scratch 3.0 and TurboWarp. It can
-                            be used for many things, from simple throwaway
-                            spaghetti scripts to large-scale calculations.
+                            <Localise
+                                id="appDescription"
+                                values={{ APP_NAME }}
+                            />
                         </p>
                     </section>
                     <section>
-                        <h2>It's not just Scratch, it's {APP_NAME}!</h2>
+                        <h2>
+                            <Localise
+                                id="notJustScratch"
+                                values={{ APP_NAME }}
+                            />
+                        </h2>
                         <p>
-                            {APP_NAME} is designed to be a convenient package of
-                            features to make complex projects easily. From
-                            clicker games to scientific experiments, we have it
-                            all.
+                            <Localise
+                                id="appConvenience"
+                                values={{ APP_NAME }}
+                            />
                         </p>
                     </section>
                     <section>
-                        <h2>Need help?</h2>
-                        {/* If you are modifying AmpMod, you should replace or remove these links */}
+                        <h2>
+                            <Localise id="needHelp" />
+                        </h2>
                         <div className={styles.buttonRow}>
                             <a href={APP_FORUMS} className={styles.button}>
-                                Visit the forums
+                                <Localise id="visitForums" />
                             </a>
                             <a href={APP_WIKI} className={styles.button}>
-                                Visit the wiki
+                                <Localise id="visitWiki" />
                             </a>
                         </div>
                     </section>
                 </div>
 
-                {/* RIGHT COLUMN: Contains the Features section */}
                 <div className={styles.rightColumn}>
                     <section>
-                        <h2>Features</h2>
-                        {/* Inner 2-column grid for the features list */}
+                        <h2>
+                            <Localise id="features" />
+                        </h2>
                         <div className={styles.twoColumnGrid}>
                             <div className={styles.columnItem}>
-                                <h3>For programmers</h3>
+                                <h3>
+                                    <Localise id="forProgrammers" />
+                                </h3>
                                 <ul>
                                     <li>
-                                        {APP_NAME} compiles projects to
-                                        JavaScript to make them run faster than
-                                        in vanilla Scratch.
+                                        <Localise
+                                            id="jsCompile"
+                                            values={{ APP_NAME }}
+                                        />
                                     </li>
                                     <li>
-                                        With arrays, you can create complex list
-                                        structures and store them as variables.
+                                        <Localise id="arraysFeature" />
                                     </li>
                                     <li>
-                                        {APP_NAME} adds over 100 new unsandboxed
-                                        extensions to Scratch, opening access to
-                                        various browser features.
+                                        <Localise
+                                            id="extensionsFeature"
+                                            values={{ APP_NAME }}
+                                        />
                                     </li>
                                 </ul>
                             </div>
                             <div className={styles.columnItem}>
-                                <h3>For artists and animators</h3>
+                                <h3>
+                                    <Localise id="forArtists" />
+                                </h3>
                                 <ul>
                                     <li>
-                                        {APP_NAME} features new fonts like Comic
-                                        and Amplification to use in your
-                                        costumes and backdrops.
+                                        <Localise
+                                            id="newFonts"
+                                            values={{ APP_NAME }}
+                                        />
                                     </li>
                                     <li>
-                                        Creating a rounded rectangle has never
-                                        been easier with the Rounded Rectangle
-                                        tool.
+                                        <Localise id="roundedRectangle" />
                                     </li>
                                     <li>
-                                        Custom fonts can be loaded from system
-                                        font name or a font file.
+                                        <Localise id="customFonts" />
                                     </li>
                                 </ul>
                             </div>

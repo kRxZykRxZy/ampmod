@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../design.css";
 import myStyles from "./hero.css";
-import { APP_SLOGAN } from "@ampmod/branding";
 import WelcomeBanner from "../../../components/amp-welcome/welcome-banner.svg";
 import * as Bowser from "bowser";
+import Localise from "../localise/localise.jsx";
 
-export const Hero = () => {
+export default () => {
     const [isPhone, setIsPhone] = useState(false);
 
     useEffect(() => {
@@ -18,20 +18,21 @@ export const Hero = () => {
         <header className={styles.headerContainer}>
             <div className={myStyles.headerContainerContainer}>
                 <div className={myStyles.headerContent}>
-                    <h1 className={styles.headerText}>{APP_SLOGAN}</h1>
+                    <h1 className={styles.headerText}>
+                        <Localise id="appSlogan" />
+                    </h1>
+
                     {process.env.ampmod_mode === "canary" && (
                         <>
                             <p className={styles.wrap}>
                                 <strong>
-                                    This is a canary build. Bugs may be present,
-                                    and your projects may break when the final
-                                    version is released. You should not use this
-                                    version for creating non-test projects.
+                                    <Localise id="hero.canaryWarning" />
                                 </strong>
                             </p>
                             <div className={styles.spacing}></div>
                         </>
                     )}
+
                     <div className={styles.spacing}></div>
                     <div className={myStyles.buttonRow}>
                         {!isPhone && (
@@ -39,14 +40,14 @@ export const Hero = () => {
                                 href="editor.html"
                                 className={myStyles.primaryButton}
                             >
-                                Try it out
+                                <Localise id="hero.create" />
                             </a>
                         )}
                         <a
                             href="examples.html"
                             className={myStyles.primaryButton}
                         >
-                            See examples
+                            <Localise id="hero.examples" />
                         </a>
                     </div>
                     <div className={styles.spacing}></div>

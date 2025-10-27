@@ -3,23 +3,6 @@ import { setAppElement } from "react-modal";
 import * as bowser from "bowser";
 import { APP_NAME, APP_SOURCE } from "@ampmod/branding";
 
-// amp: Non-foolproof check to prevent copyleft violations
-// TODO: Make this run in other components of the source code too, maybe even branding itself
-if (
-    !APP_SOURCE ||
-    (APP_NAME !== "AmpMod" &&
-        APP_SOURCE == "https://codeberg.org/ampmod/ampmod")
-) {
-    alert(
-        "LEGAL WARNING! The developer of this fork is violating the AmpMod licence.\n\n" +
-            "This fork of AmpMod does not have a link to its source code or uses the original link. Per the GPLv3 and MPL, you must release your source code if you are distributing modified versions.\n\n" +
-            "If you are a user, please use the official editor at: https://ampmod.codeberg.page\n\n" +
-            "If you are a developer of this fork, please release your source code if you haven't already and add the link. If you are not willing to do so, destroy the source code of this fork.\n\n" +
-            "(We are not lawyers. Please speak to one for more information.)"
-    );
-    throw new Error("This is an illegal, non-GPL compliant fork of AmpMod.");
-}
-
 const appTarget = document.getElementById("app");
 let migrationOccurred = false;
 /**
