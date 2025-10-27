@@ -18,7 +18,7 @@ translationContext.keys().forEach(key => {
 const supportedLocales = Object.keys(translations);
 
 // for detecting RTL
-const rtlLanguages = ["ar", "he", "fa", "ur"];
+const rtlLanguages = ["ar", "he", "fa", "ur", "ckb"];
 
 // Utility to handle strings/components interpolation
 const interpolate = (text, values) => {
