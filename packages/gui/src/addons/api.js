@@ -189,7 +189,7 @@ reduxInstance.addEventListener('statechanged', e => {
 });
 updateClasses();
 
-const getInternalKey = element => Object.keys(element).find(key => key.startsWith('__reactInternalInstance$'));
+const getInternalKey = element => Object.keys(element).find(key => key.startsWith('__reactInternals'));
 
 class Tab extends EventTargetShim {
     constructor (id) {
@@ -217,7 +217,7 @@ class Tab extends EventTargetShim {
                     )
                 });
                 const reactInternalKey = Object.keys(modeSelector)
-                    .find(key => key.startsWith('__reactInternalInstance$'));
+                    .find(key => key.startsWith('_reactInternals'));
                 const internalState = modeSelector[reactInternalKey].child;
                 // .tool or .blob.tool only exists on the selected tool
                 let toolState = internalState;

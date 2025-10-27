@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { lsNamespace } from "../../../lib/amp-localstorage-namespace";
 import locales from "@turbowarp/scratch-l10n";
 

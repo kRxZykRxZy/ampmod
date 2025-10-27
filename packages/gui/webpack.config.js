@@ -130,6 +130,7 @@ const base = {
                 ],
                 options: {
                     loader: "tsx",
+                    jsx: "automatic",
                     target: "es2019",
                 },
             },
