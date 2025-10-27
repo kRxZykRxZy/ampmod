@@ -73,7 +73,7 @@ Addons are allowed, but only if they fit the following criteria:
 ## Update the credits
 
 If you contribute to AmpMod, you may want to add your username to the credits page.
-This is found in `packages/gui/src/playground/credits/users.js`.
+This is found in `packages/gui/src/website/credits/users.js`.
 
 If you have a Scratch account, go to your profile and prepend `api.` before `scratch.mit.edu`.
 Then, copy the ID next to `"id":` in the JSON, and set it as `userID` in the credits file.

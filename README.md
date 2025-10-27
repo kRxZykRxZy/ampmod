@@ -1,4 +1,4 @@
-# ![AmpMod](packages/gui/src/playground/components/header/ampmod.svg)<br>[![CI status](https://ci.codeberg.org/api/badges/15147/status.svg)](https://ci.codeberg.org/repos/15147) [![licence GPLv3](https://img.shields.io/badge/licence-multiple,%20click%20here-blue.svg)](LICENSE.md)
+# ![AmpMod](packages/gui/src/website/components/header/ampmod.svg)<br>[![CI status](https://ci.codeberg.org/api/badges/15147/status.svg)](https://ci.codeberg.org/repos/15147) [![licence GPLv3](https://img.shields.io/badge/licence-multiple,%20click%20here-blue.svg)](LICENSE.md)
 
 This is the source code for the AmpMod editor. AmpMod (formerly UltiBlocks) is a powerful block-based programming language with things like first-class lists,
 making it easier to create larger and more complicated projects.

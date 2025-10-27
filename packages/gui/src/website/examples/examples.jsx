@@ -61,7 +61,7 @@ export const ExamplesPage = () => (
                                     </a>
                                 ),
                                 imageAttribution: (
-                                    <a href="https://codeberg.org/ampmod/ampmod/src/branch/develop/packages/gui/src/playground/examples/images/README.md">
+                                    <a href="https://codeberg.org/ampmod/ampmod/src/branch/develop/packages/gui/src/website/examples/images/README.md">
                                         <Localise id="examples.licence.images" />
                                     </a>
                                 ),
