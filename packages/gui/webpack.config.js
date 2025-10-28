@@ -309,7 +309,7 @@ module.exports = [
         },
         optimization: {
             runtimeChunk: "single",
-            chunkIds: "deterministic",
+            chunkIds: "natural",
             splitChunks: {
                 chunks: "all",
                 minChunks: 1,
