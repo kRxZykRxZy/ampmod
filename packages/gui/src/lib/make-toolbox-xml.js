@@ -976,9 +976,6 @@ const futureToolbox = function (isInitialSetup, isStage, targetId) {
         name="Future"
         iconURI="${futureIcon}"
         id="future">
-        <block type="argument_reporter_string_number">
-            <field name="VALUE">project platform</field>
-        </block>
         <block type="event_whentouchingobject">
             <value name="TOUCHINGOBJECTMENU">
                 <shadow type="event_touchingobjectmenu"/>
