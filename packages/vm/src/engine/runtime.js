@@ -476,6 +476,7 @@ class Runtime extends EventEmitter {
             miscLimits: true,
             fencing: true,
             secman: true,
+            caseSensitivity: false,
         };
 
         this.compilerOptions = {

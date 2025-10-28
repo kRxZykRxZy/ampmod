@@ -299,6 +299,27 @@ const WarpTimer = props => (
     />
 );
 
+const CaseSensitivity = props => (
+    <BooleanSetting
+        {...props}
+        label={
+            <FormattedMessage
+                defaultMessage="Case Sensitivity"
+                description="Case Sensitivity setting"
+                id="amp.settingsModal.caseSensitivity"
+            />
+        }
+        help={
+            <FormattedMessage
+                // eslint-disable-next-line max-len
+                defaultMessage="Makes the () = () block case-sensitive. E.g. with this option, (Apple) = (APPLE) will equal false, but when it is disabled, it will equal true. This may break vanilla Scratch projects."
+                description="Case Sensitivity help"
+                id="amp.settingsModal.caseSensitivityHelp"
+            />
+        }
+    />
+);
+
 const DisableCompiler = props => (
     <BooleanSetting
         {...props}
@@ -496,6 +517,10 @@ const SettingsModalComponent = props => (
             <RemoveFencing
                 value={props.removeFencing}
                 onChange={props.onRemoveFencingChange}
+            />
+            <CaseSensitivity
+                value={props.caseSensitivity}
+                onChange={props.onCaseSensitivityChange}
             />
             <RemoveMiscLimits
                 value={props.removeLimits}

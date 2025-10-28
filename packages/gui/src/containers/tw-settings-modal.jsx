@@ -31,6 +31,7 @@ class UsernameModal extends React.Component {
             "handleStageHeightChange",
             "handleDisableCompilerChange",
             "handleDisableSecmanChange",
+            "handleCaseSensitivityChange",
             "handleStoreProjectOptions",
         ]);
     }
@@ -81,6 +82,13 @@ class UsernameModal extends React.Component {
     handleRemoveLimitsChange(e) {
         this.props.vm.setRuntimeOptions({
             miscLimits: !e.target.checked,
+        });
+        if (!this.props.isEmbedded) this.handleStoreProjectOptions();
+    }
+
+    handleCaseSensitivityChange(e) {
+        this.props.vm.setRuntimeOptions({
+            caseSensitivity: e.target.checked,
         });
         if (!this.props.isEmbedded) this.handleStoreProjectOptions();
     }
@@ -146,6 +154,7 @@ class UsernameModal extends React.Component {
                 onInfiniteClonesChange={this.handleInfiniteClonesChange}
                 onRemoveFencingChange={this.handleRemoveFencingChange}
                 onRemoveLimitsChange={this.handleRemoveLimitsChange}
+                onCaseSensitivityChange={this.handleCaseSensitivityChange}
                 onWarpTimerChange={this.handleWarpTimerChange}
                 onStageWidthChange={this.handleStageWidthChange}
                 onStageHeightChange={this.handleStageHeightChange}
@@ -187,6 +196,7 @@ UsernameModal.propTypes = {
     infiniteClones: PropTypes.bool,
     removeFencing: PropTypes.bool,
     removeLimits: PropTypes.bool,
+    caseSensitivity: PropTypes.bool,
     warpTimer: PropTypes.bool,
     customStageSize: PropTypes.shape({
         width: PropTypes.number,
@@ -205,6 +215,7 @@ const mapStateToProps = state => ({
     infiniteClones: state.scratchGui.tw.runtimeOptions.maxClones === Infinity,
     removeFencing: !state.scratchGui.tw.runtimeOptions.fencing,
     removeLimits: !state.scratchGui.tw.runtimeOptions.miscLimits,
+    caseSensitivity: state.scratchGui.tw.runtimeOptions.caseSensitivity,
     warpTimer: state.scratchGui.tw.compilerOptions.warpTimer,
     customStageSize: state.scratchGui.customStageSize,
     disableCompiler: !state.scratchGui.tw.compilerOptions.enabled,

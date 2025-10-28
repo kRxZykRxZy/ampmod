@@ -206,6 +206,45 @@ class Cast {
     }
 
     /**
+     * amp: Compare two values, using Scratch cast, CASE-SENsITIVE string compare, etc.
+     * Do not use this unless runtime.runtimeOptions.caseSensitivity is enabled.
+     * We use a separate function since cast doesn't have runtime access.
+     * @param {*} v1 First value to compare.
+     * @param {*} v2 Second value to compare.
+     * @returns {number} Negative number if v1 < v2; 0 if equal; positive otherwise.
+     */
+    static compareCS(v1, v2) {
+        let n1 = Number(v1);
+        let n2 = Number(v2);
+        if (n1 === 0 && isNotActuallyZero(v1)) {
+            n1 = NaN;
+        } else if (n2 === 0 && isNotActuallyZero(v2)) {
+            n2 = NaN;
+        }
+        if (isNaN(n1) || isNaN(n2)) {
+            // At least one argument can't be converted to a number.
+            // The project has chose to use case sensitive mode.
+            const s1 = String(v1);
+            const s2 = String(v2);
+            if (s1 < s2) {
+                return -1;
+            } else if (s1 > s2) {
+                return 1;
+            }
+            return 0;
+        }
+        // Handle the special case of Infinity
+        if (
+            (n1 === Infinity && n2 === Infinity) ||
+            (n1 === -Infinity && n2 === -Infinity)
+        ) {
+            return 0;
+        }
+        // Compare as numbers.
+        return n1 - n2;
+    }
+
+    /**
      * Determine if a Scratch argument number represents a round integer.
      * @param {*} val Value to check.
      * @return {boolean} True if number looks like an integer.

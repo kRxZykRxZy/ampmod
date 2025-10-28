@@ -548,7 +548,10 @@ class ScriptTreeGenerator {
                 );
             case "operator_equals":
                 return new IntermediateInput(
-                    InputOpcode.OP_EQUALS,
+                    // amp: An alternate version of this is used for case sensitivity mode.
+                    this.runtime.runtimeOptions.caseSensitivity
+                        ? InputOpcode.OP_EQUALS_CS
+                        : InputOpcode.OP_EQUALS,
                     InputType.BOOLEAN,
                     {
                         left: this.descendInputOfBlock(block, "OPERAND1"),

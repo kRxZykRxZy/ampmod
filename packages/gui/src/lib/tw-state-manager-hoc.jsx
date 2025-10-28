@@ -368,6 +368,12 @@ const TWStateManager = function (WrappedComponent) {
                 }
             }
 
+            if (urlParams.has("caseSensitive")) {
+                this.props.vm.setRuntimeOptions({
+                    caseSensitivity: true,
+                });
+            }
+
             if (urlParams.has("offscreen")) {
                 this.props.vm.setRuntimeOptions({
                     fencing: false,
@@ -471,6 +477,12 @@ const TWStateManager = function (WrappedComponent) {
                     searchParams.set("hqpen", "");
                 } else {
                     searchParams.delete("hqpen");
+                }
+
+                if (this.props.runtimeOptions.caseSensitivity) {
+                    searchParams.set("caseSensitive", "");
+                } else {
+                    searchParams.delete("caseSensitive");
                 }
 
                 if (compilerOptions.enabled) {

@@ -232,6 +232,8 @@ const InputOpcode = {
     OP_CONTAINS: "op.contains",
     OP_DIVIDE: "op.divide",
     OP_EQUALS: "op.equals",
+    // amp: Not really a new block but rather an alternate version of op.equals for when case sensitivity is enabled.
+    OP_EQUALS_CS: "op.equals.cs",
     OP_GREATER: "op.greater",
     OP_LESS: "op.less",
     OP_JOIN: "op.join",

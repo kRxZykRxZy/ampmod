@@ -64,7 +64,13 @@ class Scratch3OperatorsBlocks {
     }
 
     equals(args) {
-        return Cast.compare(args.OPERAND1, args.OPERAND2) === 0;
+        // amp: Handle case sensitivity.
+        // We don't do this with lt or gt since we only expect those to be used for numbers.
+        if (this.runtime.runtimeOptions.caseSensitivity) {
+            return Cast.compareCS(args.OPERAND1, args.OPERAND2) === 0;
+        } else {
+            return Cast.compare(args.OPERAND1, args.OPERAND2) === 0;
+        }
     }
 
     gt(args) {

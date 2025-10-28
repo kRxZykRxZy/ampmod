@@ -35,6 +35,7 @@ export const initialState = {
         miscLimits: true,
         fencing: true,
         secman: true,
+        caseSensitivity: false,
     },
     isWindowFullScreen: false,
     dimensions: [0, 0],

@@ -309,8 +309,6 @@ module.exports = [
         },
         optimization: {
             runtimeChunk: "single",
-            chunkIds:
-                process.env.NODE_ENV !== "production" ? "named" : "hashed",
             splitChunks: {
                 chunks: "all",
                 minChunks: 1,
