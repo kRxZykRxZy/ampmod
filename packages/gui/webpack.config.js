@@ -309,29 +309,25 @@ module.exports = [
         },
         optimization: {
             runtimeChunk: "single",
-            chunkIds: "natural",
+            chunkIds:
+                process.env.NODE_ENV !== "production" ? "named" : "hashed",
             splitChunks: {
                 chunks: "all",
                 minChunks: 1,
                 minSize: 10000,
                 maxInitialRequests: 3,
-                cacheGroups: {
-                    reactRuntime: {
-                        test: /[\\/]node_modules[\\/]react(\-dom)?[\\/](.*)/,
-                        name: "react",
-                        chunks: "all",
-                        enforce: true,
-                    },
-                    vm: {
-                        test: /[\\/]node_modules[\\/]scratch-vm/,
-                        name: "vm",
-                        chunks: "initial",
-                        enforce: true,
-                    },
-                },
             },
             minimizer: [new EsbuildPlugin({ css: true, target: "es2019" })],
         },
+        stats:
+            process.env.NODE_ENV === "production"
+                ? "errors-only"
+                : {
+                      chunks: true,
+                      chunkModules: false,
+                      chunkOrigins: false,
+                      colors: true,
+                  },
         plugins: base.plugins.concat([
             new OptimizeCssAssetsPlugin(),
             new HtmlWebpackPlugin({
