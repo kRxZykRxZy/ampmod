@@ -25,6 +25,16 @@ a commit.
 - Arrow functions with one parameter will not have paranthesis around that parameter.
 - Trailing commas should be included when permitted in ES5.
 
+## On joke functionality and loading messages
+
+Joke functionality will **not** be added **except from 1-31 March**.
+This includes Clippy, new joke-related loading messages, and in general, any code with April Fools logic.
+
+This rule is in place because several PRs we received in the early days of AmpMod simply
+added messages for Clippy and the loading screen even after April Fools had already passed. We
+do not find this funny as it puts more burden on maintaining the editor, especially considering
+almost all of the PRs were also made by JS beginners who caused syntax errors.
+
 ## Scope
 
 ### Extensions
