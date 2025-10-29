@@ -30,7 +30,6 @@ class UsernameModal extends React.Component {
             "handleStageWidthChange",
             "handleStageHeightChange",
             "handleDisableCompilerChange",
-            "handleDisableSecmanChange",
             "handleCaseSensitivityChange",
             "handleStoreProjectOptions",
         ]);
@@ -159,7 +158,6 @@ class UsernameModal extends React.Component {
                 onStageWidthChange={this.handleStageWidthChange}
                 onStageHeightChange={this.handleStageHeightChange}
                 onDisableCompilerChange={this.handleDisableCompilerChange}
-                onDisableSecmanChange={this.handleDisableSecmanChange}
                 stageWidth={this.props.customStageSize.width}
                 stageHeight={this.props.customStageSize.height}
                 customStageSizeEnabled={
@@ -203,7 +201,6 @@ UsernameModal.propTypes = {
         height: PropTypes.number,
     }),
     disableCompiler: PropTypes.bool,
-    disableSecman: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
@@ -219,7 +216,6 @@ const mapStateToProps = state => ({
     warpTimer: state.scratchGui.tw.compilerOptions.warpTimer,
     customStageSize: state.scratchGui.customStageSize,
     disableCompiler: !state.scratchGui.tw.compilerOptions.enabled,
-    disableSecman: !state.scratchGui.tw.runtimeOptions.secman,
 });
 
 const mapDispatchToProps = dispatch => ({

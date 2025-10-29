@@ -54,9 +54,7 @@ const setupUnsandboxedExtensionAPI = vm =>
             if (parsed.protocol === "blob:" || parsed.protocol === "data:") {
                 return true;
             }
-            return !vm.runtime.runtimeOptions.secman
-                ? true
-                : vm.securityManager.canFetch(parsed.href);
+            return vm.securityManager.canFetch(parsed.href);
         };
 
         Scratch.canOpenWindow = async url => {
@@ -69,9 +67,7 @@ const setupUnsandboxedExtensionAPI = vm =>
             if (parsed.protocol === "javascript:") {
                 return false;
             }
-            return !vm.runtime.runtimeOptions.secman
-                ? true
-                : vm.securityManager.canOpenWindow(parsed.href);
+            return vm.securityManager.canOpenWindow(parsed.href);
         };
 
         Scratch.canRedirect = async url => {
@@ -84,44 +80,28 @@ const setupUnsandboxedExtensionAPI = vm =>
             if (parsed.protocol === "javascript:") {
                 return false;
             }
-            return !vm.runtime.runtimeOptions.secman
-                ? true
-                : vm.securityManager.canRedirect(parsed.href);
+            return vm.securityManager.canRedirect(parsed.href);
         };
 
         Scratch.canRecordAudio = async () =>
-            !vm.runtime.runtimeOptions.secman
-                ? true
-                : vm.securityManager.canRecordAudio();
+            vm.securityManager.canRecordAudio();
 
         Scratch.canRecordVideo = async () =>
-            !vm.runtime.runtimeOptions.secman
-                ? true
-                : vm.securityManager.canRecordVideo();
+            vm.securityManager.canRecordVideo();
 
         Scratch.canReadClipboard = async () =>
-            !vm.runtime.runtimeOptions.secman
-                ? true
-                : vm.securityManager.canReadClipboard();
+            vm.securityManager.canReadClipboard();
 
-        Scratch.canNotify = async () =>
-            !vm.runtime.runtimeOptions.secman
-                ? true
-                : vm.securityManager.canNotify();
+        Scratch.canNotify = async () => vm.securityManager.canNotify();
 
-        Scratch.canGeolocate = async () =>
-            !vm.runtime.runtimeOptions.secman
-                ? true
-                : vm.securityManager.canGeolocate();
+        Scratch.canGeolocate = async () => vm.securityManager.canGeolocate();
 
         Scratch.canEmbed = async url => {
             const parsed = parseURL(url);
             if (!parsed) {
                 return false;
             }
-            return !vm.runtime.runtimeOptions.secman
-                ? true
-                : vm.securityManager.canEmbed(parsed.href);
+            return vm.securityManager.canEmbed(parsed.href);
         };
 
         Scratch.canDownload = async (url, name) => {
@@ -134,9 +114,7 @@ const setupUnsandboxedExtensionAPI = vm =>
             if (parsed.protocol === "javascript:") {
                 return false;
             }
-            return !vm.runtime.runtimeOptions.secman
-                ? true
-                : vm.securityManager.canDownload(url, name);
+            return vm.securityManager.canDownload(url, name);
         };
 
         Scratch.fetch = async (url, options) => {

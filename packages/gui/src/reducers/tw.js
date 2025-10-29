@@ -1,7 +1,6 @@
 const SET_FRAMERATE = "tw/SET_FRAMERATE";
 const SET_INTERPOLATION = "tw/SET_INTERPOLATION";
 const SET_COMPILER_OPTIONS = "tw/SET_COMPILER_OPTIONS";
-const SET_SECMAN = "tw/SET_SECMAN";
 const SET_RUNTIME_OPTIONS = "tw/SET_RUNTIME_OPTIONS";
 const SET_USERNAME = "tw/SET_USERNAME";
 const SET_CLOUD = "tw/SET_CLOUD";
@@ -34,7 +33,6 @@ export const initialState = {
         maxClones: 300,
         miscLimits: true,
         fencing: true,
-        secman: true,
         caseSensitivity: false,
     },
     isWindowFullScreen: false,
