@@ -73,7 +73,7 @@ const ClippyComponent = ({ isFixed, messageSet }) => {
         "Do <strong>NOT</strong> read the AmpMod wiki, it is very suspicious.",
         "STOP USING AMPMOD! Learn Assembly instead.",
         "It look like your code is pretty- code is pretty- code is pretty- code is pretty- code is pretty-  (clippy.exe has stopped responding.)",
-        "AmpMod is better offline! <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Click here to install it!</a>",
+        "AmpMod is better offline! <a href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'>Click here to install it!</a>",
         "<b><i><u>You better NOT close me... or else...</u></i></b>",
     ];
 
