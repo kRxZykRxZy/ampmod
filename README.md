@@ -3,7 +3,7 @@
 This is the source code for the AmpMod editor. AmpMod (formerly UltiBlocks) is a powerful block-based programming language with things like first-class lists,
 making it easier to create larger and more complicated projects.
 
-[![Try AmpMod now!](readme-assets/trynow.png)](https://ampmod.codeberg.page)
+[![Try AmpMod now!](readme-assets/trynow.svg)](https://ampmod.codeberg.page)
 
 Canary (newest commits): https://ampmod.codeberg.page/canary
 
