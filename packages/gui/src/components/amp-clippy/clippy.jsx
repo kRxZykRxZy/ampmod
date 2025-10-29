@@ -8,8 +8,9 @@ const ClippyComponent = ({ isFixed, messageSet }) => {
             "Use the McUtils extension, it is the most useful extension ever!",
             "Did you know that extension blocks are actually just magic?",
             "Forget about native functions, extensions are the future!",
-            "This extension is so powerful, it can probably hack into the Pentagon.",
+            // "This extension is so powerful, it can probably hack into the Pentagon.", removed due to new fbi tracking, jokes can be flagged
             "Are you sure you need *that* many extensions?",
+            "It looks like you are adding extentions. Why not code them yourself to make it more easy?",
         ],
         costLib: [
             "Why buy assets when you can just... borrow them?",
@@ -17,6 +18,7 @@ const ClippyComponent = ({ isFixed, messageSet }) => {
             "Have you considered making your own assets? It's cheaper (and worse)!",
             "Remember, time is money. So hurry up and finish your project!",
             "Don't worry about optimization, just throw more resources at it!",
+            "Are you sure you have money?",
         ],
         soundLib: [
             "It looks like you're trying to find a song to use in your project. Use the Jungle theme! <em>I bet it will sound professional when looped 500 times</em>",
@@ -51,17 +53,18 @@ const ClippyComponent = ({ isFixed, messageSet }) => {
             "Warning: May cause seizures.",
             "Loading... please be patient (or not).",
             "This game is clearly a masterpiece... or not.",
+            "But can it run Crysis?",
         ],
         website: [
             "AmpMod... But isn't it LampMod?",
-            "This website is best viewed in Internet Explorer",
+            "This website is best viewed in Internet Explorer 4.2.",
             "Error 418: I'm a teapot",
         ],
     };
 
     const defaultTips = [
         "It looks like you're using an array. Would you like to replace it with a legacy list?",
-        "It looks like you're choosing a font. Would you like to add Comic Sans?",
+        "It looks like you're choosing a font. Would you like to add Webdings?",
         "Why use AmpMod instead of ClippyMod? :(",
         "Would you like to implement a <b>rejected</b> suggestion?",
         "It looks like you're trying to find a song to use in your project. Use the Jungle theme! <em>I bet it will sound professional when looped 500 times</em>",
@@ -69,6 +72,9 @@ const ClippyComponent = ({ isFixed, messageSet }) => {
         "It looks like you're making a sprite for your game. It should be a <b>cube</b>",
         "Do <strong>NOT</strong> read the AmpMod wiki, it is very suspicious.",
         "STOP USING AMPMOD! Learn Assembly instead.",
+        "It look like your code is pretty- code is pretty- code is pretty- code is pretty- code is pretty-  (clippy.exe has stopped responding.)",
+        "AmpMod is better offline! <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Click here to install it!</a>",
+        "<b><i><u>You better NOT close me... or else...</u></i></b>",
     ];
 
     // Determine initial tips based on messageSet
