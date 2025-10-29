@@ -839,7 +839,7 @@ Blockly.Css.CONTENT = [
     /* Override the default Closure URL. */
     ".blocklyWidgetDiv .goog-option-selected .goog-menuitem-checkbox,",
     ".blocklyWidgetDiv .goog-option-selected .goog-menuitem-icon {",
-    "background: url(<<<PATH>>>/sprites.png) no-repeat -48px -16px !important;",
+    "background: url(<<<PATH>>>/sprites.svg) no-repeat -48px -16px !important;",
     "}",
 
     /* Category tree in Toolbox. */
@@ -902,7 +902,7 @@ Blockly.Css.CONTENT = [
     "}",
 
     ".blocklyTreeIcon {",
-    "background-image: url(<<<PATH>>>/sprites.png);",
+    "background-image: url(<<<PATH>>>/sprites.svg);",
     "height: 16px;",
     "vertical-align: middle;",
     "width: 16px;",
@@ -1188,7 +1188,7 @@ Blockly.Css.CONTENT = [
     ".blocklyDropDownDiv .goog-option-selected .goog-menuitem-checkbox,",
     ".blocklyDropDownDiv .goog-option-selected .goog-menuitem-icon {",
     /* Client apps may override the URL at which they serve the sprite. */
-    "background: url(<<<PATH>>>/sprites.png) no-repeat -48px -16px !important;",
+    "background: url(<<<PATH>>>/sprites.svg) no-repeat -48px -16px !important;",
     "position: static;" /* Scroll with the menu. */,
     "float: left;",
     "margin-left: -24px;",

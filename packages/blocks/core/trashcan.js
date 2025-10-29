@@ -152,12 +152,12 @@ Blockly.Trashcan.prototype.createDom = function () {
     <clippath id="blocklyTrashBodyClipPath837493">
       <rect width="47" height="45" y="15"></rect>
     </clippath>
-    <image width="64" height="92" y="-32" xlink:href="media/sprites.png"
+    <image width="64" height="92" y="-32" xlink:href="media/sprites.svg"
         clip-path="url(#blocklyTrashBodyClipPath837493)"></image>
     <clippath id="blocklyTrashLidClipPath837493">
       <rect width="47" height="15"></rect>
     </clippath>
-    <image width="84" height="92" y="-32" xlink:href="media/sprites.png"
+    <image width="84" height="92" y="-32" xlink:href="media/sprites.svg"
         clip-path="url(#blocklyTrashLidClipPath837493)"></image>
   </g>
   */
