@@ -14,7 +14,6 @@ import Footer from "../components/footer/footer";
 import Clippy from "../../containers/amp-clippy";
 import Hero from "../components/hero/hero";
 
-/* eslint-disable react/jsx-no-literals */
 import Localise, { setHtmlLang } from "../components/localise/localise";
 
 applyGuiColors(detectTheme());

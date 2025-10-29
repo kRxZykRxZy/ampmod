@@ -16,8 +16,6 @@ import Footer from "../components/footer/footer";
 import Localise, { setHtmlLang } from "../components/localise/localise";
 import appleCat from "./apple-cat-pleased.svg";
 
-/* eslint-disable react/jsx-no-literals */
-
 applyGuiColors(detectTheme());
 setHtmlLang(); // Use helper instead of hardcoding <html lang>
 
