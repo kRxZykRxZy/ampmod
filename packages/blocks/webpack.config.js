@@ -86,10 +86,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         plugins: [
             new CopyWebpackPlugin([
                 {
-                    from: "../../node_modules/google-closure-library",
-                    to: "closure-library",
-                },
-                {
                     from: "blocks_common",
                     to: "playgrounds/blocks_common",
                 },
