@@ -33,13 +33,13 @@ export const options = defineMessages({
         defaultMessage: "Green",
         description:
             "Name of the green color scheme, used by AmpMod by default.",
-        id: "tw.accent.green",
+        id: "amp.accent.green",
     },
     [ACCENT_GREEN_OLD]: {
         defaultMessage: "Green (Classic)",
         description:
             "Name of the old version of green color scheme, used by AmpMod until version 0.3.",
-        id: "tw.accent.green.old",
+        id: "amp.accent.green.old",
     },
     [ACCENT_RED]: {
         defaultMessage: "Red",
@@ -62,7 +62,7 @@ export const options = defineMessages({
         defaultMessage: "Grey",
         description:
             "Name of the grey color scheme. Matches the header of TurboWarp in dark mode.",
-        id: "tw.accent.grey",
+        id: "amp.accent.grey",
     },
     [ACCENT_RAINBOW]: {
         defaultMessage: "Rainbow",

@@ -1,6 +1,11 @@
 {
+    "amp.accent.green": "Green",
+    "amp.accent.green.old": "Green (Classic)",
+    "amp.accent.grey": "Grey",
     "amp.browserModal.device": "Device is not supported",
     "amp.browserModal.mobile": "{APP_NAME}'s editor is not supported on mobile devices. However, you can still view projects on the AmpMod website.",
+    "amp.confirmDeprecated.1": "This extension is deprecated for the following reason:",
+    "amp.confirmDeprecated.2": "Are you sure you want to add it?",
     "amp.controls.pause": "Pause",
     "amp.controls.play": "Play",
     "amp.deprecatedExtension": "Deprecated: {reason}",

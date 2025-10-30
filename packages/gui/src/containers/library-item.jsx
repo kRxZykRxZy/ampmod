@@ -6,12 +6,16 @@ import { injectIntl, intlShape, defineMessages } from "react-intl";
 import LibraryItemComponent from "../components/library-item/library-item.jsx";
 
 const messages = defineMessages({
-    incompatible: {
-        // eslint-disable-next-line max-len
+    deprecated1: {
         defaultMessage:
-            "This extension is incompatible with Scratch. Projects made with it cannot be uploaded to the Scratch website. Are you sure you want to enable it?",
-        description: "Confirm loading Scratch-incompatible extension",
-        id: "tw.confirmIncompatibleExtension",
+            "This extension is deprecated for the following reason:",
+        description: "Confirm loading deprecated extension",
+        id: "amp.confirmDeprecated.1",
+    },
+    deprecated2: {
+        defaultMessage: "Are you sure you want to add it?",
+        description: "Confirm loading deprecated extension",
+        id: "amp.confirmDeprecated.2",
     },
 });
 
@@ -52,7 +56,8 @@ class LibraryItem extends React.PureComponent {
         if (this.props.deprecated) {
             if (
                 !window.confirm(
-                    `This extension is deprecated for the following reason:\n\n${this.props.deprecated}\n\nAre you sure you want to enable it?`
+                    // eslint-disable-next-line max-len
+                    `${this.props.intl.formatMessage(messages.deprecated1)}\n\n${this.props.deprecated}\n\n${this.props.intl.formatMessage(messages.deprecated2)}`
                 )
             ) {
                 e.preventDefault();
