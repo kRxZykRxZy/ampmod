@@ -28,7 +28,6 @@ goog.provide("Blockly.Block");
 
 goog.require("Blockly.Blocks");
 goog.require("Blockly.Colours");
-goog.require("Blockly.Comment");
 goog.require("Blockly.ScratchBlockComment");
 goog.require("Blockly.Connection");
 goog.require("Blockly.Events.BlockChange");
@@ -136,9 +135,6 @@ Blockly.Block = function (workspace, prototypeName, opt_id) {
      * @private
      */
     this.checkboxInFlyout_ = false;
-
-    /** @type {string|Blockly.Comment} */
-    this.comment = null;
 
     /**
      * @type {?number}
