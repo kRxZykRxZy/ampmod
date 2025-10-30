@@ -25,7 +25,7 @@
     max-width: 1000px;
     margin: auto;
     display: flex;
-    text-align: start;
+    text-align: center;
     justify-content: space-between;
     align-items: center;
     gap: 2em;
@@ -35,17 +35,9 @@
     flex: 1;
 }
 
-.header-image {
-    flex-shrink: 0;
-    max-width: 40%;
-}
-
-[dir="rtl"] .header-image {
-    transform: scaleX(-1);
-}
-
 .button-row {
     display: flex;
+    justify-content: center;
     gap: 16px;
 }
 
@@ -58,10 +50,6 @@
         text-align: center;
         gap: 1em;
         padding: 0 1em;
-    }
-
-    .header-image {
-        display: none;
     }
 
     .primary-button {
@@ -78,10 +66,6 @@
 }
 
 @media (max-width: 480px) {
-    .header-image {
-        max-width: 90%; /* almost full width on very small screens */
-    }
-
     .primary-button {
         font-size: 1em;
         padding: 8px 0;
