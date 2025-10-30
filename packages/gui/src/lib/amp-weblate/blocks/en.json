@@ -1,6 +1,6 @@
 {
     "OPERATORS_NEWLINE": "new line",
-    "CONTROL_ISCLONE": "clone?",
+    "CONTROL_ISCLONE": "running as a clone?",
     "CONTROL_ASYNC": "in the background, do",
     "CONTROL_SWITCH": "test if %1 is matched",
     "CONTROL_SWITCH_BAD_SYNTAX": "\"if () was matched\" blocks must be in a \"test if () is matched\" C-block.",
