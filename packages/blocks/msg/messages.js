@@ -234,6 +234,18 @@ Blockly.Msg.PROCEDURES_TO_REPORTER = "Change To Reporter";
 Blockly.Msg.PROCEDURES_TO_STATEMENT = "Change To Stacked Block";
 Blockly.Msg.PROCEDURES_DOCS = "How to use return";
 
+// amp: Arrays blocks
+Blockly.Msg.ARRAYS_ITEM_OF = "item %1 of %2";
+Blockly.Msg.ARRAYS_ITEM_NO_OF = "item # of %1 in %2";
+Blockly.Msg.ARRAYS_CONTAINS = "%1 contains %2?";
+Blockly.Msg.ARRAYS_LENGTH = "length of %1";
+Blockly.Msg.ARRAYS_EMPTY_ARRAY = "empty array";
+Blockly.Msg.ARRAYS_DELIMITED_TO_ARRAY = "array from %1 separated by %2";
+Blockly.Msg.ARRAYS_BEHIND = "add %1 to %2";
+Blockly.Msg.ARRAYS_IN_FRONT_OF = "%1 in front of %2";
+Blockly.Msg.ARRAYS_AT = "insert %1 at %2 of %3";
+Blockly.Msg.ARRAYS_RANGE = "list from %1 to %2";
+
 // Sensing blocks
 Blockly.Msg.SENSING_TOUCHINGOBJECT = "touching %1?";
 Blockly.Msg.SENSING_TOUCHINGOBJECT_POINTER = "mouse-pointer";
