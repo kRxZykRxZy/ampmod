@@ -1,28 +1,35 @@
 # Contributing guidelines
 
-## I don't know JavaScript! / I don't want to create a Codeberg account!
-
 If you don't want to use this repository but still found a bug or want to add a feature, we recommend
 posting on the [forums](https://ampmod.flarum.cloud) about it.
+
+If you really want to contribute, you will want to know JavaScript. If you don't know the difference
+between `[1]`, `1`, and `"1"`, or don't know any way of creating a function, sorry, you don't know
+JavaScript. We cannot spend all of our time helping you learn it, but there are some useful tutorials
+online.
+
+In addition, we highly recommend you learn how to use Git, as it is helpful for tracking your code so
+you can revert bugs. If you can't use Git, you are creating a hard fork of AmpMod, which means you cannot
+contribute your changes to upstream and also cannot pull from upstream without manual intervention.
 
 ## Development environment
 
 To set up the development environment, run `pnpm i`. You need Node.js installed (v22 and later are
 preferred but v18 and later should work fine.)
 
-Note you need Python and Java installed if you want to modify `blocks`.
+Note you need Python and Java installed if you want to modify `blocks`, as it relies on Google's
+(outdated) Closure Compiler.
 
 ## Style guide
 
 We use Prettier to format files with this style guide, so if you make a mistake, don't
-worry. If you ran `pnpm i`, changes will be modified to fit the style guide after you make
-a commit.
+worry. If you ran `pnpm i`, changes will be formatted with the style guide before committing.
 
 - Files should end with a newline.
 - JS statements should have a semicolon at the end.
 - Use double quotes.
 - To indent, use 4 spaces. This isn't C code from the 90's, so don't use tabs.
-- Arrow functions with one parameter will not have paranthesis around that parameter.
+- Arrow functions with one parameter will not have parentheses around that parameter.
 - Trailing commas should be included when permitted in ES5.
 
 ## On joke functionality and loading messages
@@ -33,7 +40,10 @@ This includes Clippy, new joke-related loading messages, and in general, any cod
 This rule is in place because several PRs we received in the early days of AmpMod simply
 added messages for Clippy and the loading screen even after April Fools had already passed. We
 do not find this funny as it puts more burden on maintaining the editor, especially considering
-almost all of the PRs were also made by JS beginners who caused syntax errors.
+almost all of the PRs were also made by people who didn't know JavaScript, put quotes inside another pair
+of quotes, and caused syntax errors.
+
+Any joke PRs made outside April Fools may be closed or marked as WIP.
 
 ## Scope
 
@@ -71,11 +81,16 @@ Addons are allowed, but only if they fit the following criteria:
 - They do not add new blocks (this should be done with extensions). Debugger is an
   exception to this rule.
 - They do not corrupt projects
-- They use the API from SA (in case addons are ported to that browser extension)
+
+However, you should add them in [ampmod/addons](https://codeberg.org/ampmod/addons) instead
+of here.
 
 ## Cheat sheet
 
 - `pnpm i` - Install dependencies
+- `pnpm --filter=!turbowarp-desktop i` - Install dependencies, except those only needed for
+  the desktop app (e.g. Electron or a snapshot of the extension gallery). This saves a few
+  megabytes in case you aren't going to develop the desktop app.
 - `pnpm start` - Start a development server
 - `pnpm run build` - Build the project for production
 - `prettier --write .` - modify your files to follow our style guide
@@ -91,7 +106,10 @@ This will add your profile picture and a link to your profile. `username` will a
 to be the same as your Scratch username.
 
 If you do not have a Scratch account, you can set `userID` to `0` and `username` to a nickname
-you go by.
+you go by. You can optionally set `img` if you want to use another image instead of the default
+Apple Cat; note that the image should be a perfect square else it will be squashed. You can also
+optionally set `href` to a personal website, forge profile, etc. that complies with [our \
+guidelines](https://ampmod.flarum.cloud/p/1).
 
 Example:
 
@@ -101,3 +119,15 @@ Example:
     username: "AmpElectrecuted",
 }
 ```
+
+## Othre repositories associated with the AmpMod project
+
+All repositories below are on Codeberg unless otherwise noted.
+
+- [ampmod/addons](https://codeberg.org/ampmod/addons) - addons available in the Addon Settings page
+- [ampmod/manual](https://codeberg.org/ampmod/manual) - AmpMod documentation
+- [ampmod/extensions](https://codeberg.org/ampmod/extensions) - AmpMod extension gallery, forked from
+  TurboWarp
+- [ampmod/ampmod-deployer](https://codeberg.org/ampmod/ampmod-deployer) - deploys AmpMod to a server
+- [ampmod/pmp2apz](https://codeberg.org/ampmod/pmp2apz) - convert incompatible projects to work with
+  AmpMod
