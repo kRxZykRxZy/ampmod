@@ -52,6 +52,9 @@ import LoadScratchBlocksHOC from "../lib/tw-load-scratch-blocks-hoc.jsx";
 import { findTopBlock } from "../lib/backpack/code-payload.js";
 import { gentlyRequestPersistentStorage } from "../lib/tw-persistent-storage.js";
 
+// amp: we use this to inject our translations
+import { blockMsg } from "../lib/amp-weblate/blocks";
+
 // TW: Strings we add to scratch-blocks are localized here
 const messages = defineMessages({
     PROCEDURES_RETURN: {
@@ -182,6 +185,12 @@ class Blocks extends React.Component {
         Msg.PROCEDURES_DOCS = this.props.intl.formatMessage(
             messages.PROCEDURES_DOCS
         );
+
+        const amp_translations =
+            blockMsg[this.props.intl.locale] || blockMsg.en;
+        Object.entries(blockMsg.en).forEach(([key, value]) => {
+            Msg[key] = amp_translations[key] || value;
+        });
 
         const workspaceConfig = defaultsDeep(
             {},
