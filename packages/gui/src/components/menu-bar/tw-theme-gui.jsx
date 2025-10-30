@@ -56,7 +56,7 @@ const options = defineMessages({
     [GUI_CUSTOM]: {
         defaultMessage: "Customize in Addon Settings",
         description: "Link to addon settings",
-        id: "amp.gui.custom",
+        id: "tw.blockColors.custom",
     },
 });
 

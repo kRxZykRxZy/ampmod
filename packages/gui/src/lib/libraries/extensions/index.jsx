@@ -195,7 +195,7 @@ export default [
             <FormattedMessage
                 defaultMessage="Future"
                 description="Name of the 'Future' extension"
-                id="ub.futureExtension.name"
+                id="amp.futureExtension.name"
             />
         ),
         extensionId: "future",
