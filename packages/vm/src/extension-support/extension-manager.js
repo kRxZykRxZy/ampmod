@@ -57,8 +57,18 @@ const defaultBuiltinExtensions = {
         ),
     // amp: exclusive extensions
     future: () => {
-        /* compatibility */
+        // future was moved to gui
+        class FutureCompat {
+            getInfo() {
+                return {
+                    id: "future",
+                };
+            }
+        }
+
+        return FutureCompat;
     },
+
     electroTest: () =>
         import(
             /* webpackChunkName: "electrotest" */ "../extensions/ampmod_electro_test"
