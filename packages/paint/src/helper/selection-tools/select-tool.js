@@ -1,11 +1,11 @@
-import Modes from "../../lib/modes";
+import Modes from '../../lib/modes';
 
-import { getHoveredItem } from "../hover";
-import { selectRootItem } from "../selection";
-import BoundingBoxTool from "./bounding-box-tool";
-import NudgeTool from "./nudge-tool";
-import SelectionBoxTool from "./selection-box-tool";
-import paper from "@turbowarp/paper";
+import {getHoveredItem} from '../hover';
+import {selectRootItem} from '../selection';
+import BoundingBoxTool from './bounding-box-tool';
+import NudgeTool from './nudge-tool';
+import SelectionBoxTool from './selection-box-tool';
+import paper from '@turbowarp/paper';
 
 /**
  * paper.Tool that handles select mode. This is made up of 2 subtools.
@@ -53,16 +53,8 @@ class SelectTool extends paper.Tool {
             onUpdateImage,
             switchToTextTool
         );
-        const nudgeTool = new NudgeTool(
-            Modes.SELECT,
-            this.boundingBoxTool,
-            onUpdateImage
-        );
-        this.selectionBoxTool = new SelectionBoxTool(
-            Modes.SELECT,
-            setSelectedItems,
-            clearSelectedItems
-        );
+        const nudgeTool = new NudgeTool(Modes.SELECT, this.boundingBoxTool, onUpdateImage);
+        this.selectionBoxTool = new SelectionBoxTool(Modes.SELECT, setSelectedItems, clearSelectedItems);
         this.selectionBoxMode = false;
         this.prevHoveredItemId = null;
         this.active = false;
@@ -118,11 +110,8 @@ class SelectTool extends paper.Tool {
                 if (!hitResult.item.data || !hitResult.item.data.isHelperItem) {
                     return true;
                 }
-                return (
-                    hitResult.item.data.isScaleHandle ||
-                    hitResult.item.data.isRotHandle
-                );
-            },
+                return hitResult.item.data.isScaleHandle || hitResult.item.data.isRotHandle;
+            }
         };
         if (preselectedOnly) {
             hitOptions.selected = true;
@@ -137,10 +126,7 @@ class SelectTool extends paper.Tool {
         // Check if double clicked
         let doubleClicked = false;
         if (this.lastEvent) {
-            if (
-                event.event.timeStamp - this.lastEvent.event.timeStamp <
-                SelectTool.DOUBLE_CLICK_MILLIS
-            ) {
+            if (event.event.timeStamp - this.lastEvent.event.timeStamp < SelectTool.DOUBLE_CLICK_MILLIS) {
                 doubleClicked = true;
             } else {
                 doubleClicked = false;
@@ -167,9 +153,7 @@ class SelectTool extends paper.Tool {
         if (
             (!hoveredItem && this.prevHoveredItemId) || // There is no longer a hovered item
             (hoveredItem && !this.prevHoveredItemId) || // There is now a hovered item
-            (hoveredItem &&
-                this.prevHoveredItemId &&
-                hoveredItem.id !== this.prevHoveredItemId)
+            (hoveredItem && this.prevHoveredItemId && hoveredItem.id !== this.prevHoveredItemId)
         ) {
             // hovered item changed
             this.setHoveredItem(hoveredItem ? hoveredItem.id : null);

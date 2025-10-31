@@ -1,4 +1,4 @@
-import parseColorLib from "parse-color";
+import parseColorLib from 'parse-color';
 
 /**
  * @typedef ParsedColor
@@ -8,7 +8,7 @@ import parseColorLib from "parse-color";
 
 const TRANSPARENT_BLACK = {
     rgba: [0, 0, 0, 0],
-    hex: "#000000",
+    hex: '#000000'
 };
 
 /**
@@ -23,9 +23,9 @@ const parseColor = color => {
         if (hexPart.length === 3 || hexPart.length === 4) {
             // Double each character, eg. 08A -> 0088AA
             hexPart = hexPart
-                .split("")
+                .split('')
                 .map(char => char + char)
-                .join("");
+                .join('');
         }
 
         const red = parseInt(hexPart.substring(0, 2), 16);
@@ -38,7 +38,7 @@ const parseColor = color => {
 
         return {
             rgba: [red, green, blue, alpha],
-            hex: `#${hexPart.substring(0, 6)}`,
+            hex: `#${hexPart.substring(0, 6)}`
         };
     }
 
@@ -56,7 +56,7 @@ const parseColor = color => {
 const makeAlphaComponent = alpha =>
     Math.round(alpha * 255)
         .toString(16)
-        .padStart(2, "0");
+        .padStart(2, '0');
 
 /**
  * @param {string} color Color in any format.
@@ -72,4 +72,4 @@ const colorToHex = color => {
     return hex;
 };
 
-export { makeAlphaComponent, colorToHex };
+export {makeAlphaComponent, colorToHex};

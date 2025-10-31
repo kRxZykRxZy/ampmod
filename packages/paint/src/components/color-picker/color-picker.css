@@ -1,7 +1,7 @@
-@import "../../css/colors";
-@import "../../css/units";
-@import "../../css/colors";
-@import "../../css/filters.css";
+@import '../../css/colors';
+@import '../../css/units';
+@import '../../css/colors';
+@import '../../css/filters.css';
 
 /* Popover styles */
 /* body is for specificity to override some addons that set a lower z-index */
@@ -39,7 +39,7 @@ body :global(.Popover) {
 }
 
 .row-header {
-    font-family: "Inter Variable", "Helvetica Neue", Helvetica, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, sans-serif;
     font-size: 0.65rem;
     margin: 8px 8px 0 8px;
 }
@@ -109,15 +109,15 @@ body :global(.Popover) {
     user-select: none;
 }
 
-[dir="ltr"] .gradient-picker-row > img + img {
+[dir='ltr'] .gradient-picker-row > img + img {
     margin-left: calc(2 * $grid-unit);
 }
 
-[dir="rtl"] .gradient-picker-row > img + img {
+[dir='rtl'] .gradient-picker-row > img + img {
     margin-right: calc(2 * $grid-unit);
 }
 
-[dir="rtl"] .gradient-swatches-row {
+[dir='rtl'] .gradient-swatches-row {
     flex-direction: row-reverse;
 }
 
@@ -142,11 +142,11 @@ body :global(.Popover) {
     box-sizing: border-box;
     width: 100%;
 }
-[dir="ltr"] .picker-row .picker-text {
+[dir='ltr'] .picker-row .picker-text {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
-[dir="rtl"] .picker-row .picker-text {
+[dir='rtl'] .picker-row .picker-text {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }

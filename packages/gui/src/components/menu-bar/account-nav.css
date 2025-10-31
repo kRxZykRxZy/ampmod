@@ -1,5 +1,5 @@
-@import "../../css/colors.css";
-@import "../../css/units.css";
+@import '../../css/colors.css';
+@import '../../css/units.css';
 
 .user-info {
     display: inline-flex;
@@ -19,11 +19,11 @@
     font-weight: normal;
 }
 
-[dir="ltr"] .user-info .avatar {
+[dir='ltr'] .user-info .avatar {
     margin-right: calc($space * 0.8125);
 }
 
-[dir="rtl"] .user-info .avatar {
+[dir='rtl'] .user-info .avatar {
     margin-left: calc($space * 0.8125);
 }
 
@@ -32,11 +32,11 @@
     height: 2rem;
 }
 
-[dir="ltr"] .user-info .dropdown-caret-position {
+[dir='ltr'] .user-info .dropdown-caret-position {
     margin-left: calc($space * 0.8125);
 }
 
-[dir="rtl"] .user-info .dropdown-caret-position {
+[dir='rtl'] .user-info .dropdown-caret-position {
     margin-right: calc($space * 0.8125);
 }
 

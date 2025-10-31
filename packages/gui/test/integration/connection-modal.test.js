@@ -1,10 +1,9 @@
-import path from "path";
-import SeleniumHelper from "../helpers/selenium-helper";
+import path from 'path';
+import SeleniumHelper from '../helpers/selenium-helper';
 
-const { clickText, clickXpath, findByText, getDriver, getLogs, loadUri } =
-    new SeleniumHelper();
+const {clickText, clickXpath, findByText, getDriver, getLogs, loadUri} = new SeleniumHelper();
 
-const uri = path.resolve(__dirname, "../../build/index.html");
+const uri = path.resolve(__dirname, '../../build/index.html');
 
 let driver;
 
@@ -17,7 +16,7 @@ const websocketFakeoutJs = `var RealWebSocket = WebSocket;
         return new RealWebSocket("wss://fake.fake");
     }`;
 
-describe("Hardware extension connection modal", () => {
+describe('Hardware extension connection modal', () => {
     beforeAll(() => {
         driver = getDriver();
     });
@@ -26,7 +25,7 @@ describe("Hardware extension connection modal", () => {
         await driver.quit();
     });
 
-    test("Message saying Scratch Link is unavailable (BLE)", async () => {
+    test('Message saying Scratch Link is unavailable (BLE)', async () => {
         await driver.quit();
         driver = getDriver();
 
@@ -36,24 +35,24 @@ describe("Hardware extension connection modal", () => {
 
         await clickXpath('//button[@title="Add Extension"]');
 
-        await clickText("micro:bit");
+        await clickText('micro:bit');
         await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for modal to open
-        findByText("Scratch Link"); // Scratch Link is mentioned in the error modal
+        findByText('Scratch Link'); // Scratch Link is mentioned in the error modal
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);
     });
 
-    test("Message saying Scratch Link is unavailable (BT)", async () => {
+    test('Message saying Scratch Link is unavailable (BT)', async () => {
         await loadUri(uri);
 
         await driver.executeScript(websocketFakeoutJs);
 
         await clickXpath('//button[@title="Add Extension"]');
 
-        await clickText("EV3");
+        await clickText('EV3');
         await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for modal to open
-        findByText("Scratch Link"); // Scratch Link is mentioned in the error modal
+        findByText('Scratch Link'); // Scratch Link is mentioned in the error modal
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);

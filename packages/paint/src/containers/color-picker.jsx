@@ -1,27 +1,26 @@
-import bindAll from "lodash.bindall";
-import { connect } from "react-redux";
-import paper from "@turbowarp/paper";
-import parseColor from "parse-color";
-import PropTypes from "prop-types";
-import React from "react";
+import bindAll from 'lodash.bindall';
+import {connect} from 'react-redux';
+import paper from '@turbowarp/paper';
+import parseColor from 'parse-color';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import { changeColorIndex } from "../reducers/color-index";
-import { clearSelectedItems } from "../reducers/selected-items";
-import { activateEyeDropper } from "../reducers/eye-dropper";
-import GradientTypes from "../lib/gradient-types";
+import {changeColorIndex} from '../reducers/color-index';
+import {clearSelectedItems} from '../reducers/selected-items';
+import {activateEyeDropper} from '../reducers/eye-dropper';
+import GradientTypes from '../lib/gradient-types';
 
-import ColorPickerComponent from "../components/color-picker/color-picker.jsx";
-import { MIXED } from "../helper/style-path";
-import Modes from "../lib/modes";
-import { colorToHex, makeAlphaComponent } from "../lib/tw-color-utils";
+import ColorPickerComponent from '../components/color-picker/color-picker.jsx';
+import {MIXED} from '../helper/style-path';
+import Modes from '../lib/modes';
+import {colorToHex, makeAlphaComponent} from '../lib/tw-color-utils';
 
 const colorStringToHsv = hexString => {
     let hsv;
-    if (hexString.startsWith("#") && hexString.length === 9) {
+    if (hexString.startsWith('#') && hexString.length === 9) {
         // parseColor does not properly parse alpha of hex colors
         hsv = parseColor(hexString).hsva;
-        const alpha =
-            parseInt(hexString.substr(hexString.length - 2), 16) / 255;
+        const alpha = parseInt(hexString.substr(hexString.length - 2), 16) / 255;
         hsv[3] = alpha;
     } else {
         hsv = parseColor(hexString).hsva;
@@ -51,18 +50,18 @@ class ColorPicker extends React.Component {
     constructor(props) {
         super(props);
         bindAll(this, [
-            "getHsv",
-            "handleChangeGradientTypeHorizontal",
-            "handleChangeGradientTypeRadial",
-            "handleChangeGradientTypeSolid",
-            "handleChangeGradientTypeVertical",
-            "handleHueChange",
-            "handleSaturationChange",
-            "handleBrightnessChange",
-            "handleAlphaChange",
-            "handleHexColorChange",
-            "handleTransparent",
-            "handleActivateEyeDropper",
+            'getHsv',
+            'handleChangeGradientTypeHorizontal',
+            'handleChangeGradientTypeRadial',
+            'handleChangeGradientTypeSolid',
+            'handleChangeGradientTypeVertical',
+            'handleHueChange',
+            'handleSaturationChange',
+            'handleBrightnessChange',
+            'handleAlphaChange',
+            'handleHexColorChange',
+            'handleTransparent',
+            'handleActivateEyeDropper'
         ]);
 
         const color = props.colorIndex === 0 ? props.color : props.color2;
@@ -71,73 +70,60 @@ class ColorPicker extends React.Component {
             hue: hsv[0],
             saturation: hsv[1],
             brightness: hsv[2],
-            alpha: hsv[3],
+            alpha: hsv[3]
         };
     }
     componentWillReceiveProps(newProps) {
-        const color =
-            newProps.colorIndex === 0 ? this.props.color : this.props.color2;
-        const newColor =
-            newProps.colorIndex === 0 ? newProps.color : newProps.color2;
-        const colorSetByEyedropper =
-            this.props.isEyeDropping && color !== newColor;
-        if (
-            colorSetByEyedropper ||
-            this.props.colorIndex !== newProps.colorIndex
-        ) {
+        const color = newProps.colorIndex === 0 ? this.props.color : this.props.color2;
+        const newColor = newProps.colorIndex === 0 ? newProps.color : newProps.color2;
+        const colorSetByEyedropper = this.props.isEyeDropping && color !== newColor;
+        if (colorSetByEyedropper || this.props.colorIndex !== newProps.colorIndex) {
             const hsv = this.getHsv(newColor);
             this.setState({
                 hue: hsv[0],
                 saturation: hsv[1],
                 brightness: hsv[2],
-                alpha: hsv[3],
+                alpha: hsv[3]
             });
         }
     }
     getHsv(color) {
         const isTransparent = color === null;
         const isMixed = color === MIXED;
-        return isTransparent || isMixed
-            ? [50, 100, 100, isTransparent ? 0 : 1]
-            : colorStringToHsv(color);
+        return isTransparent || isMixed ? [50, 100, 100, isTransparent ? 0 : 1] : colorStringToHsv(color);
     }
     ensureNonZeroAlpha() {
         if (this.state.alpha === 0) {
             this.setState({
-                alpha: 1,
+                alpha: 1
             });
         }
     }
     handleHueChange(hue) {
         this.ensureNonZeroAlpha();
-        this.setState({ hue: hue }, () => {
+        this.setState({hue: hue}, () => {
             this.handleColorChange();
         });
     }
     handleSaturationChange(saturation) {
         this.ensureNonZeroAlpha();
-        this.setState({ saturation: saturation }, () => {
+        this.setState({saturation: saturation}, () => {
             this.handleColorChange();
         });
     }
     handleBrightnessChange(brightness) {
         this.ensureNonZeroAlpha();
-        this.setState({ brightness: brightness }, () => {
+        this.setState({brightness: brightness}, () => {
             this.handleColorChange();
         });
     }
     handleColorChange() {
         this.props.onChangeColor(
-            hsvToHex(
-                this.state.hue,
-                this.state.saturation,
-                this.state.brightness,
-                this.state.alpha
-            )
+            hsvToHex(this.state.hue, this.state.saturation, this.state.brightness, this.state.alpha)
         );
     }
     handleAlphaChange(alpha) {
-        this.setState({ alpha: alpha / 100 }, () => {
+        this.setState({alpha: alpha / 100}, () => {
             if (this.state.alpha === 0) {
                 this.handleTransparent();
             } else {
@@ -147,7 +133,7 @@ class ColorPicker extends React.Component {
     }
     handleHexColorChange(e) {
         let color;
-        if (typeof e === "string") {
+        if (typeof e === 'string') {
             color = e;
         } else {
             color = e.target.value;
@@ -161,7 +147,7 @@ class ColorPicker extends React.Component {
             hue: hsv[0],
             saturation: hsv[1],
             brightness: hsv[2],
-            alpha: hsv[3],
+            alpha: hsv[3]
         });
         this.props.onChangeColor(color);
     }
@@ -201,23 +187,15 @@ class ColorPicker extends React.Component {
                 saturation={this.state.saturation}
                 alpha={this.state.alpha * 100}
                 onAlphaChange={this.handleAlphaChange}
-                hexColor={colorToHex(
-                    this.props.colorIndex === 0
-                        ? this.props.color
-                        : this.props.color2
-                )}
+                hexColor={colorToHex(this.props.colorIndex === 0 ? this.props.color : this.props.color2)}
                 onHexColorChange={this.handleHexColorChange}
                 shouldShowGradientTools={this.props.shouldShowGradientTools}
                 onActivateEyeDropper={this.handleActivateEyeDropper}
                 onBrightnessChange={this.handleBrightnessChange}
-                onChangeGradientTypeHorizontal={
-                    this.handleChangeGradientTypeHorizontal
-                }
+                onChangeGradientTypeHorizontal={this.handleChangeGradientTypeHorizontal}
                 onChangeGradientTypeRadial={this.handleChangeGradientTypeRadial}
                 onChangeGradientTypeSolid={this.handleChangeGradientTypeSolid}
-                onChangeGradientTypeVertical={
-                    this.handleChangeGradientTypeVertical
-                }
+                onChangeGradientTypeVertical={this.handleChangeGradientTypeVertical}
                 onHueChange={this.handleHueChange}
                 onSaturationChange={this.handleSaturationChange}
                 onSelectColor={this.props.onSelectColor}
@@ -243,14 +221,14 @@ ColorPicker.propTypes = {
     onSelectColor2: PropTypes.func.isRequired,
     onSwap: PropTypes.func,
     rtl: PropTypes.bool.isRequired,
-    shouldShowGradientTools: PropTypes.bool.isRequired,
+    shouldShowGradientTools: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
     colorIndex: state.scratchPaint.fillMode.colorIndex,
     isEyeDropping: state.scratchPaint.color.eyeDropper.active,
     mode: state.scratchPaint.mode,
-    rtl: state.scratchPaint.layout.rtl,
+    rtl: state.scratchPaint.layout.rtl
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -265,7 +243,7 @@ const mapDispatchToProps = dispatch => ({
     },
     onSelectColor2: () => {
         dispatch(changeColorIndex(1));
-    },
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ColorPicker);

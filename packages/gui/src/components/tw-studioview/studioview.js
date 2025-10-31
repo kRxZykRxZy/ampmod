@@ -5,8 +5,8 @@
 // todo: we have to see if we are leaking memory when this is mounted and unmounted, esp. because of event listeners
 // todo: use react-intl for translations
 
-import styles from "./studioview.css";
-import classNames from "classnames";
+import styles from './studioview.css';
+import classNames from 'classnames';
 
 /**
  * @class
@@ -18,25 +18,19 @@ var StudioView = function (studioId) {
     this.loadingPage = false;
     this.unusedPlaceholders = [];
 
-    this.root = document.createElement("div");
+    this.root = document.createElement('div');
     this.root.className = styles.studioviewRoot;
-    this.projectList = document.createElement("div");
+    this.projectList = document.createElement('div');
     this.projectList.className = styles.studioviewList;
     this.root.appendChild(this.projectList);
 
-    if ("IntersectionObserver" in window) {
-        this.intersectionObserver = new IntersectionObserver(
-            this.handleIntersection.bind(this),
-            {
-                root: this.projectList,
-            }
-        );
-        this.loadNextPageObserver = new IntersectionObserver(
-            this.handleLoadNextPageIntersection.bind(this),
-            {
-                root: this.projectList,
-            }
-        );
+    if ('IntersectionObserver' in window) {
+        this.intersectionObserver = new IntersectionObserver(this.handleIntersection.bind(this), {
+            root: this.projectList
+        });
+        this.loadNextPageObserver = new IntersectionObserver(this.handleLoadNextPageIntersection.bind(this), {
+            root: this.projectList
+        });
     } else {
         this.intersectionObserver = null;
         this.loadNextPageObserver = null;
@@ -44,9 +38,9 @@ var StudioView = function (studioId) {
 
     // will be filled in by studioview.jsx
     this.messages = {
-        AUTHOR_ATTRIBUTION: "",
-        PROJECT_HOVER_TEXT: "",
-        LOAD_ERROR: "",
+        AUTHOR_ATTRIBUTION: '',
+        PROJECT_HOVER_TEXT: '',
+        LOAD_ERROR: ''
     };
 };
 
@@ -69,7 +63,7 @@ StudioView.prototype.addProject = function (details) {
  * Create an <img> element that will load only when it becomes visible.
  */
 StudioView.prototype.createLazyImage = function (src) {
-    var el = document.createElement("img");
+    var el = document.createElement('img');
     if (this.intersectionObserver) {
         this.intersectionObserver.observe(el);
         el.dataset.src = src;
@@ -84,19 +78,16 @@ StudioView.prototype.createLazyImage = function (src) {
  * Create a placeholder or placeholder element.
  */
 StudioView.prototype.createPlaceholder = function () {
-    var el = document.createElement("a");
-    el.className = classNames(
-        styles.studioviewProject,
-        styles.studioviewPlaceholder
-    );
+    var el = document.createElement('a');
+    el.className = classNames(styles.studioviewProject, styles.studioviewPlaceholder);
 
-    var thumbnail = document.createElement("div");
+    var thumbnail = document.createElement('div');
     thumbnail.className = styles.studioviewThumbnail;
 
-    var title = document.createElement("div");
+    var title = document.createElement('div');
     title.className = styles.studioviewTitle;
 
-    var author = document.createElement("div");
+    var author = document.createElement('div');
     author.className = styles.studioviewAuthor;
 
     el.thumbnailEl = thumbnail;
@@ -114,31 +105,22 @@ StudioView.prototype.createPlaceholder = function () {
  * Convert a placeholder element made by createPlaceholder to a project element.
  */
 StudioView.prototype.placeholderToProject = function (el, id, title, author) {
-    el.className = classNames(
-        styles.studioviewProject,
-        styles.studioviewLoaded
-    );
+    el.className = classNames(styles.studioviewProject, styles.studioviewLoaded);
     el.dataset.id = id;
     el.dataset.title = title;
     el.dataset.author = author;
-    el.title = this.messages.PROJECT_HOVER_TEXT.replace(
-        "$author",
-        author
-    ).replace("$title", title);
-    el.href = StudioView.PROJECT_PAGE.replace("$id", id);
+    el.title = this.messages.PROJECT_HOVER_TEXT.replace('$author', author).replace('$title', title);
+    el.href = StudioView.PROJECT_PAGE.replace('$id', id);
 
-    var thumbnailSrc = StudioView.THUMBNAIL_SRC.replace("$id", id);
+    var thumbnailSrc = StudioView.THUMBNAIL_SRC.replace('$id', id);
     var thumbnailImg = this.createLazyImage(thumbnailSrc);
     el.thumbnailEl.appendChild(thumbnailImg);
 
     el.titleEl.innerText = title;
-    el.authorEl.innerText = this.messages.AUTHOR_ATTRIBUTION.replace(
-        "$author",
-        author
-    );
+    el.authorEl.innerText = this.messages.AUTHOR_ATTRIBUTION.replace('$author', author);
 
-    el.addEventListener("click", this.handleClick.bind(this), true);
-    el.addEventListener("keydown", this.handleKeyDown.bind(this), true);
+    el.addEventListener('click', this.handleClick.bind(this), true);
+    el.addEventListener('keydown', this.handleKeyDown.bind(this), true);
 
     return el;
 };
@@ -147,7 +129,7 @@ StudioView.prototype.placeholderToProject = function (el, id, title, author) {
  * Adds an error message to the list.
  */
 StudioView.prototype.addErrorElement = function () {
-    var el = document.createElement("div");
+    var el = document.createElement('div');
     el.innerText = this.messages.LOAD_ERROR;
     el.className = styles.studioviewError;
     this.projectList.appendChild(el);
@@ -192,8 +174,8 @@ StudioView.prototype.handleIntersection = function (entries, observer) {
         if (entry.isIntersecting) {
             var target = entry.target;
             target.src = target.dataset.src;
-            target.dataset.src = "";
-            target.className = "";
+            target.dataset.src = '';
+            target.className = '';
             observer.unobserve(target);
         }
     });
@@ -240,10 +222,10 @@ StudioView.prototype.shuffler = function (projects) {
  */
 StudioView.prototype.loadNextPage = function () {
     if (this.loadingPage) {
-        throw new Error("Already loading the next page");
+        throw new Error('Already loading the next page');
     }
     if (this.ended) {
-        throw new Error("There are no more pages to load");
+        throw new Error('There are no more pages to load');
     }
 
     if (this.unusedPlaceholders.length === 0) {
@@ -252,11 +234,11 @@ StudioView.prototype.loadNextPage = function () {
     if (this.loadNextPageObserver) {
         this.loadNextPageObserver.disconnect();
     }
-    this.root.setAttribute("loading", "");
+    this.root.setAttribute('loading', '');
     this.loadingPage = true;
 
     var xhr = new XMLHttpRequest();
-    xhr.responseType = "json";
+    xhr.responseType = 'json';
     xhr.onload = function () {
         var rawProjects = xhr.response;
         if (!Array.isArray(rawProjects)) {
@@ -269,7 +251,7 @@ StudioView.prototype.loadNextPage = function () {
             projects.push({
                 id: p.id,
                 title: p.title,
-                author: p.username,
+                author: p.username
             });
         }
         projects = this.shuffler(projects);
@@ -289,49 +271,44 @@ StudioView.prototype.loadNextPage = function () {
 
         this.offset += projects.length;
         this.loadingPage = false;
-        this.root.removeAttribute("loading");
+        this.root.removeAttribute('loading');
 
         this.onpageload();
     }.bind(this);
 
     xhr.onerror = function () {
-        this.root.setAttribute("error", "");
+        this.root.setAttribute('error', '');
         this.cleanupPlaceholders();
         this.addErrorElement();
         this.ended = true;
     }.bind(this);
 
-    var url = StudioView.STUDIO_API.replace("$id", this.studioId).replace(
-        "$offset",
-        "" + this.offset
-    );
-    xhr.open("GET", url);
+    var url = StudioView.STUDIO_API.replace('$id', this.studioId).replace('$offset', '' + this.offset);
+    xhr.open('GET', url);
     xhr.send();
 };
 
 StudioView.prototype.getURL = function () {
-    return StudioView.STUDIO_PAGE.replace("$id", this.studioId);
+    return StudioView.STUDIO_PAGE.replace('$id', this.studioId);
 };
 
 StudioView.prototype.onselect = function (id, el) {};
 StudioView.prototype.onpageload = function () {};
 StudioView.prototype.onend = function () {};
 
-StudioView.STUDIO_API =
-    "https://trampoline.turbowarp.org/api/studios/$id/projects?offset=$offset";
+StudioView.STUDIO_API = 'https://trampoline.turbowarp.org/api/studios/$id/projects?offset=$offset';
 
 // The URL to download thumbnails from.
 // $id is replaced with the project's ID.
-StudioView.THUMBNAIL_SRC =
-    "https://trampoline.turbowarp.org/thumbnails/$id?width=144&height=108";
+StudioView.THUMBNAIL_SRC = 'https://trampoline.turbowarp.org/thumbnails/$id?width=144&height=108';
 
 // The URL for project pages.
 // $id is replaced with the project ID.
-StudioView.PROJECT_PAGE = "https://turbowarp.org/$id";
+StudioView.PROJECT_PAGE = 'https://turbowarp.org/$id';
 
 // The URL for studio pages.
 // $id is replaced with the studio ID.
-StudioView.STUDIO_PAGE = "https://scratch.mit.edu/studios/$id/";
+StudioView.STUDIO_PAGE = 'https://scratch.mit.edu/studios/$id/';
 
 // The amount of "placeholders" to insert before the next page loads.
 StudioView.PLACEHOLDER_COUNT = 9;

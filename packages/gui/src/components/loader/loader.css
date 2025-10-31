@@ -1,6 +1,6 @@
-@import "../../css/colors.css";
-@import "../../css/z-index.css";
-@import "../../css/default-colors.css";
+@import '../../css/colors.css';
+@import '../../css/z-index.css';
+@import '../../css/default-colors.css';
 
 .background {
     position: absolute;
@@ -12,8 +12,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family:
-        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: $menu-bar-background;
     text-align: center;
     color: $menu-bar-foreground;
@@ -58,15 +57,15 @@
     animation: bottom-slide-in 1.5s ease infinite;
 }
 
-[dir="rtl"] .top-block {
+[dir='rtl'] .top-block {
     animation: top-slide-in-rtl 1.5s ease infinite;
 }
 
-[dir="rtl"] .middle-block {
+[dir='rtl'] .middle-block {
     animation: middle-slide-in-rtl 1.5s ease infinite;
 }
 
-[dir="rtl"] .bottom-block {
+[dir='rtl'] .bottom-block {
     animation: bottom-slide-in-rtl 1.5s ease infinite;
 }
 

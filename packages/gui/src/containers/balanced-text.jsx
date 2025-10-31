@@ -6,23 +6,23 @@
  * We may want to replace this with react-wrap-balancer once we use React >= 16.8
  */
 
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import balanceText from "balance-text";
-import bindAll from "lodash.bindall";
+import balanceText from 'balance-text';
+import bindAll from 'lodash.bindall';
 
 class BalancedText extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["balanceText", "handleResize"]);
+        bindAll(this, ['balanceText', 'handleResize']);
         this.state = {
-            forceHide: true,
+            forceHide: true
         };
     }
 
     componentDidMount() {
-        self.addEventListener("resize", this.handleResize);
+        self.addEventListener('resize', this.handleResize);
         this.stopHiding();
     }
 
@@ -31,7 +31,7 @@ class BalancedText extends React.Component {
     }
 
     componentWillUnmount() {
-        self.removeEventListener("resize", this.handleResize);
+        self.removeEventListener('resize', this.handleResize);
     }
 
     handleResize() {
@@ -41,14 +41,14 @@ class BalancedText extends React.Component {
     }
 
     balanceText() {
-        const { container } = this;
+        const {container} = this;
         if (container) {
             balanceText(container, {});
         }
     }
 
     stopHiding() {
-        this.setState({ forceHide: false });
+        this.setState({forceHide: false});
         setTimeout(() => this.balanceText(), 0);
     }
 
@@ -61,7 +61,7 @@ class BalancedText extends React.Component {
         } = this.props;
 
         if (this.state.forceHide) {
-            style = Object.assign({}, style, { visibility: "hidden" });
+            style = Object.assign({}, style, {visibility: 'hidden'});
         }
 
         return (
@@ -81,11 +81,11 @@ class BalancedText extends React.Component {
 BalancedText.propTypes = {
     children: PropTypes.node,
     resize: PropTypes.bool,
-    style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+    style: PropTypes.object // eslint-disable-line react/forbid-prop-types
 };
 
 BalancedText.defaultProps = {
-    resize: true,
+    resize: true
 };
 
 export default BalancedText;

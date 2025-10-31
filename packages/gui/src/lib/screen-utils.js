@@ -2,12 +2,10 @@ import {
     STAGE_DISPLAY_SCALE_METADATA,
     STAGE_SIZE_MODES,
     STAGE_DISPLAY_SIZES,
-    FIXED_WIDTH,
-} from "../lib/layout-constants";
+    FIXED_WIDTH
+} from '../lib/layout-constants';
 
-const maxScaleParam =
-    typeof URLSearchParams !== "undefined" &&
-    new URLSearchParams(location.search).get("scale");
+const maxScaleParam = typeof URLSearchParams !== 'undefined' && new URLSearchParams(location.search).get('scale');
 
 /**
  * @typedef {object} StageDimensions
@@ -25,7 +23,7 @@ const STAGE_DIMENSION_DEFAULTS = {
     fullScreenSpacingBorderAdjustment: 8,
     // referencing css/units.css,
     // menuHeightAdjustment = $stage-menu-height
-    menuHeightAdjustment: 44,
+    menuHeightAdjustment: 44
 };
 
 /**
@@ -54,7 +52,7 @@ const getStageDimensions = (stageSize, customStageSize, isFullScreen) => {
         widthDefault: customStageSize.width,
         height: 0,
         width: 0,
-        scale: 0,
+        scale: 0
     };
 
     if (isFullScreen) {
@@ -63,38 +61,29 @@ const getStageDimensions = (stageSize, customStageSize, isFullScreen) => {
             STAGE_DIMENSION_DEFAULTS.menuHeightAdjustment -
             STAGE_DIMENSION_DEFAULTS.fullScreenSpacingBorderAdjustment;
 
-        stageDimensions.width =
-            stageDimensions.height *
-            (customStageSize.width / customStageSize.height);
+        stageDimensions.width = stageDimensions.height * (customStageSize.width / customStageSize.height);
 
         const maxWidth = maxScaleParam
             ? Math.min(window.innerWidth, maxScaleParam * customStageSize.width)
             : window.innerWidth;
         if (stageDimensions.width > maxWidth) {
             stageDimensions.width = maxWidth;
-            stageDimensions.height =
-                stageDimensions.width *
-                (customStageSize.height / customStageSize.width);
+            stageDimensions.height = stageDimensions.width * (customStageSize.height / customStageSize.width);
         }
 
-        stageDimensions.scale =
-            stageDimensions.width / stageDimensions.widthDefault;
+        stageDimensions.scale = stageDimensions.width / stageDimensions.widthDefault;
     } else {
         const metadata = STAGE_DISPLAY_SCALE_METADATA[stageSize];
         if (metadata.width) {
             // Uses a fixed width.
             stageDimensions.width = metadata.width;
-            stageDimensions.scale =
-                stageDimensions.width / stageDimensions.widthDefault;
-            stageDimensions.height =
-                stageDimensions.scale * stageDimensions.heightDefault;
+            stageDimensions.scale = stageDimensions.width / stageDimensions.widthDefault;
+            stageDimensions.height = stageDimensions.scale * stageDimensions.heightDefault;
         } else {
             // Uses a width relative to the current size.
             stageDimensions.scale = metadata.scale;
-            stageDimensions.height =
-                stageDimensions.scale * stageDimensions.heightDefault;
-            stageDimensions.width =
-                stageDimensions.scale * stageDimensions.widthDefault;
+            stageDimensions.height = stageDimensions.scale * stageDimensions.heightDefault;
+            stageDimensions.width = stageDimensions.scale * stageDimensions.widthDefault;
         }
     }
 
@@ -127,12 +116,7 @@ const getMinWidth = stageSize => {
  * @param {number} sizeInfo.heightDefault The default height
  * @returns {object} the CSS transform
  */
-const stageSizeToTransform = ({
-    width,
-    height,
-    widthDefault,
-    heightDefault,
-}) => {
+const stageSizeToTransform = ({width, height, widthDefault, heightDefault}) => {
     const scaleX = width / widthDefault;
     const scaleY = height / heightDefault;
     if (scaleX === 1 && scaleY === 1) {
@@ -140,12 +124,7 @@ const stageSizeToTransform = ({
         // it messes up `position: fixed` elements like the context menu.
         return;
     }
-    return { transform: `scale(${scaleX},${scaleY})` };
+    return {transform: `scale(${scaleX},${scaleY})`};
 };
 
-export {
-    getStageDimensions,
-    getMinWidth,
-    resolveStageSize,
-    stageSizeToTransform,
-};
+export {getStageDimensions, getMinWidth, resolveStageSize, stageSizeToTransform};

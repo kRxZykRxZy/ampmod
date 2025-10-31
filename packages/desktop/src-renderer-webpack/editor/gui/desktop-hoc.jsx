@@ -1,26 +1,18 @@
-import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import {
-    openLoadingProject,
-    closeLoadingProject,
-    openInvalidProjectModal,
-} from "scratch-gui/src/reducers/modals";
+import React from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {openLoadingProject, closeLoadingProject, openInvalidProjectModal} from 'scratch-gui/src/reducers/modals';
 import {
     requestProjectUpload,
     setProjectId,
     defaultProjectId,
     onFetchedProjectData,
     onLoadedProject,
-    requestNewProject,
-} from "scratch-gui/src/reducers/project-state";
-import {
-    setFileHandle,
-    setUsername,
-    setProjectError,
-} from "scratch-gui/src/reducers/tw";
-import { WrappedFileHandle } from "./filesystem-api.js";
-import { setStrings } from "../prompt/prompt.js";
+    requestNewProject
+} from 'scratch-gui/src/reducers/project-state';
+import {setFileHandle, setUsername, setProjectError} from 'scratch-gui/src/reducers/tw';
+import {WrappedFileHandle} from './filesystem-api.js';
+import {setStrings} from '../prompt/prompt.js';
 
 let mountedOnce = false;
 
@@ -35,7 +27,7 @@ const getDefaultProjectTitle = filename => {
 };
 
 const handleClickAddonSettings = search => {
-    EditorPreload.openAddonSettings(typeof search === "string" ? search : null);
+    EditorPreload.openAddonSettings(typeof search === 'string' ? search : null);
 };
 
 const handleClickExampleProjects = search => {
@@ -63,7 +55,7 @@ const handleClickAbout = () => {
 };
 
 const handleClickSourceCode = () => {
-    window.open("https://codeberg.org/ampmod/ampmod");
+    window.open('https://codeberg.org/ampmod/ampmod');
 };
 
 const securityManager = {
@@ -74,32 +66,31 @@ const securityManager = {
     canNotify: () => true,
 
     // Does not work in Electron:
-    canGeolocate: () => false,
+    canGeolocate: () => false
 };
 
-const USERNAME_KEY = "amp:username";
-const DEFAULT_USERNAME = "player";
+const USERNAME_KEY = 'amp:username';
+const DEFAULT_USERNAME = 'player';
 
 const DesktopHOC = function (WrappedComponent) {
     class DesktopComponent extends React.Component {
         constructor(props) {
             super(props);
             this.state = {
-                title: "",
+                title: ''
             };
-            this.handleUpdateProjectTitle =
-                this.handleUpdateProjectTitle.bind(this);
+            this.handleUpdateProjectTitle = this.handleUpdateProjectTitle.bind(this);
 
             // Changing locale always re-mounts this component
             const stateFromMain = EditorPreload.setLocale(this.props.locale);
             this.messages = stateFromMain.strings;
             setStrings({
-                ok: this.messages["prompt.ok"],
-                cancel: this.messages["prompt.cancel"],
+                ok: this.messages['prompt.ok'],
+                cancel: this.messages['prompt.cancel']
             });
 
             const storedUsername = localStorage.getItem(USERNAME_KEY);
-            if (typeof storedUsername === "string") {
+            if (typeof storedUsername === 'string') {
                 this.props.onSetReduxUsername(storedUsername);
             } else {
                 this.props.onSetReduxUsername(DEFAULT_USERNAME);
@@ -107,9 +98,9 @@ const DesktopHOC = function (WrappedComponent) {
         }
         componentDidMount() {
             EditorPreload.setExportForPackager(() =>
-                this.props.vm.saveProjectSb3("arraybuffer").then(buffer => ({
+                this.props.vm.saveProjectSb3('arraybuffer').then(buffer => ({
                     name: this.state.title,
-                    data: buffer,
+                    data: buffer
                 }))
             );
 
@@ -125,16 +116,13 @@ const DesktopHOC = function (WrappedComponent) {
                 // Note that 0 is a valid ID and does mean there is a file open
                 const id = await EditorPreload.getInitialFile();
                 if (id === null) {
-                    this.props.onHasInitialProject(
-                        false,
-                        this.props.loadingState
-                    );
+                    this.props.onHasInitialProject(false, this.props.loadingState);
                     this.props.onLoadingCompleted();
                     return;
                 }
 
                 this.props.onHasInitialProject(true, this.props.loadingState);
-                const { name, type, data } = await EditorPreload.getFile(id);
+                const {name, type, data} = await EditorPreload.getFile(id);
 
                 await this.props.vm.loadProject(data);
                 this.props.onLoadingCompleted();
@@ -143,11 +131,11 @@ const DesktopHOC = function (WrappedComponent) {
                 const title = getDefaultProjectTitle(name);
                 if (title) {
                     this.setState({
-                        title,
+                        title
                     });
                 }
 
-                if (type === "file" && name.endsWith(".sb3")) {
+                if (type === 'file' && name.endsWith('.sb3')) {
                     this.props.onSetFileHandle(new WrappedFileHandle(id, name));
                 }
             })().catch(error => {
@@ -187,7 +175,7 @@ const DesktopHOC = function (WrappedComponent) {
         }
         handleUpdateProjectTitle(newTitle) {
             this.setState({
-                title: newTitle,
+                title: newTitle
             });
         }
         render() {
@@ -219,23 +207,21 @@ const DesktopHOC = function (WrappedComponent) {
                     onClickExampleProjects={handleClickExampleProjects}
                     onClickAbout={[
                         {
-                            title: this.messages[
-                                "in-app-about.desktop-settings"
-                            ],
-                            onClick: handleClickDesktopSettings,
+                            title: this.messages['in-app-about.desktop-settings'],
+                            onClick: handleClickDesktopSettings
                         },
                         {
-                            title: this.messages["in-app-about.privacy"],
-                            onClick: handleClickPrivacy,
+                            title: this.messages['in-app-about.privacy'],
+                            onClick: handleClickPrivacy
                         },
                         {
-                            title: this.messages["in-app-about.about"],
-                            onClick: handleClickAbout,
+                            title: this.messages['in-app-about.about'],
+                            onClick: handleClickAbout
                         },
                         {
-                            title: this.messages["in-app-about.source-code"],
-                            onClick: handleClickSourceCode,
-                        },
+                            title: this.messages['in-app-about.source-code'],
+                            onClick: handleClickSourceCode
+                        }
                     ]}
                     onClickDesktopSettings={handleClickDesktopSettings}
                     onClickExampleProjects={handleClickExampleProjects}
@@ -251,7 +237,7 @@ const DesktopHOC = function (WrappedComponent) {
         loadingState: PropTypes.string.isRequired,
         projectChanged: PropTypes.bool.isRequired,
         fileHandle: PropTypes.shape({
-            id: PropTypes.string.isRequired,
+            id: PropTypes.string.isRequired
         }),
         isFullScreen: PropTypes.bool.isRequired,
         reduxUsername: PropTypes.string.isRequired,
@@ -265,8 +251,8 @@ const DesktopHOC = function (WrappedComponent) {
         onSetReduxUsername: PropTypes.func.isRequired,
         onShowErrorModal: PropTypes.func.isRequired,
         vm: PropTypes.shape({
-            loadProject: PropTypes.func.isRequired,
-        }).isRequired,
+            loadProject: PropTypes.func.isRequired
+        }).isRequired
     };
 
     const mapStateToProps = state => ({
@@ -276,7 +262,7 @@ const DesktopHOC = function (WrappedComponent) {
         projectChanged: state.scratchGui.projectChanged,
         fileHandle: state.scratchGui.tw.fileHandle,
         reduxUsername: state.scratchGui.tw.username,
-        vm: state.scratchGui.vm,
+        vm: state.scratchGui.vm
     });
 
     const mapDispatchToProps = dispatch => ({
@@ -291,9 +277,7 @@ const DesktopHOC = function (WrappedComponent) {
         onFetchedInitialProjectData: (projectData, loadingState) =>
             dispatch(onFetchedProjectData(projectData, loadingState)),
         onLoadedProject: (loadingState, loadSuccess) => {
-            return dispatch(
-                onLoadedProject(loadingState, /* canSave */ false, loadSuccess)
-            );
+            return dispatch(onLoadedProject(loadingState, /* canSave */ false, loadSuccess));
         },
         onRequestNewProject: () => dispatch(requestNewProject(false)),
         onSetFileHandle: fileHandle => dispatch(setFileHandle(fileHandle)),
@@ -301,7 +285,7 @@ const DesktopHOC = function (WrappedComponent) {
         onShowErrorModal: error => {
             dispatch(setProjectError(error));
             dispatch(openInvalidProjectModal());
-        },
+        }
     });
 
     return connect(mapStateToProps, mapDispatchToProps)(DesktopComponent);

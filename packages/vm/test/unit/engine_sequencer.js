@@ -1,24 +1,24 @@
-const test = require("tap").test;
-const Sequencer = require("../../src/engine/sequencer");
-const Runtime = require("../../src/engine/runtime");
-const Thread = require("../../src/engine/thread");
-const RenderedTarget = require("../../src/sprites/rendered-target");
-const Sprite = require("../../src/sprites/sprite");
+const test = require('tap').test;
+const Sequencer = require('../../src/engine/sequencer');
+const Runtime = require('../../src/engine/runtime');
+const Thread = require('../../src/engine/thread');
+const RenderedTarget = require('../../src/sprites/rendered-target');
+const Sprite = require('../../src/sprites/sprite');
 
-test("spec", t => {
-    t.type(Sequencer, "function");
+test('spec', t => {
+    t.type(Sequencer, 'function');
 
     const r = new Runtime();
     const s = new Sequencer(r);
 
-    t.type(s, "object");
+    t.type(s, 'object');
     t.ok(s instanceof Sequencer);
 
-    t.type(s.stepThreads, "function");
-    t.type(s.stepThread, "function");
-    t.type(s.stepToBranch, "function");
-    t.type(s.stepToProcedure, "function");
-    t.type(s.retireThread, "function");
+    t.type(s.stepThreads, 'function');
+    t.type(s.stepThread, 'function');
+    t.type(s.stepToBranch, 'function');
+    t.type(s.stepToProcedure, 'function');
+    t.type(s.retireThread, 'function');
 
     t.end();
 });
@@ -34,16 +34,16 @@ const generateBlock = function (id) {
         id: id,
         inputs: {},
         STEPS: Object,
-        block: "fakeBlock",
-        name: "fakeName",
+        block: 'fakeBlock',
+        name: 'fakeName',
         next: null,
-        opcode: "procedures_definition",
-        mutation: { proccode: "fakeCode" },
+        opcode: 'procedures_definition',
+        mutation: {proccode: 'fakeCode'},
         parent: null,
         shadow: false,
         topLevel: true,
         x: 0,
-        y: 0,
+        y: 0
     };
     return block;
 };
@@ -52,18 +52,18 @@ const generateBlockInput = function (id, next, inp) {
     const block = {
         fields: Object,
         id: id,
-        inputs: { SUBSTACK: { block: inp, name: "SUBSTACK" } },
+        inputs: {SUBSTACK: {block: inp, name: 'SUBSTACK'}},
         STEPS: Object,
-        block: "fakeBlock",
-        name: "fakeName",
+        block: 'fakeBlock',
+        name: 'fakeName',
         next: next,
-        opcode: "procedures_definition",
-        mutation: { proccode: "fakeCode" },
+        opcode: 'procedures_definition',
+        mutation: {proccode: 'fakeCode'},
         parent: null,
         shadow: false,
         topLevel: true,
         x: 0,
-        y: 0,
+        y: 0
     };
     return block;
 };
@@ -79,7 +79,7 @@ const generateThread = function (runtime) {
 
     const pushStack = id => {
         th.pushStack(id);
-        th.peekStackFrame().op = { id };
+        th.peekStackFrame().op = {id};
     };
 
     rt.blocks.createBlock(generateBlockInput(name, next, inp));
@@ -105,7 +105,7 @@ const generateThread = function (runtime) {
     return th;
 };
 
-test("stepThread", t => {
+test('stepThread', t => {
     const r = new Runtime();
     const s = new Sequencer(r);
     let th = generateThread(r);
@@ -123,7 +123,7 @@ test("stepThread", t => {
     t.end();
 });
 
-test("stepToBranch", t => {
+test('stepToBranch', t => {
     const r = new Runtime();
     const s = new Sequencer(r);
     const th = generateThread(r);
@@ -140,7 +140,7 @@ test("stepToBranch", t => {
     t.end();
 });
 
-test("retireThread", t => {
+test('retireThread', t => {
     const r = new Runtime();
     const s = new Sequencer(r);
     const th = generateThread(r);
@@ -152,35 +152,35 @@ test("retireThread", t => {
     t.end();
 });
 
-test("stepToProcedure", t => {
+test('stepToProcedure', t => {
     const r = new Runtime();
     const s = new Sequencer(r);
     const th = generateThread(r);
     let expectedBlock = th.peekStack();
-    s.stepToProcedure(th, "");
+    s.stepToProcedure(th, '');
     t.strictEquals(th.peekStack(), expectedBlock);
-    s.stepToProcedure(th, "faceCode");
+    s.stepToProcedure(th, 'faceCode');
     t.strictEquals(th.peekStack(), expectedBlock);
 
     th.target.blocks.createBlock({
-        id: "internalId",
-        opcode: "procedures_prototype",
+        id: 'internalId',
+        opcode: 'procedures_prototype',
         mutation: {
-            proccode: "othercode",
-        },
+            proccode: 'othercode'
+        }
     });
     expectedBlock = th.stack[th.stack.length - 4];
     th.target.blocks.getBlock(expectedBlock).inputs.custom_block = {
-        type: "custom_block",
-        block: "internalId",
+        type: 'custom_block',
+        block: 'internalId'
     };
-    s.stepToProcedure(th, "othercode");
+    s.stepToProcedure(th, 'othercode');
     t.strictEquals(th.peekStack(), expectedBlock);
 
     t.end();
 });
 
-test("stepThreads", t => {
+test('stepThreads', t => {
     const r = new Runtime();
     r.currentStepTime = Infinity;
     const s = new Sequencer(r);

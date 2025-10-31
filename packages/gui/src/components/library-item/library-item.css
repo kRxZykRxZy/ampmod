@@ -1,6 +1,6 @@
-@import "../../css/colors.css";
-@import "../../css/default-colors.css";
-@import "../../css/units.css";
+@import '../../css/colors.css';
+@import '../../css/default-colors.css';
+@import '../../css/units.css';
 
 .library-item {
     display: flex;
@@ -13,8 +13,7 @@
     max-width: 160px;
     margin: $space;
     padding: 1rem 1rem 0 1rem;
-    font-family:
-        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: $text-primary;
     background: $ui-white;
     border-radius: $space;
@@ -75,11 +74,11 @@
     border: 0.25rem solid $ui-white;
 }
 
-[dir="ltr"] .library-item-inset-image-container {
+[dir='ltr'] .library-item-inset-image-container {
     margin-left: 1rem;
 }
 
-[dir="rtl"] .library-item-inset-image-container {
+[dir='rtl'] .library-item-inset-image-container {
     margin-right: 1rem;
 }
 
@@ -146,11 +145,11 @@
     opacity: 0.75;
 }
 
-[dir="ltr"] .featured-extension-metadata {
+[dir='ltr'] .featured-extension-metadata {
     text-align: left;
 }
 
-[dir="rtl"] .featured-extension-metadata {
+[dir='rtl'] .featured-extension-metadata {
     text-align: right;
 }
 
@@ -204,14 +203,14 @@
     background-color: $data-primary;
 }
 
-[dir="ltr"] .coming-soon-text,
-[dir="ltr"] .new-text {
+[dir='ltr'] .coming-soon-text,
+[dir='ltr'] .new-text {
     right: 8px;
     left: auto;
 }
 
-[dir="rtl"] .coming-soon-text,
-[dir="rtl"] .new-text {
+[dir='rtl'] .coming-soon-text,
+[dir='rtl'] .new-text {
     left: 8px;
     right: auto;
 }

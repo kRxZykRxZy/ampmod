@@ -1,36 +1,31 @@
-import {
-    defineMessages,
-    FormattedMessage,
-    intlShape,
-    injectIntl,
-} from "react-intl";
-import PropTypes from "prop-types";
-import React from "react";
-import Box from "../box/box.jsx";
-import Modal from "../../containers/modal.jsx";
-import SecurityModals from "../../lib/tw-security-manager-constants";
-import LoadExtensionModal from "./load-extension.jsx";
-import FetchModal from "./fetch.jsx";
-import OpenWindowModal from "./open-window.jsx";
-import RedirectModal from "./redirect.jsx";
-import RecordAudio from "./record-audio.jsx";
-import RecordVideo from "./record-video.jsx";
-import ReadClipboard from "./read-clipboard.jsx";
-import Notify from "./notify.jsx";
-import Geolocate from "./geolocate.jsx";
-import Embed from "./embed.jsx";
-import Download from "./download.jsx";
-import DelayedMountPropertyHOC from "./delayed-mount-property-hoc.jsx";
-import styles from "./security-manager-modal.css";
+import {defineMessages, FormattedMessage, intlShape, injectIntl} from 'react-intl';
+import PropTypes from 'prop-types';
+import React from 'react';
+import Box from '../box/box.jsx';
+import Modal from '../../containers/modal.jsx';
+import SecurityModals from '../../lib/tw-security-manager-constants';
+import LoadExtensionModal from './load-extension.jsx';
+import FetchModal from './fetch.jsx';
+import OpenWindowModal from './open-window.jsx';
+import RedirectModal from './redirect.jsx';
+import RecordAudio from './record-audio.jsx';
+import RecordVideo from './record-video.jsx';
+import ReadClipboard from './read-clipboard.jsx';
+import Notify from './notify.jsx';
+import Geolocate from './geolocate.jsx';
+import Embed from './embed.jsx';
+import Download from './download.jsx';
+import DelayedMountPropertyHOC from './delayed-mount-property-hoc.jsx';
+import styles from './security-manager-modal.css';
 
 const messages = defineMessages({
     title: {
-        defaultMessage: "Extension Security",
+        defaultMessage: 'Extension Security',
         // eslint-disable-next-line max-len
         description:
-            "Title of modal thats asks the user for permission to let the project load an extension, fetch a resource, open a window, etc.",
-        id: "tw.securityManager.title",
-    },
+            'Title of modal thats asks the user for permission to let the project load an extension, fetch a resource, open a window, etc.',
+        id: 'tw.securityManager.title'
+    }
 });
 
 const noop = () => {};
@@ -68,22 +63,14 @@ const SecurityManagerModalComponent = props => (
             ) : null}
 
             <Box className={styles.buttons}>
-                <button
-                    className={styles.denyButton}
-                    onClick={props.onDenied}
-                    disabled={!props.enableButtons}
-                >
+                <button className={styles.denyButton} onClick={props.onDenied} disabled={!props.enableButtons}>
                     <FormattedMessage
                         defaultMessage="Deny"
                         description="Button in modal asking user for permission to load extension, access file, etc."
                         id="tw.securityManager.deny"
                     />
                 </button>
-                <button
-                    className={styles.allowButton}
-                    onClick={props.onAllowed}
-                    disabled={!props.enableButtons}
-                >
+                <button className={styles.allowButton} onClick={props.onAllowed} disabled={!props.enableButtons}>
                     <FormattedMessage
                         defaultMessage="Allow"
                         description="Button in modal asking user for permission to load extension, access file, etc."
@@ -103,15 +90,11 @@ SecurityManagerModalComponent.propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
     data: PropTypes.object.isRequired,
     onAllowed: PropTypes.func.isRequired,
-    onDenied: PropTypes.func.isRequired,
+    onDenied: PropTypes.func.isRequired
 };
 
 // Prevent accidentally pressing buttons immediately when a prompt appears.
 const BUTTON_DELAY = 750;
-export default DelayedMountPropertyHOC(
-    injectIntl(SecurityManagerModalComponent),
-    BUTTON_DELAY,
-    {
-        enableButtons: true,
-    }
-);
+export default DelayedMountPropertyHOC(injectIntl(SecurityManagerModalComponent), BUTTON_DELAY, {
+    enableButtons: true
+});

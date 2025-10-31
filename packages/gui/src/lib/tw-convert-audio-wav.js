@@ -1,5 +1,5 @@
-import SharedAudioContext from "./audio/shared-audio-context";
-import WavEncoder from "wav-encoder";
+import SharedAudioContext from './audio/shared-audio-context';
+import WavEncoder from 'wav-encoder';
 
 const convertAudioToWav = fileData => {
     /** @type {AudioContext} */
@@ -12,7 +12,7 @@ const convertAudioToWav = fileData => {
         }
         return WavEncoder.encode({
             sampleRate: decodedData.sampleRate,
-            channelData: channels,
+            channelData: channels
         });
     });
 };

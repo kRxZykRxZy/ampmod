@@ -1,19 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
-import bindAll from "lodash.bindall";
-import PlaybackStepComponent from "../components/record-modal/playback-step.jsx";
-import AudioBufferPlayer from "../lib/audio/audio-buffer-player.js";
+import React from 'react';
+import PropTypes from 'prop-types';
+import bindAll from 'lodash.bindall';
+import PlaybackStepComponent from '../components/record-modal/playback-step.jsx';
+import AudioBufferPlayer from '../lib/audio/audio-buffer-player.js';
 
 class PlaybackStep extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["handlePlay", "handleStopPlaying"]);
+        bindAll(this, ['handlePlay', 'handleStopPlaying']);
     }
     componentDidMount() {
-        this.audioBufferPlayer = new AudioBufferPlayer(
-            this.props.samples,
-            this.props.sampleRate
-        );
+        this.audioBufferPlayer = new AudioBufferPlayer(this.props.samples, this.props.sampleRate);
     }
     componentWillUnmount() {
         this.audioBufferPlayer.stop();
@@ -52,7 +49,7 @@ class PlaybackStep extends React.Component {
 PlaybackStep.propTypes = {
     sampleRate: PropTypes.number.isRequired,
     samples: PropTypes.instanceOf(Float32Array).isRequired,
-    ...PlaybackStepComponent.propTypes,
+    ...PlaybackStepComponent.propTypes
 };
 
 export default PlaybackStep;

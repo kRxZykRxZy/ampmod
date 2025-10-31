@@ -1,4 +1,4 @@
-@import "../../css/colors.css";
+@import '../../css/colors.css';
 
 .checkbox {
     appearance: none;
@@ -24,5 +24,5 @@
 }
 .checkbox:checked {
     background-color: $looks-secondary;
-    background-image: url("./checkbox.svg");
+    background-image: url('./checkbox.svg');
 }

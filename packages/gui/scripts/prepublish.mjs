@@ -4,13 +4,13 @@
 // Once this step is complete, a developer should be able to work without an Internet connection.
 // See also: https://docs.npmjs.com/cli/using-npm/scripts
 
-import fs from "fs";
-import path from "path";
-import nodeCrypto from "crypto";
+import fs from 'fs';
+import path from 'path';
+import nodeCrypto from 'crypto';
 
-import crossFetch from "cross-fetch";
-import yauzl from "yauzl";
-import { fileURLToPath } from "url";
+import crossFetch from 'cross-fetch';
+import yauzl from 'yauzl';
+import {fileURLToPath} from 'url';
 
 /** @typedef {import('yauzl').Entry} ZipEntry */
 /** @typedef {import('yauzl').ZipFile} ZipFile */
@@ -20,7 +20,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // base/root path for the project
-const basePath = path.join(__dirname, "..");
+const basePath = path.join(__dirname, '..');
 
 /**
  * Extract the first matching file from a zip buffer.
@@ -35,101 +35,72 @@ const extractFirstMatchingFile = (filter, relativeDestDir, zipBuffer) =>
     new Promise((resolve, reject) => {
         try {
             let extractedFileName;
-            yauzl.fromBuffer(
-                zipBuffer,
-                { lazyEntries: true },
-                (zipError, zipfile) => {
-                    if (zipError) {
-                        throw zipError;
-                    }
-                    zipfile.readEntry();
-                    zipfile.on("end", () => {
-                        resolve(extractedFileName);
-                    });
-                    zipfile.on("entry", entry => {
-                        if (!filter(entry)) {
-                            // ignore non-matching file
-                            return zipfile.readEntry();
-                        }
-                        if (extractedFileName) {
-                            console.warn(
-                                `Multiple matching files found. Ignoring: ${entry.fileName}`
-                            );
-                            return zipfile.readEntry();
-                        }
-                        extractedFileName = entry.fileName;
-                        console.info(`Found matching file: ${entry.fileName}`);
-                        zipfile.openReadStream(
-                            entry,
-                            (fileError, readStream) => {
-                                if (fileError) {
-                                    throw fileError;
-                                }
-                                const baseName = path.basename(entry.fileName);
-                                const relativeDestFile = path.join(
-                                    relativeDestDir,
-                                    baseName
-                                );
-                                console.info(`Extracting ${relativeDestFile}`);
-                                const absoluteDestDir = path.join(
-                                    basePath,
-                                    relativeDestDir
-                                );
-                                fs.mkdirSync(absoluteDestDir, {
-                                    recursive: true,
-                                });
-                                const absoluteDestFile = path.join(
-                                    basePath,
-                                    relativeDestFile
-                                );
-                                const outStream =
-                                    fs.createWriteStream(absoluteDestFile);
-                                readStream.on("end", () => {
-                                    outStream.close();
-                                    zipfile.readEntry();
-                                });
-                                readStream.pipe(outStream);
-                            }
-                        );
-                    });
+            yauzl.fromBuffer(zipBuffer, {lazyEntries: true}, (zipError, zipfile) => {
+                if (zipError) {
+                    throw zipError;
                 }
-            );
+                zipfile.readEntry();
+                zipfile.on('end', () => {
+                    resolve(extractedFileName);
+                });
+                zipfile.on('entry', entry => {
+                    if (!filter(entry)) {
+                        // ignore non-matching file
+                        return zipfile.readEntry();
+                    }
+                    if (extractedFileName) {
+                        console.warn(`Multiple matching files found. Ignoring: ${entry.fileName}`);
+                        return zipfile.readEntry();
+                    }
+                    extractedFileName = entry.fileName;
+                    console.info(`Found matching file: ${entry.fileName}`);
+                    zipfile.openReadStream(entry, (fileError, readStream) => {
+                        if (fileError) {
+                            throw fileError;
+                        }
+                        const baseName = path.basename(entry.fileName);
+                        const relativeDestFile = path.join(relativeDestDir, baseName);
+                        console.info(`Extracting ${relativeDestFile}`);
+                        const absoluteDestDir = path.join(basePath, relativeDestDir);
+                        fs.mkdirSync(absoluteDestDir, {
+                            recursive: true
+                        });
+                        const absoluteDestFile = path.join(basePath, relativeDestFile);
+                        const outStream = fs.createWriteStream(absoluteDestFile);
+                        readStream.on('end', () => {
+                            outStream.close();
+                            zipfile.readEntry();
+                        });
+                        readStream.pipe(outStream);
+                    });
+                });
+            });
         } catch (error) {
             reject(error);
         }
     });
 
 const downloadMicrobitHex = async () => {
-    const url =
-        "https://packagerdata.turbowarp.org/scratch-microbit-1.2.0.hex.zip";
-    const expectedSHA256 =
-        "dfd574b709307fe76c44dbb6b0ac8942e7908f4d5c18359fae25fbda3c9f4399";
+    const url = 'https://packagerdata.turbowarp.org/scratch-microbit-1.2.0.hex.zip';
+    const expectedSHA256 = 'dfd574b709307fe76c44dbb6b0ac8942e7908f4d5c18359fae25fbda3c9f4399';
     console.info(`Downloading ${url}`);
     const response = await crossFetch(url);
     const zipBuffer = Buffer.from(await response.arrayBuffer());
-    const sha256 = nodeCrypto
-        .createHash("sha-256")
-        .update(zipBuffer)
-        .digest("hex");
+    const sha256 = nodeCrypto.createHash('sha-256').update(zipBuffer).digest('hex');
     if (sha256 !== expectedSHA256) {
-        throw new Error(
-            `microbit hex has SHA-256 ${sha256} but expected ${expectedSHA256}`
-        );
+        throw new Error(`microbit hex has SHA-256 ${sha256} but expected ${expectedSHA256}`);
     }
-    const relativeHexDir = path.join("static", "microbit");
+    const relativeHexDir = path.join('static', 'microbit');
     const hexFileName = await extractFirstMatchingFile(
         entry => /\.hex$/.test(entry.fileName),
-        path.join("static", "microbit"),
+        path.join('static', 'microbit'),
         zipBuffer
     );
     const relativeHexFile = path.join(relativeHexDir, hexFileName);
-    const relativeGeneratedDir = path.join("src", "generated");
-    const relativeGeneratedFile = path.join(
-        relativeGeneratedDir,
-        "microbit-hex-url.cjs"
-    );
+    const relativeGeneratedDir = path.join('src', 'generated');
+    const relativeGeneratedFile = path.join(relativeGeneratedDir, 'microbit-hex-url.cjs');
     const absoluteGeneratedDir = path.join(basePath, relativeGeneratedDir);
-    fs.mkdirSync(absoluteGeneratedDir, { recursive: true });
+    fs.mkdirSync(absoluteGeneratedDir, {recursive: true});
     const absoluteGeneratedFile = path.join(basePath, relativeGeneratedFile);
     const requirePath = `./${path
         .relative(relativeGeneratedDir, relativeHexFile)
@@ -138,12 +109,12 @@ const downloadMicrobitHex = async () => {
     fs.writeFileSync(
         absoluteGeneratedFile,
         [
-            "// This file is generated by scripts/prepublish.mjs",
-            "// Do not edit this file directly",
-            "// This file relies on a loader to turn this `require` into a URL",
+            '// This file is generated by scripts/prepublish.mjs',
+            '// Do not edit this file directly',
+            '// This file relies on a loader to turn this `require` into a URL',
             `module.exports = require('${requirePath}');`,
-            "", // final newline
-        ].join("\n")
+            '' // final newline
+        ].join('\n')
     );
     console.info(`Wrote ${relativeGeneratedFile}`);
 };
@@ -154,7 +125,7 @@ const prepublish = async () => {
 
 prepublish().then(
     () => {
-        console.info("Prepublish script complete");
+        console.info('Prepublish script complete');
         process.exit(0);
     },
     e => {

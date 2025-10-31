@@ -1,32 +1,29 @@
-import bindAll from "lodash.bindall";
-import PropTypes from "prop-types";
-import React from "react";
-import { defineMessages, injectIntl, intlShape } from "react-intl";
-import { connect } from "react-redux";
-import { setCloud } from "../reducers/tw";
-import isScratchDesktop from "../lib/isScratchDesktop";
+import bindAll from 'lodash.bindall';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import {connect} from 'react-redux';
+import {setCloud} from '../reducers/tw';
+import isScratchDesktop from '../lib/isScratchDesktop';
 
 const messages = defineMessages({
     cloudUnavailableAlert: {
-        defaultMessage:
-            "Cannot use cloud variables, most likely because you opened the editor.",
+        defaultMessage: 'Cannot use cloud variables, most likely because you opened the editor.',
         // eslint-disable-next-line max-len
         description:
-            "Message displayed when clicking on the option to toggle cloud variables when cloud variables are not available",
-        id: "tw.menuBar.cloudUnavailableAlert",
-    },
+            'Message displayed when clicking on the option to toggle cloud variables when cloud variables are not available',
+        id: 'tw.menuBar.cloudUnavailableAlert'
+    }
 });
 
 class CloudVariablesToggler extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["toggleCloudVariables"]);
+        bindAll(this, ['toggleCloudVariables']);
     }
     toggleCloudVariables() {
         if (!this.props.canUseCloudVariables) {
-            const message = this.props.intl.formatMessage(
-                messages.cloudUnavailableAlert
-            );
+            const message = this.props.intl.formatMessage(messages.cloudUnavailableAlert);
             // eslint-disable-next-line no-alert
             alert(message);
             return;
@@ -50,20 +47,17 @@ CloudVariablesToggler.propTypes = {
     enabled: PropTypes.bool,
     username: PropTypes.string,
     onCloudChange: PropTypes.func,
-    canUseCloudVariables: PropTypes.bool,
+    canUseCloudVariables: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
     username: state.scratchGui.tw.username,
     enabled: state.scratchGui.tw.cloud,
-    canUseCloudVariables:
-        isScratchDesktop() || !state.scratchGui.mode.hasEverEnteredEditor,
+    canUseCloudVariables: isScratchDesktop() || !state.scratchGui.mode.hasEverEnteredEditor
 });
 
 const mapDispatchToProps = dispatch => ({
-    onCloudChange: enabled => dispatch(setCloud(enabled)),
+    onCloudChange: enabled => dispatch(setCloud(enabled))
 });
 
-export default injectIntl(
-    connect(mapStateToProps, mapDispatchToProps)(CloudVariablesToggler)
-);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(CloudVariablesToggler));

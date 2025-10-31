@@ -1,11 +1,11 @@
-const test = require("tap").test;
+const test = require('tap').test;
 // const MicroBit = require('../../src/extensions/scratch3_microbit/index.js');
 
-test("displayText", t => {
+test('displayText', t => {
     t.end();
 });
 
-test("displayMatrix", t => {
+test('displayMatrix', t => {
     t.end();
 });
 

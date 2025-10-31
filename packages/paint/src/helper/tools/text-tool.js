@@ -1,17 +1,17 @@
-import paper from "@turbowarp/paper";
-import Modes from "../../lib/modes";
-import { clearSelection, getSelectedLeafItems } from "../selection";
-import BoundingBoxTool from "../selection-tools/bounding-box-tool";
-import NudgeTool from "../selection-tools/nudge-tool";
-import { hoverBounds } from "../guides";
-import { getRaster } from "../layer";
+import paper from '@turbowarp/paper';
+import Modes from '../../lib/modes';
+import {clearSelection, getSelectedLeafItems} from '../selection';
+import BoundingBoxTool from '../selection-tools/bounding-box-tool';
+import NudgeTool from '../selection-tools/nudge-tool';
+import {hoverBounds} from '../guides';
+import {getRaster} from '../layer';
 
 const getTextColor = text => {
     let color = text.fillColor;
     if (!color) return null;
     color = color.clone();
     color.alpha = 1;
-    if (color.type !== "gradient") return color;
+    if (color.type !== 'gradient') return color;
     const firstStop = text.fillColor.gradient.stops[0];
     return firstStop.color;
 };
@@ -25,10 +25,10 @@ class TextTool extends paper.Tool {
         return 2;
     }
     static get TEXT_EDIT_MODE() {
-        return "TEXT_EDIT_MODE";
+        return 'TEXT_EDIT_MODE';
     }
     static get SELECT_MODE() {
-        return "SELECT_MODE";
+        return 'SELECT_MODE';
     }
     /** Clicks registered within this amount of time are registered as double clicks */
     static get DOUBLE_CLICK_MILLIS() {
@@ -76,11 +76,7 @@ class TextTool extends paper.Tool {
             setCursor,
             onUpdateImage
         );
-        this.nudgeTool = new NudgeTool(
-            paintMode,
-            this.boundingBoxTool,
-            onUpdateImage
-        );
+        this.nudgeTool = new NudgeTool(paintMode, this.boundingBoxTool, onUpdateImage);
         this.isBitmap = isBitmap;
 
         // We have to set these functions instead of just declaring them because
@@ -111,11 +107,9 @@ class TextTool extends paper.Tool {
             fill: true,
             guide: false,
             match: hitResult =>
-                (hitResult.item.data &&
-                    (hitResult.item.data.isScaleHandle ||
-                        hitResult.item.data.isRotHandle)) ||
+                (hitResult.item.data && (hitResult.item.data.isScaleHandle || hitResult.item.data.isRotHandle)) ||
                 hitResult.item.selected, // Allow hits on bounding box and selected only
-            tolerance: TextTool.TOLERANCE / paper.view.zoom,
+            tolerance: TextTool.TOLERANCE / paper.view.zoom
         };
     }
     getTextEditHitOptions() {
@@ -130,7 +124,7 @@ class TextTool extends paper.Tool {
                 hitResult.item &&
                 !(hitResult.item.data && hitResult.item.data.isHelperItem) &&
                 !hitResult.item.selected, // Unselected only
-            tolerance: TextTool.TOLERANCE / paper.view.zoom,
+            tolerance: TextTool.TOLERANCE / paper.view.zoom
         };
     }
     /**
@@ -212,19 +206,13 @@ class TextTool extends paper.Tool {
         this.rtl = isRtl;
     }
     handleMouseMove(event) {
-        const hitResults = paper.project.hitTestAll(
-            event.point,
-            this.getTextEditHitOptions()
-        );
+        const hitResults = paper.project.hitTestAll(event.point, this.getTextEditHitOptions());
         if (hitResults.length) {
-            document.body.style.cursor = "text";
+            document.body.style.cursor = 'text';
         } else {
-            document.body.style.cursor = "auto";
+            document.body.style.cursor = 'auto';
         }
-        this.boundingBoxTool.onMouseMove(
-            event,
-            this.getBoundingBoxHitOptions()
-        );
+        this.boundingBoxTool.onMouseMove(event, this.getBoundingBoxHitOptions());
     }
     handleMouseDown(event) {
         if (event.event.button > 0) return; // only first mouse button
@@ -232,15 +220,9 @@ class TextTool extends paper.Tool {
 
         // Check if double clicked
         const doubleClicked =
-            this.lastEvent &&
-            event.event.timeStamp - this.lastEvent.event.timeStamp <
-                TextTool.DOUBLE_CLICK_MILLIS;
+            this.lastEvent && event.event.timeStamp - this.lastEvent.event.timeStamp < TextTool.DOUBLE_CLICK_MILLIS;
         this.lastEvent = event;
-        if (
-            doubleClicked &&
-            this.mode === TextTool.SELECT_MODE &&
-            this.textBox.hitTest(event.point)
-        ) {
+        if (doubleClicked && this.mode === TextTool.SELECT_MODE && this.textBox.hitTest(event.point)) {
             // Double click in select mode moves you to text edit mode
             this.endSelect();
             this.beginTextEdit(this.textBox);
@@ -272,10 +254,7 @@ class TextTool extends paper.Tool {
             this.endTextEdit();
         }
 
-        const hitResults = paper.project.hitTestAll(
-            event.point,
-            this.getTextEditHitOptions()
-        );
+        const hitResults = paper.project.hitTestAll(event.point, this.getTextEditHitOptions());
         if (hitResults.length) {
             // Clicking a different text item to begin text edit mode on that item
             this.beginTextEdit(hitResults[0].item);
@@ -286,7 +265,7 @@ class TextTool extends paper.Tool {
             // In no mode or select mode clicking away to begin text edit mode
             this.textBox = new paper.PointText({
                 point: event.point,
-                content: "",
+                content: '',
                 font: this.font,
                 fontSize: 40,
                 // TODO: style using gradient
@@ -295,7 +274,7 @@ class TextTool extends paper.Tool {
                 // Default leading for both the HTML text area and paper.PointText
                 // is 120%, but for some reason they are slightly off from each other.
                 // This value was obtained experimentally.
-                leading: 46.15,
+                leading: 46.15
             });
             this.beginTextEdit(this.textBox);
         }
@@ -320,10 +299,7 @@ class TextTool extends paper.Tool {
         this.active = false;
     }
     handleKeyUp(event) {
-        if (
-            event.event.target instanceof HTMLInputElement ||
-            event.event.target instanceof HTMLTextAreaElement
-        ) {
+        if (event.event.target instanceof HTMLInputElement || event.event.target instanceof HTMLTextAreaElement) {
             // Ignore nudge if a text input field is focused
             return;
         }
@@ -333,14 +309,11 @@ class TextTool extends paper.Tool {
         }
     }
     handleKeyDown(event) {
-        if (
-            event.event.target instanceof HTMLInputElement ||
-            event.event.target instanceof HTMLTextAreaElement
-        ) {
+        if (event.event.target instanceof HTMLInputElement || event.event.target instanceof HTMLTextAreaElement) {
             // Ignore nudge if a text input field is focused
             return;
         }
-        if (this.mode === TextTool.TEXT_EDIT_MODE && event.key === "escape") {
+        if (this.mode === TextTool.TEXT_EDIT_MODE && event.key === 'escape') {
             this.endTextEdit();
         }
         if (this.mode === TextTool.SELECT_MODE) {
@@ -349,11 +322,7 @@ class TextTool extends paper.Tool {
     }
     handleTextInput(event) {
         // Save undo state if you paused typing for long enough.
-        if (
-            this.lastTypeEvent &&
-            event.timeStamp - this.lastTypeEvent.timeStamp >
-                TextTool.TYPING_TIMEOUT_MILLIS
-        ) {
+        if (this.lastTypeEvent && event.timeStamp - this.lastTypeEvent.timeStamp > TextTool.TYPING_TIMEOUT_MILLIS) {
             // Select the textbox so that it will be selected if the user performs undo.
             this.textBox.selected = true;
             this.onUpdateImage();
@@ -402,26 +371,25 @@ class TextTool extends paper.Tool {
             this.changeFont(this.textBox.font);
         }
         this.element.style.fontSize = `${this.textBox.fontSize}px`;
-        this.element.style.lineHeight =
-            this.textBox.leading / this.textBox.fontSize;
+        this.element.style.lineHeight = this.textBox.leading / this.textBox.fontSize;
 
         const fillColor = getTextColor(textBox);
-        this.element.style.color = fillColor ? fillColor.toCSS() : "";
+        this.element.style.color = fillColor ? fillColor.toCSS() : '';
 
-        this.element.style.display = "initial";
-        this.element.value = textBox.content ? textBox.content : "";
+        this.element.style.display = 'initial';
+        this.element.value = textBox.content ? textBox.content : '';
         this.calculateMatrix(paper.view.matrix);
 
         if (this.rtl) {
             // make both the textbox and the textarea element grow to the left
-            this.textBox.justification = "right";
+            this.textBox.justification = 'right';
         } else {
-            this.textBox.justification = "left";
+            this.textBox.justification = 'left';
         }
 
-        this.element.focus({ preventScroll: true });
+        this.element.focus({preventScroll: true});
         this.eventListener = this.handleTextInput.bind(this);
-        this.element.addEventListener("input", this.eventListener);
+        this.element.addEventListener('input', this.eventListener);
         this.resizeGuide();
     }
     endTextEdit() {
@@ -431,7 +399,7 @@ class TextTool extends paper.Tool {
         this.mode = null;
 
         // Remove invisible textboxes
-        if (this.textBox && this.textBox.content.trim() === "") {
+        if (this.textBox && this.textBox.content.trim() === '') {
             this.textBox.remove();
             this.textBox = null;
         }
@@ -442,9 +410,9 @@ class TextTool extends paper.Tool {
             this.guide = null;
             this.setTextEditTarget();
         }
-        this.element.style.display = "none";
+        this.element.style.display = 'none';
         if (this.eventListener) {
-            this.element.removeEventListener("input", this.eventListener);
+            this.element.removeEventListener('input', this.eventListener);
             this.eventListener = null;
         }
         if (this.textBox && this.lastTypeEvent) {
@@ -460,24 +428,17 @@ class TextTool extends paper.Tool {
         if (!this.textBox || !this.textBox.parent) return;
 
         // @todo get crisp text https://github.com/LLK/scratch-paint/issues/508
-        const textRaster = this.textBox.rasterize(
-            72,
-            false /* insert */,
-            this.textBox.drawnBounds
-        );
+        const textRaster = this.textBox.rasterize(72, false /* insert */, this.textBox.drawnBounds);
         this.textBox.remove();
         this.textBox = null;
         getRaster().drawImage(
             textRaster.canvas,
-            new paper.Point(
-                Math.floor(textRaster.bounds.x),
-                Math.floor(textRaster.bounds.y)
-            )
+            new paper.Point(Math.floor(textRaster.bounds.x), Math.floor(textRaster.bounds.y))
         );
         this.onUpdateImage();
     }
     deactivateTool() {
-        if (this.textBox && this.textBox.content.trim() === "") {
+        if (this.textBox && this.textBox.content.trim() === '') {
             this.textBox.remove();
             this.textBox = null;
         }

@@ -1,5 +1,5 @@
 // Use the constants instead of manually redefining them again
-const ScratchBlocksConstants = require("../engine/scratch-blocks-constants");
+const ScratchBlocksConstants = require('../engine/scratch-blocks-constants');
 
 /**
  * Types of block shapes
@@ -19,7 +19,7 @@ const BlockShape = {
     /**
      * Output shape: squared (any/all values; strings).
      */
-    SQUARE: ScratchBlocksConstants.OUTPUT_SHAPE_SQUARE,
+    SQUARE: ScratchBlocksConstants.OUTPUT_SHAPE_SQUARE
 };
 
 module.exports = BlockShape;

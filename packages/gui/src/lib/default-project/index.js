@@ -1,27 +1,27 @@
-import projectData from "./project-data";
+import projectData from './project-data';
 
 /* eslint-disable import/no-unresolved */
-import overrideDefaultProject from "!arraybuffer-loader!./override-default-project.sb3";
-import backdrop from "!raw-loader!./cd21514d0531fdffb22204e0ec5ed84a.svg";
-import costume1 from "!raw-loader!./applecat.svg";
+import overrideDefaultProject from '!arraybuffer-loader!./override-default-project.sb3';
+import backdrop from '!raw-loader!./cd21514d0531fdffb22204e0ec5ed84a.svg';
+import costume1 from '!raw-loader!./applecat.svg';
 /* eslint-enable import/no-unresolved */
-import { TextEncoder } from "../tw-text-encoder";
+import {TextEncoder} from '../tw-text-encoder';
 
 const defaultProject = translator => {
     if (overrideDefaultProject.byteLength > 0) {
         return [
             {
                 id: 0,
-                assetType: "Project",
-                dataFormat: "JSON",
-                data: overrideDefaultProject,
-            },
+                assetType: 'Project',
+                dataFormat: 'JSON',
+                data: overrideDefaultProject
+            }
         ];
     }
 
     let _TextEncoder;
-    if (typeof TextEncoder === "undefined") {
-        _TextEncoder = require("text-encoding").TextEncoder;
+    if (typeof TextEncoder === 'undefined') {
+        _TextEncoder = require('text-encoding').TextEncoder;
     } else {
         _TextEncoder = TextEncoder;
     }
@@ -31,22 +31,22 @@ const defaultProject = translator => {
     return [
         {
             id: 0,
-            assetType: "Project",
-            dataFormat: "JSON",
-            data: JSON.stringify(projectJson),
+            assetType: 'Project',
+            dataFormat: 'JSON',
+            data: JSON.stringify(projectJson)
         },
         {
-            id: "cd21514d0531fdffb22204e0ec5ed84a",
-            assetType: "ImageVector",
-            dataFormat: "SVG",
-            data: encoder.encode(backdrop),
+            id: 'cd21514d0531fdffb22204e0ec5ed84a',
+            assetType: 'ImageVector',
+            dataFormat: 'SVG',
+            data: encoder.encode(backdrop)
         },
         {
-            id: "927d672925e7b99f7813735c484c6922",
-            assetType: "ImageVector",
-            dataFormat: "SVG",
-            data: encoder.encode(costume1),
-        },
+            id: '927d672925e7b99f7813735c484c6922',
+            assetType: 'ImageVector',
+            dataFormat: 'SVG',
+            data: encoder.encode(costume1)
+        }
     ];
 };
 

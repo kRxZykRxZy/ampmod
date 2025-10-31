@@ -1,5 +1,5 @@
-const BlockType = require("../extension-support/block-type");
-const ArgumentType = require("../extension-support/argument-type");
+const BlockType = require('../extension-support/block-type');
+const ArgumentType = require('../extension-support/argument-type');
 
 /* eslint-disable-next-line max-len */
 const blockIconURI =
@@ -11,7 +11,7 @@ const blockIconURI =
  * and used as part of tests.
  */
 class Scratch3CoreExample {
-    constructor(runtime) {
+    constructor (runtime) {
         /**
          * The runtime instantiating this block package.
          * @type {Runtime}
@@ -22,33 +22,33 @@ class Scratch3CoreExample {
     /**
      * @returns {object} metadata for this extension and its blocks.
      */
-    getInfo() {
+    getInfo () {
         return {
-            id: "coreExample",
-            name: "CoreEx", // This string does not need to be translated as this extension is only used as an example.
+            id: 'coreExample',
+            name: 'CoreEx', // This string does not need to be translated as this extension is only used as an example.
             blocks: [
                 {
-                    func: "MAKE_A_VARIABLE",
+                    func: 'MAKE_A_VARIABLE',
                     blockType: BlockType.BUTTON,
-                    text: "make a variable (CoreEx)",
+                    text: 'make a variable (CoreEx)'
                 },
                 {
-                    opcode: "exampleOpcode",
+                    opcode: 'exampleOpcode',
                     blockType: BlockType.REPORTER,
-                    text: "example block",
+                    text: 'example block'
                 },
                 {
-                    opcode: "exampleWithInlineImage",
+                    opcode: 'exampleWithInlineImage',
                     blockType: BlockType.COMMAND,
-                    text: "block with image [CLOCKWISE] inline",
+                    text: 'block with image [CLOCKWISE] inline',
                     arguments: {
                         CLOCKWISE: {
                             type: ArgumentType.IMAGE,
-                            dataURI: blockIconURI,
-                        },
-                    },
-                },
-            ],
+                            dataURI: blockIconURI
+                        }
+                    }
+                }
+            ]
         };
     }
 
@@ -56,12 +56,12 @@ class Scratch3CoreExample {
      * Example opcode just returns the name of the stage target.
      * @returns {string} The name of the first target in the project.
      */
-    exampleOpcode() {
+    exampleOpcode () {
         const stage = this.runtime.getTargetForStage();
-        return stage ? stage.getName() : "no stage yet";
+        return stage ? stage.getName() : 'no stage yet';
     }
 
-    exampleWithInlineImage() {
+    exampleWithInlineImage () {
         return;
     }
 }

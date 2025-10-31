@@ -10,7 +10,9 @@ const packageJSON = require('../package.json');
 const LinuxTargetHelper = require('app-builder-lib/out/targets/LinuxTargetHelper.js').LinuxTargetHelper;
 LinuxTargetHelper.prototype.computeMimeTypeFiles = async function (...args) {
     const tempFile = await this.packager.getTempFile('.xml');
-    console.log(`${packageJSON.name}: LinuxTargetHelper.prototype.computeMimeTypeFiles has been patched. mime.xml to be saved to ${tempFile}`);
+    console.log(
+        `${packageJSON.name}: LinuxTargetHelper.prototype.computeMimeTypeFiles has been patched. mime.xml to be saved to ${tempFile}`
+    );
 
     const xmlPath = pathUtil.join(__dirname, '../linux-files/org.turbowarp.TurboWarp.mime.xml');
     const rawXml = await fsPromises.readFile(xmlPath, 'utf-8');

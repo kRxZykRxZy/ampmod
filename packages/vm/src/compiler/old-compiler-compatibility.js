@@ -17,13 +17,9 @@
  *    they use. Can not rely on the default JS generator.
  */
 
-const { InputOpcode, InputType } = require("./enums");
+const {InputOpcode, InputType} = require('./enums');
 // eslint-disable-next-line no-unused-vars
-const {
-    IntermediateInput,
-    IntermediateStackBlock,
-    IntermediateStack,
-} = require("./intermediate");
+const {IntermediateInput, IntermediateStackBlock, IntermediateStack} = require('./intermediate');
 
 class IRGeneratorStub {
     // Doesn't seem like extensions override anything, though the class may
@@ -34,7 +30,7 @@ class ScriptTreeGeneratorStub {
     /**
      * @param {import("./irgen").ScriptTreeGenerator} real
      */
-    constructor(real) {
+    constructor (real) {
         /**
          * @type {import("./irgen").ScriptTreeGenerator}
          */
@@ -53,12 +49,8 @@ class ScriptTreeGeneratorStub {
              * @param {string} inputName Name of input.
              * @returns opaque object
              */
-            descendInputOfBlock(parentBlock, inputName) {
-                const node = real.descendInputOfBlock(
-                    parentBlock,
-                    inputName,
-                    true
-                );
+            descendInputOfBlock (parentBlock, inputName) {
+                const node = real.descendInputOfBlock(parentBlock, inputName, true);
                 return node;
             },
 
@@ -67,18 +59,15 @@ class ScriptTreeGeneratorStub {
              * @param {*} substackName Name of substack.
              * @returns opaque object
              */
-            descendSubstack(parentBlock, substackName) {
-                const substack = real.descendSubstack(
-                    parentBlock,
-                    substackName
-                );
+            descendSubstack (parentBlock, substackName) {
+                const substack = real.descendSubstack(parentBlock, substackName);
                 return substack;
             },
 
-            analyzeLoop() {
+            analyzeLoop () {
                 // TODO: not always necessary
                 real.script.yields = true;
-            },
+            }
         };
     }
 
@@ -88,7 +77,7 @@ class ScriptTreeGeneratorStub {
      * @param {{opcode: string}} block VM block
      * @returns {{kind: string}} Node object from old compiler.
      */
-    descendInput(block) {
+    descendInput (block) {
         // eslint-disable-line no-unused-vars
         return null;
     }
@@ -99,7 +88,7 @@ class ScriptTreeGeneratorStub {
      * @param {{opcode: string}} block VM block
      * @returns {{kind: string}} Node object from old compiler.
      */
-    descendStackedBlock(block) {
+    descendStackedBlock (block) {
         // eslint-disable-line no-unused-vars
         return null;
     }
@@ -108,14 +97,14 @@ class ScriptTreeGeneratorStub {
      * @param block VM block
      * @returns {IntermediateInput|null}
      */
-    descendInputFromNewCompiler(block) {
+    descendInputFromNewCompiler (block) {
         const node = this.descendInput.call(this.fakeThis, block);
         if (node) {
             return new IntermediateInput(
                 InputOpcode.OLD_COMPILER_COMPATIBILITY_LAYER,
                 InputType.ANY,
                 {
-                    oldNode: node,
+                    oldNode: node
                 },
                 true
             );
@@ -127,13 +116,13 @@ class ScriptTreeGeneratorStub {
      * @param block VM block
      * @returns {IntermediateStackBlock|null}
      */
-    descendStackedBlockFromNewCompiler(block) {
+    descendStackedBlockFromNewCompiler (block) {
         const node = this.descendStackedBlock.call(this.fakeThis, block);
         if (node) {
             return new IntermediateStackBlock(
                 InputOpcode.OLD_COMPILER_COMPATIBILITY_LAYER,
                 {
-                    oldNode: node,
+                    oldNode: node
                 },
                 true
             );
@@ -157,7 +146,7 @@ class TypedInput {
      * @param {string} source JavaScript
      * @param {number|IntermediateInput} typeOrIntermediate
      */
-    constructor(source, typeOrIntermediate) {
+    constructor (source, typeOrIntermediate) {
         /**
          * JavaScript.
          * @type {string}
@@ -183,45 +172,45 @@ class TypedInput {
         }
     }
 
-    asNumber() {
+    asNumber () {
         return `(+${this.source} || 0)`;
     }
 
-    asNumberOrNaN() {
+    asNumberOrNaN () {
         return `(+${this.source})`;
     }
 
-    asString() {
+    asString () {
         return `("" + ${this.source})`;
     }
 
-    asBoolean() {
+    asBoolean () {
         return `toBoolean(${this.source})`;
     }
 
-    asColor() {
+    asColor () {
         return this.asUnknown();
     }
 
-    asUnknown() {
+    asUnknown () {
         return this.source;
     }
 
-    asSafe() {
+    asSafe () {
         return this.asUnknown();
     }
 
-    isAlwaysNumber() {
+    isAlwaysNumber () {
         // TODO
         return false;
     }
 
-    isAlwaysNumberOrNaN() {
+    isAlwaysNumberOrNaN () {
         // TODO
         return false;
     }
 
-    isNeverNumber() {
+    isNeverNumber () {
         // TODO
         return false;
     }
@@ -231,12 +220,12 @@ class TypedInput {
  * Part of the old compiler's API.
  */
 class VariablePool {
-    constructor(prefix) {
+    constructor (prefix) {
         this.prefix = prefix;
         this.count = 0;
     }
 
-    next() {
+    next () {
         return `${this.prefix}${this.count++}`;
     }
 }
@@ -245,7 +234,7 @@ class VariablePool {
  * Part of the old compiler's API.
  */
 class Frame {
-    constructor(isLoop) {
+    constructor (isLoop) {
         this.isLoop = isLoop;
         this.isLastBlock = false;
     }
@@ -255,7 +244,7 @@ class JSGeneratorStub {
     /**
      * @param {import("./jsgen")} real
      */
-    constructor(real) {
+    constructor (real) {
         /**
          * @type {import("./jsgen")}
          */
@@ -266,27 +255,27 @@ class JSGeneratorStub {
             ir: real.ir,
             target: real.target,
 
-            get frames() {
+            get frames () {
                 return real.frames;
             },
-            get currentFrame() {
+            get currentFrame () {
                 return real.currentFrame;
             },
 
-            get source() {
+            get source () {
                 return real.source;
             },
-            set source(newSource) {
+            set source (newSource) {
                 real.source = newSource;
             },
 
-            localVariables: new VariablePool("oldCompilerLocal"),
+            localVariables: new VariablePool('oldCompilerLocal'),
 
             /**
              * @param {IntermediateInput} intermediate
              * @returns {void} output is concatenated in this.source
              */
-            descendInput(intermediate) {
+            descendInput (intermediate) {
                 const js = real.descendInput(intermediate);
                 return new TypedInput(js, intermediate);
             },
@@ -295,7 +284,7 @@ class JSGeneratorStub {
              * @param {IntermediateStack} stack Stack of blocks.
              * @param {Frame} frame New frame
              */
-            descendStack(stack, frame) {
+            descendStack (stack, frame) {
                 real.descendStack(stack, frame);
             },
 
@@ -303,7 +292,7 @@ class JSGeneratorStub {
             yieldNotWarp: () => real.yieldNotWarp(),
             yieldStuckOrNotWarp: () => real.yieldStuckOrNotWarp(),
             yielded: () => real.yielded(),
-            requestRedraw: () => real.requestRedraw(),
+            requestRedraw: () => real.requestRedraw()
         };
     }
 
@@ -313,7 +302,7 @@ class JSGeneratorStub {
      * @param {{kind: string}} node Old compiler AST node.
      * @returns {TypedInput} Old compiler TypedInput.
      */
-    descendInput(node) {
+    descendInput (node) {
         throw new Error(`Unknown input: ${node.kind}`);
     }
 
@@ -322,7 +311,7 @@ class JSGeneratorStub {
      * Always call from `fakeThis` context.
      * @param {{kind: string}} node Old compiler AST node.
      */
-    descendStackedBlock(node) {
+    descendStackedBlock (node) {
         throw new Error(`Unknown stacked block: ${node.kind}`);
     }
 
@@ -330,7 +319,7 @@ class JSGeneratorStub {
      * @param {IntermediateInput} intermediate
      * @returns {string} JavaScript
      */
-    descendInputFromNewCompiler(intermediate) {
+    descendInputFromNewCompiler (intermediate) {
         const oldNode = intermediate.inputs.oldNode;
         const typedInput = this.descendInput.call(this.fakeThis, oldNode);
         return typedInput.asSafe();
@@ -340,7 +329,7 @@ class JSGeneratorStub {
      * @param {IntermediateStackBlock} intermediate
      * @returns {void} source property on real JSGenerator is modified directly
      */
-    descendStackedBlockFromNewCompiler(intermediate) {
+    descendStackedBlockFromNewCompiler (intermediate) {
         const oldNode = intermediate.inputs.oldNode;
         this.descendStackedBlock.call(this.fakeThis, oldNode);
     }
@@ -357,7 +346,7 @@ JSGeneratorStub.unstable_exports = {
     TYPE_NUMBER_NAN,
     VariablePool,
     TypedInput,
-    Frame,
+    Frame
 };
 
 const oldCompilerCompatibility = {
@@ -365,7 +354,7 @@ const oldCompilerCompatibility = {
     IRGeneratorStub,
     ScriptTreeGeneratorStub,
     TypedInput,
-    JSGeneratorStub,
+    JSGeneratorStub
 };
 
 module.exports = oldCompilerCompatibility;

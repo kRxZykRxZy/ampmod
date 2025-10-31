@@ -1,12 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import bindAll from "lodash.bindall";
-import styles from "./fonts-modal.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+import bindAll from 'lodash.bindall';
+import styles from './fonts-modal.css';
 
 class FontDropdownItem extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["handleSelect"]);
+        bindAll(this, ['handleSelect']);
     }
 
     handleSelect() {
@@ -19,7 +19,7 @@ class FontDropdownItem extends React.Component {
                 className={styles.fontDropdownItem}
                 title={this.props.family}
                 style={{
-                    fontFamily: this.props.family,
+                    fontFamily: this.props.family
                 }}
                 onMouseDown={this.handleSelect}
             >
@@ -31,7 +31,7 @@ class FontDropdownItem extends React.Component {
 
 FontDropdownItem.propTypes = {
     family: PropTypes.string.isRequired,
-    onSelect: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired
 };
 
 export default FontDropdownItem;

@@ -17,9 +17,9 @@ const requestPersistentStorage = () => {
  * In browsers that are not to have a permission dialog, will not do anything.
  */
 const gentlyRequestPersistentStorage = () => {
-    if (!navigator.userAgent.includes("Firefox")) {
+    if (!navigator.userAgent.includes('Firefox')) {
         requestPersistentStorage();
     }
 };
 
-export { requestPersistentStorage, gentlyRequestPersistentStorage };
+export {requestPersistentStorage, gentlyRequestPersistentStorage};

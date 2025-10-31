@@ -6,6 +6,6 @@
     border: 1px solid #222;
 }
 
-[data-paint-theme="dark"] .eye-dropper {
+[data-paint-theme='dark'] .eye-dropper {
     border-color: #888;
 }

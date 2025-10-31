@@ -1,14 +1,13 @@
-import path from "path";
-import SeleniumHelper from "../helpers/selenium-helper";
+import path from 'path';
+import SeleniumHelper from '../helpers/selenium-helper';
 
-const { clickText, clickXpath, findByXpath, getDriver, getLogs, loadUri } =
-    new SeleniumHelper();
+const {clickText, clickXpath, findByXpath, getDriver, getLogs, loadUri} = new SeleniumHelper();
 
-const uri = path.resolve(__dirname, "../../build/index.html");
+const uri = path.resolve(__dirname, '../../build/index.html');
 
 let driver;
 
-describe("Working with the how-to library", () => {
+describe('Working with the how-to library', () => {
     beforeAll(() => {
         driver = getDriver();
     });
@@ -17,11 +16,11 @@ describe("Working with the how-to library", () => {
         await driver.quit();
     });
 
-    test("Choosing a how-to", async () => {
+    test('Choosing a how-to', async () => {
         await loadUri(uri);
-        await clickText("Costumes");
+        await clickText('Costumes');
         await clickXpath('//*[@aria-label="Tutorials"]');
-        await clickText("Getting Started"); // Modal should close
+        await clickText('Getting Started'); // Modal should close
         // Make sure YouTube video on first card appears
         await findByXpath('//div[contains(@class, "step-video")]');
         const logs = await getLogs();

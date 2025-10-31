@@ -1,11 +1,10 @@
-@import "../../css/units.css";
-@import "../../css/colors.css";
-@import "../../css/z-index.css";
+@import '../../css/units.css';
+@import '../../css/colors.css';
+@import '../../css/z-index.css';
 
 .page-wrapper {
     height: 100%;
-    font-family:
-        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     display: flex;
     flex-direction: column;
 }
@@ -49,9 +48,7 @@
         much better ways to solve that (e.g. undo #2124, remove this flex-basis entirely). However, they run their own
         risks of breaking things, so let's just leave this as-is for the time being.
     */
-    flex-basis: calc(
-        1024px - 408px - (($space + $stage-standard-border-width) * 2)
-    );
+    flex-basis: calc(1024px - 408px - (($space + $stage-standard-border-width) * 2));
     flex-grow: 1;
     flex-shrink: 0;
     position: relative;
@@ -68,8 +65,7 @@
     flex-shrink: 0;
     gap: $space;
 
-    font-family:
-        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 500;
     font-size: 0.8rem;
 
@@ -107,8 +103,7 @@
         font-weight 0.3s,
         padding 0.3s;
 
-    font-family:
-        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -149,20 +144,20 @@
     filter: grayscale(100%);
 }
 
-[dir="ltr"] .tab img {
+[dir='ltr'] .tab img {
     margin-right: 0.125rem;
 }
 
-[dir="rtl"] .tab img {
+[dir='rtl'] .tab img {
     margin-left: 0.125rem;
 }
 
 /* mirror blocks and sound tab icons */
-[dir="rtl"] .tab:nth-of-type(1) img {
+[dir='rtl'] .tab:nth-of-type(1) img {
     transform: scaleX(-1);
 }
 
-[dir="rtl"] .tab:nth-of-type(3) img {
+[dir='rtl'] .tab:nth-of-type(3) img {
     transform: scaleX(-1);
 }
 
@@ -245,7 +240,7 @@
 $fade-out-distance: 15px;
 
 .extension-button-container:before {
-    content: "";
+    content: '';
     position: absolute;
     top: calc(calc(-1 * $fade-out-distance) - 1px);
     left: -1px;
@@ -269,7 +264,7 @@ $fade-out-distance: 15px;
     height: 1.75rem;
 }
 
-[dir="rtl"] .extension-button-icon {
+[dir='rtl'] .extension-button-icon {
     transform: scaleX(-1);
 }
 
@@ -284,11 +279,11 @@ $fade-out-distance: 15px;
     pointer-events: none;
 }
 
-[dir="ltr"] .watermark {
+[dir='ltr'] .watermark {
     right: 1.25rem;
 }
 
-[dir="rtl"] .watermark {
+[dir='rtl'] .watermark {
     left: 1.25rem;
 }
 

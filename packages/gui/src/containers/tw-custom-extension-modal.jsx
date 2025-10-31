@@ -1,18 +1,12 @@
-import PropTypes from "prop-types";
-import React from "react";
-import bindAll from "lodash.bindall";
-import { connect } from "react-redux";
-import log from "../lib/log";
-import CustomExtensionModalComponent from "../components/tw-custom-extension-modal/custom-extension-modal.jsx";
-import { closeCustomExtensionModal } from "../reducers/modals";
-import {
-    manuallyTrustExtension,
-    isTrustedExtension,
-} from "./tw-security-manager.jsx";
-import {
-    getPersistedUnsandboxed,
-    setPersistedUnsandboxed,
-} from "../lib/tw-persisted-unsandboxed.js";
+import PropTypes from 'prop-types';
+import React from 'react';
+import bindAll from 'lodash.bindall';
+import {connect} from 'react-redux';
+import log from '../lib/log';
+import CustomExtensionModalComponent from '../components/tw-custom-extension-modal/custom-extension-modal.jsx';
+import {closeCustomExtensionModal} from '../reducers/modals';
+import {manuallyTrustExtension, isTrustedExtension} from './tw-security-manager.jsx';
+import {getPersistedUnsandboxed, setPersistedUnsandboxed} from '../lib/tw-persisted-unsandboxed.js';
 
 /**
  * amp: Saves a custom extension to localStorage in the correct format.
@@ -22,29 +16,29 @@ import {
  * @param {object} options - Options object that can contain either jsText or uri.
  */
 const saveExtensionToLocalStorage = async (name, description, options) => {
-    const key = `${process.env.ampmod_mode === "canary" ? "canary" : "amp"}:saved-custom-extensions`;
-    let data = { extensions: [] };
+    const key = `${process.env.ampmod_mode === 'canary' ? 'canary' : 'amp'}:saved-custom-extensions`;
+    let data = {extensions: []};
 
     try {
         if (localStorage[key]) {
             data = JSON.parse(localStorage[key]);
         }
     } catch (e) {
-        console.warn("Failed to parse saved custom extensions:", e);
+        console.warn('Failed to parse saved custom extensions:', e);
     }
 
     // Generate a unique SHA hash using the Web Crypto API
     const hashInput = `${Math.random().toString(36).substring(2, 15)}${Date.now()}`;
     const encoder = new TextEncoder();
     const dataToHash = encoder.encode(hashInput);
-    const hashBuffer = await crypto.subtle.digest("SHA-1", dataToHash);
+    const hashBuffer = await crypto.subtle.digest('SHA-1', dataToHash);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const id = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+    const id = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
     const newExtension = {
         id,
         name,
-        description,
+        description
     };
 
     if (options.jsText) {
@@ -66,12 +60,7 @@ const readAsDataURL = blob =>
     new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result);
-        reader.onerror = () =>
-            reject(
-                new Error(
-                    `Could not read extension as data URL: ${reader.error}`
-                )
-            );
+        reader.onerror = () => reject(new Error(`Could not read extension as data URL: ${reader.error}`));
         reader.readAsDataURL(blob);
     });
 
@@ -80,27 +69,27 @@ class CustomExtensionModal extends React.Component {
         super(props);
 
         bindAll(this, [
-            "handleChangeFiles",
-            "handleChangeURL",
-            "handleClose",
-            "handleKeyDown",
-            "handleLoadExtension",
-            "handleSwitchToFile",
-            "handleSwitchToURL",
-            "handleSwitchToText",
-            "handleChangeText",
-            "handleDragOver",
-            "handleDragLeave",
-            "handleDrop",
-            "handleChangeUnsandboxed",
+            'handleChangeFiles',
+            'handleChangeURL',
+            'handleClose',
+            'handleKeyDown',
+            'handleLoadExtension',
+            'handleSwitchToFile',
+            'handleSwitchToURL',
+            'handleSwitchToText',
+            'handleChangeText',
+            'handleDragOver',
+            'handleDragLeave',
+            'handleDrop',
+            'handleChangeUnsandboxed'
         ]);
 
         this.state = {
-            type: "url",
-            url: "",
+            type: 'url',
+            url: '',
             files: null,
-            text: "",
-            unsandboxed: getPersistedUnsandboxed(),
+            text: '',
+            unsandboxed: getPersistedUnsandboxed()
         };
     }
 
@@ -108,43 +97,37 @@ class CustomExtensionModal extends React.Component {
      * @returns {Promise<string[]>} List of extension URLs to load.
      */
     getExtensionURLs() {
-        if (this.state.type === "url") {
+        if (this.state.type === 'url') {
             return Promise.resolve([this.state.url]);
         }
 
-        if (this.state.type === "file") {
+        if (this.state.type === 'file') {
             const files = Array.from(this.state.files);
             return Promise.all(files.map(readAsDataURL));
         }
 
-        if (this.state.type === "text") {
-            return Promise.resolve([
-                `data:application/javascript;base64,${btoa(unescape(this.state.text))}`,
-            ]);
+        if (this.state.type === 'text') {
+            return Promise.resolve([`data:application/javascript;base64,${btoa(unescape(this.state.text))}`]);
         }
 
-        return Promise.reject(new Error("Unknown type"));
+        return Promise.reject(new Error('Unknown type'));
     }
 
     hasValidInput() {
-        if (this.state.type === "url") {
+        if (this.state.type === 'url') {
             try {
                 const parsed = new URL(this.state.url);
-                return (
-                    parsed.protocol === "https:" ||
-                    parsed.protocol === "http:" ||
-                    parsed.protocol === "data:"
-                );
+                return parsed.protocol === 'https:' || parsed.protocol === 'http:' || parsed.protocol === 'data:';
             } catch (e) {
                 return false;
             }
         }
 
-        if (this.state.type === "file") {
+        if (this.state.type === 'file') {
             return !!this.state.files;
         }
 
-        if (this.state.type === "text") {
+        if (this.state.type === 'text') {
             return !!this.state.text;
         }
 
@@ -153,13 +136,13 @@ class CustomExtensionModal extends React.Component {
 
     handleChangeFiles(files) {
         this.setState({
-            files,
+            files
         });
     }
 
     handleChangeURL(e) {
         this.setState({
-            url: e.target.value,
+            url: e.target.value
         });
     }
 
@@ -168,7 +151,7 @@ class CustomExtensionModal extends React.Component {
     }
 
     handleKeyDown(e) {
-        if (e.key === "Enter" && this.hasValidInput()) {
+        if (e.key === 'Enter' && this.hasValidInput()) {
             e.preventDefault();
             this.handleLoadExtension();
         }
@@ -179,7 +162,7 @@ class CustomExtensionModal extends React.Component {
         try {
             const urls = await this.getExtensionURLs();
 
-            if (this.state.type !== "url") {
+            if (this.state.type !== 'url') {
                 setPersistedUnsandboxed(this.state.unsandboxed);
                 if (this.state.unsandboxed) {
                     for (const url of urls) {
@@ -192,24 +175,23 @@ class CustomExtensionModal extends React.Component {
                 await this.props.vm.extensionManager.loadExtensionURL(url);
             }
 
-            const { saveToLocalStorage, saveName, saveDescription } =
-                extraOptions;
+            const {saveToLocalStorage, saveName, saveDescription} = extraOptions;
 
             if (saveToLocalStorage && saveName && saveDescription) {
-                if (this.state.type === "text") {
+                if (this.state.type === 'text') {
                     saveExtensionToLocalStorage(saveName, saveDescription, {
-                        jsText: this.state.text,
+                        jsText: this.state.text
                     });
-                } else if (this.state.type === "url") {
+                } else if (this.state.type === 'url') {
                     saveExtensionToLocalStorage(saveName, saveDescription, {
-                        uri: this.state.url,
+                        uri: this.state.url
                     });
-                } else if (this.state.type === "file") {
+                } else if (this.state.type === 'file') {
                     const files = Array.from(this.state.files);
                     for (const file of files) {
                         const text = await file.text();
                         saveExtensionToLocalStorage(saveName, saveDescription, {
-                            jsText: text,
+                            jsText: text
                         });
                     }
                 }
@@ -222,32 +204,32 @@ class CustomExtensionModal extends React.Component {
 
     handleSwitchToFile() {
         this.setState({
-            type: "file",
+            type: 'file'
         });
     }
 
     handleSwitchToURL() {
         this.setState({
-            type: "url",
+            type: 'url'
         });
     }
 
     handleSwitchToText() {
         this.setState({
-            type: "text",
+            type: 'text'
         });
     }
 
     handleChangeText(e) {
         this.setState({
-            text: e.target.value,
+            text: e.target.value
         });
     }
 
     handleDragOver(e) {
-        if (e.dataTransfer.types.includes("Files")) {
+        if (e.dataTransfer.types.includes('Files')) {
             e.preventDefault();
-            e.dataTransfer.dropEffect = "copy";
+            e.dataTransfer.dropEffect = 'copy';
         }
     }
 
@@ -258,14 +240,14 @@ class CustomExtensionModal extends React.Component {
         if (files.length) {
             e.preventDefault();
             this.setState({
-                type: "file",
-                files,
+                type: 'file',
+                files
             });
         }
     }
 
     isUnsandboxed() {
-        if (this.state.type === "url") {
+        if (this.state.type === 'url') {
             return isTrustedExtension(this.state.url) || this.state.unsandboxed;
         }
         return this.state.unsandboxed;
@@ -277,7 +259,7 @@ class CustomExtensionModal extends React.Component {
 
     handleChangeUnsandboxed(e) {
         this.setState({
-            unsandboxed: e.target.checked,
+            unsandboxed: e.target.checked
         });
     }
 
@@ -300,11 +282,7 @@ class CustomExtensionModal extends React.Component {
                 text={this.state.text}
                 onChangeText={this.handleChangeText}
                 unsandboxed={this.isUnsandboxed()}
-                onChangeUnsandboxed={
-                    this.canChangeUnsandboxed()
-                        ? this.handleChangeUnsandboxed
-                        : null
-                }
+                onChangeUnsandboxed={this.canChangeUnsandboxed() ? this.handleChangeUnsandboxed : null}
                 onLoadExtension={this.handleLoadExtension}
                 onClose={this.handleClose}
             />
@@ -316,20 +294,17 @@ CustomExtensionModal.propTypes = {
     onClose: PropTypes.func,
     vm: PropTypes.shape({
         extensionManager: PropTypes.shape({
-            loadExtensionURL: PropTypes.func,
-        }),
-    }),
+            loadExtensionURL: PropTypes.func
+        })
+    })
 };
 
 const mapStateToProps = state => ({
-    vm: state.scratchGui.vm,
+    vm: state.scratchGui.vm
 });
 
 const mapDispatchToProps = dispatch => ({
-    onClose: () => dispatch(closeCustomExtensionModal()),
+    onClose: () => dispatch(closeCustomExtensionModal())
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(CustomExtensionModal);
+export default connect(mapStateToProps, mapDispatchToProps)(CustomExtensionModal);

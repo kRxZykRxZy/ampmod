@@ -1,68 +1,61 @@
-import React from "react";
-import {
-    FormattedMessage,
-    injectIntl,
-    intlShape,
-    defineMessages,
-} from "react-intl";
-import { connect } from "react-redux";
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import bindAll from "lodash.bindall";
-import styles from "./loader.css";
-import { getIsLoadingWithId } from "../../reducers/project-state";
-import topBlock from "./top-block.svg";
-import middleBlock from "./middle-block.svg";
-import bottomBlock from "./bottom-block.svg";
-import { facts, tips, jokes } from "../../lib/amp-fun-facts";
+import React from 'react';
+import {FormattedMessage, injectIntl, intlShape, defineMessages} from 'react-intl';
+import {connect} from 'react-redux';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import bindAll from 'lodash.bindall';
+import styles from './loader.css';
+import {getIsLoadingWithId} from '../../reducers/project-state';
+import topBlock from './top-block.svg';
+import middleBlock from './middle-block.svg';
+import bottomBlock from './bottom-block.svg';
+import {facts, tips, jokes} from '../../lib/amp-fun-facts';
 
 const mainMessages = {
-    "gui.loader.headline": (
+    'gui.loader.headline': (
         <FormattedMessage
             defaultMessage="Loading Project"
             description="Main loading message"
             id="gui.loader.headline"
         />
     ),
-    "gui.loader.creating": (
+    'gui.loader.creating': (
         <FormattedMessage
             defaultMessage="Creating Project"
             description="Main creating message"
             id="gui.loader.creating"
         />
-    ),
+    )
 };
 
 const messages = defineMessages({
     projectData: {
-        defaultMessage: "Loading project …",
-        description: "Appears when loading project data, but not assets yet",
-        id: "tw.loader.projectData",
+        defaultMessage: 'Loading project …',
+        description: 'Appears when loading project data, but not assets yet',
+        id: 'tw.loader.projectData'
     },
     downloadingAssets: {
-        defaultMessage: "Downloading assets ({complete}/{total}) …",
-        description:
-            "Appears when loading project assets from a project on a remote website",
-        id: "tw.loader.downloadingAssets",
+        defaultMessage: 'Downloading assets ({complete}/{total}) …',
+        description: 'Appears when loading project assets from a project on a remote website',
+        id: 'tw.loader.downloadingAssets'
     },
     loadingAssets: {
-        defaultMessage: "Loading assets ({complete}/{total}) …",
-        description:
-            "Appears when loading project assets from a project file on the user's computer",
-        id: "tw.loader.loadingAssets",
-    },
+        defaultMessage: 'Loading assets ({complete}/{total}) …',
+        description: "Appears when loading project assets from a project file on the user's computer",
+        id: 'tw.loader.loadingAssets'
+    }
 });
 
 class LoaderComponent extends React.Component {
     constructor(props) {
         super(props);
         bindAll(this, [
-            "handleAssetProgress",
-            "handleProjectLoaded",
-            "barInnerRef",
-            "messageRef",
-            "funFactRef",
-            "updateFunFact",
+            'handleAssetProgress',
+            'handleProjectLoaded',
+            'barInnerRef',
+            'messageRef',
+            'funFactRef',
+            'updateFunFact'
         ]);
         this.barInnerEl = null;
         this.messageEl = null;
@@ -72,18 +65,15 @@ class LoaderComponent extends React.Component {
         this.lastFunFactIndex = -1;
     }
     componentDidMount() {
-        this.handleAssetProgress(
-            this.props.vm.runtime.finishedAssetRequests,
-            this.props.vm.runtime.totalAssetRequests
-        );
-        this.props.vm.on("ASSET_PROGRESS", this.handleAssetProgress);
-        this.props.vm.runtime.on("PROJECT_LOADED", this.handleProjectLoaded);
+        this.handleAssetProgress(this.props.vm.runtime.finishedAssetRequests, this.props.vm.runtime.totalAssetRequests);
+        this.props.vm.on('ASSET_PROGRESS', this.handleAssetProgress);
+        this.props.vm.runtime.on('PROJECT_LOADED', this.handleProjectLoaded);
         this.updateFunFact();
         this.funFactInterval = setInterval(this.updateFunFact, 3000);
     }
     componentWillUnmount() {
-        this.props.vm.off("ASSET_PROGRESS", this.handleAssetProgress);
-        this.props.vm.runtime.off("PROJECT_LOADED", this.handleProjectLoaded);
+        this.props.vm.off('ASSET_PROGRESS', this.handleAssetProgress);
+        this.props.vm.runtime.off('PROJECT_LOADED', this.handleProjectLoaded);
         clearInterval(this.funFactInterval);
     }
     updateFunFact() {
@@ -104,11 +94,7 @@ class LoaderComponent extends React.Component {
             let randomIndex;
             do {
                 randomIndex = Math.floor(Math.random() * pool.length);
-            } while (
-                pool === this.lastPool &&
-                randomIndex === this.lastFunFactIndex &&
-                pool.length > 1
-            );
+            } while (pool === this.lastPool && randomIndex === this.lastFunFactIndex && pool.length > 1);
 
             this.lastPool = pool;
             this.lastFunFactIndex = randomIndex;
@@ -126,22 +112,15 @@ class LoaderComponent extends React.Component {
 
         if (total === 0) {
             // Started loading a new project.
-            this.barInnerEl.style.width = "0";
-            this.messageEl.textContent = this.props.intl.formatMessage(
-                messages.projectData
-            );
+            this.barInnerEl.style.width = '0';
+            this.messageEl.textContent = this.props.intl.formatMessage(messages.projectData);
         } else {
             this.barInnerEl.style.width = `${(finished / total) * 100}%`;
-            const message = this.props.isRemote
-                ? messages.downloadingAssets
-                : messages.loadingAssets;
-            this.messageEl.textContent = this.props.intl.formatMessage(
-                message,
-                {
-                    complete: finished,
-                    total,
-                }
-            );
+            const message = this.props.isRemote ? messages.downloadingAssets : messages.loadingAssets;
+            this.messageEl.textContent = this.props.intl.formatMessage(message, {
+                complete: finished,
+                total
+            });
         }
     }
     handleProjectLoaded() {
@@ -165,44 +144,25 @@ class LoaderComponent extends React.Component {
         return (
             <div
                 className={classNames(styles.background, {
-                    [styles.fullscreen]: this.props.isFullScreen,
+                    [styles.fullscreen]: this.props.isFullScreen
                 })}
             >
                 <div className={styles.container}>
                     <div className={styles.blockAnimation}>
-                        <img
-                            className={styles.topBlock}
-                            src={topBlock}
-                            draggable={false}
-                        />
-                        <img
-                            className={styles.middleBlock}
-                            src={middleBlock}
-                            draggable={false}
-                        />
-                        <img
-                            className={styles.bottomBlock}
-                            src={bottomBlock}
-                            draggable={false}
-                        />
+                        <img className={styles.topBlock} src={topBlock} draggable={false} />
+                        <img className={styles.middleBlock} src={middleBlock} draggable={false} />
+                        <img className={styles.bottomBlock} src={bottomBlock} draggable={false} />
                     </div>
 
-                    <div className={styles.title}>
-                        {mainMessages[this.props.messageId]}
-                    </div>
+                    <div className={styles.title}>{mainMessages[this.props.messageId]}</div>
 
                     <div className={styles.message} ref={this.messageRef} />
 
                     <div className={styles.barOuter}>
-                        <div
-                            className={styles.barInner}
-                            ref={this.barInnerRef}
-                        />
+                        <div className={styles.barInner} ref={this.barInnerRef} />
                     </div>
 
-                    {!this.props.isEmbedded && (
-                        <div className={styles.funFact} ref={this.funFactRef} />
-                    )}
+                    {!this.props.isEmbedded && <div className={styles.funFact} ref={this.funFactRef} />}
                 </div>
             </div>
         );
@@ -223,24 +183,21 @@ LoaderComponent.propTypes = {
             finishedAssetRequests: PropTypes.number,
             resetProgress: PropTypes.func,
             on: PropTypes.func,
-            off: PropTypes.func,
-        }),
-    }),
+            off: PropTypes.func
+        })
+    })
 };
 LoaderComponent.defaultProps = {
     isFullScreen: false,
     isEmbedded: false,
-    messageId: "gui.loader.headline",
+    messageId: 'gui.loader.headline'
 };
 
 const mapStateToProps = state => ({
     isRemote: getIsLoadingWithId(state.scratchGui.projectState.loadingState),
-    vm: state.scratchGui.vm,
+    vm: state.scratchGui.vm
 });
 
 const mapDispatchToProps = () => ({});
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(injectIntl(LoaderComponent));
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(LoaderComponent));

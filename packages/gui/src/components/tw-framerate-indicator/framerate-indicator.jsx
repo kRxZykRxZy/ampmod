@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FormattedMessage } from "react-intl";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {FormattedMessage} from 'react-intl';
 
-import styles from "./framerate-indicator.css";
+import styles from './framerate-indicator.css';
 
-const FramerateIndicator = ({ framerate, interpolation }) => (
+const FramerateIndicator = ({framerate, interpolation}) => (
     <React.Fragment>
         {/* 0 is technically a valid framerate that means "at monitor refresh rate" */}
         {/* we won't display anything for that yet because we don't know how to explain it */}
@@ -16,7 +16,7 @@ const FramerateIndicator = ({ framerate, interpolation }) => (
                         description="Label to indicate custom framerate"
                         id="tw.fps"
                         values={{
-                            framerate: framerate,
+                            framerate: framerate
                         }}
                     />
                 </div>
@@ -38,7 +38,7 @@ const FramerateIndicator = ({ framerate, interpolation }) => (
 
 FramerateIndicator.propTypes = {
     framerate: PropTypes.number,
-    interpolation: PropTypes.bool,
+    interpolation: PropTypes.bool
 };
 
 export default FramerateIndicator;

@@ -1,10 +1,6 @@
-import { HANDLE_RATIO, snapDeltaToAngle } from "../math";
-import { getActionBounds } from "../view";
-import {
-    clearSelection,
-    getSelectedLeafItems,
-    getSelectedSegments,
-} from "../selection";
+import {HANDLE_RATIO, snapDeltaToAngle} from '../math';
+import {getActionBounds} from '../view';
+import {clearSelection, getSelectedLeafItems, getSelectedSegments} from '../selection';
 
 /** Subtool of ReshapeTool for moving control points. */
 class PointTool {
@@ -71,9 +67,7 @@ class PointTool {
      * @param {?boolean} hitProperties.multiselect Whether to multiselect on mouse down (e.g. shift key held)
      */
     addPoint(hitProperties) {
-        const newSegment = hitProperties.hitResult.item.divideAt(
-            hitProperties.hitResult.location
-        );
+        const newSegment = hitProperties.hitResult.item.divideAt(hitProperties.hitResult.location);
 
         // If we're adding a point in the middle of a straight line, it won't be smooth by default, so smooth it
         if (!newSegment.hasHandles()) newSegment.smooth();
@@ -91,16 +85,11 @@ class PointTool {
         // Adjust handles of curve before and curve after to account for new curve length
         const beforeSegment = hitResult.item.segments[index - 1];
         const afterSegment = hitResult.item.segments[index];
-        const curveLength = beforeSegment
-            ? beforeSegment.curve
-                ? beforeSegment.curve.length
-                : null
-            : null;
+        const curveLength = beforeSegment ? (beforeSegment.curve ? beforeSegment.curve.length : null) : null;
         if (beforeSegment && beforeSegment.handleOut) {
             if (afterSegment) {
                 beforeSegment.handleOut = beforeSegment.handleOut.multiply(
-                    (curveLength * HANDLE_RATIO) /
-                        beforeSegment.handleOut.length
+                    (curveLength * HANDLE_RATIO) / beforeSegment.handleOut.length
                 );
             } else {
                 beforeSegment.handleOut = null;
@@ -141,9 +130,7 @@ class PointTool {
             }
 
             if (event.modifiers.shift) {
-                seg.point = seg.origPoint.add(
-                    snapDeltaToAngle(dragVector, Math.PI / 4)
-                );
+                seg.point = seg.origPoint.add(snapDeltaToAngle(dragVector, Math.PI / 4));
             } else {
                 seg.point = seg.point.add(delta);
             }

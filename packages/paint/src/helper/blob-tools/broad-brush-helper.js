@@ -1,7 +1,7 @@
 // Broadbrush based on http://paperjs.org/tutorials/interaction/working-with-mouse-vectors/
-import paper from "@turbowarp/paper";
-import { styleBlob } from "../../helper/style-path";
-import log from "../../log/log";
+import paper from '@turbowarp/paper';
+import {styleBlob} from '../../helper/style-path';
+import log from '../../log/log';
 
 /**
  * Broad brush functions to add as listeners on the mouse. Call them when the corresponding mouse event happens
@@ -35,16 +35,13 @@ class BroadBrushHelper {
         this.steps = 0;
         this.smoothed = 0;
         this.lastVec = null;
-        tool.minDistance = Math.min(
-            5,
-            Math.max(2 / paper.view.zoom, options.brushSize / 2)
-        );
+        tool.minDistance = Math.min(5, Math.max(2 / paper.view.zoom, options.brushSize / 2));
         tool.maxDistance = options.brushSize;
         if (event.event.button > 0) return; // only first mouse button
 
         this.finalPath = new paper.Path.Circle({
             center: event.point,
-            radius: options.brushSize / 2,
+            radius: options.brushSize / 2
         });
         styleBlob(this.finalPath, options);
         this.lastPoint = event.point;
@@ -65,34 +62,17 @@ class BroadBrushHelper {
 
                 // If the angle is large, the broad brush tends to leave behind a flat edge.
                 // This code makes a shape to fill in that flat edge with a rounded cap.
-                const circ = new paper.Path.Circle(
-                    this.lastPoint,
-                    options.brushSize / 2
-                );
+                const circ = new paper.Path.Circle(this.lastPoint, options.brushSize / 2);
                 circ.fillColor = options.fillColor;
                 const rect = new paper.Path.Rectangle(
-                    this.lastPoint.subtract(
-                        new paper.Point(-options.brushSize / 2, 0)
-                    ),
-                    this.lastPoint.subtract(
-                        new paper.Point(
-                            options.brushSize / 2,
-                            this.lastVec.length
-                        )
-                    )
+                    this.lastPoint.subtract(new paper.Point(-options.brushSize / 2, 0)),
+                    this.lastPoint.subtract(new paper.Point(options.brushSize / 2, this.lastVec.length))
                 );
                 rect.fillColor = options.fillColor;
                 rect.rotate(this.lastVec.angle - 90, this.lastPoint);
                 const rect2 = new paper.Path.Rectangle(
-                    event.point.subtract(
-                        new paper.Point(-options.brushSize / 2, 0)
-                    ),
-                    event.point.subtract(
-                        new paper.Point(
-                            options.brushSize / 2,
-                            event.delta.length
-                        )
-                    )
+                    event.point.subtract(new paper.Point(-options.brushSize / 2, 0)),
+                    event.point.subtract(new paper.Point(options.brushSize / 2, event.delta.length))
                 );
                 rect2.fillColor = options.fillColor;
                 rect2.rotate(step.angle - 90, event.point);
@@ -108,44 +88,29 @@ class BroadBrushHelper {
             this.finalPath = new paper.Path();
             const handleVec = event.delta.normalize(options.brushSize / 2);
             this.finalPath.add(
-                new paper.Segment(
-                    this.lastPoint.subtract(handleVec),
-                    handleVec.rotate(-90),
-                    handleVec.rotate(90)
-                )
+                new paper.Segment(this.lastPoint.subtract(handleVec), handleVec.rotate(-90), handleVec.rotate(90))
             );
             styleBlob(this.finalPath, options);
-            this.finalPath.insert(
-                0,
-                new paper.Segment(this.lastPoint.subtract(step))
-            );
+            this.finalPath.insert(0, new paper.Segment(this.lastPoint.subtract(step)));
             this.finalPath.add(new paper.Segment(this.lastPoint.add(step)));
         }
 
         // Update angle of the last brush step's points to match the average angle of the last mouse vector and this
         // mouse vector (aka the vertex normal).
         if (this.lastVec) {
-            const lastNormal = this.lastVec
-                .normalize(options.brushSize / 2)
-                .rotate(90);
-            const averageNormal = new paper.Point(
-                lastNormal.x + step.x,
-                lastNormal.y + step.y
-            ).normalize(options.brushSize / 2);
+            const lastNormal = this.lastVec.normalize(options.brushSize / 2).rotate(90);
+            const averageNormal = new paper.Point(lastNormal.x + step.x, lastNormal.y + step.y).normalize(
+                options.brushSize / 2
+            );
 
-            this.finalPath.segments[0].point =
-                this.lastPoint.subtract(averageNormal);
-            this.finalPath.segments[this.finalPath.segments.length - 1].point =
-                this.lastPoint.add(averageNormal);
+            this.finalPath.segments[0].point = this.lastPoint.subtract(averageNormal);
+            this.finalPath.segments[this.finalPath.segments.length - 1].point = this.lastPoint.add(averageNormal);
         }
 
         this.finalPath.add(event.point.add(step));
         this.finalPath.insert(0, event.point.subtract(step));
 
-        if (
-            this.finalPath.segments.length >
-            this.smoothed + this.smoothingThreshold * 2
-        ) {
+        if (this.finalPath.segments.length > this.smoothed + this.smoothingThreshold * 2) {
             this.simplify(1);
         }
 
@@ -171,25 +136,16 @@ class BroadBrushHelper {
 
         // Where to cut. Don't go past the rounded start of the line (so there's always a tempPathMid)
         const firstCutoff = Math.min(newPoints + 1, Math.floor(length / 2));
-        const lastCutoff = Math.max(
-            length - 1 - newPoints,
-            Math.floor(length / 2) + 1
-        );
+        const lastCutoff = Math.max(length - 1 - newPoints, Math.floor(length / 2) + 1);
         if (firstCutoff <= 1 || lastCutoff >= length - 1) {
             // Entire path is simplified already
             return;
         }
         // Cut the path into 3 segments: the 2 ends where the new points are, and the middle, which will be
         // staying the same
-        const tempPath1 = new paper.Path(
-            this.finalPath.segments.slice(1, firstCutoff)
-        );
-        const tempPathMid = new paper.Path(
-            this.finalPath.segments.slice(firstCutoff, lastCutoff)
-        );
-        const tempPath2 = new paper.Path(
-            this.finalPath.segments.slice(lastCutoff, length - 1)
-        );
+        const tempPath1 = new paper.Path(this.finalPath.segments.slice(1, firstCutoff));
+        const tempPathMid = new paper.Path(this.finalPath.segments.slice(firstCutoff, lastCutoff));
+        const tempPath2 = new paper.Path(this.finalPath.segments.slice(lastCutoff, length - 1));
 
         // Run simplify on the new ends. We need to graft the old handles back onto the newly
         // simplified paths, since simplify removes the in handle from the start of the path, and
@@ -205,12 +161,7 @@ class BroadBrushHelper {
 
         // Delete the old contents of finalPath and replace it with the newly simplified segments, concatenated
         this.finalPath.removeSegments(1, this.finalPath.segments.length - 1);
-        this.finalPath.insertSegments(
-            1,
-            tempPath1.segments
-                .concat(tempPathMid.segments)
-                .concat(tempPath2.segments)
-        );
+        this.finalPath.insertSegments(1, tempPath1.segments.concat(tempPathMid.segments).concat(tempPath2.segments));
 
         // Remove temp paths
         tempPath1.remove();
@@ -262,20 +213,14 @@ class BroadBrushHelper {
         // Simplify before adding end cap so cap doesn't get warped
         this.simplify(1);
         const handleVec = delta.normalize(options.brushSize / 2);
-        this.finalPath.add(
-            new paper.Segment(
-                event.point.add(handleVec),
-                handleVec.rotate(90),
-                handleVec.rotate(-90)
-            )
-        );
+        this.finalPath.add(new paper.Segment(event.point.add(handleVec), handleVec.rotate(90), handleVec.rotate(-90)));
         this.finalPath.closePath();
 
         // Resolve self-crossings
         const newPath = this.finalPath
             .resolveCrossings()
             .reorient(true /* nonZero */, true /* clockwise */)
-            .reduce({ simplify: true });
+            .reduce({simplify: true});
         if (newPath !== this.finalPath) {
             newPath.copyAttributes(this.finalPath);
             newPath.fillColor = this.finalPath.fillColor;
@@ -288,10 +233,7 @@ class BroadBrushHelper {
             const temp = this.union(this.finalPath, cap);
             if (
                 temp.area >= this.finalPath.area &&
-                !(
-                    temp instanceof paper.CompoundPath &&
-                    !(this.finalPath instanceof paper.CompoundPath)
-                )
+                !(temp instanceof paper.CompoundPath && !(this.finalPath instanceof paper.CompoundPath))
             ) {
                 this.finalPath = temp;
             } else {
@@ -304,7 +246,7 @@ class BroadBrushHelper {
                 // all of the failures.)
                 this.finalPath.insertAbove(temp);
                 temp.remove();
-                log.warn("Skipping a merge.");
+                log.warn('Skipping a merge.');
             }
         }
         this.endCaps.length = 0;

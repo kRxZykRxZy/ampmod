@@ -1,45 +1,40 @@
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import React from "react";
-import {
-    defineMessages,
-    intlShape,
-    injectIntl,
-    FormattedMessage,
-} from "react-intl";
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {defineMessages, intlShape, injectIntl, FormattedMessage} from 'react-intl';
 
-import Box from "../box/box.jsx";
-import ActionMenu from "../action-menu/action-menu.jsx";
-import styles from "./stage-selector.css";
-import { isRtl } from "@turbowarp/scratch-l10n";
+import Box from '../box/box.jsx';
+import ActionMenu from '../action-menu/action-menu.jsx';
+import styles from './stage-selector.css';
+import {isRtl} from '@turbowarp/scratch-l10n';
 
-import backdropIcon from "../action-menu/icon--backdrop.svg";
-import fileUploadIcon from "../action-menu/icon--file-upload.svg";
-import paintIcon from "../action-menu/icon--paint.svg";
-import surpriseIcon from "../action-menu/icon--surprise.svg";
-import searchIcon from "../action-menu/icon--search.svg";
+import backdropIcon from '../action-menu/icon--backdrop.svg';
+import fileUploadIcon from '../action-menu/icon--file-upload.svg';
+import paintIcon from '../action-menu/icon--paint.svg';
+import surpriseIcon from '../action-menu/icon--surprise.svg';
+import searchIcon from '../action-menu/icon--search.svg';
 
 const messages = defineMessages({
     addBackdropFromLibrary: {
-        id: "gui.spriteSelector.addBackdropFromLibrary",
-        description: "Button to add a stage in the target pane from library",
-        defaultMessage: "Choose a Backdrop",
+        id: 'gui.spriteSelector.addBackdropFromLibrary',
+        description: 'Button to add a stage in the target pane from library',
+        defaultMessage: 'Choose a Backdrop'
     },
     addBackdropFromPaint: {
-        id: "gui.stageSelector.addBackdropFromPaint",
-        description: "Button to add a stage in the target pane from paint",
-        defaultMessage: "Paint",
+        id: 'gui.stageSelector.addBackdropFromPaint',
+        description: 'Button to add a stage in the target pane from paint',
+        defaultMessage: 'Paint'
     },
     addBackdropFromSurprise: {
-        id: "gui.stageSelector.addBackdropFromSurprise",
-        description: "Button to add a random stage in the target pane",
-        defaultMessage: "Surprise",
+        id: 'gui.stageSelector.addBackdropFromSurprise',
+        description: 'Button to add a random stage in the target pane',
+        defaultMessage: 'Surprise'
     },
     addBackdropFromFile: {
-        id: "gui.stageSelector.addBackdropFromFile",
-        description: "Button to add a stage in the target pane from file",
-        defaultMessage: "Upload Backdrop",
-    },
+        id: 'gui.stageSelector.addBackdropFromFile',
+        description: 'Button to add a stage in the target pane from file',
+        defaultMessage: 'Upload Backdrop'
+    }
 });
 
 const StageSelector = props => {
@@ -68,7 +63,7 @@ const StageSelector = props => {
             className={classNames(styles.stageSelector, {
                 [styles.isSelected]: selected,
                 [styles.raised]: raised || dragOver,
-                [styles.receivedBlocks]: receivedBlocks,
+                [styles.receivedBlocks]: receivedBlocks
             })}
             componentRef={containerRef}
             onClick={onClick}
@@ -85,13 +80,7 @@ const StageSelector = props => {
                     />
                 </div>
             </div>
-            {url ? (
-                <img
-                    className={styles.costumeCanvas}
-                    src={url}
-                    draggable={false}
-                />
-            ) : null}
+            {url ? <img className={styles.costumeCanvas} src={url} draggable={false} /> : null}
             <div className={styles.label}>
                 <FormattedMessage
                     defaultMessage="Backdrops"
@@ -108,36 +97,29 @@ const StageSelector = props => {
                         title: intl.formatMessage(messages.addBackdropFromFile),
                         img: fileUploadIcon,
                         onClick: onBackdropFileUploadClick,
-                        fileAccept:
-                            ".svg, .png, .bmp, .jpg, .jpeg, .jfif, .webp, .gif",
+                        fileAccept: '.svg, .png, .bmp, .jpg, .jpeg, .jfif, .webp, .gif',
                         fileChange: onBackdropFileUpload,
                         fileInput: fileInputRef,
-                        fileMultiple: true,
+                        fileMultiple: true
                     },
                     {
-                        title: intl.formatMessage(
-                            messages.addBackdropFromSurprise
-                        ),
+                        title: intl.formatMessage(messages.addBackdropFromSurprise),
                         img: surpriseIcon,
-                        onClick: onSurpriseBackdropClick,
+                        onClick: onSurpriseBackdropClick
                     },
                     {
-                        title: intl.formatMessage(
-                            messages.addBackdropFromPaint
-                        ),
+                        title: intl.formatMessage(messages.addBackdropFromPaint),
                         img: paintIcon,
-                        onClick: onEmptyBackdropClick,
+                        onClick: onEmptyBackdropClick
                     },
                     {
-                        title: intl.formatMessage(
-                            messages.addBackdropFromLibrary
-                        ),
+                        title: intl.formatMessage(messages.addBackdropFromLibrary),
                         img: searchIcon,
-                        onClick: onNewBackdropClick,
-                    },
+                        onClick: onNewBackdropClick
+                    }
                 ]}
                 title={intl.formatMessage(messages.addBackdropFromLibrary)}
-                tooltipPlace={isRtl(intl.locale) ? "right" : "left"}
+                tooltipPlace={isRtl(intl.locale) ? 'right' : 'left'}
                 onClick={onNewBackdropClick}
             />
         </Box>
@@ -161,7 +143,7 @@ StageSelector.propTypes = {
     raised: PropTypes.bool.isRequired,
     receivedBlocks: PropTypes.bool.isRequired,
     selected: PropTypes.bool.isRequired,
-    url: PropTypes.string,
+    url: PropTypes.string
 };
 
 export default injectIntl(StageSelector);

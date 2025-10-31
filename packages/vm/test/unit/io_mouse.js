@@ -1,22 +1,22 @@
-const test = require("tap").test;
-const Mouse = require("../../src/io/mouse");
-const Runtime = require("../../src/engine/runtime");
+const test = require('tap').test;
+const Mouse = require('../../src/io/mouse');
+const Runtime = require('../../src/engine/runtime');
 
-test("spec", t => {
+test('spec', t => {
     const rt = new Runtime();
     const m = new Mouse(rt);
 
-    t.type(m, "object");
-    t.type(m.postData, "function");
-    t.type(m.getClientX, "function");
-    t.type(m.getClientY, "function");
-    t.type(m.getScratchX, "function");
-    t.type(m.getScratchY, "function");
-    t.type(m.getIsDown, "function");
+    t.type(m, 'object');
+    t.type(m.postData, 'function');
+    t.type(m.getClientX, 'function');
+    t.type(m.getClientY, 'function');
+    t.type(m.getScratchX, 'function');
+    t.type(m.getScratchY, 'function');
+    t.type(m.getIsDown, 'function');
     t.end();
 });
 
-test("mouseUp", t => {
+test('mouseUp', t => {
     const rt = new Runtime();
     const m = new Mouse(rt);
 
@@ -25,7 +25,7 @@ test("mouseUp", t => {
         y: 10,
         isDown: false,
         canvasWidth: 480,
-        canvasHeight: 360,
+        canvasHeight: 360
     });
     t.strictEquals(m.getClientX(), -20);
     t.strictEquals(m.getClientY(), 10);
@@ -35,7 +35,7 @@ test("mouseUp", t => {
     t.end();
 });
 
-test("mouseDown", t => {
+test('mouseDown', t => {
     const rt = new Runtime();
     const m = new Mouse(rt);
 
@@ -44,7 +44,7 @@ test("mouseDown", t => {
         y: 400.1,
         isDown: true,
         canvasWidth: 480,
-        canvasHeight: 360,
+        canvasHeight: 360
     });
     t.strictEquals(m.getClientX(), 9.9);
     t.strictEquals(m.getClientY(), 400.1);
@@ -54,7 +54,7 @@ test("mouseDown", t => {
     t.end();
 });
 
-test("at zoomed scale", t => {
+test('at zoomed scale', t => {
     const rt = new Runtime();
     const m = new Mouse(rt);
 
@@ -62,7 +62,7 @@ test("at zoomed scale", t => {
         x: 240,
         y: 540,
         canvasWidth: 960,
-        canvasHeight: 720,
+        canvasHeight: 720
     });
     t.strictEquals(m.getClientX(), 240);
     t.strictEquals(m.getClientY(), 540);
@@ -71,7 +71,7 @@ test("at zoomed scale", t => {
     t.end();
 });
 
-test("mousedown activating click hats", t => {
+test('mousedown activating click hats', t => {
     const rt = new Runtime();
     const m = new Mouse(rt);
 
@@ -79,19 +79,19 @@ test("mousedown activating click hats", t => {
         x: 10,
         y: 100,
         canvasWidth: 480,
-        canvasHeight: 360,
+        canvasHeight: 360
     };
 
     const dummyTarget = {
-        draggable: false,
+        draggable: false
     };
 
     const mouseDownEvent = Object.assign({}, mouseMoveEvent, {
-        isDown: true,
+        isDown: true
     });
 
     const mouseUpEvent = Object.assign({}, mouseMoveEvent, {
-        isDown: false,
+        isDown: false
     });
 
     // Stub activateClickHats and pick function for testing
@@ -126,7 +126,7 @@ test("mousedown activating click hats", t => {
     m.postData(
         Object.assign({}, mouseDownEvent, {
             x: 50000,
-            y: 50,
+            y: 50
         })
     );
     t.strictEquals(ranClickHats, false);

@@ -1,11 +1,9 @@
-import React from "react";
-import styles from "./spinner.css";
+import React from 'react';
+import styles from './spinner.css';
 
-const Loading = ({ isWhite }) => (
+const Loading = ({isWhite}) => (
     <div className={styles.container}>
-        <div
-            className={`${styles.spinner} ${isWhite ? styles["spinner-white"] : ""}`}
-        />
+        <div className={`${styles.spinner} ${isWhite ? styles['spinner-white'] : ''}`} />
     </div>
 );
 

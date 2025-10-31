@@ -9,30 +9,22 @@ import {showOpenFilePicker, showSaveFilePicker} from './filesystem-api.js';
 import './normalize.css';
 import './gui.css';
 
-const WrappedGUI = compose(
-  ErrorContainerHOC,
-  AppStateHOC,
-  DesktopHOC,
-  CloudProviderHOC
-)(GUI);
+const WrappedGUI = compose(ErrorContainerHOC, AppStateHOC, DesktopHOC, CloudProviderHOC)(GUI);
 
 const GUIWithProps = () => (
-  <WrappedGUI
-    isScratchDesktop
-    isFullScreen={EditorPreload.isInitiallyFullscreen()}
-    canEditTitle
-
-    // Cloud variables can be created, but not used.
-    canModifyCloudData
-    canUseCloud
-    cloudHost="wss://fake-clouddata-server.turbowarp.org"
-
-    backpackVisible
-    backpackHost="_local_"
-
-    showOpenFilePicker={showOpenFilePicker}
-    showSaveFilePicker={showSaveFilePicker}
-  />
+    <WrappedGUI
+        isScratchDesktop
+        isFullScreen={EditorPreload.isInitiallyFullscreen()}
+        canEditTitle
+        // Cloud variables can be created, but not used.
+        canModifyCloudData
+        canUseCloud
+        cloudHost="wss://fake-clouddata-server.turbowarp.org"
+        backpackVisible
+        backpackHost="_local_"
+        showOpenFilePicker={showOpenFilePicker}
+        showSaveFilePicker={showSaveFilePicker}
+    />
 );
 
 GUIWithProps.setAppElement = GUI.setAppElement;

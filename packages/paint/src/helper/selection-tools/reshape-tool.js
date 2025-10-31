@@ -1,23 +1,23 @@
-import paper from "@turbowarp/paper";
-import log from "../../log/log";
-import keyMirror from "keymirror";
+import paper from '@turbowarp/paper';
+import log from '../../log/log';
+import keyMirror from 'keymirror';
 
-import Modes from "../../lib/modes";
-import { isBoundsItem } from "../item";
-import { hoverBounds, hoverItem } from "../guides";
-import { sortItemsByZIndex } from "../math";
-import { getSelectedLeafItems, getSelectedSegments } from "../selection";
-import MoveTool from "./move-tool";
-import PointTool from "./point-tool";
-import HandleTool from "./handle-tool";
-import SelectionBoxTool from "./selection-box-tool";
+import Modes from '../../lib/modes';
+import {isBoundsItem} from '../item';
+import {hoverBounds, hoverItem} from '../guides';
+import {sortItemsByZIndex} from '../math';
+import {getSelectedLeafItems, getSelectedSegments} from '../selection';
+import MoveTool from './move-tool';
+import PointTool from './point-tool';
+import HandleTool from './handle-tool';
+import SelectionBoxTool from './selection-box-tool';
 
 /** Modes of the reshape tool, which can do many things depending on how it's used. */
 const ReshapeModes = keyMirror({
     FILL: null,
     POINT: null,
     HANDLE: null,
-    SELECTION_BOX: null,
+    SELECTION_BOX: null
 });
 
 /**
@@ -83,16 +83,8 @@ class ReshapeTool extends paper.Tool {
             onUpdateImage,
             switchToTextTool
         );
-        this._modeMap[ReshapeModes.POINT] = new PointTool(
-            setSelectedItems,
-            clearSelectedItems,
-            onUpdateImage
-        );
-        this._modeMap[ReshapeModes.HANDLE] = new HandleTool(
-            setSelectedItems,
-            clearSelectedItems,
-            onUpdateImage
-        );
+        this._modeMap[ReshapeModes.POINT] = new PointTool(setSelectedItems, clearSelectedItems, onUpdateImage);
+        this._modeMap[ReshapeModes.HANDLE] = new HandleTool(setSelectedItems, clearSelectedItems, onUpdateImage);
         this._modeMap[ReshapeModes.SELECTION_BOX] = new SelectionBoxTool(
             Modes.RESHAPE,
             setSelectedItems,
@@ -124,13 +116,13 @@ class ReshapeTool extends paper.Tool {
             segments: true,
             tolerance: ReshapeTool.TOLERANCE / paper.view.zoom,
             match: hitResult => {
-                if (hitResult.type !== "segment") return false;
+                if (hitResult.type !== 'segment') return false;
                 if (hitResult.item.data && hitResult.item.data.noHover) {
                     return false;
                 }
                 if (!hitResult.item.selected) return false;
                 return true;
-            },
+            }
         };
         return hitOptions;
     }
@@ -156,7 +148,7 @@ class ReshapeTool extends paper.Tool {
                 // If the entire shape is selected, handles are hidden
                 if (hitResult.item.fullySelected) return false;
                 return true;
-            },
+            }
         };
         return hitOptions;
     }
@@ -175,13 +167,13 @@ class ReshapeTool extends paper.Tool {
             guide: false,
             tolerance: ReshapeTool.TOLERANCE / paper.view.zoom,
             match: hitResult => {
-                if (hitResult.type !== "curve") return false;
+                if (hitResult.type !== 'curve') return false;
                 if (!hitResult.item.selected) return false;
                 if (hitResult.item.data && hitResult.item.data.noHover) {
                     return false;
                 }
                 return true;
-            },
+            }
         };
         return hitOptions;
     }
@@ -202,7 +194,7 @@ class ReshapeTool extends paper.Tool {
                     return false;
                 }
                 return true;
-            },
+            }
         };
         return hitOptions;
     }
@@ -223,27 +215,15 @@ class ReshapeTool extends paper.Tool {
      */
     getHitResult(point) {
         // Prefer hits on segments to other types of hits, since segments always overlap curves.
-        let hitResults = paper.project.hitTestAll(
-            point,
-            this.getSelectedSegmentHitOptions()
-        );
+        let hitResults = paper.project.hitTestAll(point, this.getSelectedSegmentHitOptions());
         if (!hitResults.length) {
-            hitResults = paper.project.hitTestAll(
-                point,
-                this.getHandleHitOptions()
-            );
+            hitResults = paper.project.hitTestAll(point, this.getHandleHitOptions());
         }
         if (!hitResults.length) {
-            hitResults = paper.project.hitTestAll(
-                point,
-                this.getSelectedStrokeHitOptions()
-            );
+            hitResults = paper.project.hitTestAll(point, this.getSelectedStrokeHitOptions());
         }
         if (!hitResults.length) {
-            hitResults = paper.project.hitTestAll(
-                point,
-                this.getUnselectedAndFillHitOptions()
-            );
+            hitResults = paper.project.hitTestAll(point, this.getUnselectedAndFillHitOptions());
         }
         if (!hitResults.length) {
             return null;
@@ -252,10 +232,7 @@ class ReshapeTool extends paper.Tool {
         // Get highest z-index result
         let hitResult;
         for (const result of hitResults) {
-            if (
-                !hitResult ||
-                sortItemsByZIndex(hitResult.item, result.item) < 0
-            ) {
+            if (!hitResult || sortItemsByZIndex(hitResult.item, result.item) < 0) {
                 hitResult = result;
             }
         }
@@ -269,10 +246,7 @@ class ReshapeTool extends paper.Tool {
         // Check if double clicked
         let doubleClicked = false;
         if (this.lastEvent) {
-            if (
-                event.event.timeStamp - this.lastEvent.event.timeStamp <
-                ReshapeTool.DOUBLE_CLICK_MILLIS
-            ) {
+            if (event.event.timeStamp - this.lastEvent.event.timeStamp < ReshapeTool.DOUBLE_CLICK_MILLIS) {
                 doubleClicked = true;
             } else {
                 doubleClicked = false;
@@ -282,9 +256,7 @@ class ReshapeTool extends paper.Tool {
 
         const hitResult = this.getHitResult(event.point);
         if (!hitResult) {
-            this._modeMap[ReshapeModes.SELECTION_BOX].onMouseDown(
-                event.modifiers.shift
-            );
+            this._modeMap[ReshapeModes.SELECTION_BOX].onMouseDown(event.modifiers.shift);
             return;
         }
 
@@ -293,31 +265,28 @@ class ReshapeTool extends paper.Tool {
             clone: event.modifiers.alt,
             multiselect: event.modifiers.shift,
             doubleClicked: doubleClicked,
-            subselect: true,
+            subselect: true
         };
 
         // If item is not yet selected, don't behave differently depending on if they clicked a segment
         // (since those were invisible), just select the whole thing as if they clicked the fill.
         if (
             !hitResult.item.selected ||
-            hitResult.type === "fill" ||
-            hitResult.type === "stroke" ||
-            (hitResult.type !== "segment" && doubleClicked)
+            hitResult.type === 'fill' ||
+            hitResult.type === 'stroke' ||
+            (hitResult.type !== 'segment' && doubleClicked)
         ) {
             this.mode = ReshapeModes.FILL;
             this._modeMap[this.mode].onMouseDown(hitProperties);
-        } else if (hitResult.type === "segment") {
+        } else if (hitResult.type === 'segment') {
             this.mode = ReshapeModes.POINT;
             this._modeMap[this.mode].onMouseDown(hitProperties);
-        } else if (hitResult.type === "curve") {
+        } else if (hitResult.type === 'curve') {
             this.mode = ReshapeModes.POINT;
             this._modeMap[this.mode].addPoint(hitProperties);
             this.onUpdateImage();
             this._modeMap[this.mode].onMouseDown(hitProperties);
-        } else if (
-            hitResult.type === "handle-in" ||
-            hitResult.type === "handle-out"
-        ) {
+        } else if (hitResult.type === 'handle-in' || hitResult.type === 'handle-out') {
             this.mode = ReshapeModes.HANDLE;
             this._modeMap[this.mode].onMouseDown(hitProperties);
         } else {
@@ -344,9 +313,7 @@ class ReshapeTool extends paper.Tool {
         if (
             (!hoveredItem && this.prevHoveredItemId) || // There is no longer a hovered item
             (hoveredItem && !this.prevHoveredItemId) || // There is now a hovered item
-            (hoveredItem &&
-                this.prevHoveredItemId &&
-                hoveredItem.id !== this.prevHoveredItemId)
+            (hoveredItem && this.prevHoveredItemId && hoveredItem.id !== this.prevHoveredItemId)
         ) {
             // hovered item changed
             this.setHoveredItem(hoveredItem ? hoveredItem.id : null);
@@ -367,10 +334,7 @@ class ReshapeTool extends paper.Tool {
         this.active = false;
     }
     handleKeyDown(event) {
-        if (
-            event.event.target instanceof HTMLInputElement ||
-            event.event.target instanceof HTMLTextAreaElement
-        ) {
+        if (event.event.target instanceof HTMLInputElement || event.event.target instanceof HTMLTextAreaElement) {
             // Ignore nudge if a text input field is focused
             return;
         }
@@ -380,13 +344,13 @@ class ReshapeTool extends paper.Tool {
         if (selected.length === 0) return;
 
         let translation;
-        if (event.key === "up") {
+        if (event.key === 'up') {
             translation = new paper.Point(0, -nudgeAmount);
-        } else if (event.key === "down") {
+        } else if (event.key === 'down') {
             translation = new paper.Point(0, nudgeAmount);
-        } else if (event.key === "left") {
+        } else if (event.key === 'left') {
             translation = new paper.Point(-nudgeAmount, 0);
-        } else if (event.key === "right") {
+        } else if (event.key === 'right') {
             translation = new paper.Point(nudgeAmount, 0);
         }
 
@@ -409,12 +373,7 @@ class ReshapeTool extends paper.Tool {
         const selected = getSelectedLeafItems();
         if (selected.length === 0) return;
 
-        if (
-            event.key === "up" ||
-            event.key === "down" ||
-            event.key === "left" ||
-            event.key === "right"
-        ) {
+        if (event.key === 'up' || event.key === 'down' || event.key === 'left' || event.key === 'right') {
             this.onUpdateImage();
         }
     }

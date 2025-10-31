@@ -1,17 +1,13 @@
-const path = require("path");
-const test = require("tap").test;
-const makeTestStorage = require("../fixtures/make-test-storage");
-const readFileToBuffer =
-    require("../fixtures/readProjectFile").readFileToBuffer;
-const VirtualMachine = require("../../src/index");
+const path = require('path');
+const test = require('tap').test;
+const makeTestStorage = require('../fixtures/make-test-storage');
+const readFileToBuffer = require('../fixtures/readProjectFile').readFileToBuffer;
+const VirtualMachine = require('../../src/index');
 
-const uri = path.resolve(
-    __dirname,
-    "../fixtures/unknown-opcode-in-c-block.sb2"
-);
+const uri = path.resolve(__dirname, '../fixtures/unknown-opcode-in-c-block.sb2');
 const project = readFileToBuffer(uri);
 
-test("unknown opcode", t => {
+test('unknown opcode', t => {
     const vm = new VirtualMachine();
     vm.attachStorage(makeTestStorage());
 
@@ -33,8 +29,8 @@ test("unknown opcode", t => {
         const secondBlockId = blocks.getNextBlock(topBlockId);
         const innerBlockId = blocks.getBranch(secondBlockId, 0);
 
-        t.equal(blocks.getBlock(topBlockId).opcode, "event_whenflagclicked");
-        t.equal(blocks.getBlock(secondBlockId).opcode, "control_forever");
+        t.equal(blocks.getBlock(topBlockId).opcode, 'event_whenflagclicked');
+        t.equal(blocks.getBlock(secondBlockId).opcode, 'control_forever');
         t.equal(innerBlockId, null);
 
         vm.quit();

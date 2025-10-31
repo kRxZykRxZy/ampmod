@@ -11,17 +11,17 @@ const mockPaperRootItem = function (options) {
         strokeColor: {
             toCSS: function () {
                 return options.strokeColor;
-            },
+            }
         },
         fillColor: {
             toCSS: function () {
                 return options.fillColor;
-            },
+            }
         },
         strokeWidth: options.strokeWidth,
-        parent: { className: "Layer" },
-        data: {},
+        parent: {className: 'Layer'},
+        data: {}
     };
 };
 
-export { mockPaperRootItem };
+export {mockPaperRootItem};

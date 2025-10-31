@@ -1,13 +1,13 @@
-import classNames from "classnames";
-import { FormattedMessage } from "react-intl";
-import PropTypes from "prop-types";
-import React from "react";
-import Button from "../button/button.jsx";
+import classNames from 'classnames';
+import {FormattedMessage} from 'react-intl';
+import PropTypes from 'prop-types';
+import React from 'react';
+import Button from '../button/button.jsx';
 
-import communityIcon from "./icon--see-community.svg";
-import styles from "./tw-see-inside.css";
+import communityIcon from './icon--see-community.svg';
+import styles from './tw-see-inside.css';
 
-const SeeInsideButton = ({ className, onClick }) => (
+const SeeInsideButton = ({className, onClick}) => (
     <Button
         className={classNames(className, styles.seeInsideButton)}
         iconClassName={styles.seeInsideButtonIcon}
@@ -26,11 +26,11 @@ const SeeInsideButton = ({ className, onClick }) => (
 
 SeeInsideButton.propTypes = {
     className: PropTypes.string,
-    onClick: PropTypes.func,
+    onClick: PropTypes.func
 };
 
 SeeInsideButton.defaultProps = {
-    onClick: () => {},
+    onClick: () => {}
 };
 
 export default SeeInsideButton;

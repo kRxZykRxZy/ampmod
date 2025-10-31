@@ -1,54 +1,54 @@
-const test = require("tap").test;
-const Thread = require("../../src/engine/thread");
-const RenderedTarget = require("../../src/sprites/rendered-target");
-const Sprite = require("../../src/sprites/sprite");
-const Runtime = require("../../src/engine/runtime");
+const test = require('tap').test;
+const Thread = require('../../src/engine/thread');
+const RenderedTarget = require('../../src/sprites/rendered-target');
+const Sprite = require('../../src/sprites/sprite');
+const Runtime = require('../../src/engine/runtime');
 
-test("spec", t => {
-    t.type(Thread, "function");
+test('spec', t => {
+    t.type(Thread, 'function');
 
-    const th = new Thread("arbitraryString");
-    t.type(th, "object");
+    const th = new Thread('arbitraryString');
+    t.type(th, 'object');
     t.ok(th instanceof Thread);
-    t.type(th.pushStack, "function");
-    t.type(th.reuseStackForNextBlock, "function");
-    t.type(th.popStack, "function");
-    t.type(th.stopThisScript, "function");
-    t.type(th.peekStack, "function");
-    t.type(th.peekStackFrame, "function");
-    t.type(th.peekParentStackFrame, "function");
-    t.type(th.pushReportedValue, "function");
-    t.type(th.initParams, "function");
-    t.type(th.pushParam, "function");
-    t.type(th.peekStack, "function");
-    t.type(th.getParam, "function");
-    t.type(th.atStackTop, "function");
-    t.type(th.goToNextBlock, "function");
-    t.type(th.isRecursiveCall, "function");
+    t.type(th.pushStack, 'function');
+    t.type(th.reuseStackForNextBlock, 'function');
+    t.type(th.popStack, 'function');
+    t.type(th.stopThisScript, 'function');
+    t.type(th.peekStack, 'function');
+    t.type(th.peekStackFrame, 'function');
+    t.type(th.peekParentStackFrame, 'function');
+    t.type(th.pushReportedValue, 'function');
+    t.type(th.initParams, 'function');
+    t.type(th.pushParam, 'function');
+    t.type(th.peekStack, 'function');
+    t.type(th.getParam, 'function');
+    t.type(th.atStackTop, 'function');
+    t.type(th.goToNextBlock, 'function');
+    t.type(th.isRecursiveCall, 'function');
 
     t.end();
 });
 
-test("pushStack", t => {
-    const th = new Thread("arbitraryString");
-    th.pushStack("arbitraryString");
+test('pushStack', t => {
+    const th = new Thread('arbitraryString');
+    th.pushStack('arbitraryString');
 
     t.end();
 });
 
-test("popStack", t => {
-    const th = new Thread("arbitraryString");
-    th.pushStack("arbitraryString");
-    t.strictEquals(th.popStack(), "arbitraryString");
+test('popStack', t => {
+    const th = new Thread('arbitraryString');
+    th.pushStack('arbitraryString');
+    t.strictEquals(th.popStack(), 'arbitraryString');
     t.strictEquals(th.popStack(), undefined);
 
     t.end();
 });
 
-test("atStackTop", t => {
-    const th = new Thread("arbitraryString");
-    th.pushStack("arbitraryString");
-    th.pushStack("secondString");
+test('atStackTop', t => {
+    const th = new Thread('arbitraryString');
+    th.pushStack('arbitraryString');
+    th.pushStack('secondString');
     t.strictEquals(th.atStackTop(), false);
     th.popStack();
     t.strictEquals(th.atStackTop(), true);
@@ -56,18 +56,18 @@ test("atStackTop", t => {
     t.end();
 });
 
-test("reuseStackForNextBlock", t => {
-    const th = new Thread("arbitraryString");
-    th.pushStack("arbitraryString");
-    th.reuseStackForNextBlock("secondString");
-    t.strictEquals(th.popStack(), "secondString");
+test('reuseStackForNextBlock', t => {
+    const th = new Thread('arbitraryString');
+    th.pushStack('arbitraryString');
+    th.reuseStackForNextBlock('secondString');
+    t.strictEquals(th.popStack(), 'secondString');
 
     t.end();
 });
 
-test("peekStackFrame", t => {
-    const th = new Thread("arbitraryString");
-    th.pushStack("arbitraryString");
+test('peekStackFrame', t => {
+    const th = new Thread('arbitraryString');
+    th.pushStack('arbitraryString');
     t.strictEquals(th.peekStackFrame().warpMode, false);
     th.popStack();
     t.strictEquals(th.peekStackFrame(), null);
@@ -75,85 +75,85 @@ test("peekStackFrame", t => {
     t.end();
 });
 
-test("peekParentStackFrame", t => {
-    const th = new Thread("arbitraryString");
-    th.pushStack("arbitraryString");
+test('peekParentStackFrame', t => {
+    const th = new Thread('arbitraryString');
+    th.pushStack('arbitraryString');
     th.peekStackFrame().warpMode = true;
     t.strictEquals(th.peekParentStackFrame(), null);
-    th.pushStack("secondString");
+    th.pushStack('secondString');
     t.strictEquals(th.peekParentStackFrame().warpMode, true);
 
     t.end();
 });
 
-test("pushReportedValue", t => {
-    const th = new Thread("arbitraryString");
-    th.pushStack("arbitraryString");
-    th.pushStack("secondString");
-    th.pushReportedValue("value");
-    t.strictEquals(th.justReported, "value");
+test('pushReportedValue', t => {
+    const th = new Thread('arbitraryString');
+    th.pushStack('arbitraryString');
+    th.pushStack('secondString');
+    th.pushReportedValue('value');
+    t.strictEquals(th.justReported, 'value');
 
     t.end();
 });
 
-test("peekStack", t => {
-    const th = new Thread("arbitraryString");
-    th.pushStack("arbitraryString");
-    t.strictEquals(th.peekStack(), "arbitraryString");
+test('peekStack', t => {
+    const th = new Thread('arbitraryString');
+    th.pushStack('arbitraryString');
+    t.strictEquals(th.peekStack(), 'arbitraryString');
     th.popStack();
     t.strictEquals(th.peekStack(), null);
 
     t.end();
 });
 
-test("PushGetParam", t => {
-    const th = new Thread("arbitraryString");
-    th.pushStack("arbitraryString");
+test('PushGetParam', t => {
+    const th = new Thread('arbitraryString');
+    th.pushStack('arbitraryString');
     th.initParams();
-    th.pushParam("testParam", "testValue");
-    t.strictEquals(th.peekStackFrame().params.testParam, "testValue");
-    t.strictEquals(th.getParam("testParam"), "testValue");
+    th.pushParam('testParam', 'testValue');
+    t.strictEquals(th.peekStackFrame().params.testParam, 'testValue');
+    t.strictEquals(th.getParam('testParam'), 'testValue');
     // Params outside of define stack always evaluate to null
-    t.strictEquals(th.getParam("nonExistentParam"), null);
+    t.strictEquals(th.getParam('nonExistentParam'), null);
 
     t.end();
 });
 
-test("goToNextBlock", t => {
-    const th = new Thread("arbitraryString");
+test('goToNextBlock', t => {
+    const th = new Thread('arbitraryString');
     const r = new Runtime();
     const s = new Sprite(null, r);
     const rt = new RenderedTarget(s, r);
     const block1 = {
         fields: Object,
-        id: "arbitraryString",
+        id: 'arbitraryString',
         inputs: Object,
         STEPS: Object,
-        block: "fakeBlock",
-        name: "STEPS",
-        next: "secondString",
-        opcode: "motion_movesteps",
+        block: 'fakeBlock',
+        name: 'STEPS',
+        next: 'secondString',
+        opcode: 'motion_movesteps',
         parent: null,
         shadow: false,
         topLevel: true,
         x: 0,
-        y: 0,
+        y: 0
     };
     const block2 = {
         fields: Object,
-        id: "secondString",
+        id: 'secondString',
         inputs: Object,
         STEPS: Object,
-        block: "fakeBlock",
-        name: "STEPS",
+        block: 'fakeBlock',
+        name: 'STEPS',
         next: null,
-        opcode: "procedures_call",
-        mutation: { proccode: "fakeCode" },
+        opcode: 'procedures_call',
+        mutation: {proccode: 'fakeCode'},
         parent: null,
         shadow: false,
         topLevel: true,
         x: 0,
-        y: 0,
+        y: 0
     };
 
     rt.blocks.createBlock(block1);
@@ -162,56 +162,56 @@ test("goToNextBlock", t => {
     th.target = rt;
 
     t.strictEquals(th.peekStack(), null);
-    th.pushStack("secondString");
-    t.strictEquals(th.peekStack(), "secondString");
+    th.pushStack('secondString');
+    t.strictEquals(th.peekStack(), 'secondString');
     th.goToNextBlock();
     t.strictEquals(th.peekStack(), null);
-    th.pushStack("secondString");
-    th.pushStack("arbitraryString");
-    t.strictEquals(th.peekStack(), "arbitraryString");
+    th.pushStack('secondString');
+    th.pushStack('arbitraryString');
+    t.strictEquals(th.peekStack(), 'arbitraryString');
     th.goToNextBlock();
-    t.strictEquals(th.peekStack(), "secondString");
+    t.strictEquals(th.peekStack(), 'secondString');
     th.goToNextBlock();
     t.strictEquals(th.peekStack(), null);
 
     t.end();
 });
 
-test("stopThisScript", t => {
-    const th = new Thread("arbitraryString");
+test('stopThisScript', t => {
+    const th = new Thread('arbitraryString');
     const r = new Runtime();
     const s = new Sprite(null, r);
     const rt = new RenderedTarget(s, r);
     const block1 = {
         fields: Object,
-        id: "arbitraryString",
+        id: 'arbitraryString',
         inputs: Object,
         STEPS: Object,
-        block: "fakeBlock",
-        name: "STEPS",
+        block: 'fakeBlock',
+        name: 'STEPS',
         next: null,
-        opcode: "motion_movesteps",
+        opcode: 'motion_movesteps',
         parent: null,
         shadow: false,
         topLevel: true,
         x: 0,
-        y: 0,
+        y: 0
     };
     const block2 = {
         fields: Object,
-        id: "secondString",
+        id: 'secondString',
         inputs: Object,
         STEPS: Object,
-        block: "fakeBlock",
-        name: "STEPS",
+        block: 'fakeBlock',
+        name: 'STEPS',
         next: null,
-        opcode: "procedures_call",
-        mutation: { proccode: "fakeCode" },
+        opcode: 'procedures_call',
+        mutation: {proccode: 'fakeCode'},
         parent: null,
         shadow: false,
         topLevel: true,
         x: 0,
-        y: 0,
+        y: 0
     };
 
     rt.blocks.createBlock(block1);
@@ -220,53 +220,53 @@ test("stopThisScript", t => {
 
     th.stopThisScript();
     t.strictEquals(th.peekStack(), null);
-    th.pushStack("arbitraryString");
-    t.strictEquals(th.peekStack(), "arbitraryString");
+    th.pushStack('arbitraryString');
+    t.strictEquals(th.peekStack(), 'arbitraryString');
     th.stopThisScript();
     t.strictEquals(th.peekStack(), null);
-    th.pushStack("arbitraryString");
-    th.pushStack("secondString");
+    th.pushStack('arbitraryString');
+    th.pushStack('secondString');
     th.stopThisScript();
     t.strictEquals(th.peekStack(), null);
 
     t.end();
 });
 
-test("isRecursiveCall", t => {
-    const th = new Thread("arbitraryString");
+test('isRecursiveCall', t => {
+    const th = new Thread('arbitraryString');
     const r = new Runtime();
     const s = new Sprite(null, r);
     const rt = new RenderedTarget(s, r);
     const block1 = {
         fields: Object,
-        id: "arbitraryString",
+        id: 'arbitraryString',
         inputs: Object,
         STEPS: Object,
-        block: "fakeBlock",
-        name: "STEPS",
+        block: 'fakeBlock',
+        name: 'STEPS',
         next: null,
-        opcode: "motion_movesteps",
+        opcode: 'motion_movesteps',
         parent: null,
         shadow: false,
         topLevel: true,
         x: 0,
-        y: 0,
+        y: 0
     };
     const block2 = {
         fields: Object,
-        id: "secondString",
+        id: 'secondString',
         inputs: Object,
         STEPS: Object,
-        block: "fakeBlock",
-        name: "STEPS",
+        block: 'fakeBlock',
+        name: 'STEPS',
         next: null,
-        opcode: "procedures_call",
-        mutation: { proccode: "fakeCode" },
+        opcode: 'procedures_call',
+        mutation: {proccode: 'fakeCode'},
         parent: null,
         shadow: false,
         topLevel: true,
         x: 0,
-        y: 0,
+        y: 0
     };
 
     rt.blocks.createBlock(block1);
@@ -275,22 +275,22 @@ test("isRecursiveCall", t => {
 
     const pushStack = id => {
         th.pushStack(id);
-        th.peekStackFrame().op = { id };
+        th.peekStackFrame().op = {id};
     };
 
-    t.strictEquals(th.isRecursiveCall("fakeCode"), false);
-    pushStack("secondString");
-    t.strictEquals(th.isRecursiveCall("fakeCode"), false);
-    pushStack("arbitraryString");
-    t.strictEquals(th.isRecursiveCall("fakeCode"), true);
-    pushStack("arbitraryString");
-    t.strictEquals(th.isRecursiveCall("fakeCode"), true);
+    t.strictEquals(th.isRecursiveCall('fakeCode'), false);
+    pushStack('secondString');
+    t.strictEquals(th.isRecursiveCall('fakeCode'), false);
+    pushStack('arbitraryString');
+    t.strictEquals(th.isRecursiveCall('fakeCode'), true);
+    pushStack('arbitraryString');
+    t.strictEquals(th.isRecursiveCall('fakeCode'), true);
     th.popStack();
-    t.strictEquals(th.isRecursiveCall("fakeCode"), true);
+    t.strictEquals(th.isRecursiveCall('fakeCode'), true);
     th.popStack();
-    t.strictEquals(th.isRecursiveCall("fakeCode"), false);
+    t.strictEquals(th.isRecursiveCall('fakeCode'), false);
     th.popStack();
-    t.strictEquals(th.isRecursiveCall("fakeCode"), false);
+    t.strictEquals(th.isRecursiveCall('fakeCode'), false);
 
     t.end();
 });

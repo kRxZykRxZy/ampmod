@@ -1,19 +1,18 @@
-const path = require("path");
-const test = require("tap").test;
-const makeTestStorage = require("../fixtures/make-test-storage");
-const readFileToBuffer =
-    require("../fixtures/readProjectFile").readFileToBuffer;
-const VirtualMachine = require("../../src/index");
+const path = require('path');
+const test = require('tap').test;
+const makeTestStorage = require('../fixtures/make-test-storage');
+const readFileToBuffer = require('../fixtures/readProjectFile').readFileToBuffer;
+const VirtualMachine = require('../../src/index');
 
-const uri = path.resolve(__dirname, "../fixtures/data.sb2");
+const uri = path.resolve(__dirname, '../fixtures/data.sb2');
 const project = readFileToBuffer(uri);
 
-test("data", t => {
+test('data', t => {
     const vm = new VirtualMachine();
     vm.attachStorage(makeTestStorage());
 
     // Evaluate playground data and exit
-    vm.on("playgroundData", () => {
+    vm.on('playgroundData', () => {
         // @todo Additional tests
         vm.quit();
         t.end();

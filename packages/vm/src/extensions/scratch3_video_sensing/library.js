@@ -7,7 +7,7 @@
  * Video motion sensing primitives.
  */
 
-const { motionVector, scratchAtan2 } = require("./math");
+const {motionVector, scratchAtan2} = require('./math');
 
 /**
  * The width of the intended resolution to analyze for motion.
@@ -78,7 +78,7 @@ const LOCAL_THRESHOLD = THRESHOLD / 3;
  * @constructor
  */
 class VideoMotion {
-    constructor() {
+    constructor () {
         /**
          * The number of frames that have been added from a source.
          * @type {number}
@@ -129,29 +129,21 @@ class VideoMotion {
          * curr member is copied into this array.
          * @type {number}
          */
-        this._curr = new Uint8ClampedArray(
-            this._arrays,
-            WIDTH * HEIGHT * 0 * 1,
-            WIDTH * HEIGHT
-        );
+        this._curr = new Uint8ClampedArray(this._arrays, WIDTH * HEIGHT * 0 * 1, WIDTH * HEIGHT);
 
         /**
          * A clamped uint8 view of _arrays. One component of each index of the
          * prev member is copied into this array.
          * @type {number}
          */
-        this._prev = new Uint8ClampedArray(
-            this._arrays,
-            WIDTH * HEIGHT * 1 * 1,
-            WIDTH * HEIGHT
-        );
+        this._prev = new Uint8ClampedArray(this._arrays, WIDTH * HEIGHT * 1 * 1, WIDTH * HEIGHT);
     }
 
     /**
      * Reset internal state so future frame analysis does not consider values
      * from before this method was called.
      */
-    reset() {
+    reset () {
         this.frameNumber = 0;
         this.lastAnalyzedFrame = 0;
         this.motionAmount = this.motionDirection = 0;
@@ -163,7 +155,7 @@ class VideoMotion {
      * each index in the RGBA format.
      * @param {Uint32Array} source - a source frame of pixels to copy
      */
-    addFrame(source) {
+    addFrame (source) {
         this.frameNumber++;
 
         // Swap curr to prev.
@@ -186,7 +178,7 @@ class VideoMotion {
      * Analyze the current frame against the previous frame determining the
      * amount of motion and direction of the motion.
      */
-    analyzeFrame() {
+    analyzeFrame () {
         if (!this.curr || !this.prev) {
             this.motionAmount = this.motionDirection = -1;
             // Don't have two frames to analyze yet
@@ -199,7 +191,7 @@ class VideoMotion {
         }
         this.lastAnalyzedFrame = this.frameNumber;
 
-        const { _curr: curr, _prev: prev } = this;
+        const {_curr: curr, _prev: prev} = this;
 
         const winStep = WINSIZE * 2 + 1;
         const wmax = WIDTH - WINSIZE - 1;
@@ -226,11 +218,7 @@ class VideoMotion {
                 let address = (i - WINSIZE) * WIDTH + j - WINSIZE;
                 let nextAddress = address + winStep;
                 const maxAddress = (i + WINSIZE) * WIDTH + j + WINSIZE;
-                for (
-                    ;
-                    address <= maxAddress;
-                    address += WIDTH - winStep, nextAddress += WIDTH
-                ) {
+                for (; address <= maxAddress; address += WIDTH - winStep, nextAddress += WIDTH) {
                     for (; address <= nextAddress; address += 1) {
                         // The difference in color between the last frame and
                         // the current frame.
@@ -240,8 +228,7 @@ class VideoMotion {
                         const gradX = curr[address - 1] - curr[address + 1];
                         // The difference between the pixel above and the pixel
                         // below.
-                        const gradY =
-                            curr[address - WIDTH] - curr[address + WIDTH];
+                        const gradY = curr[address - WIDTH] - curr[address + WIDTH];
 
                         // Add the combined values of this pixel to previously
                         // considered pixels.
@@ -255,16 +242,11 @@ class VideoMotion {
 
                 // Use the accumalated values from the for loop to determine a
                 // motion direction.
-                const { u, v } = motionVector(A2, A1B2, B1, C2, C1);
+                const {u, v} = motionVector(A2, A1B2, B1, C2, C1);
 
                 // If u and v are within negative winStep to positive winStep,
                 // add them to a sum that will later be averaged.
-                if (
-                    -winStep < u &&
-                    u < winStep &&
-                    -winStep < v &&
-                    v < winStep
-                ) {
+                if (-winStep < u && u < winStep && -winStep < v && v < winStep) {
                     uu += u;
                     vv += v;
                     n++;
@@ -290,7 +272,7 @@ class VideoMotion {
      * @param {Drawable} drawable - touchable and bounded drawable to build motion for
      * @param {MotionState} state - state to store built values to
      */
-    getLocalMotion(drawable, state) {
+    getLocalMotion (drawable, state) {
         if (!this.curr || !this.prev) {
             state.motionAmount = state.motionDirection = -1;
             // Don't have two frames to analyze yet
@@ -299,7 +281,7 @@ class VideoMotion {
 
         // Skip if the current frame has already been considered for this state.
         if (state.motionFrameNumber !== this.frameNumber) {
-            const { _prev: prev, _curr: curr } = this;
+            const {_prev: prev, _curr: curr} = this;
 
             // The public APIs for Renderer#isTouching manage keeping the matrix and
             // silhouette up-to-date, which is needed for drawable#isTouching to work (used below)
@@ -312,15 +294,9 @@ class VideoMotion {
             // Transform the bounding box from scratch space to a space from 0,
             // 0 to WIDTH, HEIGHT.
             const xmin = Math.max(Math.floor(boundingRect.left + WIDTH / 2), 1);
-            const xmax = Math.min(
-                Math.floor(boundingRect.right + WIDTH / 2),
-                WIDTH - 1
-            );
+            const xmax = Math.min(Math.floor(boundingRect.right + WIDTH / 2), WIDTH - 1);
             const ymin = Math.max(Math.floor(HEIGHT / 2 - boundingRect.top), 1);
-            const ymax = Math.min(
-                Math.floor(HEIGHT / 2 - boundingRect.bottom),
-                HEIGHT - 1
-            );
+            const ymax = Math.min(Math.floor(HEIGHT / 2 - boundingRect.bottom), HEIGHT - 1);
 
             let A2 = 0;
             let A1B2 = 0;
@@ -353,8 +329,7 @@ class VideoMotion {
                         const gradX = curr[address - 1] - curr[address + 1];
                         // The difference between the pixel above and the pixel
                         // below.
-                        const gradY =
-                            curr[address - WIDTH] - curr[address + WIDTH];
+                        const gradY = curr[address - WIDTH] - curr[address + WIDTH];
 
                         // Add the combined values of this pixel to previously
                         // considered pixels.
@@ -370,7 +345,7 @@ class VideoMotion {
 
             // Use the accumalated values from the for loop to determine a
             // motion direction.
-            let { u, v } = motionVector(A2, A1B2, B1, C2, C1);
+            let {u, v} = motionVector(A2, A1B2, B1, C2, C1);
 
             let activePixelNum = 0;
             if (scaleFactor) {
@@ -384,9 +359,7 @@ class VideoMotion {
 
             // Scale the magnitude of the averaged UV vector and the number of
             // overlapping drawable pixels.
-            state.motionAmount = Math.round(
-                LOCAL_AMOUNT_SCALE * activePixelNum * Math.hypot(u, v)
-            );
+            state.motionAmount = Math.round(LOCAL_AMOUNT_SCALE * activePixelNum * Math.hypot(u, v));
             if (state.motionAmount > LOCAL_MAX_AMOUNT) {
                 // Clip all magnitudes greater than 100.
                 state.motionAmount = LOCAL_MAX_AMOUNT;

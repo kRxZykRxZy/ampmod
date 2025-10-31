@@ -1,18 +1,16 @@
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import React, { useState, useEffect } from "react";
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React, {useState, useEffect} from 'react';
 
-import styles from "./spinner.css";
+import styles from './spinner.css';
 
 const SpinnerComponent = function (props) {
-    const { className, level, small, large } = props;
+    const {className, level, small, large} = props;
 
     const [isMotionReduced, setIsMotionReduced] = useState(false);
 
     useEffect(() => {
-        const mediaQuery = window.matchMedia(
-            "(prefers-reduced-motion: reduce)"
-        );
+        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
         setIsMotionReduced(mediaQuery.matches);
 
@@ -23,18 +21,14 @@ const SpinnerComponent = function (props) {
     }, []);
 
     if (isMotionReduced) {
-        return (
-            <div className={classNames(className, styles.loadingText)}>
-                loading
-            </div>
-        );
+        return <div className={classNames(className, styles.loadingText)}>loading</div>;
     }
 
     return (
         <div
             className={classNames(className, styles.spinner, styles[level], {
                 [styles.small]: small,
-                [styles.large]: large,
+                [styles.large]: large
             })}
         />
     );
@@ -45,13 +39,13 @@ SpinnerComponent.propTypes = {
     className: PropTypes.string,
     large: PropTypes.bool,
     level: PropTypes.string,
-    small: PropTypes.bool,
+    small: PropTypes.bool
 };
 SpinnerComponent.defaultProps = {
-    className: "",
+    className: '',
     large: false,
-    level: "info",
-    small: false,
+    level: 'info',
+    small: false
 };
 
 export default SpinnerComponent;

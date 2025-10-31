@@ -1,24 +1,19 @@
-import {
-    defineMessages,
-    FormattedMessage,
-    intlShape,
-    injectIntl,
-} from "react-intl";
-import PropTypes from "prop-types";
-import React from "react";
-import classNames from "classnames";
-import Modal from "../../containers/modal.jsx";
-import ManageFont from "./manage-font.jsx";
-import AddSystemFont from "./add-system-font.jsx";
-import AddCustomFont, { FONT_FORMATS } from "./add-custom-font.jsx";
-import styles from "./fonts-modal.css";
+import {defineMessages, FormattedMessage, intlShape, injectIntl} from 'react-intl';
+import PropTypes from 'prop-types';
+import React from 'react';
+import classNames from 'classnames';
+import Modal from '../../containers/modal.jsx';
+import ManageFont from './manage-font.jsx';
+import AddSystemFont from './add-system-font.jsx';
+import AddCustomFont, {FONT_FORMATS} from './add-custom-font.jsx';
+import styles from './fonts-modal.css';
 
 const messages = defineMessages({
     title: {
-        defaultMessage: "Fonts",
-        description: "Title of custom font management modal",
-        id: "tw.fonts.title",
-    },
+        defaultMessage: 'Fonts',
+        description: 'Title of custom font management modal',
+        id: 'tw.fonts.title'
+    }
 });
 
 const FontModal = props => (
@@ -29,19 +24,10 @@ const FontModal = props => (
         id="fontModal"
     >
         <div className={styles.body}>
-            {props.screen === "" ? (
+            {props.screen === '' ? (
                 <div className={styles.openButtons}>
-                    <button
-                        className={styles.openButton}
-                        onClick={props.onOpenSystemFonts}
-                    >
-                        <img
-                            className={classNames(
-                                styles.openButtonImage,
-                                styles.systemImage
-                            )}
-                            draggable={false}
-                        />
+                    <button className={styles.openButton} onClick={props.onOpenSystemFonts}>
+                        <img className={classNames(styles.openButtonImage, styles.systemImage)} draggable={false} />
                         <div className={styles.openButtonText}>
                             <div className={styles.openButtonTextMain}>
                                 <FormattedMessage
@@ -61,17 +47,8 @@ const FontModal = props => (
                         </div>
                     </button>
 
-                    <button
-                        className={styles.openButton}
-                        onClick={props.onOpenCustomFonts}
-                    >
-                        <img
-                            className={classNames(
-                                styles.openButtonImage,
-                                styles.customImage
-                            )}
-                            draggable={false}
-                        />
+                    <button className={styles.openButton} onClick={props.onOpenCustomFonts}>
+                        <img className={classNames(styles.openButtonImage, styles.customImage)} draggable={false} />
                         <div className={styles.openButtonText}>
                             <div className={styles.openButtonTextMain}>
                                 <FormattedMessage
@@ -89,27 +66,21 @@ const FontModal = props => (
                                     values={{
                                         formats: Object.values(FONT_FORMATS)
                                             .map(i => `.${i}`)
-                                            .join(", "),
+                                            .join(', ')
                                     }}
                                 />
                             </div>
                         </div>
                     </button>
                 </div>
-            ) : props.screen === "system" ? (
-                <AddSystemFont
-                    fontManager={props.fontManager}
-                    onClose={props.onClose}
-                />
-            ) : props.screen === "custom" ? (
-                <AddCustomFont
-                    fontManager={props.fontManager}
-                    onClose={props.onClose}
-                />
+            ) : props.screen === 'system' ? (
+                <AddSystemFont fontManager={props.fontManager} onClose={props.onClose} />
+            ) : props.screen === 'custom' ? (
+                <AddCustomFont fontManager={props.fontManager} onClose={props.onClose} />
             ) : // Should never happen
             null}
 
-            {props.screen === "" && (
+            {props.screen === '' && (
                 <div className={styles.fontsOuter}>
                     <p>
                         {props.fonts.length ? (
@@ -158,14 +129,14 @@ FontModal.propTypes = {
             name: PropTypes.string.isRequired,
             family: PropTypes.string.isRequired,
             data: PropTypes.instanceOf(Uint8Array),
-            format: PropTypes.string,
+            format: PropTypes.string
         }).isRequired
     ).isRequired,
     fontManager: PropTypes.shape({}),
-    screen: PropTypes.oneOf(["", "system", "custom"]),
+    screen: PropTypes.oneOf(['', 'system', 'custom']),
     onOpenSystemFonts: PropTypes.func.isRequired,
     // onOpenLibraryFonts: PropTypes.func.isRequired,
-    onOpenCustomFonts: PropTypes.func.isRequired,
+    onOpenCustomFonts: PropTypes.func.isRequired
 };
 
 export default injectIntl(FontModal);

@@ -1,15 +1,15 @@
 // This is plain JS for the sake of saving a lot of megabytes from the React bundle,
 // since we inline our js into the 404 page.
-import "@fontsource/inter";
-import { APP_FORUMS, APP_NAME } from "@ampmod/branding";
-import { applyGuiColors } from "../lib/themes/guiHelpers";
-import { detectTheme } from "../lib/themes/themePersistance";
-import styles from "./design.css";
+import '@fontsource/inter';
+import {APP_FORUMS, APP_NAME} from '@ampmod/branding';
+import {applyGuiColors} from '../lib/themes/guiHelpers';
+import {detectTheme} from '../lib/themes/themePersistance';
+import styles from './design.css';
 
 applyGuiColors(detectTheme());
-document.documentElement.lang = "en";
+document.documentElement.lang = 'en';
 
-const root = document.getElementById("app") || document.body;
+const root = document.getElementById('app') || document.body;
 
 root.innerHTML = `
     <header class="${styles.headerContainer} ${styles.headerContainerAltColour}">

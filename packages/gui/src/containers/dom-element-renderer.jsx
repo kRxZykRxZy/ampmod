@@ -1,8 +1,8 @@
-import omit from "lodash.omit";
-import PropTypes from "prop-types";
-import React from "react";
-import Style from "to-style";
-import stylePropType from "react-style-proptype";
+import omit from 'lodash.omit';
+import PropTypes from 'prop-types';
+import React from 'react';
+import Style from 'to-style';
+import stylePropType from 'react-style-proptype';
 
 /*
  * DOMElementRenderer wraps a DOM element, allowing it to be
@@ -31,16 +31,11 @@ class DOMElementRenderer extends React.Component {
         // Apply props to the DOM element, so its attributes
         // are updated as if it were a normal component.
         // Look at me, I'm the React now!
-        Object.assign(
-            this.props.domElement,
-            omit(this.props, ["domElement", "children", "style"])
-        );
+        Object.assign(this.props.domElement, omit(this.props, ['domElement', 'children', 'style']));
 
         // Convert react style prop to dom element styling.
         if (this.props.style) {
-            this.props.domElement.style.cssText = Style.string(
-                this.props.style
-            );
+            this.props.domElement.style.cssText = Style.string(this.props.style);
         }
 
         return <div ref={this.setContainer} />;
@@ -49,7 +44,7 @@ class DOMElementRenderer extends React.Component {
 
 DOMElementRenderer.propTypes = {
     domElement: PropTypes.instanceOf(Element).isRequired,
-    style: stylePropType,
+    style: stylePropType
 };
 
 export default DOMElementRenderer;

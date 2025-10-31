@@ -1,68 +1,66 @@
-import bindAll from "lodash.bindall";
-import omit from "lodash.omit";
-import PropTypes from "prop-types";
-import React from "react";
-import { intlShape, injectIntl } from "react-intl";
+import bindAll from 'lodash.bindall';
+import omit from 'lodash.omit';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {intlShape, injectIntl} from 'react-intl';
 
-import { connect } from "react-redux";
-import { openBackdropLibrary } from "../reducers/modals";
-import { activateTab, COSTUMES_TAB_INDEX } from "../reducers/editor-tab";
-import { showStandardAlert, closeAlertWithId } from "../reducers/alerts";
-import { setHoveredSprite } from "../reducers/hovered-target";
-import DragConstants from "../lib/drag-constants";
-import DropAreaHOC from "../lib/drop-area-hoc.jsx";
-import ThrottledPropertyHOC from "../lib/throttled-property-hoc.jsx";
-import { emptyCostume } from "../lib/empty-assets";
-import sharedMessages from "../lib/shared-messages";
-import { fetchCode } from "../lib/backpack-api";
-import { getEventXY } from "../lib/touch-utils";
+import {connect} from 'react-redux';
+import {openBackdropLibrary} from '../reducers/modals';
+import {activateTab, COSTUMES_TAB_INDEX} from '../reducers/editor-tab';
+import {showStandardAlert, closeAlertWithId} from '../reducers/alerts';
+import {setHoveredSprite} from '../reducers/hovered-target';
+import DragConstants from '../lib/drag-constants';
+import DropAreaHOC from '../lib/drop-area-hoc.jsx';
+import ThrottledPropertyHOC from '../lib/throttled-property-hoc.jsx';
+import {emptyCostume} from '../lib/empty-assets';
+import sharedMessages from '../lib/shared-messages';
+import {fetchCode} from '../lib/backpack-api';
+import {getEventXY} from '../lib/touch-utils';
 
-import StageSelectorComponent from "../components/stage-selector/stage-selector.jsx";
+import StageSelectorComponent from '../components/stage-selector/stage-selector.jsx';
 
-import { getBackdropLibrary } from "../lib/libraries/tw-async-libraries";
-import { handleFileUpload, costumeUpload } from "../lib/file-uploader.js";
-import { placeInViewport } from "../lib/backpack/code-payload.js";
+import {getBackdropLibrary} from '../lib/libraries/tw-async-libraries';
+import {handleFileUpload, costumeUpload} from '../lib/file-uploader.js';
+import {placeInViewport} from '../lib/backpack/code-payload.js';
 
 const dragTypes = [
     DragConstants.COSTUME,
     DragConstants.SOUND,
     DragConstants.BACKPACK_COSTUME,
     DragConstants.BACKPACK_SOUND,
-    DragConstants.BACKPACK_CODE,
+    DragConstants.BACKPACK_CODE
 ];
 
-const DroppableThrottledStage = DropAreaHOC(dragTypes)(
-    ThrottledPropertyHOC("url", 500)(StageSelectorComponent)
-);
+const DroppableThrottledStage = DropAreaHOC(dragTypes)(ThrottledPropertyHOC('url', 500)(StageSelectorComponent));
 
 class StageSelector extends React.Component {
     constructor(props) {
         super(props);
         bindAll(this, [
-            "handleClick",
-            "handleNewBackdrop",
-            "handleSurpriseBackdrop",
-            "handleEmptyBackdrop",
-            "addBackdropFromLibraryItem",
-            "handleFileUploadClick",
-            "handleBackdropUpload",
-            "handleMouseEnter",
-            "handleMouseLeave",
-            "handleTouchEnd",
-            "handleDrop",
-            "setFileInput",
-            "setRef",
+            'handleClick',
+            'handleNewBackdrop',
+            'handleSurpriseBackdrop',
+            'handleEmptyBackdrop',
+            'addBackdropFromLibraryItem',
+            'handleFileUploadClick',
+            'handleBackdropUpload',
+            'handleMouseEnter',
+            'handleMouseLeave',
+            'handleTouchEnd',
+            'handleDrop',
+            'setFileInput',
+            'setRef'
         ]);
     }
     componentDidMount() {
-        document.addEventListener("touchend", this.handleTouchEnd);
+        document.addEventListener('touchend', this.handleTouchEnd);
     }
     componentWillUnmount() {
-        document.removeEventListener("touchend", this.handleTouchEnd);
+        document.removeEventListener('touchend', this.handleTouchEnd);
     }
     handleTouchEnd(e) {
-        const { x, y } = getEventXY(e);
-        const { top, left, bottom, right } = this.ref.getBoundingClientRect();
+        const {x, y} = getEventXY(e);
+        const {top, left, bottom, right} = this.ref.getBoundingClientRect();
         if (x >= left && x <= right && y >= top && y <= bottom) {
             this.handleMouseEnter();
         }
@@ -74,7 +72,7 @@ class StageSelector extends React.Component {
             rotationCenterX: item.rotationCenterX,
             rotationCenterY: item.rotationCenterY,
             bitmapResolution: item.bitmapResolution,
-            skinId: null,
+            skinId: null
         };
         this.handleNewBackdrop(vmBackdrop, shouldActivateTab);
     }
@@ -83,11 +81,7 @@ class StageSelector extends React.Component {
     }
     handleNewBackdrop(backdrops_, shouldActivateTab = true) {
         const backdrops = Array.isArray(backdrops_) ? backdrops_ : [backdrops_];
-        return Promise.all(
-            backdrops.map(backdrop =>
-                this.props.vm.addBackdrop(backdrop.md5, backdrop)
-            )
-        ).then(() => {
+        return Promise.all(backdrops.map(backdrop => this.props.vm.addBackdrop(backdrop.md5, backdrop))).then(() => {
             if (shouldActivateTab) {
                 return this.props.onActivateTab(COSTUMES_TAB_INDEX);
             }
@@ -97,10 +91,7 @@ class StageSelector extends React.Component {
         e.stopPropagation(); // Prevent click from falling through to selecting stage.
         const backdropLibraryContent = await getBackdropLibrary();
         // @todo should this not add a backdrop you already have?
-        const item =
-            backdropLibraryContent[
-                Math.floor(Math.random() * backdropLibraryContent.length)
-            ];
+        const item = backdropLibraryContent[Math.floor(Math.random() * backdropLibraryContent.length)];
         this.addBackdropFromLibraryItem(item, false);
     }
     handleEmptyBackdrop(e) {
@@ -109,7 +100,7 @@ class StageSelector extends React.Component {
         this.handleNewBackdrop(
             emptyCostume(
                 this.props.intl.formatMessage(sharedMessages.backdrop, {
-                    index: 1,
+                    index: 1
                 })
             )
         );
@@ -127,7 +118,7 @@ class StageSelector extends React.Component {
                     vmCostumes => {
                         this.props.vm.setEditingTarget(this.props.id);
                         vmCostumes.forEach((costume, i) => {
-                            costume.name = `${fileName}${i ? i + 1 : ""}`;
+                            costume.name = `${fileName}${i ? i + 1 : ''}`;
                         });
                         this.handleNewBackdrop(vmCostumes).then(() => {
                             if (fileIndex === fileCount - 1) {
@@ -160,7 +151,7 @@ class StageSelector extends React.Component {
             this.props.vm.addCostume(
                 dragInfo.payload.body,
                 {
-                    name: dragInfo.payload.name,
+                    name: dragInfo.payload.name
                 },
                 this.props.id
             );
@@ -168,7 +159,7 @@ class StageSelector extends React.Component {
             this.props.vm.addSound(
                 {
                     md5: dragInfo.payload.body,
-                    name: dragInfo.payload.name,
+                    name: dragInfo.payload.name
                 },
                 this.props.id
             );
@@ -192,16 +183,16 @@ class StageSelector extends React.Component {
     }
     render() {
         const componentProps = omit(this.props, [
-            "asset",
-            "dispatchSetHoveredSprite",
-            "id",
-            "intl",
-            "onActivateTab",
-            "onSelect",
-            "onShowImporting",
-            "onCloseImporting",
-            "isRtl",
-            "workspaceMetrics",
+            'asset',
+            'dispatchSetHoveredSprite',
+            'id',
+            'intl',
+            'onActivateTab',
+            'onSelect',
+            'onShowImporting',
+            'onCloseImporting',
+            'isRtl',
+            'workspaceMetrics'
         ]);
         return (
             <DroppableThrottledStage
@@ -229,19 +220,17 @@ StageSelector.propTypes = {
     onSelect: PropTypes.func,
     onShowImporting: PropTypes.func,
     workspaceMetrics: PropTypes.shape({
-        targets: PropTypes.object,
-    }),
+        targets: PropTypes.object
+    })
 };
 
-const mapStateToProps = (state, { asset, id }) => ({
+const mapStateToProps = (state, {asset, id}) => ({
     isRtl: state.locales.isRtl,
     url: asset && asset.encodeDataURI(),
     vm: state.scratchGui.vm,
-    receivedBlocks:
-        state.scratchGui.hoveredTarget.receivedBlocks &&
-        state.scratchGui.hoveredTarget.sprite === id,
+    receivedBlocks: state.scratchGui.hoveredTarget.receivedBlocks && state.scratchGui.hoveredTarget.sprite === id,
     raised: state.scratchGui.blockDrag,
-    workspaceMetrics: state.scratchGui.workspaceMetrics,
+    workspaceMetrics: state.scratchGui.workspaceMetrics
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -255,10 +244,8 @@ const mapDispatchToProps = dispatch => ({
     dispatchSetHoveredSprite: spriteId => {
         dispatch(setHoveredSprite(spriteId));
     },
-    onCloseImporting: () => dispatch(closeAlertWithId("importingAsset")),
-    onShowImporting: () => dispatch(showStandardAlert("importingAsset")),
+    onCloseImporting: () => dispatch(closeAlertWithId('importingAsset')),
+    onShowImporting: () => dispatch(showStandardAlert('importingAsset'))
 });
 
-export default injectIntl(
-    connect(mapStateToProps, mapDispatchToProps)(StageSelector)
-);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(StageSelector));

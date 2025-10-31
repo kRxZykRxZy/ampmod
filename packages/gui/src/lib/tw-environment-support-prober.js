@@ -1,6 +1,6 @@
-import Renderer from "scratch-render";
-import * as bowser from "bowser";
-import log from "./log";
+import Renderer from 'scratch-render';
+import * as bowser from 'bowser';
+import log from './log';
 
 let cachedRendererSupport = null;
 export const isRendererSupported = () => {
@@ -16,7 +16,7 @@ export const isNewFunctionSupported = () => {
         try {
             // This will throw if blocked by CSP
             // eslint-disable-next-line no-new
-            new Function("");
+            new Function('');
             cachedNewFunctionSupport = true;
         } catch (e) {
             cachedNewFunctionSupport = false;
@@ -33,7 +33,7 @@ export const findIncompatibleUserscripts = () => {
 
     // Chibi < v4 breaks extensionURLs in project.json
     // Check suggested by SinanShiki
-    if (typeof window.chibi === "object" && Number(window.chibi.version) <= 3) {
+    if (typeof window.chibi === 'object' && Number(window.chibi.version) <= 3) {
         errors.push(
             'You are using an old version of the "Chibi" userscript that has known project corruption bugs. Please disable it, uninstall it, or update to version 4.'
         );
@@ -42,11 +42,8 @@ export const findIncompatibleUserscripts = () => {
     // For debugging incompatibilities, allow ignoring the errors with an undocumented URL parameter.
     if (errors.length > 0) {
         const params = new URLSearchParams(location.search);
-        if (
-            params.get("ignore_unsupported_userscripts") ===
-            "i_will_not_ask_for_help_if_something_breaks"
-        ) {
-            log.error("Ignoring unsupported userscripts", errors);
+        if (params.get('ignore_unsupported_userscripts') === 'i_will_not_ask_for_help_if_something_breaks') {
+            log.error('Ignoring unsupported userscripts', errors);
             return [];
         }
     }
@@ -56,8 +53,7 @@ export const findIncompatibleUserscripts = () => {
 };
 
 export const isBrowserSupported = isEmbedded =>
-    (!!isEmbedded ||
-        bowser.parse(navigator.userAgent).platform.type !== "mobile") &&
+    (!!isEmbedded || bowser.parse(navigator.userAgent).platform.type !== 'mobile') &&
     isNewFunctionSupported() &&
     isRendererSupported() &&
     findIncompatibleUserscripts().length === 0;

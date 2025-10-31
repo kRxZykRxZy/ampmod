@@ -1,21 +1,20 @@
-import paper from "@turbowarp/paper";
+import paper from '@turbowarp/paper';
 
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
-import bindAll from "lodash.bindall";
+import PropTypes from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
+import bindAll from 'lodash.bindall';
 
 const SelectionHOC = function (WrappedComponent) {
     class SelectionComponent extends React.Component {
         constructor(props) {
             super(props);
-            bindAll(this, ["removeItemById"]);
+            bindAll(this, ['removeItemById']);
         }
         componentDidUpdate(prevProps) {
             // Hovered item has changed
             if (
-                (this.props.hoveredItemId &&
-                    this.props.hoveredItemId !== prevProps.hoveredItemId) ||
+                (this.props.hoveredItemId && this.props.hoveredItemId !== prevProps.hoveredItemId) ||
                 (!this.props.hoveredItemId && prevProps.hoveredItemId)
             ) {
                 // Remove the old hover item if any
@@ -25,7 +24,7 @@ const SelectionHOC = function (WrappedComponent) {
         removeItemById(itemId) {
             if (itemId) {
                 const match = paper.project.getItem({
-                    match: item => item.id === itemId,
+                    match: item => item.id === itemId
                 });
                 if (match) {
                     match.remove();
@@ -41,11 +40,11 @@ const SelectionHOC = function (WrappedComponent) {
         }
     }
     SelectionComponent.propTypes = {
-        hoveredItemId: PropTypes.number,
+        hoveredItemId: PropTypes.number
     };
 
     const mapStateToProps = state => ({
-        hoveredItemId: state.scratchPaint.hoveredItemId,
+        hoveredItemId: state.scratchPaint.hoveredItemId
     });
     return connect(mapStateToProps)(SelectionComponent);
 };

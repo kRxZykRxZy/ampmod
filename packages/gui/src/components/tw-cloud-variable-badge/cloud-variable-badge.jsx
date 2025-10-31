@@ -1,24 +1,24 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FormattedMessage } from "react-intl";
-import cloudIcon from "./clouddata.svg";
-import CloudServerButton from "./cloud-server-button.jsx";
-import styles from "./cloud-variable-badge.css";
-import { APP_NAME } from "@ampmod/branding";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {FormattedMessage} from 'react-intl';
+import cloudIcon from './clouddata.svg';
+import CloudServerButton from './cloud-server-button.jsx';
+import styles from './cloud-variable-badge.css';
+import {APP_NAME} from '@ampmod/branding';
 
 const hosts = [
     {
-        name: "US East",
-        cloudHost: "wss://clouddata.turbowarp.org",
+        name: 'US East',
+        cloudHost: 'wss://clouddata.turbowarp.org'
     },
     {
-        name: "EU",
-        cloudHost: "wss://clouddata-eu.turbowarp.org",
+        name: 'EU',
+        cloudHost: 'wss://clouddata-eu.turbowarp.org',
         provider: {
-            name: "9gr",
-            href: "https://scratch.mit.edu/users/9gr/",
-        },
-    },
+            name: '9gr',
+            href: 'https://scratch.mit.edu/users/9gr/'
+        }
+    }
 ];
 
 const CloudVariableBadge = props => {
@@ -26,14 +26,7 @@ const CloudVariableBadge = props => {
     return (
         <div className={styles.badge}>
             <div className={styles.title}>
-                <img
-                    className={styles.cloudIcon}
-                    src={cloudIcon}
-                    alt=""
-                    width={32}
-                    height={32}
-                    draggable={false}
-                />
+                <img className={styles.cloudIcon} src={cloudIcon} alt="" width={32} height={32} draggable={false} />
                 <FormattedMessage
                     // eslint-disable-next-line max-len
                     defaultMessage="This project uses cloud variables."
@@ -59,7 +52,7 @@ const CloudVariableBadge = props => {
                                 id="tw.usesCloudVariables2.change"
                             />
                         </a>
-                    ),
+                    )
                 }}
             />
 
@@ -87,7 +80,7 @@ const CloudVariableBadge = props => {
                     description="Appears when using a non-TurboWarp provided cloud variable server. {server} is replaced with the server's URL, eg. wss://clouddata.turbowarp.org"
                     id="tw.customCloudServer"
                     values={{
-                        server: props.cloudHost,
+                        server: props.cloudHost
                     }}
                 />
             )}
@@ -99,23 +92,15 @@ const CloudVariableBadge = props => {
                     id="tw.cloudProvider"
                     values={{
                         name: (
-                            <a
-                                href={selectedHost.provider.href}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
+                            <a href={selectedHost.provider.href} target="_blank" rel="noreferrer">
                                 {selectedHost.provider.name}
                             </a>
-                        ),
+                        )
                     }}
                 />
             )}
 
-            <a
-                target="_blank"
-                rel="noreferrer"
-                href="https://docs.turbowarp.org/cloud-variables"
-            >
+            <a target="_blank" rel="noreferrer" href="https://docs.turbowarp.org/cloud-variables">
                 <FormattedMessage
                     defaultMessage="Learn more about cloud variables."
                     description="Link for more information about cloud variables"
@@ -129,7 +114,7 @@ const CloudVariableBadge = props => {
 CloudVariableBadge.propTypes = {
     cloudHost: PropTypes.string,
     onSetCloudHost: PropTypes.func,
-    onOpenChangeUsername: PropTypes.func,
+    onOpenChangeUsername: PropTypes.func
 };
 
 export default CloudVariableBadge;

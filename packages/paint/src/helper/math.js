@@ -1,4 +1,4 @@
-import paper from "@turbowarp/paper";
+import paper from '@turbowarp/paper';
 
 /** The ratio of the curve length to use for the handle length to convert squares into approximately circles. */
 const HANDLE_RATIO = 0.3902628565;
@@ -154,14 +154,11 @@ const getSquareDimensions = function (startPos, eventPoint) {
     const offsetDistance = eventPoint.subtract(startPos).abs();
     const length = Math.max(offsetDistance.x, offsetDistance.y);
 
-    const size = new paper.Point(
-        (length * offsetX) / Math.abs(offsetX),
-        (length * offsetY) / Math.abs(offsetY)
-    );
+    const size = new paper.Point((length * offsetX) / Math.abs(offsetX), (length * offsetY) / Math.abs(offsetY));
 
     const position = startPos.add(size.multiply(0.5));
 
-    return { size, position };
+    return {size, position};
 };
 
 export {
@@ -174,5 +171,5 @@ export {
     getSquareDimensions,
     scaleWithStrokes,
     snapDeltaToAngle,
-    sortItemsByZIndex,
+    sortItemsByZIndex
 };

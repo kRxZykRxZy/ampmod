@@ -1,24 +1,23 @@
-const path = require("path");
-const test = require("tap").test;
-const makeTestStorage = require("../fixtures/make-test-storage");
-const readFileToBuffer =
-    require("../fixtures/readProjectFile").readFileToBuffer;
-const VirtualMachine = require("../../src/index");
+const path = require('path');
+const test = require('tap').test;
+const makeTestStorage = require('../fixtures/make-test-storage');
+const readFileToBuffer = require('../fixtures/readProjectFile').readFileToBuffer;
+const VirtualMachine = require('../../src/index');
 
-const uri = path.resolve(__dirname, "../fixtures/looks.sb2");
+const uri = path.resolve(__dirname, '../fixtures/looks.sb2');
 const project = readFileToBuffer(uri);
 
-test("Running project should not emit project changed event", t => {
+test('Running project should not emit project changed event', t => {
     const vm = new VirtualMachine();
     vm.attachStorage(makeTestStorage());
 
     let projectChanged = false;
-    vm.on("PROJECT_CHANGED", () => {
+    vm.on('PROJECT_CHANGED', () => {
         projectChanged = true;
     });
 
     // Evaluate playground data and exit
-    vm.on("playgroundData", () => {
+    vm.on('playgroundData', () => {
         t.equal(projectChanged, false);
         vm.quit();
         t.end();

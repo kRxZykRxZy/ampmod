@@ -1,12 +1,12 @@
-import Formats from "../lib/format";
-import log from "../log/log";
-import { UNDO, REDO } from "./undo";
+import Formats from '../lib/format';
+import log from '../log/log';
+import {UNDO, REDO} from './undo';
 
-const CHANGE_FORMAT = "scratch-paint/formats/CHANGE_FORMAT";
+const CHANGE_FORMAT = 'scratch-paint/formats/CHANGE_FORMAT';
 const initialState = null;
 
 const reducer = function (state, action) {
-    if (typeof state === "undefined") state = initialState;
+    if (typeof state === 'undefined') state = initialState;
     switch (action.type) {
         case UNDO:
         /* falls through */
@@ -28,8 +28,8 @@ const reducer = function (state, action) {
 const changeFormat = function (format) {
     return {
         type: CHANGE_FORMAT,
-        format: format,
+        format: format
     };
 };
 
-export { reducer as default, changeFormat };
+export {reducer as default, changeFormat};

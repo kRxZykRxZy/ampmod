@@ -1,52 +1,51 @@
-const test = require("tap").test;
-const maybeFormatMessage = require("../../src/util/maybe-format-message");
+const test = require('tap').test;
+const maybeFormatMessage = require('../../src/util/maybe-format-message');
 
 const nonMessages = [
-    "hi",
+    'hi',
     42,
     true,
     function () {
-        return "unused";
+        return 'unused';
     },
     {
         a: 1,
-        b: 2,
+        b: 2
     },
     {
-        id: "almost a message",
-        notDefault: 'but missing the "default" property',
+        id: 'almost a message',
+        notDefault: 'but missing the "default" property'
     },
     {
         notId: 'this one is missing the "id" property',
-        default: 'but has "default"',
-    },
+        default: 'but has "default"'
+    }
 ];
 
 const argsQuick = {
-    speed: "quick",
+    speed: 'quick'
 };
 
 const argsOther = {
-    speed: "slow",
+    speed: 'slow'
 };
 
 const argsEmpty = {};
 
 const simpleMessage = {
-    id: "test.simpleMessage",
-    default: "The quick brown fox jumped over the lazy dog.",
+    id: 'test.simpleMessage',
+    default: 'The quick brown fox jumped over the lazy dog.'
 };
 
 const complexMessage = {
-    id: "test.complexMessage",
-    default:
-        "{speed, select, quick {The quick brown fox jumped over the lazy dog.} other {Too slow, Gobo!}}",
+    id: 'test.complexMessage',
+    default: '{speed, select, quick {The quick brown fox jumped over the lazy dog.} other {Too slow, Gobo!}}'
 };
 
-const quickExpectedResult = "The quick brown fox jumped over the lazy dog.";
-const otherExpectedResult = "Too slow, Gobo!";
+const quickExpectedResult = 'The quick brown fox jumped over the lazy dog.';
+const otherExpectedResult = 'Too slow, Gobo!';
 
-test("preserve non-messages", t => {
+test('preserve non-messages', t => {
     t.plan(nonMessages.length);
 
     for (const x of nonMessages) {
@@ -57,7 +56,7 @@ test("preserve non-messages", t => {
     t.end();
 });
 
-test("format messages", t => {
+test('format messages', t => {
     const quickResult1 = maybeFormatMessage(simpleMessage);
     t.strictNotSame(quickResult1, simpleMessage);
     t.same(quickResult1, quickExpectedResult);

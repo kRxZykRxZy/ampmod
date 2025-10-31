@@ -1,20 +1,11 @@
-import paper from "@turbowarp/paper";
-import { createCanvas, getRaster, getBackgroundGuideLayer } from "../layer";
+import paper from '@turbowarp/paper';
+import {createCanvas, getRaster, getBackgroundGuideLayer} from '../layer';
 
 const LOUPE_RADIUS = 20;
 const ZOOM_SCALE = 3;
 
 class EyeDropperTool extends paper.Tool {
-    constructor(
-        canvas,
-        width,
-        height,
-        pixelRatio,
-        zoom,
-        offsetX,
-        offsetY,
-        isBitmap
-    ) {
+    constructor(canvas, width, height, pixelRatio, zoom, offsetX, offsetY, isBitmap) {
         super();
 
         const layer = isBitmap ? getRaster().layer : paper.project.activeLayer;
@@ -30,17 +21,11 @@ class EyeDropperTool extends paper.Tool {
         );
 
         // Canvas from which loupe is cut, shows art and grid
-        this.bufferCanvas = createCanvas(
-            canvas.width * ZOOM_SCALE,
-            canvas.height * ZOOM_SCALE
-        );
-        const bufferCanvasContext = this.bufferCanvas.getContext("2d");
+        this.bufferCanvas = createCanvas(canvas.width * ZOOM_SCALE, canvas.height * ZOOM_SCALE);
+        const bufferCanvasContext = this.bufferCanvas.getContext('2d');
         // Canvas to sample colors from; just the art
-        this.colorCanvas = createCanvas(
-            canvas.width * ZOOM_SCALE,
-            canvas.height * ZOOM_SCALE
-        );
-        const colorCanvasContext = this.colorCanvas.getContext("2d");
+        this.colorCanvas = createCanvas(canvas.width * ZOOM_SCALE, canvas.height * ZOOM_SCALE);
+        const colorCanvasContext = this.colorCanvas.getContext('2d');
 
         backgroundRaster3x.onLoad = () => {
             bufferCanvasContext.drawImage(backgroundRaster3x.canvas, 0, 0);
@@ -72,7 +57,7 @@ class EyeDropperTool extends paper.Tool {
         this.width = width * this.zoom * this.pixelRatio;
         this.height = height * this.zoom * this.pixelRatio;
         this.rect = canvas.getBoundingClientRect();
-        this.colorString = "";
+        this.colorString = '';
         this.pickX = -1;
         this.pickY = -1;
         this.hideLoupe = true;
@@ -81,17 +66,11 @@ class EyeDropperTool extends paper.Tool {
     }
     handleMouseMove(event) {
         // Set the pickX/Y for the color picker loop to pick up
-        this.pickX =
-            (event.point.x - this.offsetX) * this.zoom * this.pixelRatio;
-        this.pickY =
-            (event.point.y - this.offsetY) * this.zoom * this.pixelRatio;
+        this.pickX = (event.point.x - this.offsetX) * this.zoom * this.pixelRatio;
+        this.pickY = (event.point.y - this.offsetY) * this.zoom * this.pixelRatio;
 
         // check if the x/y are outside of the canvas
-        this.hideLoupe =
-            this.pickX > this.width ||
-            this.pickX < 0 ||
-            this.pickY > this.height ||
-            this.pickY < 0;
+        this.hideLoupe = this.pickX > this.width || this.pickX < 0 || this.pickY > this.height || this.pickY < 0;
     }
     handleMouseDown(event) {
         // Nothing special on mousedown, just send to move handler which will show the loupe,
@@ -101,11 +80,7 @@ class EyeDropperTool extends paper.Tool {
     }
     handleMouseUp() {
         if (!this.hideLoupe) {
-            const colorInfo = this.getColorInfo(
-                this.pickX,
-                this.pickY,
-                this.hideLoupe
-            );
+            const colorInfo = this.getColorInfo(this.pickX, this.pickY, this.hideLoupe);
             if (!colorInfo) return;
             if (colorInfo.color[3] === 0) {
                 // Alpha 0
@@ -127,11 +102,7 @@ class EyeDropperTool extends paper.Tool {
         }
     }
     getColorInfo(x, y, hideLoupe) {
-        if (
-            this.previousColorInfo &&
-            this.previousColorInfo.x === x &&
-            this.previousColorInfo.y === y
-        ) {
+        if (this.previousColorInfo && this.previousColorInfo.x === x && this.previousColorInfo.y === y) {
             return this.previousColorInfo;
         }
         const artX = x / this.pixelRatio;
@@ -154,13 +125,13 @@ class EyeDropperTool extends paper.Tool {
                 x: ZOOM_SCALE * (artX - LOUPE_RADIUS),
                 y: ZOOM_SCALE * (artY - LOUPE_RADIUS),
                 width: LOUPE_RADIUS * 2 * ZOOM_SCALE,
-                height: LOUPE_RADIUS * 2 * ZOOM_SCALE,
+                height: LOUPE_RADIUS * 2 * ZOOM_SCALE
             },
-            hideLoupe: hideLoupe,
+            hideLoupe: hideLoupe
         };
         this.previousColorInfo = colorInfo;
         return colorInfo;
     }
 }
 
-export { EyeDropperTool as default, LOUPE_RADIUS, ZOOM_SCALE };
+export {EyeDropperTool as default, LOUPE_RADIUS, ZOOM_SCALE};

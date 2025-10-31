@@ -1,14 +1,12 @@
-const path = require("path");
-const fs = require("fs");
-const crypto = require("crypto");
-const VM = require("../../src/virtual-machine");
-const JSGenerator = require("../../src/compiler/jsgen");
+const path = require('path');
+const fs = require('fs');
+const crypto = require('crypto');
+const VM = require('../../src/virtual-machine');
+const JSGenerator = require('../../src/compiler/jsgen');
 
-const executeDir = path.resolve(__dirname, "../fixtures/execute");
+const executeDir = path.resolve(__dirname, '../fixtures/execute');
 // sb2 project loading results in random IDs each time, so for now we only snapshot sb3 files
-const testFiles = fs
-    .readdirSync(executeDir)
-    .filter(uri => uri.endsWith(".sb3"));
+const testFiles = fs.readdirSync(executeDir).filter(uri => uri.endsWith('.sb3') || uri.endsWith('.apz'));
 
 /**
  * @typedef {string} Snapshot Represents either a generated or parsed test case snapshot.
@@ -28,46 +26,43 @@ const testCases = testFiles
             id: file,
             file: file,
             compilerOptions: {
-                warpTimer: false,
-            },
+                warpTimer: false
+            }
         },
         {
             id: `warp-timer/${file}`,
             file: file,
             compilerOptions: {
-                warpTimer: true,
-            },
-        },
+                warpTimer: true
+            }
+        }
     ])
     .flat();
 
-const snapshotDir = path.resolve(__dirname, "__snapshots__");
-fs.mkdirSync(snapshotDir, { recursive: true });
-fs.mkdirSync(path.join(snapshotDir, "warp-timer"), { recursive: true });
+const snapshotDir = path.resolve(__dirname, '__snapshots__');
+fs.mkdirSync(snapshotDir, {recursive: true});
+fs.mkdirSync(path.join(snapshotDir, 'warp-timer'), {recursive: true});
 
 /**
  * @param {TestCase} testCase From testCases.
  * @returns {Buffer} Compressed project file from disk.
  */
-const getProjectData = testCase =>
-    fs.readFileSync(path.join(executeDir, testCase.file));
+const getProjectData = testCase => fs.readFileSync(path.join(executeDir, testCase.file));
 
 /**
  * @param {TestCase} testCase From testCases.
  * @returns {string} The path on disk where this test's snapshot should be saved.
  */
-const getSnapshotPath = testCase =>
-    path.join(snapshotDir, `${testCase.id}.tw-snapshot`);
+const getSnapshotPath = testCase => path.join(snapshotDir, `${testCase.id}.tw-snapshot`);
 
-const computeSHA256 = buffer =>
-    crypto.createHash("SHA256").update(buffer).digest("hex");
+const computeSHA256 = buffer => crypto.createHash('SHA256').update(buffer)
+    .digest('hex');
 
 /**
  * @param {string} snapshot a snapshot
  * @returns {string} SHA-256
  */
-const parseSnapshotSHA256 = snapshot =>
-    snapshot.match(/^\/\/ Input SHA-256: ([0-9a-f]{64})$/m)[1];
+const parseSnapshotSHA256 = snapshot => snapshot.match(/^\/\/ Input SHA-256: ([0-9a-f]{64})$/m)[1];
 
 /**
  * @param {TestCase} testCase Test to run from testCases
@@ -94,37 +89,37 @@ const generateActualSnapshot = async testCase => {
     */
     const normalizeJS = source =>
         source
-            .replace(/^\(function factory\d+/, "(function factoryXYZ")
-            .replace(/return function\* gen\d+/, "return function* genXYZ")
-            .replace(/return function fun\d+/, "return function funXYZ");
+            .replace(/^\(function factory\d+/, '(function factoryXYZ')
+            .replace(/return function\* gen\d+/, 'return function* genXYZ')
+            .replace(/return function fun\d+/, 'return function funXYZ');
 
     const generatedJS = [];
     JSGenerator.testingApparatus = {
         report: (jsgen, factorySource) => {
             const targetName = jsgen.target.getName();
-            const scriptName = jsgen.script.procedureVariant || "script";
+            const scriptName = jsgen.script.procedureVariant || 'script';
             const js = normalizeJS(factorySource);
             generatedJS.push(`// ${targetName} ${scriptName}\n${js}`);
-        },
+        }
     };
 
     const errors = [];
-    vm.on("COMPILE_ERROR", (target, error) => {
-        errors.push({ target, error });
+    vm.on('COMPILE_ERROR', (target, error) => {
+        errors.push({target, error});
     });
 
     vm.runtime.precompile();
 
-    let result = "// TW Snapshot\n";
+    let result = '// TW Snapshot\n';
     result += `// Input SHA-256: ${inputSHA256}\n`;
-    result += "\n";
+    result += '\n';
     if (errors.length) {
-        result += "// Errors:\n";
+        result += '// Errors:\n';
         result += errors.map(i => `// ${i.target.getName()}: ${i.error}\n`);
-        result += "\n";
+        result += '\n';
     }
-    result += generatedJS.join("\n\n");
-    result += "\n";
+    result += generatedJS.join('\n\n');
+    result += '\n';
     return result;
 };
 
@@ -134,9 +129,9 @@ const generateActualSnapshot = async testCase => {
  */
 const getExpectedSnapshot = testCase => {
     try {
-        return fs.readFileSync(getSnapshotPath(testCase), "utf-8");
+        return fs.readFileSync(getSnapshotPath(testCase), 'utf-8');
     } catch (e) {
-        if (e.code === "ENOENT") {
+        if (e.code === 'ENOENT') {
             return null;
         }
         throw e;
@@ -150,20 +145,20 @@ const getExpectedSnapshot = testCase => {
  */
 const compareSnapshots = (expected, actual) => {
     if (expected === actual) {
-        return "VALID";
+        return 'VALID';
     }
 
     if (expected === null) {
-        return "MISSING_SNAPSHOT";
+        return 'MISSING_SNAPSHOT';
     }
 
     const expectedSHA256 = parseSnapshotSHA256(expected);
     const actualSHA256 = parseSnapshotSHA256(actual);
     if (expectedSHA256 !== actualSHA256) {
-        return "INPUT_MODIFIED";
+        return 'INPUT_MODIFIED';
     }
 
-    return "INVALID";
+    return 'INVALID';
 };
 
 /**
@@ -180,5 +175,5 @@ module.exports = {
     generateActualSnapshot,
     getExpectedSnapshot,
     compareSnapshots,
-    saveSnapshot,
+    saveSnapshot
 };

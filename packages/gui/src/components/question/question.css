@@ -1,6 +1,6 @@
-@import "../../css/units.css";
-@import "../../css/colors.css";
-@import "../../css/default-colors.css";
+@import '../../css/units.css';
+@import '../../css/colors.css';
+@import '../../css/default-colors.css';
 
 .question-container {
     margin: $space;
@@ -14,8 +14,7 @@
 .question-label {
     font-size: 0.75rem;
     font-weight: bold;
-    font-family:
-        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: $text-primary-default;
     padding-bottom: $space;
 }
@@ -39,15 +38,14 @@
 
     color: white;
     background: $looks-secondary;
-    font-family:
-        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-[dir="ltr"] .question-submit-button {
+[dir='ltr'] .question-submit-button {
     right: calc($space / 2);
 }
 
-[dir="rtl"] .question-submit-button {
+[dir='rtl'] .question-submit-button {
     left: calc($space / 2);
 }
 
@@ -62,11 +60,11 @@
     border-color: $ui-black-transparent-default;
 }
 
-[dir="ltr"] .question-input > input {
+[dir='ltr'] .question-input > input {
     padding: 0 2rem 0 0.75rem; /* To make room for the submit button */
 }
 
-[dir="rtl"] .question-input > input {
+[dir='rtl'] .question-input > input {
     padding: 0 0.75rem 0 2rem; /* To make room for the submit button */
 }
 

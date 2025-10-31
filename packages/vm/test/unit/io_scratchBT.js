@@ -1,22 +1,22 @@
-const test = require("tap").test;
+const test = require('tap').test;
 // const ScratchBT = require('../../src/io/scratchBT');
 
-test("constructor", t => {
+test('constructor', t => {
     t.end();
 });
 
-test("requestPeripheral", t => {
+test('requestPeripheral', t => {
     t.end();
 });
 
-test("connectPeripheral", t => {
+test('connectPeripheral', t => {
     t.end();
 });
 
-test("sendMessage", t => {
+test('sendMessage', t => {
     t.end();
 });
 
-test("didReceiveCall", t => {
+test('didReceiveCall', t => {
     t.end();
 });

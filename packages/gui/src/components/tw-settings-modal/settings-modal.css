@@ -1,6 +1,6 @@
-@import "../../css/colors.css";
-@import "../../css/filters.css";
-@import "../../css/default-colors.css";
+@import '../../css/colors.css';
+@import '../../css/filters.css';
+@import '../../css/default-colors.css';
 
 .modal-content {
     max-width: 750px;

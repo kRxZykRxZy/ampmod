@@ -1,21 +1,21 @@
-import bindAll from "lodash.bindall";
-import omit from "lodash.omit";
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
+import bindAll from 'lodash.bindall';
+import omit from 'lodash.omit';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
 
-import ThrottledPropertyHOC from "../lib/throttled-property-hoc.jsx";
+import ThrottledPropertyHOC from '../lib/throttled-property-hoc.jsx';
 
-import VM from "scratch-vm";
-import storage from "../lib/storage";
-import getCostumeUrl from "../lib/get-costume-url";
+import VM from 'scratch-vm';
+import storage from '../lib/storage';
+import getCostumeUrl from '../lib/get-costume-url';
 
-import WatermarkComponent from "../components/watermark/watermark.jsx";
+import WatermarkComponent from '../components/watermark/watermark.jsx';
 
 class Watermark extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["getCostumeData"]);
+        bindAll(this, ['getCostumeData']);
     }
 
     getCostumeData() {
@@ -25,19 +25,14 @@ class Watermark extends React.Component {
     }
 
     render() {
-        const componentProps = omit(this.props, ["asset", "vm"]);
-        return (
-            <WatermarkComponent
-                costumeURL={this.getCostumeData()}
-                {...componentProps}
-            />
-        );
+        const componentProps = omit(this.props, ['asset', 'vm']);
+        return <WatermarkComponent costumeURL={this.getCostumeData()} {...componentProps} />;
     }
 }
 
 Watermark.propTypes = {
     asset: PropTypes.instanceOf(storage.Asset),
-    vm: PropTypes.instanceOf(VM).isRequired,
+    vm: PropTypes.instanceOf(VM).isRequired
 };
 
 const mapStateToProps = state => {
@@ -48,12 +43,7 @@ const mapStateToProps = state => {
     if (currentTargetId) {
         if (targets.stage.id === currentTargetId) {
             asset = targets.stage.costume.asset;
-        } else if (
-            Object.prototype.hasOwnProperty.call(
-                targets.sprites,
-                currentTargetId
-            )
-        ) {
+        } else if (Object.prototype.hasOwnProperty.call(targets.sprites, currentTargetId)) {
             const currentSprite = targets.sprites[currentTargetId];
             asset = currentSprite.costume.asset;
         }
@@ -61,12 +51,10 @@ const mapStateToProps = state => {
 
     return {
         vm: state.scratchGui.vm,
-        asset: asset,
+        asset: asset
     };
 };
 
-const ConnectedComponent = connect(mapStateToProps)(
-    ThrottledPropertyHOC("asset", 500)(Watermark)
-);
+const ConnectedComponent = connect(mapStateToProps)(ThrottledPropertyHOC('asset', 500)(Watermark));
 
 export default ConnectedComponent;

@@ -1,20 +1,14 @@
-import React from "react";
-import { FormattedMessage } from "react-intl";
-import PropTypes from "prop-types";
+import React from 'react';
+import {FormattedMessage} from 'react-intl';
+import PropTypes from 'prop-types';
 
-import turboIcon from "./icon--turbo.svg";
+import turboIcon from './icon--turbo.svg';
 
-import styles from "./turbo-mode.css";
+import styles from './turbo-mode.css';
 
-const TurboMode = ({ isSmall }) => (
+const TurboMode = ({isSmall}) => (
     <div className={styles.turboContainer}>
-        <img
-            className={styles.turboIcon}
-            src={turboIcon}
-            draggable={false}
-            width={16}
-            height={16}
-        />
+        <img className={styles.turboIcon} src={turboIcon} draggable={false} width={16} height={16} />
         {!isSmall && (
             <div className={styles.turboLabel}>
                 <FormattedMessage
@@ -28,11 +22,11 @@ const TurboMode = ({ isSmall }) => (
 );
 
 TurboMode.propTypes = {
-    isSmall: PropTypes.bool,
+    isSmall: PropTypes.bool
 };
 
 TurboMode.defaultProps = {
-    isSmall: false,
+    isSmall: false
 };
 
 export default TurboMode;

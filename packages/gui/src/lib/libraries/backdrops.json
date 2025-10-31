@@ -1,15 +1,7 @@
 [
     {
         "name": "Arctic",
-        "tags": [
-            "outdoors",
-            "cold",
-            "north pole",
-            "south pole",
-            "ice",
-            "antarctica",
-            "robert hunter"
-        ],
+        "tags": ["outdoors", "cold", "north pole", "south pole", "ice", "antarctica", "robert hunter"],
         "assetId": "67e0db3305b3c8bac3a363b1c428892e",
         "bitmapResolution": 2,
         "dataFormat": "png",
@@ -809,15 +801,7 @@
     },
     {
         "name": "Woods",
-        "tags": [
-            "fantasy",
-            "spooky",
-            "halloween",
-            "outdoors",
-            "haunted",
-            "forest",
-            "alex eben meyer"
-        ],
+        "tags": ["fantasy", "spooky", "halloween", "outdoors", "haunted", "forest", "alex eben meyer"],
         "assetId": "f3eb165d6f3fd23370f97079f2e631bf",
         "bitmapResolution": 1,
         "dataFormat": "svg",

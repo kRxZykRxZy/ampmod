@@ -1,14 +1,14 @@
-import "../../playground/import-first.js";
-import { useState, useEffect } from "react";
-import styles from "./examples.css";
-import homeStyles from "../home/home.css";
-import Box from "../../components/box/box";
-import Modal from "../../components/modal/modal";
+import '../../playground/import-first.js';
+import {useState, useEffect} from 'react';
+import styles from './examples.css';
+import homeStyles from '../home/home.css';
+import Box from '../../components/box/box';
+import Modal from '../../components/modal/modal';
 
-import examples from "../../lib/examples/index.js";
-import Localise, { localise } from "../components/localise/localise";
+import examples from '../../lib/examples/index.js';
+import Localise, {localise} from '../components/localise/localise';
 
-import { APP_NAME } from "@ampmod/branding";
+import {APP_NAME} from '@ampmod/branding';
 
 const ExampleModal = props => {
     const [downloadLink, setDownloadLink] = useState(null);
@@ -23,23 +23,18 @@ const ExampleModal = props => {
                 const buffer = module.default || module;
 
                 // ensure it's ArrayBuffer / Uint8Array
-                if (
-                    !(
-                        buffer instanceof ArrayBuffer ||
-                        buffer instanceof Uint8Array
-                    )
-                ) {
-                    console.error("Invalid buffer type for download:", buffer);
+                if (!(buffer instanceof ArrayBuffer || buffer instanceof Uint8Array)) {
+                    console.error('Invalid buffer type for download:', buffer);
                     return;
                 }
 
                 const blob = new Blob([buffer], {
-                    type: "application/x.scratch.sb3",
+                    type: 'application/x.scratch.sb3'
                 });
                 const url = URL.createObjectURL(blob);
-                setDownloadLink({ url, filename: `${title}.apz` });
+                setDownloadLink({url, filename: `${title}.apz`});
             } catch (err) {
-                console.error("Failed to fetch download link:", err);
+                console.error('Failed to fetch download link:', err);
             }
         };
         fetchDownloadLink(props.id, localise(`examples.apz.${props.id}`));
@@ -53,13 +48,10 @@ const ExampleModal = props => {
             id="exampleModal"
         >
             <Box className={styles.modalBody}>
-                <Localise
-                    id={`examples.apz.${props.id}.description`}
-                    values={{ APP_NAME }}
-                />
+                <Localise id={`examples.apz.${props.id}.description`} values={{APP_NAME}} />
                 {!props.isSupported && (
                     <div className={styles.unsupported}>
-                        <Localise id={"examples.unsupported"} />
+                        <Localise id={'examples.unsupported'} />
                     </div>
                 )}
                 <iframe
@@ -70,22 +62,15 @@ const ExampleModal = props => {
                     frameBorder="0"
                     scrolling="no"
                     allowFullScreen=""
-                    style={{ colorScheme: "auto", borderRadius: "8px" }}
+                    style={{colorScheme: 'auto', borderRadius: '8px'}}
                 />
-                <div>{`Project created by ${props.by || "AmpMod developers"}.`}</div>
+                <div>{`Project created by ${props.by || 'AmpMod developers'}.`}</div>
                 <div className={homeStyles.buttonRow}>
-                    <a
-                        className={homeStyles.button}
-                        href={`editor.html?example=${props.id}`}
-                    >
+                    <a className={homeStyles.button} href={`editor.html?example=${props.id}`}>
                         <Localise id="examples.open" />
                     </a>
                     {downloadLink && (
-                        <a
-                            className={homeStyles.button}
-                            href={downloadLink.url}
-                            download={downloadLink.filename}
-                        >
+                        <a className={homeStyles.button} href={downloadLink.url} download={downloadLink.filename}>
                             <Localise id="examples.download" />
                         </a>
                     )}
@@ -101,29 +86,20 @@ const Example = props => {
     return (
         <>
             <div className={styles.example} onClick={() => setIsOpen(true)}>
-                <img
-                    className={styles.exampleThumbnail}
-                    src={props.img}
-                    draggable={false}
-                />
+                <img className={styles.exampleThumbnail} src={props.img} draggable={false} />
                 <div className={styles.exampleContent}>
                     <div className={styles.exampleTitle}>
                         <Localise id={`examples.apz.${props.id}`} />
                     </div>
                     {props.by && (
                         <div className={styles.exampleAuthor}>
-                            <Localise
-                                id="examples.by"
-                                values={{ creator: props.by }}
-                            />
+                            <Localise id="examples.by" values={{creator: props.by}} />
                         </div>
                     )}
                 </div>
             </div>
 
-            {isOpen && (
-                <ExampleModal {...props} onCancel={() => setIsOpen(false)} />
-            )}
+            {isOpen && <ExampleModal {...props} onCancel={() => setIsOpen(false)} />}
         </>
     );
 };

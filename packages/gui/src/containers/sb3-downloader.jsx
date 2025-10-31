@@ -1,25 +1,22 @@
-import bindAll from "lodash.bindall";
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
-import {
-    projectTitleInitialState,
-    setProjectTitle,
-} from "../reducers/project-title";
-import downloadBlob from "../lib/download-blob";
-import { setProjectUnchanged } from "../reducers/project-changed";
-import { showStandardAlert, showAlertWithTimeout } from "../reducers/alerts";
-import { setFileHandle } from "../reducers/tw";
-import { getIsShowingProject } from "../reducers/project-state";
-import log from "../lib/log";
+import bindAll from 'lodash.bindall';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
+import {projectTitleInitialState, setProjectTitle} from '../reducers/project-title';
+import downloadBlob from '../lib/download-blob';
+import {setProjectUnchanged} from '../reducers/project-changed';
+import {showStandardAlert, showAlertWithTimeout} from '../reducers/alerts';
+import {setFileHandle} from '../reducers/tw';
+import {getIsShowingProject} from '../reducers/project-state';
+import log from '../lib/log';
 
 // from sb-file-uploader-hoc.jsx
 const getProjectTitleFromFilename = fileInputFilename => {
-    if (!fileInputFilename) return "";
+    if (!fileInputFilename) return '';
     // only parse title with valid scratch project extensions
     // (.sb, .sb2, and .sb3)
     const matches = fileInputFilename.match(/^(.*)\.(apz|sb[23]?)$/);
-    if (!matches) return "";
+    if (!matches) return '';
     return matches[1].substring(0, 100); // truncate project title to max 100 chars
 };
 
@@ -67,12 +64,7 @@ const concatenateByteArrays = arrays => {
 class SB3Downloader extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, [
-            "downloadProject",
-            "saveAsNew",
-            "saveToLastFile",
-            "saveToLastFileOrNew",
-        ]);
+        bindAll(this, ['downloadProject', 'saveAsNew', 'saveToLastFile', 'saveToLastFileOrNew']);
     }
     startedSaving() {
         this.props.onShowSavingAlert();
@@ -103,13 +95,13 @@ class SB3Downloader extends React.Component {
                 suggestedName: this.props.projectFilename,
                 types: [
                     {
-                        description: "AmpMod Project",
+                        description: 'AmpMod Project',
                         accept: {
-                            "application/octet-stream": ".apz",
-                        },
-                    },
+                            'application/octet-stream': '.apz'
+                        }
+                    }
                 ],
-                excludeAcceptAllOption: true,
+                excludeAcceptAllOption: true
             });
             await this.saveToHandle(handle);
             this.props.onSetFileHandle(handle);
@@ -148,7 +140,7 @@ class SB3Downloader extends React.Component {
             const jszipStream = this.props.saveProjectSb3Stream();
 
             const abortController = new AbortController();
-            jszipStream.on("error", error => {
+            jszipStream.on('error', error => {
                 abortController.abort(error);
             });
 
@@ -181,13 +173,13 @@ class SB3Downloader extends React.Component {
             const zipStream = new ReadableStream(
                 {
                     start: controller => {
-                        jszipStream.on("data", data => {
+                        jszipStream.on('data', data => {
                             controller.enqueue(data);
                             if (controller.desiredSize <= 0) {
                                 pauseJSZipStream();
                             }
                         });
-                        jszipStream.on("end", () => {
+                        jszipStream.on('end', () => {
                             controller.close();
                         });
                         resumeJSZipStream();
@@ -197,10 +189,10 @@ class SB3Downloader extends React.Component {
                     },
                     cancel: () => {
                         pauseJSZipStream();
-                    },
+                    }
                 },
                 new ByteLengthQueuingStrategy({
-                    highWaterMark: HIGH_WATER_MARK_BYTES,
+                    highWaterMark: HIGH_WATER_MARK_BYTES
                 })
             );
 
@@ -227,12 +219,12 @@ class SB3Downloader extends React.Component {
                 },
                 abort: async () => {
                     await writable.abort();
-                },
+                }
             });
 
             zipStream
                 .pipeTo(fileStream, {
-                    signal: abortController.signal,
+                    signal: abortController.signal
                 })
                 .then(() => {
                     this.finishedSaving();
@@ -245,31 +237,29 @@ class SB3Downloader extends React.Component {
     }
     handleSaveError(e) {
         // AbortError can happen when someone cancels the file selector dialog
-        if (e && e.name === "AbortError") {
+        if (e && e.name === 'AbortError') {
             return;
         }
         log.error(e);
         this.props.onShowSaveErrorAlert();
     }
     render() {
-        const { children } = this.props;
+        const {children} = this.props;
         return children(
             this.props.className,
             this.downloadProject,
             this.props.showSaveFilePicker
                 ? {
                       available: true,
-                      name: this.props.fileHandle
-                          ? this.props.fileHandle.name
-                          : null,
+                      name: this.props.fileHandle ? this.props.fileHandle.name : null,
                       saveAsNew: this.saveAsNew,
                       saveToLastFile: this.saveToLastFile,
                       saveToLastFileOrNew: this.saveToLastFileOrNew,
-                      smartSave: this.saveToLastFileOrNew,
+                      smartSave: this.saveToLastFileOrNew
                   }
                 : {
                       available: false,
-                      smartSave: this.downloadProject,
+                      smartSave: this.downloadProject
                   }
         );
     }
@@ -287,7 +277,7 @@ SB3Downloader.propTypes = {
     children: PropTypes.func,
     className: PropTypes.string,
     fileHandle: PropTypes.shape({
-        name: PropTypes.string,
+        name: PropTypes.string
     }),
     onSaveFinished: PropTypes.func,
     projectFilename: PropTypes.string,
@@ -300,41 +290,28 @@ SB3Downloader.propTypes = {
     onShowSaveSuccessAlert: PropTypes.func,
     onShowSaveErrorAlert: PropTypes.func,
     onProjectUnchanged: PropTypes.func,
-    showSaveFilePicker: PropTypes.func,
+    showSaveFilePicker: PropTypes.func
 };
 SB3Downloader.defaultProps = {
-    className: "",
-    showSaveFilePicker:
-        typeof showSaveFilePicker === "function"
-            ? window.showSaveFilePicker.bind(window)
-            : null,
+    className: '',
+    showSaveFilePicker: typeof showSaveFilePicker === 'function' ? window.showSaveFilePicker.bind(window) : null
 };
 
 const mapStateToProps = state => ({
     fileHandle: state.scratchGui.tw.fileHandle,
-    saveProjectSb3: state.scratchGui.vm.saveProjectSb3.bind(
-        state.scratchGui.vm
-    ),
-    saveProjectSb3Stream: state.scratchGui.vm.saveProjectSb3Stream.bind(
-        state.scratchGui.vm
-    ),
-    canSaveProject: getIsShowingProject(
-        state.scratchGui.projectState.loadingState
-    ),
-    projectFilename: getProjectFilename(
-        state.scratchGui.projectTitle,
-        projectTitleInitialState
-    ),
+    saveProjectSb3: state.scratchGui.vm.saveProjectSb3.bind(state.scratchGui.vm),
+    saveProjectSb3Stream: state.scratchGui.vm.saveProjectSb3Stream.bind(state.scratchGui.vm),
+    canSaveProject: getIsShowingProject(state.scratchGui.projectState.loadingState),
+    projectFilename: getProjectFilename(state.scratchGui.projectTitle, projectTitleInitialState)
 });
 
 const mapDispatchToProps = dispatch => ({
     onSetFileHandle: fileHandle => dispatch(setFileHandle(fileHandle)),
     onSetProjectTitle: title => dispatch(setProjectTitle(title)),
-    onShowSavingAlert: () => showAlertWithTimeout(dispatch, "saving"),
-    onShowSaveSuccessAlert: () =>
-        showAlertWithTimeout(dispatch, "twSaveToDiskSuccess"),
-    onShowSaveErrorAlert: () => dispatch(showStandardAlert("savingError")),
-    onProjectUnchanged: () => dispatch(setProjectUnchanged()),
+    onShowSavingAlert: () => showAlertWithTimeout(dispatch, 'saving'),
+    onShowSaveSuccessAlert: () => showAlertWithTimeout(dispatch, 'twSaveToDiskSuccess'),
+    onShowSaveErrorAlert: () => dispatch(showStandardAlert('savingError')),
+    onProjectUnchanged: () => dispatch(setProjectUnchanged())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SB3Downloader);

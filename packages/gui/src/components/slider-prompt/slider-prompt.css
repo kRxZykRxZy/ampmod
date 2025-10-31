@@ -1,5 +1,5 @@
-@import "../../css/colors.css";
-@import "../../css/units.css";
+@import '../../css/colors.css';
+@import '../../css/units.css';
 
 .modal-content {
     width: 360px;
@@ -49,10 +49,10 @@
     color: white;
 }
 
-[dir="ltr"] .button-row button + button {
+[dir='ltr'] .button-row button + button {
     margin-left: 0.5rem;
 }
 
-[dir="rtl"] .button-row button + button {
+[dir='rtl'] .button-row button + button {
     margin-right: 0.5rem;
 }

@@ -10,14 +10,12 @@ const {APP_NAME} = require('./brand');
  * @param {string} message
  */
 const alert = (window, message) => {
-  dialog.showMessageBoxSync(window, {
-    title: APP_NAME,
-    message: '' + message,
-    buttons: [
-      translate('prompt.ok')
-    ],
-    noLink: true
-  });
+    dialog.showMessageBoxSync(window, {
+        title: APP_NAME,
+        message: '' + message,
+        buttons: [translate('prompt.ok')],
+        noLink: true
+    });
 };
 
 /**
@@ -26,21 +24,18 @@ const alert = (window, message) => {
  * @returns {boolean}
  */
 const confirm = (window, message) => {
-  const result = dialog.showMessageBoxSync(window, {
-    title: APP_NAME,
-    message: '' + message,
-    buttons: [
-      translate('prompt.ok'),
-      translate('prompt.cancel')
-    ],
-    defaultId: 0,
-    cancelId: 1,
-    noLink: true
-  });
-  return result === 0;
+    const result = dialog.showMessageBoxSync(window, {
+        title: APP_NAME,
+        message: '' + message,
+        buttons: [translate('prompt.ok'), translate('prompt.cancel')],
+        defaultId: 0,
+        cancelId: 1,
+        noLink: true
+    });
+    return result === 0;
 };
 
 module.exports = {
-  alert,
-  confirm
+    alert,
+    confirm
 };

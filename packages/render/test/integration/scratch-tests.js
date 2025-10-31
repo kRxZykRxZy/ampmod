@@ -15,20 +15,20 @@ const checkOneGpuMode = (t, says) => {
     let didPlan = false;
     let didEnd = false;
     const reporters = {
-        comment (message) {
+        comment(message) {
             t.comment(message);
         },
-        pass (reason) {
+        pass(reason) {
             t.pass(reason);
         },
-        fail (reason) {
+        fail(reason) {
             t.fail(reason);
         },
-        plan (count) {
+        plan(count) {
             didPlan = true;
             t.plan(Number(count));
         },
-        end () {
+        end() {
             didEnd = true;
             t.end();
         }
@@ -87,7 +87,7 @@ const testFile = async (file, page) => {
         });
 
         for (const useGpuMode of useGpuModes) {
-            const messages = allMessages[useGpuMode] = [];
+            const messages = (allMessages[useGpuMode] = []);
 
             vm.renderer.setUseGpuMode(useGpuMode);
             vm.greenFlag();
@@ -95,7 +95,7 @@ const testFile = async (file, page) => {
 
             // wait for all threads to complete before moving on to the next mode
             while (vm.runtime.threads.some(thread => vm.runtime.isActiveThread(thread))) {
-                if ((Date.now() - startTime) >= TIMEOUT) {
+                if (Date.now() - startTime >= TIMEOUT) {
                     // if we push the message after end, the failure from tap is not very useful:
                     // "not ok test after end() was called"
                     messages.unshift(`fail Threads still running after ${TIMEOUT}ms`);
@@ -119,8 +119,7 @@ const testFile = async (file, page) => {
     const browser = await chromium.launch();
     const page = await browser.newPage();
 
-    const files = fs.readdirSync(testDir())
-        .filter(uri => uri.endsWith('.sb2') || uri.endsWith('.sb3'));
+    const files = fs.readdirSync(testDir()).filter(uri => uri.endsWith('.sb2') || uri.endsWith('.sb3'));
 
     for (const file of files) {
         await testFile(file, page);

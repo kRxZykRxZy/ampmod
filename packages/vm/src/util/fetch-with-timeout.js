@@ -30,13 +30,11 @@ const setFetch = newFetch => {
 const fetchWithTimeout = (resource, init, timeout) => {
     let timeoutID = null;
     // Not supported in Safari <11
-    const controller = window.AbortController
-        ? new window.AbortController()
-        : null;
+    const controller = window.AbortController ? new window.AbortController() : null;
     const signal = controller ? controller.signal : null;
     // The fetch call races a timer.
     return Promise.race([
-        myFetch(resource, Object.assign({ signal }, init)).then(
+        myFetch(resource, Object.assign({signal}, init)).then(
             response => {
                 clearTimeout(timeoutID);
                 return response;
@@ -51,11 +49,11 @@ const fetchWithTimeout = (resource, init, timeout) => {
                 if (controller) controller.abort();
                 reject(new Error(`Fetch timed out after ${timeout} ms`));
             }, timeout);
-        }),
+        })
     ]);
 };
 
 module.exports = {
     fetchWithTimeout,
-    setFetch,
+    setFetch
 };

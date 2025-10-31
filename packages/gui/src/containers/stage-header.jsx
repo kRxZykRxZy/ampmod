@@ -1,47 +1,40 @@
-import PropTypes from "prop-types";
-import React from "react";
-import bindAll from "lodash.bindall";
-import VM from "scratch-vm";
-import {
-    STAGE_DISPLAY_SCALE_METADATA,
-    STAGE_DISPLAY_SIZES,
-    STAGE_SIZE_MODES,
-} from "../lib/layout-constants";
-import { setStageSize } from "../reducers/stage-size";
-import { setFullScreen } from "../reducers/mode";
-import { openSettingsModal } from "../reducers/modals";
+import PropTypes from 'prop-types';
+import React from 'react';
+import bindAll from 'lodash.bindall';
+import VM from 'scratch-vm';
+import {STAGE_DISPLAY_SCALE_METADATA, STAGE_DISPLAY_SIZES, STAGE_SIZE_MODES} from '../lib/layout-constants';
+import {setStageSize} from '../reducers/stage-size';
+import {setFullScreen} from '../reducers/mode';
+import {openSettingsModal} from '../reducers/modals';
 
-import { connect } from "react-redux";
+import {connect} from 'react-redux';
 
-import StageHeaderComponent from "../components/stage-header/stage-header.jsx";
+import StageHeaderComponent from '../components/stage-header/stage-header.jsx';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class StageHeader extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["handleKeyPress"]);
+        bindAll(this, ['handleKeyPress']);
         this.checkInvalidStageSizeMode();
     }
     componentDidMount() {
-        document.addEventListener("keydown", this.handleKeyPress);
+        document.addEventListener('keydown', this.handleKeyPress);
     }
     componentDidUpdate() {
         this.checkInvalidStageSizeMode();
     }
     componentWillUnmount() {
-        document.removeEventListener("keydown", this.handleKeyPress);
+        document.removeEventListener('keydown', this.handleKeyPress);
     }
     handleKeyPress(event) {
-        if (event.key === "Escape" && this.props.isFullScreen) {
+        if (event.key === 'Escape' && this.props.isFullScreen) {
             this.props.onSetStageUnFullScreen();
         }
     }
     checkInvalidStageSizeMode() {
         // Switch from "large" to "full" when the large option isn't even displayed in the interface
-        if (
-            this.props.stageSizeMode === STAGE_SIZE_MODES.large &&
-            !this.showFixedLargeSize()
-        ) {
+        if (this.props.stageSizeMode === STAGE_SIZE_MODES.large && !this.showFixedLargeSize()) {
             this.props.onSetStageFull();
         }
     }
@@ -49,16 +42,13 @@ class StageHeader extends React.Component {
         // Fixed width "large" mode should only be available when it would be smaller than the constrained
         // full stage, otherwise there are some sizes where switching to the smaller size would make it
         // larger instead of smaller.
-        const constrainedScale =
-            STAGE_DISPLAY_SCALE_METADATA[STAGE_DISPLAY_SIZES.constrained].scale;
-        const constrainedWidth =
-            this.props.customStageSize.width * constrainedScale;
-        const largeWidth =
-            STAGE_DISPLAY_SCALE_METADATA[STAGE_DISPLAY_SIZES.large].width;
+        const constrainedScale = STAGE_DISPLAY_SCALE_METADATA[STAGE_DISPLAY_SIZES.constrained].scale;
+        const constrainedWidth = this.props.customStageSize.width * constrainedScale;
+        const largeWidth = STAGE_DISPLAY_SCALE_METADATA[STAGE_DISPLAY_SIZES.large].width;
         return constrainedWidth > largeWidth;
     }
     render() {
-        const { ...props } = this.props;
+        const {...props} = this.props;
         return (
             <StageHeaderComponent
                 {...props}
@@ -75,7 +65,7 @@ StageHeader.propTypes = {
     isWindowFullScreen: PropTypes.bool.isRequired,
     customStageSize: PropTypes.shape({
         width: PropTypes.number.isRequired,
-        height: PropTypes.number.isRequired,
+        height: PropTypes.number.isRequired
     }).isRequired,
     dimensions: PropTypes.arrayOf(PropTypes.number),
     isPlayerOnly: PropTypes.bool,
@@ -85,7 +75,7 @@ StageHeader.propTypes = {
     // tw: replace showBranding
     isEmbedded: PropTypes.bool.isRequired,
     stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)).isRequired,
-    vm: PropTypes.instanceOf(VM).isRequired,
+    vm: PropTypes.instanceOf(VM).isRequired
 };
 
 const mapStateToProps = state => ({
@@ -97,7 +87,7 @@ const mapStateToProps = state => ({
     // tw: update when dimensions or isWindowFullScreen changes
     isWindowFullScreen: state.scratchGui.tw.isWindowFullScreen,
     dimensions: state.scratchGui.tw.dimensions,
-    isPlayerOnly: state.scratchGui.mode.isPlayerOnly,
+    isPlayerOnly: state.scratchGui.mode.isPlayerOnly
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -106,7 +96,7 @@ const mapDispatchToProps = dispatch => ({
     onSetStageFull: () => dispatch(setStageSize(STAGE_SIZE_MODES.full)),
     onSetStageFullScreen: () => dispatch(setFullScreen(true)),
     onSetStageUnFullScreen: () => dispatch(setFullScreen(false)),
-    onOpenSettings: () => dispatch(openSettingsModal()),
+    onOpenSettings: () => dispatch(openSettingsModal())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StageHeader);

@@ -1,9 +1,9 @@
-const test = require("tap").test;
+const test = require('tap').test;
 
-const Runtime = require("../../src/engine/runtime");
-const Scratch3PenBlocks = require("../../src/extensions/scratch3_pen/index");
+const Runtime = require('../../src/engine/runtime');
+const Scratch3PenBlocks = require('../../src/extensions/scratch3_pen/index');
 
-test("_clampPenSize", t => {
+test('_clampPenSize', t => {
     const rt = new Runtime();
     const pen = new Scratch3PenBlocks(rt);
 
@@ -17,7 +17,7 @@ test("_clampPenSize", t => {
     t.equal(pen._clampPenSize(1201), 1200);
 
     rt.setRuntimeOptions({
-        miscLimits: false,
+        miscLimits: false
     });
     t.equal(pen._clampPenSize(-1), 0);
     t.equal(pen._clampPenSize(0), 0);

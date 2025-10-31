@@ -1,46 +1,46 @@
-import bindAll from "lodash.bindall";
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
+import bindAll from 'lodash.bindall';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
 
-import { setHoveredSprite } from "../reducers/hovered-target";
-import { updateAssetDrag } from "../reducers/asset-drag";
-import VM from "scratch-vm";
-import getCostumeUrl from "../lib/get-costume-url";
-import DragRecognizer from "../lib/drag-recognizer";
-import { getEventXY } from "../lib/touch-utils";
+import {setHoveredSprite} from '../reducers/hovered-target';
+import {updateAssetDrag} from '../reducers/asset-drag';
+import VM from 'scratch-vm';
+import getCostumeUrl from '../lib/get-costume-url';
+import DragRecognizer from '../lib/drag-recognizer';
+import {getEventXY} from '../lib/touch-utils';
 
-import SpriteSelectorItemComponent from "../components/sprite-selector-item/sprite-selector-item.jsx";
+import SpriteSelectorItemComponent from '../components/sprite-selector-item/sprite-selector-item.jsx';
 
 class SpriteSelectorItem extends React.PureComponent {
     constructor(props) {
         super(props);
         bindAll(this, [
-            "getCostumeData",
-            "setRef",
-            "handleClick",
-            "handleDelete",
-            "handleDuplicate",
-            "handleExport",
-            "handleRename",
-            "handleMouseEnter",
-            "handleMouseLeave",
-            "handleMouseDown",
-            "handleDragEnd",
-            "handleDrag",
-            "handleTouchEnd",
+            'getCostumeData',
+            'setRef',
+            'handleClick',
+            'handleDelete',
+            'handleDuplicate',
+            'handleExport',
+            'handleRename',
+            'handleMouseEnter',
+            'handleMouseLeave',
+            'handleMouseDown',
+            'handleDragEnd',
+            'handleDrag',
+            'handleTouchEnd'
         ]);
 
         this.dragRecognizer = new DragRecognizer({
             onDrag: this.handleDrag,
-            onDragEnd: this.handleDragEnd,
+            onDragEnd: this.handleDragEnd
         });
     }
     componentDidMount() {
-        document.addEventListener("touchend", this.handleTouchEnd);
+        document.addEventListener('touchend', this.handleTouchEnd);
     }
     componentWillUnmount() {
-        document.removeEventListener("touchend", this.handleTouchEnd);
+        document.removeEventListener('touchend', this.handleTouchEnd);
         this.dragRecognizer.reset();
     }
     getCostumeData() {
@@ -56,7 +56,7 @@ class SpriteSelectorItem extends React.PureComponent {
                 currentOffset: null,
                 dragging: false,
                 dragType: null,
-                index: null,
+                index: null
             });
         }
         setTimeout(() => {
@@ -70,13 +70,13 @@ class SpriteSelectorItem extends React.PureComponent {
             dragging: true,
             dragType: this.props.dragType,
             index: this.props.index,
-            payload: this.props.dragPayload,
+            payload: this.props.dragPayload
         });
         this.noClick = true;
     }
     handleTouchEnd(e) {
-        const { x, y } = getEventXY(e);
-        const { top, left, bottom, right } = this.ref.getBoundingClientRect();
+        const {x, y} = getEventXY(e);
+        const {top, left, bottom, right} = this.ref.getBoundingClientRect();
         if (x >= left && x <= right && y >= top && y <= bottom) {
             this.handleMouseEnter();
         }
@@ -140,18 +140,10 @@ class SpriteSelectorItem extends React.PureComponent {
                 costumeURL={this.getCostumeData()}
                 preventContextMenu={this.dragRecognizer.gestureInProgress()}
                 onClick={this.handleClick}
-                onDeleteButtonClick={
-                    onDeleteButtonClick ? this.handleDelete : null
-                }
-                onDuplicateButtonClick={
-                    onDuplicateButtonClick ? this.handleDuplicate : null
-                }
-                onExportButtonClick={
-                    onExportButtonClick ? this.handleExport : null
-                }
-                onRenameButtonClick={
-                    onRenameButtonClick ? this.handleRename : null
-                }
+                onDeleteButtonClick={onDeleteButtonClick ? this.handleDelete : null}
+                onDuplicateButtonClick={onDuplicateButtonClick ? this.handleDuplicate : null}
+                onExportButtonClick={onExportButtonClick ? this.handleExport : null}
+                onRenameButtonClick={onRenameButtonClick ? this.handleRename : null}
                 onMouseDown={this.handleMouseDown}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
@@ -183,26 +175,21 @@ SpriteSelectorItem.propTypes = {
     onExportButtonClick: PropTypes.func,
     receivedBlocks: PropTypes.bool.isRequired,
     selected: PropTypes.bool,
-    vm: PropTypes.instanceOf(VM).isRequired,
+    vm: PropTypes.instanceOf(VM).isRequired
 };
 
-const mapStateToProps = (state, { id }) => ({
+const mapStateToProps = (state, {id}) => ({
     dragging: state.scratchGui.assetDrag.dragging,
-    receivedBlocks:
-        state.scratchGui.hoveredTarget.receivedBlocks &&
-        state.scratchGui.hoveredTarget.sprite === id,
-    vm: state.scratchGui.vm,
+    receivedBlocks: state.scratchGui.hoveredTarget.receivedBlocks && state.scratchGui.hoveredTarget.sprite === id,
+    vm: state.scratchGui.vm
 });
 const mapDispatchToProps = dispatch => ({
     dispatchSetHoveredSprite: spriteId => {
         dispatch(setHoveredSprite(spriteId));
     },
-    onDrag: data => dispatch(updateAssetDrag(data)),
+    onDrag: data => dispatch(updateAssetDrag(data))
 });
 
-const ConnectedComponent = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(SpriteSelectorItem);
+const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(SpriteSelectorItem);
 
 export default ConnectedComponent;

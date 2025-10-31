@@ -1,12 +1,11 @@
 const twgl = require('twgl.js');
 
-
 class ShaderManager {
     /**
      * @param {WebGLRenderingContext} gl WebGL rendering context to create shaders for
      * @constructor
      */
-    constructor (gl) {
+    constructor(gl) {
         this._gl = gl;
 
         /**
@@ -29,7 +28,7 @@ class ShaderManager {
      * @param {int} effectBits Bitmask representing the enabled effects.
      * @returns {ProgramInfo} The shader's program info.
      */
-    getShader (drawMode, effectBits) {
+    getShader(drawMode, effectBits) {
         const cache = this._shaderCache[drawMode];
         if (drawMode === ShaderManager.DRAW_MODE.silhouette) {
             // Silhouette mode isn't affected by these effects.
@@ -49,12 +48,10 @@ class ShaderManager {
      * @returns {ProgramInfo} The new shader's program info.
      * @private
      */
-    _buildShader (drawMode, effectBits) {
+    _buildShader(drawMode, effectBits) {
         const numEffects = ShaderManager.EFFECTS.length;
 
-        const defines = [
-            `#define DRAW_MODE_${drawMode}`
-        ];
+        const defines = [`#define DRAW_MODE_${drawMode}`];
         for (let index = 0; index < numEffects; ++index) {
             if ((effectBits & (1 << index)) !== 0) {
                 defines.push(`#define ENABLE_${ShaderManager.EFFECTS[index]}`);
@@ -119,7 +116,7 @@ ShaderManager.EFFECT_INFO = {
     whirl: {
         uniformName: 'u_whirl',
         mask: 1 << 2,
-        converter: x => -x * Math.PI / 180,
+        converter: x => (-x * Math.PI) / 180,
         shapeChanges: true
     },
     /** Pixelate effect */
@@ -151,7 +148,7 @@ ShaderManager.EFFECT_INFO = {
     ghost: {
         uniformName: 'u_ghost',
         mask: 1 << 6,
-        converter: x => 1 - (Math.max(0, Math.min(x, 100)) / 100),
+        converter: x => 1 - Math.max(0, Math.min(x, 100)) / 100,
         shapeChanges: false
     }
 };

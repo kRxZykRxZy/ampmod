@@ -1,27 +1,27 @@
-import { FormattedMessage } from "react-intl";
-import PropTypes from "prop-types";
-import React from "react";
-import keyMirror from "keymirror";
-import classNames from "classnames";
+import {FormattedMessage} from 'react-intl';
+import PropTypes from 'prop-types';
+import React from 'react';
+import keyMirror from 'keymirror';
+import classNames from 'classnames';
 
-import BalancedFormattedMessage from "../../containers/balanced-formatted-message.jsx";
-import Box from "../box/box.jsx";
-import Dots from "./dots.jsx";
+import BalancedFormattedMessage from '../../containers/balanced-formatted-message.jsx';
+import Box from '../box/box.jsx';
+import Dots from './dots.jsx';
 
-import closeIcon from "../close-button/icon--close.svg";
+import closeIcon from '../close-button/icon--close.svg';
 
-import backIcon from "./icons/back.svg";
-import bluetoothIcon from "./icons/bluetooth-white.svg";
-import enterUpdateIcon from "./icons/enter-update.svg";
-import radarIcon from "./icons/searching.png";
-import warningIcon from "./icons/warning.svg";
+import backIcon from './icons/back.svg';
+import bluetoothIcon from './icons/bluetooth-white.svg';
+import enterUpdateIcon from './icons/enter-update.svg';
+import radarIcon from './icons/searching.png';
+import warningIcon from './icons/warning.svg';
 
-import styles from "./connection-modal.css";
+import styles from './connection-modal.css';
 
 const PHASES = keyMirror({
     prescan: null,
     pressbutton: null,
-    notfound: null,
+    notfound: null
 });
 
 const AutoScanningStep = props => {
@@ -39,25 +39,14 @@ const AutoScanningStep = props => {
                     <div className={styles.centeredRow}>
                         {props.phase === PHASES.prescan && (
                             <React.Fragment>
-                                <img
-                                    className={styles.radarBig}
-                                    src={radarIcon}
-                                    draggable={false}
-                                />
-                                <img
-                                    className={styles.bluetoothCenteredIcon}
-                                    src={bluetoothIcon}
-                                    draggable={false}
-                                />
+                                <img className={styles.radarBig} src={radarIcon} draggable={false} />
+                                <img className={styles.bluetoothCenteredIcon} src={bluetoothIcon} draggable={false} />
                             </React.Fragment>
                         )}
                         {props.phase === PHASES.pressbutton && (
                             <React.Fragment>
                                 <img
-                                    className={classNames(
-                                        styles.radarBig,
-                                        styles.radarSpin
-                                    )}
+                                    className={classNames(styles.radarBig, styles.radarSpin)}
                                     src={radarIcon}
                                     draggable={false}
                                 />
@@ -70,11 +59,7 @@ const AutoScanningStep = props => {
                         )}
                         {props.phase === PHASES.notfound && (
                             <React.Fragment>
-                                <img
-                                    className={styles.helpStepImage}
-                                    src={warningIcon}
-                                    draggable={false}
-                                />
+                                <img className={styles.helpStepImage} src={warningIcon} draggable={false} />
                                 <FormattedMessage
                                     className={styles.helpStepText}
                                     defaultMessage="No devices found"
@@ -87,12 +72,7 @@ const AutoScanningStep = props => {
                 </div>
             </Box>
             <Box className={styles.bottomArea}>
-                <Box
-                    className={classNames(
-                        styles.bottomAreaItem,
-                        styles.instructions
-                    )}
-                >
+                <Box className={classNames(styles.bottomAreaItem, styles.instructions)}>
                     {props.phase === PHASES.prescan && (
                         <FormattedMessage
                             defaultMessage="Have your device nearby, then begin searching."
@@ -109,12 +89,7 @@ const AutoScanningStep = props => {
                     )}
                 </Box>
                 {showUpdate && (
-                    <Box
-                        className={classNames(
-                            styles.bottomAreaItem,
-                            styles.instructions
-                        )}
-                    >
+                    <Box className={classNames(styles.bottomAreaItem, styles.instructions)}>
                         <BalancedFormattedMessage
                             defaultMessage="If you don't see your device, you may need to update it to work with Scratch."
                             description="Prompt for updating a peripheral device"
@@ -123,17 +98,9 @@ const AutoScanningStep = props => {
                     </Box>
                 )}
                 <Dots className={styles.bottomAreaItem} counter={0} total={3} />
-                <Box
-                    className={classNames(
-                        styles.bottomAreaItem,
-                        styles.buttonRow
-                    )}
-                >
+                <Box className={classNames(styles.bottomAreaItem, styles.buttonRow)}>
                     {props.phase === PHASES.prescan && (
-                        <button
-                            className={styles.connectionButton}
-                            onClick={props.onStartScan}
-                        >
+                        <button className={styles.connectionButton} onClick={props.onStartScan}>
                             <FormattedMessage
                                 defaultMessage="Start Searching"
                                 description="Button in prompt for starting a search"
@@ -143,38 +110,21 @@ const AutoScanningStep = props => {
                     )}
                     {props.phase === PHASES.pressbutton && (
                         <div className={styles.segmentedButton}>
-                            <button
-                                disabled
-                                className={styles.connectionButton}
-                            >
+                            <button disabled className={styles.connectionButton}>
                                 <FormattedMessage
                                     defaultMessage="Searching..."
                                     description="Label indicating that search is in progress"
                                     id="gui.connection.connecting-searchbutton"
                                 />
                             </button>
-                            <button
-                                className={styles.connectionButton}
-                                onClick={props.onRefresh}
-                            >
-                                <img
-                                    className={styles.abortConnectingIcon}
-                                    src={closeIcon}
-                                    draggable={false}
-                                />
+                            <button className={styles.connectionButton} onClick={props.onRefresh}>
+                                <img className={styles.abortConnectingIcon} src={closeIcon} draggable={false} />
                             </button>
                         </div>
                     )}
                     {props.phase === PHASES.notfound && (
-                        <button
-                            className={styles.connectionButton}
-                            onClick={props.onRefresh}
-                        >
-                            <img
-                                className={styles.buttonIconLeft}
-                                src={backIcon}
-                                draggable={false}
-                            />
+                        <button className={styles.connectionButton} onClick={props.onRefresh}>
+                            <img className={styles.buttonIconLeft} src={backIcon} draggable={false} />
                             <FormattedMessage
                                 defaultMessage="Try again"
                                 description="Button in prompt for trying a device search again"
@@ -184,10 +134,7 @@ const AutoScanningStep = props => {
                     )}
                     {showUpdate && (
                         <button
-                            className={classNames(
-                                styles.bottomAreaItem,
-                                styles.connectionButton
-                            )}
+                            className={classNames(styles.bottomAreaItem, styles.connectionButton)}
                             onClick={props.onUpdatePeripheral}
                         >
                             <FormattedMessage
@@ -195,11 +142,7 @@ const AutoScanningStep = props => {
                                 description="Button to enter the peripheral update mode"
                                 id="gui.connection.auto-scanning.updatePeripheralButton"
                             />
-                            <img
-                                className={styles.buttonIconRight}
-                                src={enterUpdateIcon}
-                                draggable={false}
-                            />
+                            <img className={styles.buttonIconRight} src={enterUpdateIcon} draggable={false} />
                         </button>
                     )}
                 </Box>
@@ -213,11 +156,11 @@ AutoScanningStep.propTypes = {
     onRefresh: PropTypes.func,
     onStartScan: PropTypes.func,
     onUpdatePeripheral: PropTypes.func,
-    phase: PropTypes.oneOf(Object.keys(PHASES)),
+    phase: PropTypes.oneOf(Object.keys(PHASES))
 };
 
 AutoScanningStep.defaultProps = {
-    phase: PHASES.prescan,
+    phase: PHASES.prescan
 };
 
-export { AutoScanningStep as default, PHASES };
+export {AutoScanningStep as default, PHASES};

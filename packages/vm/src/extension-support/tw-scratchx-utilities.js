@@ -9,7 +9,7 @@
  * @returns {string}
  */
 const generateExtensionId = scratchXName => {
-    const sanitizedName = scratchXName.replace(/[^a-z0-9]/gi, "").toLowerCase();
+    const sanitizedName = scratchXName.replace(/[^a-z0-9]/gi, '').toLowerCase();
     return `sbx${sanitizedName}`;
 };
 
@@ -21,5 +21,5 @@ const argumentIndexToId = i => i.toString();
 
 module.exports = {
     generateExtensionId,
-    argumentIndexToId,
+    argumentIndexToId
 };

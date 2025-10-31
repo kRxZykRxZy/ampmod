@@ -13,7 +13,7 @@
  */
 
 class Timer {
-    constructor(nowObj = Timer.nowObj) {
+    constructor (nowObj = Timer.nowObj) {
         /**
          * Used to store the start time of a timer action.
          * Updated when calling `timer.start`.
@@ -32,7 +32,7 @@ class Timer {
      * However, instancing it like below (caching the self.performance to a local variable) negates most of the issues.
      * @type {boolean}
      */
-    static get USE_PERFORMANCE() {
+    static get USE_PERFORMANCE () {
         return false;
     }
 
@@ -40,24 +40,19 @@ class Timer {
      * Legacy object to allow for us to call now to get the old style date time (for backwards compatibility)
      * @deprecated This is only called via the nowObj.now() if no other means is possible...
      */
-    static get legacyDateCode() {
+    static get legacyDateCode () {
         return {
             now: function () {
                 return new Date().getTime();
-            },
+            }
         };
     }
 
     /**
      * Use this object to route all time functions through single access points.
      */
-    static get nowObj() {
-        if (
-            Timer.USE_PERFORMANCE &&
-            typeof self !== "undefined" &&
-            self.performance &&
-            "now" in self.performance
-        ) {
+    static get nowObj () {
+        if (Timer.USE_PERFORMANCE && typeof self !== 'undefined' && self.performance && 'now' in self.performance) {
             return self.performance;
         } else if (Date.now) {
             return Date;
@@ -69,7 +64,7 @@ class Timer {
      * Return the currently known absolute time, in ms precision.
      * @returns {number} ms elapsed since 1 January 1970 00:00:00 UTC.
      */
-    time() {
+    time () {
         return this.nowObj.now();
     }
 
@@ -77,11 +72,11 @@ class Timer {
      * Start a timer for measuring elapsed time,
      * at the most accurate precision possible.
      */
-    start() {
+    start () {
         this.startTime = this.nowObj.now();
     }
 
-    timeElapsed() {
+    timeElapsed () {
         return this.nowObj.now() - this.startTime;
     }
 
@@ -91,7 +86,7 @@ class Timer {
      * @param {number} timeout - number of milliseconds to delay before calling the handler
      * @returns {number} - the ID of the new timeout
      */
-    setTimeout(handler, timeout) {
+    setTimeout (handler, timeout) {
         return global.setTimeout(handler, timeout);
     }
 
@@ -100,7 +95,7 @@ class Timer {
      * @param {number} timeoutId - the ID returned by `setTimeout()`
      * @memberof Timer
      */
-    clearTimeout(timeoutId) {
+    clearTimeout (timeoutId) {
         global.clearTimeout(timeoutId);
     }
 }

@@ -1,14 +1,8 @@
-import paper from "@turbowarp/paper";
-import log from "../log/log";
-import {
-    ART_BOARD_BOUNDS,
-    ART_BOARD_WIDTH,
-    ART_BOARD_HEIGHT,
-    CENTER,
-    MAX_WORKSPACE_BOUNDS,
-} from "./view";
-import { isGroupItem } from "./item";
-import { isBitmap, isVector } from "../lib/format";
+import paper from '@turbowarp/paper';
+import log from '../log/log';
+import {ART_BOARD_BOUNDS, ART_BOARD_WIDTH, ART_BOARD_HEIGHT, CENTER, MAX_WORKSPACE_BOUNDS} from './view';
+import {isGroupItem} from './item';
+import {isBitmap, isVector} from '../lib/format';
 
 const CHECKERBOARD_SIZE = 8;
 const CROSSHAIR_SIZE = 16;
@@ -23,7 +17,7 @@ const _getLayer = function (layerString) {
 };
 
 const _getPaintingLayer = function () {
-    return _getLayer("isPaintingLayer");
+    return _getLayer('isPaintingLayer');
 };
 
 /**
@@ -33,20 +27,20 @@ const _getPaintingLayer = function () {
  * @return {HTMLCanvasElement} the canvas
  */
 const createCanvas = function (width, height) {
-    const canvas = document.createElement("canvas");
+    const canvas = document.createElement('canvas');
     canvas.width = width ? width : ART_BOARD_WIDTH;
     canvas.height = height ? height : ART_BOARD_HEIGHT;
-    canvas.getContext("2d").imageSmoothingEnabled = false;
+    canvas.getContext('2d').imageSmoothingEnabled = false;
     return canvas;
 };
 
 const clearRaster = function () {
-    const layer = _getLayer("isRasterLayer");
+    const layer = _getLayer('isRasterLayer');
     layer.removeChildren();
 
     // Generate blank raster
     const raster = new paper.Raster(createCanvas());
-    raster.canvas.getContext("2d").imageSmoothingEnabled = false;
+    raster.canvas.getContext('2d').imageSmoothingEnabled = false;
     raster.parent = layer;
     raster.guide = true;
     raster.locked = true;
@@ -54,24 +48,24 @@ const clearRaster = function () {
 };
 
 const getRaster = function () {
-    const layer = _getLayer("isRasterLayer");
+    const layer = _getLayer('isRasterLayer');
     // Generate blank raster
     if (layer.children.length === 0) {
         clearRaster();
     }
-    return _getLayer("isRasterLayer").children[0];
+    return _getLayer('isRasterLayer').children[0];
 };
 
 const getDragCrosshairLayer = function () {
-    return _getLayer("isDragCrosshairLayer");
+    return _getLayer('isDragCrosshairLayer');
 };
 
 const getBackgroundGuideLayer = function () {
-    return _getLayer("isBackgroundGuideLayer");
+    return _getLayer('isBackgroundGuideLayer');
 };
 
 const getOutlineLayer = function () {
-    return _getLayer("isOutlineLayer");
+    return _getLayer('isOutlineLayer');
 };
 
 const _convertLayer = function (layer, format) {
@@ -90,7 +84,7 @@ const _makeGuideLayer = function () {
 };
 
 const getGuideLayer = function () {
-    let layer = _getLayer("isGuideLayer");
+    let layer = _getLayer('isGuideLayer');
     if (!layer) {
         layer = _makeGuideLayer();
         _getPaintingLayer().activate();
@@ -116,7 +110,7 @@ const setGuideItem = function (item) {
 const hideGuideLayers = function (includeRaster) {
     const backgroundGuideLayer = getBackgroundGuideLayer();
     const dragCrosshairLayer = getDragCrosshairLayer();
-    const outlineLayer = _getLayer("isOutlineLayer");
+    const outlineLayer = _getLayer('isOutlineLayer');
     const guideLayer = getGuideLayer();
     dragCrosshairLayer.remove();
     outlineLayer.remove();
@@ -124,7 +118,7 @@ const hideGuideLayers = function (includeRaster) {
     backgroundGuideLayer.remove();
     let rasterLayer;
     if (includeRaster) {
-        rasterLayer = _getLayer("isRasterLayer");
+        rasterLayer = _getLayer('isRasterLayer');
         rasterLayer.remove();
     }
     return {
@@ -132,7 +126,7 @@ const hideGuideLayers = function (includeRaster) {
         outlineLayer: outlineLayer,
         guideLayer: guideLayer,
         backgroundGuideLayer: backgroundGuideLayer,
-        rasterLayer: rasterLayer,
+        rasterLayer: rasterLayer
     };
 };
 
@@ -186,10 +180,10 @@ const _makeRasterLayer = function () {
     return rasterLayer;
 };
 
-const BACKGROUND_LIGHT = "#FFFFFF";
-const BACKGROUND_TILE_LIGHT = "#D9E3F2";
-const BACKGROUND_DARK = "#111";
-const BACKGROUND_TILE_DARK = "#222";
+const BACKGROUND_LIGHT = '#FFFFFF';
+const BACKGROUND_TILE_LIGHT = '#D9E3F2';
+const BACKGROUND_DARK = '#111';
+const BACKGROUND_TILE_DARK = '#222';
 
 const _makeBackgroundPaper = function (width, height, opacity) {
     // creates a checkerboard path of width * height squares in color on white
@@ -212,17 +206,14 @@ const _makeBackgroundPaper = function (width, height, opacity) {
     }
     const vRect = new paper.Shape.Rectangle(
         new paper.Point(0, 0),
-        new paper.Point(
-            ART_BOARD_WIDTH / CHECKERBOARD_SIZE,
-            ART_BOARD_HEIGHT / CHECKERBOARD_SIZE
-        )
+        new paper.Point(ART_BOARD_WIDTH / CHECKERBOARD_SIZE, ART_BOARD_HEIGHT / CHECKERBOARD_SIZE)
     );
     vRect.fillColor = BACKGROUND_LIGHT;
     vRect.guide = true;
     vRect.locked = true;
     vRect.position = CENTER;
     const vPath = new paper.Path(pathPoints);
-    vPath.fillRule = "evenodd";
+    vPath.fillRule = 'evenodd';
     vPath.fillColor = BACKGROUND_TILE_LIGHT;
     vPath.opacity = opacity;
     vPath.guide = true;
@@ -238,49 +229,37 @@ const _makeBackgroundPaper = function (width, height, opacity) {
     return vGroup;
 };
 
-const CROSSHAIR_INNER_LIGHT = "#000000";
-const CROSSHAIR_OUTER_LIGHT = "#FFFFFF";
+const CROSSHAIR_INNER_LIGHT = '#000000';
+const CROSSHAIR_OUTER_LIGHT = '#FFFFFF';
 
 // Helper function for drawing a crosshair
 const _makeCrosshair = function (opacity, parent) {
     const crosshair = new paper.Group();
 
-    const vLine2 = new paper.Path.Line(
-        new paper.Point(0, -7),
-        new paper.Point(0, 7)
-    );
+    const vLine2 = new paper.Path.Line(new paper.Point(0, -7), new paper.Point(0, 7));
     vLine2.strokeWidth = 6;
     vLine2.strokeColor = CROSSHAIR_OUTER_LIGHT;
-    vLine2.strokeCap = "round";
+    vLine2.strokeCap = 'round';
     crosshair.addChild(vLine2);
-    const hLine2 = new paper.Path.Line(
-        new paper.Point(-7, 0),
-        new paper.Point(7, 0)
-    );
+    const hLine2 = new paper.Path.Line(new paper.Point(-7, 0), new paper.Point(7, 0));
     hLine2.strokeWidth = 6;
     hLine2.strokeColor = CROSSHAIR_OUTER_LIGHT;
-    hLine2.strokeCap = "round";
+    hLine2.strokeCap = 'round';
     crosshair.addChild(hLine2);
     const circle2 = new paper.Shape.Circle(new paper.Point(0, 0), 5.5);
     circle2.strokeWidth = 6;
     circle2.strokeColor = CROSSHAIR_OUTER_LIGHT;
     crosshair.addChild(circle2);
 
-    const vLine = new paper.Path.Line(
-        new paper.Point(0, -7),
-        new paper.Point(0, 7)
-    );
+    const vLine = new paper.Path.Line(new paper.Point(0, -7), new paper.Point(0, 7));
     vLine.strokeWidth = 2;
     vLine.strokeColor = CROSSHAIR_INNER_LIGHT;
-    vLine.strokeCap = "round";
+    vLine.strokeCap = 'round';
     crosshair.addChild(vLine);
-    const hLine = new paper.Path.Line(
-        new paper.Point(-7, 0),
-        new paper.Point(7, 0)
-    );
+    const hLine = new paper.Path.Line(new paper.Point(-7, 0), new paper.Point(7, 0));
     hLine.strokeWidth = 2;
     hLine.strokeColor = CROSSHAIR_INNER_LIGHT;
-    hLine.strokeCap = "round";
+    hLine.strokeCap = 'round';
     crosshair.addChild(hLine);
     const circle = new paper.Shape.Circle(new paper.Point(0, 0), 5.5);
     circle.strokeWidth = 2;
@@ -304,9 +283,9 @@ const _makeDragCrosshairLayer = function () {
     return dragCrosshairLayer;
 };
 
-const OUTLINE_INNER_LIGHT = "#FFFFFF";
-const OUTLINE_OUTER_LIGHT = "#4280D7";
-const OUTLINE_INNER_DARK = "#555555";
+const OUTLINE_INNER_LIGHT = '#FFFFFF';
+const OUTLINE_OUTER_LIGHT = '#4280D7';
+const OUTLINE_INNER_DARK = '#555555';
 
 const _makeOutlineLayer = function () {
     const outlineLayer = new paper.Layer();
@@ -323,8 +302,8 @@ const _makeOutlineLayer = function () {
     return outlineLayer;
 };
 
-const WORKSPACE_BOUNDS_LIGHT = "#ECF1F9";
-const WORKSPACE_BOUNDS_DARK = "#333";
+const WORKSPACE_BOUNDS_LIGHT = '#ECF1F9';
+const WORKSPACE_BOUNDS_DARK = '#333';
 
 const _makeBackgroundGuideLayer = function (format) {
     const guideLayer = new paper.Layer();
@@ -356,10 +335,7 @@ const _makeBackgroundGuideLayer = function (format) {
         0.55
     );
     bitmapBackground.position = CENTER;
-    bitmapBackground.scaling = new paper.Point(
-        CHECKERBOARD_SIZE,
-        CHECKERBOARD_SIZE
-    );
+    bitmapBackground.scaling = new paper.Point(CHECKERBOARD_SIZE, CHECKERBOARD_SIZE);
     bitmapBackground.guide = true;
     bitmapBackground.locked = true;
     guideLayer.bitmapBackground = bitmapBackground;
@@ -373,30 +349,20 @@ const _makeBackgroundGuideLayer = function (format) {
 };
 
 const updateTheme = function (theme) {
-    const isDark = theme === "dark";
+    const isDark = theme === 'dark';
 
     const backgroundGuideLayer = getBackgroundGuideLayer();
     const bitmapChildren = backgroundGuideLayer.bitmapBackground.children;
     bitmapChildren[0].fillColor = isDark ? BACKGROUND_DARK : BACKGROUND_LIGHT;
-    bitmapChildren[1].fillColor = isDark
-        ? BACKGROUND_TILE_DARK
-        : BACKGROUND_TILE_LIGHT;
+    bitmapChildren[1].fillColor = isDark ? BACKGROUND_TILE_DARK : BACKGROUND_TILE_LIGHT;
 
     const vectorChildren = backgroundGuideLayer.vectorBackground.children;
-    vectorChildren[0].fillColor = isDark
-        ? WORKSPACE_BOUNDS_DARK
-        : WORKSPACE_BOUNDS_LIGHT;
-    vectorChildren[1].children[0].fillColor = isDark
-        ? BACKGROUND_DARK
-        : BACKGROUND_LIGHT;
-    vectorChildren[1].children[1].fillColor = isDark
-        ? BACKGROUND_TILE_DARK
-        : BACKGROUND_TILE_LIGHT;
+    vectorChildren[0].fillColor = isDark ? WORKSPACE_BOUNDS_DARK : WORKSPACE_BOUNDS_LIGHT;
+    vectorChildren[1].children[0].fillColor = isDark ? BACKGROUND_DARK : BACKGROUND_LIGHT;
+    vectorChildren[1].children[1].fillColor = isDark ? BACKGROUND_TILE_DARK : BACKGROUND_TILE_LIGHT;
 
     const outlineLayer = getOutlineLayer();
-    outlineLayer.children[0].strokeColor = isDark
-        ? OUTLINE_INNER_DARK
-        : OUTLINE_INNER_LIGHT;
+    outlineLayer.children[0].strokeColor = isDark ? OUTLINE_INNER_DARK : OUTLINE_INNER_LIGHT;
 };
 
 const setupLayers = function (format) {
@@ -427,5 +393,5 @@ export {
     getRaster,
     setGuideItem,
     updateTheme,
-    setupLayers,
+    setupLayers
 };

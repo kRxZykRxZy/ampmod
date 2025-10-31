@@ -1,15 +1,15 @@
-import { useState } from "react";
-import PropTypes from "prop-types";
-import { FormattedMessage, injectIntl, intlShape } from "react-intl";
-import ReactModal from "react-modal";
-import Box from "../box/box.jsx";
-import styles from "./welcome.css";
-import { APP_NAME } from "@ampmod/branding";
-import CloseButton from "../close-button/close-button.jsx";
-import ThemeSelector from "./theme-selector.jsx";
-import AccentSelector from "./accent-selector.jsx";
+import {useState} from 'react';
+import PropTypes from 'prop-types';
+import {FormattedMessage, injectIntl, intlShape} from 'react-intl';
+import ReactModal from 'react-modal';
+import Box from '../box/box.jsx';
+import styles from './welcome.css';
+import {APP_NAME} from '@ampmod/branding';
+import CloseButton from '../close-button/close-button.jsx';
+import ThemeSelector from './theme-selector.jsx';
+import AccentSelector from './accent-selector.jsx';
 
-const Welcome = ({ intl, isRtl, onContinue }) => {
+const Welcome = ({intl, isRtl, onContinue}) => {
     const [stepIndex, setStepIndex] = useState(0);
     const [theme, setTheme] = useState(window.scratchGui?.theme?.theme || null);
     const [themeChanged, setThemeChanged] = useState(false);
@@ -31,11 +31,7 @@ const Welcome = ({ intl, isRtl, onContinue }) => {
                 ariaHideApp={false}
             >
                 <Box className={styles.illustration}>
-                    <CloseButton
-                        size={CloseButton.SIZE_LARGE}
-                        onClick={onContinue}
-                        className={styles.closeButton}
-                    />
+                    <CloseButton size={CloseButton.SIZE_LARGE} onClick={onContinue} className={styles.closeButton} />
                 </Box>
                 <Box className={styles.body}>
                     {/* Step content */}
@@ -47,7 +43,7 @@ const Welcome = ({ intl, isRtl, onContinue }) => {
                                         id="amp.welcome.title"
                                         defaultMessage="Welcome to {APP_NAME}!"
                                         description="Welcome modal title"
-                                        values={{ APP_NAME }}
+                                        values={{APP_NAME}}
                                     />
                                 </h2>
                                 <p>
@@ -55,20 +51,20 @@ const Welcome = ({ intl, isRtl, onContinue }) => {
                                         id="amp.welcome.intro"
                                         defaultMessage="{APP_NAME} is a powerful block-based programming language with new blocks and extensions to allow you to make interesting projects."
                                         description="Welcome modal introduction"
-                                        values={{ APP_NAME }}
+                                        values={{APP_NAME}}
                                     />
                                 </p>
-                                {process.env.ampmod_mode === "canary" && (
+                                {process.env.ampmod_mode === 'canary' && (
                                     <p>
                                         <FormattedMessage
                                             id="amp.welcome.canary"
                                             defaultMessage="You are using a canary build of {APP_NAME}. This build may be unstable and contain bugs. Please report any issues you encounter."
                                             description="Welcome modal canary build message"
-                                            values={{ APP_NAME }}
+                                            values={{APP_NAME}}
                                         />
                                     </p>
                                 )}
-                                {process.env.ampmod_mode === "lab" && (
+                                {process.env.ampmod_mode === 'lab' && (
                                     <p>
                                         <FormattedMessage
                                             id="amp.welcome.lab"
@@ -84,7 +80,7 @@ const Welcome = ({ intl, isRtl, onContinue }) => {
                                                     >
                                                         AmpMod Forums
                                                     </a>
-                                                ),
+                                                )
                                             }}
                                         />
                                     </p>
@@ -94,7 +90,7 @@ const Welcome = ({ intl, isRtl, onContinue }) => {
                                         id="amp.welcome.alreadyUsed"
                                         defaultMessage="If you've used {APP_NAME} before, you can click the button on the top left to skip this tutorial."
                                         description="Welcome modal already used message"
-                                        values={{ APP_NAME }}
+                                        values={{APP_NAME}}
                                     />
                                 </p>
                                 <p>
@@ -105,7 +101,7 @@ const Welcome = ({ intl, isRtl, onContinue }) => {
                                                 // eslint-disable-next-line max-len
                                                 defaultMessage="Note for school IT admins: {APP_NAME} is a Scratch modification (like Snap!/BYOB once was). We are an IDE, not a site to play Geometry Dash. An education version of {APP_NAME} will be available soon."
                                                 description="Welcome modal message for educators"
-                                                values={{ APP_NAME }}
+                                                values={{APP_NAME}}
                                             />
                                         </small>
                                     </i>
@@ -159,7 +155,7 @@ const Welcome = ({ intl, isRtl, onContinue }) => {
                                                 >
                                                     AmpMod Forums
                                                 </a>
-                                            ),
+                                            )
                                         }}
                                     />
                                 </p>
@@ -174,10 +170,7 @@ const Welcome = ({ intl, isRtl, onContinue }) => {
                     </Box>
 
                     <Box className={styles.buttonRow}>
-                        <button
-                            className={styles.continue}
-                            onClick={handleNext}
-                        >
+                        <button className={styles.continue} onClick={handleNext}>
                             {stepIndex === 2 ? (
                                 <FormattedMessage
                                     id="amp.welcome.ok"
@@ -202,7 +195,7 @@ const Welcome = ({ intl, isRtl, onContinue }) => {
 Welcome.propTypes = {
     intl: intlShape.isRequired,
     isRtl: PropTypes.bool,
-    onContinue: PropTypes.func.isRequired,
+    onContinue: PropTypes.func.isRequired
 };
 
 export default injectIntl(Welcome);

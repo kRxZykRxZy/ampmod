@@ -1,5 +1,5 @@
-import LazyScratchBlocks from "./tw-lazy-scratch-blocks";
-import AddonHooks from "../addons/hooks";
+import LazyScratchBlocks from './tw-lazy-scratch-blocks';
+import AddonHooks from '../addons/hooks';
 
 /**
  * Implements Scratch.gui API for unsandboxed extensions.
@@ -21,9 +21,7 @@ const implementGuiAPI = Scratch => {
                 return Promise.resolve(AddonHooks.blockly);
             }
             return new Promise(resolve => {
-                AddonHooks.blocklyCallbacks.push(() =>
-                    resolve(AddonHooks.blockly)
-                );
+                AddonHooks.blocklyCallbacks.push(() => resolve(AddonHooks.blockly));
             });
         },
 
@@ -36,7 +34,7 @@ const implementGuiAPI = Scratch => {
          *
          * @returns {Promise<any>} Promise that will resolve to ScratchBlocks.
          */
-        getBlocklyEagerly: () => LazyScratchBlocks.load(),
+        getBlocklyEagerly: () => LazyScratchBlocks.load()
     };
 };
 

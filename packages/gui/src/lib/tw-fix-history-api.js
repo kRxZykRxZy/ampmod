@@ -1,4 +1,4 @@
-import log from "./log";
+import log from './log';
 
 const originalReplaceState = history.replaceState;
 history.replaceState = function (...args) {

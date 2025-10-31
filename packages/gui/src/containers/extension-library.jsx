@@ -1,34 +1,34 @@
-import bindAll from "lodash.bindall";
-import PropTypes from "prop-types";
-import React from "react";
-import VM from "scratch-vm";
-import { defineMessages, injectIntl, intlShape } from "react-intl";
-import log from "../lib/log";
+import bindAll from 'lodash.bindall';
+import PropTypes from 'prop-types';
+import React from 'react';
+import VM from 'scratch-vm';
+import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import log from '../lib/log';
 
 import extensionLibraryContent, {
     galleryError,
     galleryLoading,
-    galleryMore,
-} from "../lib/libraries/extensions/index.jsx";
-import extensionTags from "../lib/libraries/tw-extension-tags";
+    galleryMore
+} from '../lib/libraries/extensions/index.jsx';
+import extensionTags from '../lib/libraries/tw-extension-tags';
 
-import LibraryComponent from "../components/library/library.jsx";
-import extensionIcon from "../components/action-menu/icon--sprite.svg";
-import localExtensionIcon from "../lib/libraries/extensions/local/local.svg";
+import LibraryComponent from '../components/library/library.jsx';
+import extensionIcon from '../components/action-menu/icon--sprite.svg';
+import localExtensionIcon from '../lib/libraries/extensions/local/local.svg';
 
 const messages = defineMessages({
     extensionTitle: {
-        defaultMessage: "Choose an Extension",
-        description: "Heading for the extension library",
-        id: "gui.extensionLibrary.chooseAnExtension",
-    },
+        defaultMessage: 'Choose an Extension',
+        description: 'Heading for the extension library',
+        id: 'gui.extensionLibrary.chooseAnExtension'
+    }
 });
 
 const toLibraryItem = extension => {
-    if (typeof extension === "object") {
+    if (typeof extension === 'object') {
         return {
             rawURL: extension.iconURL || extensionIcon,
-            ...extension,
+            ...extension
         };
     }
     return extension;
@@ -37,16 +37,13 @@ const toLibraryItem = extension => {
 const translateGalleryItem = (extension, locale) => ({
     ...extension,
     name: extension.nameTranslations[locale] || extension.name,
-    description:
-        extension.descriptionTranslations[locale] || extension.description,
+    description: extension.descriptionTranslations[locale] || extension.description
 });
 
 let cachedGallery = null;
 
 const fetchLibrary = async () => {
-    const res = await fetch(
-        "https://ampmod.codeberg.page/extensions/generated-metadata/extensions-v0.json"
-    );
+    const res = await fetch('https://ampmod.codeberg.page/extensions/generated-metadata/extensions-v0.json');
     if (!res.ok) {
         throw new Error(`HTTP status ${res.status}`);
     }
@@ -54,61 +51,42 @@ const fetchLibrary = async () => {
     return data.extensions.map(extension => ({
         name: extension.name,
         nameTranslations: extension.nameTranslations || {},
-        description:
-            extension.deprecated == extension.description
-                ? null
-                : extension.description,
+        description: extension.deprecated == extension.description ? null : extension.description,
         descriptionTranslations: extension.descriptionTranslations || {},
         extensionId: extension.id,
         extensionURL: `https://ampmod.codeberg.page/extensions/${extension.slug}.js`,
-        iconURL: `https://ampmod.codeberg.page/extensions/${extension.image || "images/unknown.svg"}`,
+        iconURL: `https://ampmod.codeberg.page/extensions/${extension.image || 'images/unknown.svg'}`,
         tags: [
-            ...(extension.id === "faceSensing"
-                ? ["scratch"]
-                : extension.isAmpMod
-                  ? ["ampmod"]
-                  : ["tw"]),
-            ...(extension.tags || []),
+            ...(extension.id === 'faceSensing' ? ['scratch'] : extension.isAmpMod ? ['ampmod'] : ['tw']),
+            ...(extension.tags || [])
         ],
 
         deprecated: extension.deprecated,
-        credits: [...(extension.original || []), ...(extension.by || [])].map(
-            credit => {
-                if (credit.link) {
-                    return (
-                        <a
-                            href={credit.link}
-                            target="_blank"
-                            rel="noreferrer"
-                            key={credit.name}
-                        >
-                            {credit.name}
-                        </a>
-                    );
-                }
-                return credit.name;
+        credits: [...(extension.original || []), ...(extension.by || [])].map(credit => {
+            if (credit.link) {
+                return (
+                    <a href={credit.link} target="_blank" rel="noreferrer" key={credit.name}>
+                        {credit.name}
+                    </a>
+                );
             }
-        ),
+            return credit.name;
+        }),
         requirements: extension.requirements,
-        docsURI: extension.docs
-            ? `https://ampmod.codeberg.page/extensions/${extension.slug}`
-            : null,
+        docsURI: extension.docs ? `https://ampmod.codeberg.page/extensions/${extension.slug}` : null,
         samples: extension.samples
             ? extension.samples.map(sample => ({
                   href: `${process.env.ROOT}editor.html?project_url=https://ampmod.codeberg.page/extensions/samples/${encodeURIComponent(sample)}`,
-                  text: sample,
+                  text: sample
               }))
             : null,
         incompatibleWithScratch: !extension.scratchCompatible,
-        featured: true,
+        featured: true
     }));
 };
 
 const parseExtLocalStorage = async () => {
-    const raw =
-        localStorage[
-            `${process.env.ampmod_mode === "canary" ? "canary" : "amp"}:saved-custom-extensions`
-        ];
+    const raw = localStorage[`${process.env.ampmod_mode === 'canary' ? 'canary' : 'amp'}:saved-custom-extensions`];
 
     if (!raw) return [];
 
@@ -116,7 +94,7 @@ const parseExtLocalStorage = async () => {
     try {
         data = JSON.parse(raw);
     } catch (e) {
-        console.error("Invalid JSON in saved-custom-extensions:", e);
+        console.error('Invalid JSON in saved-custom-extensions:', e);
         return [];
     }
 
@@ -134,8 +112,8 @@ const parseExtLocalStorage = async () => {
                     name: extension.name,
                     description: extension.description,
                     extensionURL: extension.uri,
-                    tags: ["localStorage"],
-                    featured: true,
+                    tags: ['localStorage'],
+                    featured: true
                 };
             } else if (extension.base64) {
                 return {
@@ -144,8 +122,8 @@ const parseExtLocalStorage = async () => {
                     name: extension.name,
                     description: extension.description,
                     extensionURL: `data:application/javascript;base64,${extension.base64}`,
-                    tags: ["localStorage"],
-                    featured: true,
+                    tags: ['localStorage'],
+                    featured: true
                 };
             }
             return null;
@@ -156,19 +134,19 @@ const parseExtLocalStorage = async () => {
 class ExtensionLibrary extends React.PureComponent {
     constructor(props) {
         super(props);
-        bindAll(this, ["handleItemSelect"]);
+        bindAll(this, ['handleItemSelect']);
         this.state = {
             gallery: cachedGallery,
             galleryError: null,
             galleryTimedOut: false,
-            savedCustomExtensions: [], // added state for custom extensions
+            savedCustomExtensions: [] // added state for custom extensions
         };
     }
     componentDidMount() {
         if (!this.state.gallery) {
             const timeout = setTimeout(() => {
                 this.setState({
-                    galleryTimedOut: true,
+                    galleryTimedOut: true
                 });
             }, 750);
 
@@ -176,14 +154,14 @@ class ExtensionLibrary extends React.PureComponent {
                 .then(gallery => {
                     cachedGallery = gallery;
                     this.setState({
-                        gallery,
+                        gallery
                     });
                     clearTimeout(timeout);
                 })
                 .catch(error => {
                     log.error(error);
                     this.setState({
-                        galleryError: error,
+                        galleryError: error
                     });
                     clearTimeout(timeout);
                 });
@@ -192,10 +170,10 @@ class ExtensionLibrary extends React.PureComponent {
         // Load saved custom extensions
         parseExtLocalStorage()
             .then(savedCustomExtensions => {
-                this.setState({ savedCustomExtensions });
+                this.setState({savedCustomExtensions});
             })
             .catch(e => {
-                console.warn("Failed to parse saved custom extensions", e);
+                console.warn('Failed to parse saved custom extensions', e);
             });
     }
     handleItemSelect(item) {
@@ -205,26 +183,26 @@ class ExtensionLibrary extends React.PureComponent {
 
         const extensionId = item.extensionId;
 
-        if (extensionId === "custom_extension") {
+        if (extensionId === 'custom_extension') {
             this.props.onOpenCustomExtensionModal();
             return;
         }
 
-        if (extensionId === "procedures_enable_return") {
+        if (extensionId === 'procedures_enable_return') {
             this.props.onEnableProcedureReturns();
-            this.props.onCategorySelected("myBlocks");
+            this.props.onCategorySelected('myBlocks');
             return;
         }
 
-        if (extensionId === "data_enable_lists") {
+        if (extensionId === 'data_enable_lists') {
             this.props.onEnableLegacyLists();
-            this.props.onCategorySelected("variables");
+            this.props.onCategorySelected('variables');
             return;
         }
 
-        if (extensionId === "future") {
+        if (extensionId === 'future') {
             this.props.onFutureClicked();
-            this.props.onCategorySelected("future");
+            this.props.onCategorySelected('future');
             return;
         }
 
@@ -254,32 +232,22 @@ class ExtensionLibrary extends React.PureComponent {
         const locale = this.props.intl.locale;
 
         // Find faceSensing in the gallery
-        const faceSensingItem = galleryItems.find(
-            ext => ext.extensionId === "faceSensing"
-        );
+        const faceSensingItem = galleryItems.find(ext => ext.extensionId === 'faceSensing');
 
         // Insert faceSensing after videoSensing in the main library
         if (faceSensingItem) {
-            const videoIndex = library.findIndex(
-                item => item.extensionId === "videoSensing"
-            );
+            const videoIndex = library.findIndex(item => item.extensionId === 'videoSensing');
             if (videoIndex !== -1) {
-                library.splice(
-                    videoIndex + 1,
-                    0,
-                    toLibraryItem(translateGalleryItem(faceSensingItem, locale))
-                );
+                library.splice(videoIndex + 1, 0, toLibraryItem(translateGalleryItem(faceSensingItem, locale)));
             }
         }
 
-        library.push("---");
+        library.push('---');
 
         // Add saved custom extensions from state
         if (this.state.savedCustomExtensions.length > 0) {
-            library.push(
-                ...this.state.savedCustomExtensions.map(toLibraryItem)
-            );
-            library.push("---");
+            library.push(...this.state.savedCustomExtensions.map(toLibraryItem));
+            library.push('---');
         }
 
         // Add gallery extensions, but exclude faceSensing to avoid duplicates
@@ -287,7 +255,7 @@ class ExtensionLibrary extends React.PureComponent {
             library.push(toLibraryItem(galleryMore));
             library.push(
                 ...galleryItems
-                    .filter(ext => ext.extensionId !== "faceSensing")
+                    .filter(ext => ext.extensionId !== 'faceSensing')
                     .map(ext => translateGalleryItem(ext, locale))
                     .map(toLibraryItem)
             );
@@ -322,7 +290,7 @@ ExtensionLibrary.propTypes = {
     onOpenCustomExtensionModal: PropTypes.func,
     onRequestClose: PropTypes.func,
     visible: PropTypes.bool,
-    vm: PropTypes.instanceOf(VM).isRequired, // eslint-disable-line react/no-unused-prop-types
+    vm: PropTypes.instanceOf(VM).isRequired // eslint-disable-line react/no-unused-prop-types
 };
 
 export default injectIntl(ExtensionLibrary);

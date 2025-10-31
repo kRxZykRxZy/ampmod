@@ -1,30 +1,28 @@
-import bindAll from "lodash.bindall";
-import PropTypes from "prop-types";
-import React from "react";
+import bindAll from 'lodash.bindall';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import DirectionComponent, {
-    RotationStyles,
-} from "../components/direction-picker/direction-picker.jsx";
+import DirectionComponent, {RotationStyles} from '../components/direction-picker/direction-picker.jsx';
 
 class DirectionPicker extends React.Component {
     constructor(props) {
         super(props);
         bindAll(this, [
-            "handleOpenPopover",
-            "handleClosePopover",
-            "handleClickLeftRight",
-            "handleClickDontRotate",
-            "handleClickAllAround",
+            'handleOpenPopover',
+            'handleClosePopover',
+            'handleClickLeftRight',
+            'handleClickDontRotate',
+            'handleClickAllAround'
         ]);
         this.state = {
-            popoverOpen: false,
+            popoverOpen: false
         };
     }
     handleOpenPopover() {
-        this.setState({ popoverOpen: true });
+        this.setState({popoverOpen: true});
     }
     handleClosePopover() {
-        this.setState({ popoverOpen: false });
+        this.setState({popoverOpen: false});
     }
     handleClickAllAround() {
         this.props.onChangeRotationStyle(RotationStyles.ALL_AROUND);
@@ -60,7 +58,7 @@ DirectionPicker.propTypes = {
     labelAbove: PropTypes.bool,
     onChangeDirection: PropTypes.func,
     onChangeRotationStyle: PropTypes.func,
-    rotationStyle: PropTypes.string,
+    rotationStyle: PropTypes.string
 };
 
 export default DirectionPicker;

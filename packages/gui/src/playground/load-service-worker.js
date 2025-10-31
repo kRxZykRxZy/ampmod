@@ -1,25 +1,21 @@
-import log from "../lib/log";
-import serviceWorker from "!!file-loader?name=sw.js!./service-worker.js";
+import log from '../lib/log';
+import serviceWorker from '!!file-loader?name=sw.js!./service-worker.js';
 
 let loaded = false;
 const actuallyLoadServiceWorker = () => {
     navigator.serviceWorker.register(serviceWorker).catch(err => {
-        log.error("sw error", err);
+        log.error('sw error', err);
     });
 };
 const loadServiceWorker = () => {
-    if (
-        !process.env.DISABLE_SERVICE_WORKER &&
-        "serviceWorker" in navigator &&
-        !loaded
-    ) {
+    if (!process.env.DISABLE_SERVICE_WORKER && 'serviceWorker' in navigator && !loaded) {
         loaded = true;
-        if (document.readyState === "complete") {
+        if (document.readyState === 'complete') {
             actuallyLoadServiceWorker();
         } else {
-            window.addEventListener("load", actuallyLoadServiceWorker);
+            window.addEventListener('load', actuallyLoadServiceWorker);
         }
     }
 };
 
-export { loadServiceWorker };
+export {loadServiceWorker};

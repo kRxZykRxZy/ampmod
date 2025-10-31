@@ -1,22 +1,16 @@
-import bindAll from "lodash.bindall";
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
-import paper from "@turbowarp/paper";
-import Formats from "../lib/format";
-import log from "../log/log";
+import bindAll from 'lodash.bindall';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
+import paper from '@turbowarp/paper';
+import Formats from '../lib/format';
+import log from '../log/log';
 
-import { performSnapshot } from "../helper/undo";
-import { undoSnapshot, clearUndoState } from "../reducers/undo";
-import { isGroup, ungroupItems } from "../helper/group";
-import {
-    clearRaster,
-    convertBackgroundGuideLayer,
-    getRaster,
-    setupLayers,
-    updateTheme,
-} from "../helper/layer";
-import { clearSelectedItems } from "../reducers/selected-items";
+import {performSnapshot} from '../helper/undo';
+import {undoSnapshot, clearUndoState} from '../reducers/undo';
+import {isGroup, ungroupItems} from '../helper/group';
+import {clearRaster, convertBackgroundGuideLayer, getRaster, setupLayers, updateTheme} from '../helper/layer';
+import {clearSelectedItems} from '../reducers/selected-items';
 import {
     ART_BOARD_WIDTH,
     ART_BOARD_HEIGHT,
@@ -26,42 +20,41 @@ import {
     resetZoom,
     setWorkspaceBounds,
     zoomToFit,
-    resizeCrosshair,
-} from "../helper/view";
-import { ensureClockwise, scaleWithStrokes } from "../helper/math";
-import { clearHoveredItem } from "../reducers/hover";
-import { clearPasteOffset } from "../reducers/clipboard";
-import { changeFormat } from "../reducers/format";
-import { updateViewBounds } from "../reducers/view-bounds";
-import { saveZoomLevel, setZoomLevelId } from "../reducers/zoom-levels";
-import { setImportingImage } from "../lib/tw-is-importing-image";
+    resizeCrosshair
+} from '../helper/view';
+import {ensureClockwise, scaleWithStrokes} from '../helper/math';
+import {clearHoveredItem} from '../reducers/hover';
+import {clearPasteOffset} from '../reducers/clipboard';
+import {changeFormat} from '../reducers/format';
+import {updateViewBounds} from '../reducers/view-bounds';
+import {saveZoomLevel, setZoomLevelId} from '../reducers/zoom-levels';
+import {setImportingImage} from '../lib/tw-is-importing-image';
 
-import styles from "./paper-canvas.css";
+import styles from './paper-canvas.css';
 
 class PaperCanvas extends React.Component {
     constructor(props) {
         super(props);
         bindAll(this, [
-            "clearQueuedImport",
-            "setCanvas",
-            "importSvg",
-            "initializeSvg",
-            "maybeZoomToFit",
-            "switchCostume",
-            "onViewResize",
-            "recalibrateSize",
+            'clearQueuedImport',
+            'setCanvas',
+            'importSvg',
+            'initializeSvg',
+            'maybeZoomToFit',
+            'switchCostume',
+            'onViewResize',
+            'recalibrateSize'
         ]);
     }
     componentDidMount() {
         paper.setup(this.canvas);
-        paper.view.on("resize", this.onViewResize);
+        paper.view.on('resize', this.onViewResize);
         resetZoom();
         if (this.props.zoomLevelId) {
             this.props.setZoomLevelId(this.props.zoomLevelId);
             if (this.props.zoomLevels[this.props.zoomLevelId]) {
                 // This is the matrix that the view should be zoomed to after image import
-                this.shouldZoomToFit =
-                    this.props.zoomLevels[this.props.zoomLevelId];
+                this.shouldZoomToFit = this.props.zoomLevels[this.props.zoomLevelId];
             } else {
                 // Zoom to fit true means find a comfortable zoom level for viewing the costume
                 this.shouldZoomToFit = true;
@@ -70,7 +63,7 @@ class PaperCanvas extends React.Component {
             this.props.updateViewBounds(paper.view.matrix);
         }
 
-        const context = this.canvas.getContext("2d");
+        const context = this.canvas.getContext('2d');
         context.webkitImageSmoothingEnabled = false;
         context.imageSmoothingEnabled = false;
 
@@ -119,19 +112,12 @@ class PaperCanvas extends React.Component {
             this.queuedImport = null;
         }
         if (this.queuedImageToLoad) {
-            this.queuedImageToLoad.src = "";
+            this.queuedImageToLoad.src = '';
             this.queuedImageToLoad.onload = null;
             this.queuedImageToLoad = null;
         }
     }
-    switchCostume(
-        format,
-        image,
-        rotationCenterX,
-        rotationCenterY,
-        oldZoomLevelId,
-        newZoomLevelId
-    ) {
+    switchCostume(format, image, rotationCenterX, rotationCenterY, oldZoomLevelId, newZoomLevelId) {
         if (oldZoomLevelId && oldZoomLevelId !== newZoomLevelId) {
             this.props.saveZoomLevel();
         }
@@ -169,15 +155,12 @@ class PaperCanvas extends React.Component {
         if (!image) {
             this.clearPaperCanvas();
             this.props.changeFormat(Formats.VECTOR_SKIP_CONVERT);
-            performSnapshot(
-                this.props.undoSnapshot,
-                Formats.VECTOR_SKIP_CONVERT
-            );
+            performSnapshot(this.props.undoSnapshot, Formats.VECTOR_SKIP_CONVERT);
             this.recalibrateSize();
             return;
         }
 
-        if (format === "jpg" || format === "png") {
+        if (format === 'jpg' || format === 'png') {
             // import bitmap
             this.props.changeFormat(Formats.BITMAP_SKIP_CONVERT);
             setImportingImage(true);
@@ -197,10 +180,10 @@ class PaperCanvas extends React.Component {
                 this.clearPaperCanvas();
                 setImportingImage(false);
 
-                if (typeof rotationCenterX === "undefined") {
+                if (typeof rotationCenterX === 'undefined') {
                     rotationCenterX = imgElement.width / 2;
                 }
-                if (typeof rotationCenterY === "undefined") {
+                if (typeof rotationCenterY === 'undefined') {
                     rotationCenterY = imgElement.height / 2;
                 }
 
@@ -211,26 +194,18 @@ class PaperCanvas extends React.Component {
                 );
 
                 this.maybeZoomToFit(true /* isBitmap */);
-                performSnapshot(
-                    this.props.undoSnapshot,
-                    Formats.BITMAP_SKIP_CONVERT
-                );
+                performSnapshot(this.props.undoSnapshot, Formats.BITMAP_SKIP_CONVERT);
                 this.recalibrateSize();
             };
             imgElement.src = image;
-        } else if (format === "svg") {
+        } else if (format === 'svg') {
             this.props.changeFormat(Formats.VECTOR_SKIP_CONVERT);
             this.importSvg(image, rotationCenterX, rotationCenterY);
         } else {
             this.clearPaperCanvas();
-            log.error(
-                `Didn't recognize format: ${format}. Use 'jpg', 'png' or 'svg'.`
-            );
+            log.error(`Didn't recognize format: ${format}. Use 'jpg', 'png' or 'svg'.`);
             this.props.changeFormat(Formats.VECTOR_SKIP_CONVERT);
-            performSnapshot(
-                this.props.undoSnapshot,
-                Formats.VECTOR_SKIP_CONVERT
-            );
+            performSnapshot(this.props.undoSnapshot, Formats.VECTOR_SKIP_CONVERT);
             this.recalibrateSize();
         }
     }
@@ -253,22 +228,19 @@ class PaperCanvas extends React.Component {
         // Pre-process SVG to prevent parsing errors (discussion from #213)
         // 1. Remove svg: namespace on elements.
         // TODO: remove
-        svg = svg.split(/<\s*svg:/).join("<");
-        svg = svg.split(/<\/\s*svg:/).join("</");
+        svg = svg.split(/<\s*svg:/).join('<');
+        svg = svg.split(/<\/\s*svg:/).join('</');
         // 2. Add root svg namespace if it does not exist.
         const svgAttrs = svg.match(/<svg [^>]*>/);
-        if (svgAttrs && svgAttrs[0].indexOf("xmlns=") === -1) {
-            svg = svg.replace(
-                "<svg ",
-                '<svg xmlns="http://www.w3.org/2000/svg" '
-            );
+        if (svgAttrs && svgAttrs[0].indexOf('xmlns=') === -1) {
+            svg = svg.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ');
         }
 
         // Get the origin which the viewBox is defined relative to. During import, Paper will translate
         // the viewBox to start at (0, 0), and we need to translate it back for some costumes to render
         // correctly.
         const parser = new DOMParser();
-        const svgDom = parser.parseFromString(svg, "text/xml");
+        const svgDom = parser.parseFromString(svg, 'text/xml');
         const viewBox = svgDom.documentElement.attributes.viewBox
             ? svgDom.documentElement.attributes.viewBox.value.match(/\S+/g)
             : null;
@@ -283,14 +255,11 @@ class PaperCanvas extends React.Component {
             insert: false,
             onLoad: function (item) {
                 if (!item) {
-                    log.error("SVG import failed:");
+                    log.error('SVG import failed:');
                     log.info(svg);
                     setImportingImage(false);
                     paperCanvas.props.changeFormat(Formats.VECTOR_SKIP_CONVERT);
-                    performSnapshot(
-                        paperCanvas.props.undoSnapshot,
-                        Formats.VECTOR_SKIP_CONVERT
-                    );
+                    performSnapshot(paperCanvas.props.undoSnapshot, Formats.VECTOR_SKIP_CONVERT);
                     return;
                 }
 
@@ -298,14 +267,9 @@ class PaperCanvas extends React.Component {
                 // positioned incorrectly
                 paperCanvas.queuedImport = paperCanvas.recalibrateSize(() => {
                     paperCanvas.props.updateViewBounds(paper.view.matrix);
-                    paperCanvas.initializeSvg(
-                        item,
-                        rotationCenterX,
-                        rotationCenterY,
-                        viewBox
-                    );
+                    paperCanvas.initializeSvg(item, rotationCenterX, rotationCenterY, viewBox);
                 });
-            },
+            }
         });
     }
     initializeSvg(item, rotationCenterX, rotationCenterY, viewBox) {
@@ -348,20 +312,9 @@ class PaperCanvas extends React.Component {
         scaleWithStrokes(item, 2, new paper.Point()); // Import at 2x
 
         // Apply rotation center
-        if (
-            typeof rotationCenterX !== "undefined" &&
-            typeof rotationCenterY !== "undefined"
-        ) {
-            let rotationPoint = new paper.Point(
-                rotationCenterX,
-                rotationCenterY
-            );
-            if (
-                viewBox &&
-                viewBox.length >= 2 &&
-                !isNaN(viewBox[0]) &&
-                !isNaN(viewBox[1])
-            ) {
+        if (typeof rotationCenterX !== 'undefined' && typeof rotationCenterY !== 'undefined') {
+            let rotationPoint = new paper.Point(rotationCenterX, rotationCenterY);
+            if (viewBox && viewBox.length >= 2 && !isNaN(viewBox[0]) && !isNaN(viewBox[1])) {
                 rotationPoint = rotationPoint.subtract(viewBox[0], viewBox[1]);
             }
             item.translate(CENTER.subtract(rotationPoint.multiply(2)));
@@ -420,7 +373,7 @@ class PaperCanvas extends React.Component {
             <canvas
                 className={styles.paperCanvas}
                 ref={this.setCanvas}
-                style={{ cursor: this.props.cursor }}
+                style={{cursor: this.props.cursor}}
                 resize="true"
             />
         );
@@ -436,10 +389,7 @@ PaperCanvas.propTypes = {
     clearUndo: PropTypes.func.isRequired,
     cursor: PropTypes.string,
     format: PropTypes.oneOf(Object.keys(Formats)),
-    image: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.instanceOf(HTMLImageElement),
-    ]),
+    image: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(HTMLImageElement)]),
     imageFormat: PropTypes.string, // The incoming image's data format, used during import. The user could switch this.
     imageId: PropTypes.string,
     rotationCenterX: PropTypes.number,
@@ -451,14 +401,14 @@ PaperCanvas.propTypes = {
     updateViewBounds: PropTypes.func.isRequired,
     zoomLevelId: PropTypes.string,
     zoomLevels: PropTypes.shape({
-        currentZoomLevelId: PropTypes.string,
-    }),
+        currentZoomLevelId: PropTypes.string
+    })
 };
 const mapStateToProps = state => ({
     mode: state.scratchPaint.mode,
     cursor: state.scratchPaint.cursor,
     format: state.scratchPaint.format,
-    zoomLevels: state.scratchPaint.zoomLevels,
+    zoomLevels: state.scratchPaint.zoomLevels
 });
 const mapDispatchToProps = dispatch => ({
     undoSnapshot: snapshot => {
@@ -487,7 +437,7 @@ const mapDispatchToProps = dispatch => ({
     },
     updateViewBounds: matrix => {
         dispatch(updateViewBounds(matrix));
-    },
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaperCanvas);

@@ -1,8 +1,8 @@
-import paper from "@turbowarp/paper";
-import { isBoundsItem, getRootItem } from "./item";
-import { hoverBounds, hoverItem } from "./guides";
-import { isGroupChild } from "./group";
-import { sortItemsByZIndex } from "./math";
+import paper from '@turbowarp/paper';
+import {isBoundsItem, getRootItem} from './item';
+import {hoverBounds, hoverItem} from './guides';
+import {isGroupChild} from './group';
+import {sortItemsByZIndex} from './math';
 
 /**
  * @param {!MouseEvent} event mouse event
@@ -48,4 +48,4 @@ const getHoveredItem = function (event, hitOptions, subselect) {
     return hoverGuide;
 };
 
-export { getHoveredItem };
+export {getHoveredItem};

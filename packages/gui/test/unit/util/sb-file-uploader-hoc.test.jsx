@@ -1,14 +1,14 @@
-import "web-audio-test-api";
+import 'web-audio-test-api';
 
-import React from "react";
-import configureStore from "redux-mock-store";
-import { mountWithIntl, shallowWithIntl } from "../../helpers/intl-helpers.jsx";
-import { LoadingState } from "../../../src/reducers/project-state";
-import VM from "scratch-vm";
+import React from 'react';
+import configureStore from 'redux-mock-store';
+import {mountWithIntl, shallowWithIntl} from '../../helpers/intl-helpers.jsx';
+import {LoadingState} from '../../../src/reducers/project-state';
+import VM from 'scratch-vm';
 
-import SBFileUploaderHOC from "../../../src/lib/sb-file-uploader-hoc.jsx";
+import SBFileUploaderHOC from '../../../src/lib/sb-file-uploader-hoc.jsx';
 
-describe("SBFileUploaderHOC", () => {
+describe('SBFileUploaderHOC', () => {
     const mockStore = configureStore();
     let store;
     let vm;
@@ -19,8 +19,7 @@ describe("SBFileUploaderHOC", () => {
         return SBFileUploaderHOC(Component);
     };
 
-    const shallowMountWithContext = component =>
-        shallowWithIntl(component, { context: { store } });
+    const shallowMountWithContext = component => shallowWithIntl(component, {context: {store}});
 
     const unwrappedInstance = () => {
         const WrappedComponent = getContainer();
@@ -50,42 +49,34 @@ describe("SBFileUploaderHOC", () => {
         store = mockStore({
             scratchGui: {
                 projectState: {
-                    loadingState: LoadingState.SHOWING_WITHOUT_ID,
+                    loadingState: LoadingState.SHOWING_WITHOUT_ID
                 },
-                vm: {},
+                vm: {}
             },
             locales: {
-                locale: "en",
-            },
+                locale: 'en'
+            }
         });
     });
 
-    test("correctly sets title with .sb3 filename", () => {
-        const projectName = unwrappedInstance().getProjectTitleFromFilename(
-            "my project is great.sb3"
-        );
-        expect(projectName).toBe("my project is great");
+    test('correctly sets title with .sb3 filename', () => {
+        const projectName = unwrappedInstance().getProjectTitleFromFilename('my project is great.sb3');
+        expect(projectName).toBe('my project is great');
     });
 
-    test("correctly sets title with .sb2 filename", () => {
-        const projectName = unwrappedInstance().getProjectTitleFromFilename(
-            "my project is great.sb2"
-        );
-        expect(projectName).toBe("my project is great");
+    test('correctly sets title with .sb2 filename', () => {
+        const projectName = unwrappedInstance().getProjectTitleFromFilename('my project is great.sb2');
+        expect(projectName).toBe('my project is great');
     });
 
-    test("correctly sets title with .sb filename", () => {
-        const projectName = unwrappedInstance().getProjectTitleFromFilename(
-            "my project is great.sb"
-        );
-        expect(projectName).toBe("my project is great");
+    test('correctly sets title with .sb filename', () => {
+        const projectName = unwrappedInstance().getProjectTitleFromFilename('my project is great.sb');
+        expect(projectName).toBe('my project is great');
     });
 
-    test("sets blank title with filename with no extension", () => {
-        const projectName = unwrappedInstance().getProjectTitleFromFilename(
-            "my project is great"
-        );
-        expect(projectName).toBe("");
+    test('sets blank title with filename with no extension', () => {
+        const projectName = unwrappedInstance().getProjectTitleFromFilename('my project is great');
+        expect(projectName).toBe('');
     });
 
     /* tw: test is broken by flag required to fix issues with multiple instances

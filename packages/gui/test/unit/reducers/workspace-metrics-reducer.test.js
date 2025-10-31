@@ -1,26 +1,20 @@
 /* eslint-env jest */
-import workspaceMetricsReducer, {
-    updateMetrics,
-} from "../../../src/reducers/workspace-metrics";
+import workspaceMetricsReducer, {updateMetrics} from '../../../src/reducers/workspace-metrics';
 
-test("initialState", () => {
+test('initialState', () => {
     let defaultState;
     /* workspaceMetricsReducer(state, action) */
-    expect(
-        workspaceMetricsReducer(defaultState, { type: "anything" })
-    ).toBeDefined();
-    expect(workspaceMetricsReducer(defaultState, { type: "anything" })).toEqual(
-        { targets: {} }
-    );
+    expect(workspaceMetricsReducer(defaultState, {type: 'anything'})).toBeDefined();
+    expect(workspaceMetricsReducer(defaultState, {type: 'anything'})).toEqual({targets: {}});
 });
 
-test("updateMetrics action creator", () => {
+test('updateMetrics action creator', () => {
     let defaultState;
     const action = updateMetrics({
-        targetID: "abcde",
+        targetID: 'abcde',
         scrollX: 225,
         scrollY: 315,
-        scale: 1.25,
+        scale: 1.25
     });
     const resultState = workspaceMetricsReducer(defaultState, action);
     expect(Object.keys(resultState.targets).length).toBe(1);

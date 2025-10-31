@@ -1,21 +1,21 @@
-const test = require("tap").test;
-const Clock = require("../../src/io/clock");
-const Runtime = require("../../src/engine/runtime");
+const test = require('tap').test;
+const Clock = require('../../src/io/clock');
+const Runtime = require('../../src/engine/runtime');
 
-test("spec", t => {
+test('spec', t => {
     const rt = new Runtime();
     const c = new Clock(rt);
 
-    t.type(Clock, "function");
-    t.type(c, "object");
-    t.type(c.projectTimer, "function");
-    t.type(c.pause, "function");
-    t.type(c.resume, "function");
-    t.type(c.resetProjectTimer, "function");
+    t.type(Clock, 'function');
+    t.type(c, 'object');
+    t.type(c.projectTimer, 'function');
+    t.type(c.pause, 'function');
+    t.type(c.resume, 'function');
+    t.type(c.resetProjectTimer, 'function');
     t.end();
 });
 
-test("cycle", t => {
+test('cycle', t => {
     const rt = new Runtime();
     const c = new Clock(rt);
 

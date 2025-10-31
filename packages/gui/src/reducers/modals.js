@@ -1,24 +1,24 @@
-const OPEN_MODAL = "scratch-gui/modals/OPEN_MODAL";
-const CLOSE_MODAL = "scratch-gui/modals/CLOSE_MODAL";
+const OPEN_MODAL = 'scratch-gui/modals/OPEN_MODAL';
+const CLOSE_MODAL = 'scratch-gui/modals/CLOSE_MODAL';
 
-const MODAL_BACKDROP_LIBRARY = "backdropLibrary";
-const MODAL_COSTUME_LIBRARY = "costumeLibrary";
-const MODAL_EXTENSION_LIBRARY = "extensionLibrary";
-const MODAL_LOADING_PROJECT = "loadingProject";
-const MODAL_TELEMETRY = "telemetryModal";
-const MODAL_WELCOME = "welcomeModal";
-const MODAL_SOUND_LIBRARY = "soundLibrary";
-const MODAL_SPRITE_LIBRARY = "spriteLibrary";
-const MODAL_SOUND_RECORDER = "soundRecorder";
-const MODAL_CONNECTION = "connectionModal";
-const MODAL_TIPS_LIBRARY = "tipsLibrary";
-const MODAL_USERNAME = "usernameModal";
-const MODAL_SETTINGS = "settingsModal";
-const MODAL_CUSTOM_EXTENSION = "customExtensionModal";
-const MODAL_RESTORE_POINTS = "restorePointModal";
-const MODAL_FONTS = "fontsModal";
-const MODAL_UNKNOWN_PLATFORM = "unknownPlatformModal";
-const MODAL_INVALID_PROJECT = "invalidProjectModal";
+const MODAL_BACKDROP_LIBRARY = 'backdropLibrary';
+const MODAL_COSTUME_LIBRARY = 'costumeLibrary';
+const MODAL_EXTENSION_LIBRARY = 'extensionLibrary';
+const MODAL_LOADING_PROJECT = 'loadingProject';
+const MODAL_TELEMETRY = 'telemetryModal';
+const MODAL_WELCOME = 'welcomeModal';
+const MODAL_SOUND_LIBRARY = 'soundLibrary';
+const MODAL_SPRITE_LIBRARY = 'spriteLibrary';
+const MODAL_SOUND_RECORDER = 'soundRecorder';
+const MODAL_CONNECTION = 'connectionModal';
+const MODAL_TIPS_LIBRARY = 'tipsLibrary';
+const MODAL_USERNAME = 'usernameModal';
+const MODAL_SETTINGS = 'settingsModal';
+const MODAL_CUSTOM_EXTENSION = 'customExtensionModal';
+const MODAL_RESTORE_POINTS = 'restorePointModal';
+const MODAL_FONTS = 'fontsModal';
+const MODAL_UNKNOWN_PLATFORM = 'unknownPlatformModal';
+const MODAL_INVALID_PROJECT = 'invalidProjectModal';
 
 const initialState = {
     [MODAL_BACKDROP_LIBRARY]: false,
@@ -43,19 +43,19 @@ const initialState = {
     [MODAL_RESTORE_POINTS]: false,
     [MODAL_FONTS]: false,
     [MODAL_UNKNOWN_PLATFORM]: false,
-    [MODAL_INVALID_PROJECT]: false,
+    [MODAL_INVALID_PROJECT]: false
 };
 
 const reducer = function (state, action) {
-    if (typeof state === "undefined") state = initialState;
+    if (typeof state === 'undefined') state = initialState;
     switch (action.type) {
         case OPEN_MODAL:
             return Object.assign({}, state, {
-                [action.modal]: true,
+                [action.modal]: true
             });
         case CLOSE_MODAL:
             return Object.assign({}, state, {
-                [action.modal]: false,
+                [action.modal]: false
             });
         default:
             return state;
@@ -64,13 +64,13 @@ const reducer = function (state, action) {
 const openModal = function (modal) {
     return {
         type: OPEN_MODAL,
-        modal: modal,
+        modal: modal
     };
 };
 const closeModal = function (modal) {
     return {
         type: CLOSE_MODAL,
-        modal: modal,
+        modal: modal
     };
 };
 const openBackdropLibrary = function () {
@@ -219,5 +219,5 @@ export {
     closeRestorePointModal,
     closeFontsModal,
     closeUnknownPlatformModal,
-    closeInvalidProjectModal,
+    closeInvalidProjectModal
 };

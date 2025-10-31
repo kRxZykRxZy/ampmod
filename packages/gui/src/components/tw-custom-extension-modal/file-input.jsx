@@ -1,15 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-import bindAll from "lodash.bindall";
-import { FormattedMessage } from "react-intl";
-import styles from "./file-input.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+import bindAll from 'lodash.bindall';
+import {FormattedMessage} from 'react-intl';
+import styles from './file-input.css';
 
 class FileInput extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["handleChange", "handleClick"]);
+        bindAll(this, ['handleChange', 'handleClick']);
         this.state = {
-            files: props.files,
+            files: props.files
         };
     }
 
@@ -22,11 +22,11 @@ class FileInput extends React.Component {
     }
 
     handleClick() {
-        const input = document.createElement("input");
-        input.type = "file";
+        const input = document.createElement('input');
+        input.type = 'file';
         input.accept = this.props.accept;
         input.multiple = true;
-        input.addEventListener("change", this.handleChange);
+        input.addEventListener('change', this.handleChange);
         document.body.appendChild(input);
         input.click();
         input.remove();
@@ -44,7 +44,7 @@ class FileInput extends React.Component {
                         values={{
                             names: Array.from(this.props.files)
                                 .map(i => i.name)
-                                .join(", "),
+                                .join(', ')
                         }}
                     />
                 ) : (
@@ -62,7 +62,7 @@ class FileInput extends React.Component {
 FileInput.propTypes = {
     files: PropTypes.instanceOf(FileList),
     accept: PropTypes.string,
-    onChange: PropTypes.func,
+    onChange: PropTypes.func
 };
 
 export default FileInput;

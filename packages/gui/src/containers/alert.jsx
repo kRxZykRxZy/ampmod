@@ -1,17 +1,17 @@
-import React from "react";
-import bindAll from "lodash.bindall";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import SB3Downloader from "./sb3-downloader.jsx";
-import AlertComponent from "../components/alerts/alert.jsx";
-import { openConnectionModal } from "../reducers/modals";
-import { setConnectionModalExtensionId } from "../reducers/connection-modal";
-import { manualUpdateProject } from "../reducers/project-state";
+import React from 'react';
+import bindAll from 'lodash.bindall';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import SB3Downloader from './sb3-downloader.jsx';
+import AlertComponent from '../components/alerts/alert.jsx';
+import {openConnectionModal} from '../reducers/modals';
+import {setConnectionModalExtensionId} from '../reducers/connection-modal';
+import {manualUpdateProject} from '../reducers/project-state';
 
 class Alert extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["handleOnCloseAlert", "handleOnReconnect"]);
+        bindAll(this, ['handleOnCloseAlert', 'handleOnReconnect']);
     }
     handleOnCloseAlert() {
         this.props.onCloseAlert(this.props.index);
@@ -33,7 +33,7 @@ class Alert extends React.Component {
             onSaveNow,
             showDownload,
             showReconnect,
-            showSaveNow,
+            showSaveNow
         } = this.props;
         return (
             <SB3Downloader>
@@ -69,7 +69,7 @@ const mapDispatchToProps = dispatch => ({
     },
     onSaveNow: () => {
         dispatch(manualUpdateProject());
-    },
+    }
 });
 
 Alert.propTypes = {
@@ -87,7 +87,7 @@ Alert.propTypes = {
     onSaveNow: PropTypes.func,
     showDownload: PropTypes.bool,
     showReconnect: PropTypes.bool,
-    showSaveNow: PropTypes.bool,
+    showSaveNow: PropTypes.bool
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Alert);

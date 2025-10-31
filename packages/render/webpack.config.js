@@ -13,9 +13,7 @@ const base = {
     module: {
         rules: [
             {
-                include: [
-                    path.resolve('src')
-                ],
+                include: [path.resolve('src')],
                 test: /\.js$/,
                 loader: 'babel-loader',
                 options: {

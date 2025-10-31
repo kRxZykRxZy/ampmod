@@ -1,5 +1,5 @@
-@import "../../css/units.css";
-@import "../../css/colors.css";
+@import '../../css/units.css';
+@import '../../css/colors.css';
 
 .filter {
     display: flex;
@@ -23,12 +23,12 @@
     width: 1rem;
 }
 
-[dir="ltr"] .filter-icon {
+[dir='ltr'] .filter-icon {
     left: 0;
     margin: 0.75rem 0.75rem 0.75rem 1rem;
 }
 
-[dir="rtl"] .filter-icon {
+[dir='rtl'] .filter-icon {
     right: 0;
     margin: 0.75rem 1rem 0.75rem 0.75rem;
     transform: scaleX(-1);
@@ -61,11 +61,11 @@
     transition: opacity 0.05s linear;
 }
 
-[dir="ltr"] .x-icon-wrapper {
+[dir='ltr'] .x-icon-wrapper {
     right: 0;
 }
 
-[dir="rtl"] .x-icon-wrapper {
+[dir='rtl'] .x-icon-wrapper {
     left: 0;
 }
 
@@ -114,11 +114,11 @@
     cursor: text;
 }
 
-[dir="ltr"] .filter-input {
+[dir='ltr'] .filter-input {
     padding: 0.625rem 2rem 0.625rem 3rem;
 }
 
-[dir="rtl"] .filter-input {
+[dir='rtl'] .filter-input {
     padding: 0.625rem 3rem 0.625rem 2rem;
 }
 
@@ -129,10 +129,10 @@
     letter-spacing: 0.15px;
 }
 
-[dir="ltr"] .filter-input::placeholder {
+[dir='ltr'] .filter-input::placeholder {
     padding: 0 0 0 0.25rem;
 }
 
-[dir="rtl"] .filter-input::placeholder {
+[dir='rtl'] .filter-input::placeholder {
     padding: 0 0.25rem 0 0;
 }

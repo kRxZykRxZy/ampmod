@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FormattedMessage } from "react-intl";
-import { APP_NAME } from "@ampmod/branding";
-import styles from "./download.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {FormattedMessage} from 'react-intl';
+import {APP_NAME} from '@ampmod/branding';
+import styles from './download.css';
 
 const DEFINITELY_EXECUTABLE = [
     // Entries should be lowercase and without leading period.
@@ -11,82 +11,82 @@ const DEFINITELY_EXECUTABLE = [
     // would be eligible for a bounty.
 
     // Windows executable formats
-    "exe",
-    "msi",
-    "msix",
-    "msixbundle",
-    "com",
-    "scf",
-    "scr",
-    "sct",
-    "dll",
-    "appx",
-    "appxbundle",
-    "reg",
-    "iso",
-    "drv",
-    "sys",
+    'exe',
+    'msi',
+    'msix',
+    'msixbundle',
+    'com',
+    'scf',
+    'scr',
+    'sct',
+    'dll',
+    'appx',
+    'appxbundle',
+    'reg',
+    'iso',
+    'drv',
+    'sys',
 
     // Mac executable formats
-    "app",
-    "dmg",
-    "pkg",
+    'app',
+    'dmg',
+    'pkg',
 
     // Unix executable formats
-    "so",
-    "a",
-    "run",
-    "appimage",
-    "deb",
-    "rpm",
-    "snap",
-    "flatpakref",
+    'so',
+    'a',
+    'run',
+    'appimage',
+    'deb',
+    'rpm',
+    'snap',
+    'flatpakref',
 
     // Cross-platform executable formats
-    "jar",
+    'jar',
 
     // Browser extensions
-    "crx",
-    "xpi",
+    'crx',
+    'xpi',
 
     // Shortcuts
-    "url",
-    "webloc",
-    "inetloc",
-    "lnk",
+    'url',
+    'webloc',
+    'inetloc',
+    'lnk',
 
     // Windows scripting languages
-    "bat",
-    "cmd",
-    "ps1",
-    "psm1",
-    "asp",
-    "vbs",
-    "vbe",
-    "ws",
-    "wsf",
-    "wsc",
-    "ahk",
+    'bat',
+    'cmd',
+    'ps1',
+    'psm1',
+    'asp',
+    'vbs',
+    'vbe',
+    'ws',
+    'wsf',
+    'wsc',
+    'ahk',
 
     // Microsoft Office macros
-    "docm",
-    "dotm",
-    "xlm",
-    "xlsm",
-    "xltm",
-    "xla",
-    "xlam",
-    "pptm",
-    "potm",
-    "ppsm",
-    "sldm",
+    'docm',
+    'dotm',
+    'xlm',
+    'xlsm',
+    'xltm',
+    'xla',
+    'xlam',
+    'pptm',
+    'potm',
+    'ppsm',
+    'sldm',
 
     // Unix scripting languages
-    "sh",
+    'sh',
 
     // Common cross-platform languages with interpreters that could be executed by double clicking on the file
-    "js",
-    "py",
+    'js',
+    'py'
 ];
 
 /**
@@ -94,7 +94,7 @@ const DEFINITELY_EXECUTABLE = [
  * @returns {boolean} True indicates definitely dangerous. False does not mean safe.
  */
 const isDefinitelyExecutable = name => {
-    const parts = name.split(".");
+    const parts = name.split('.');
     const extension = parts.length > 1 ? parts.pop().toLowerCase() : null;
     return extension !== null && DEFINITELY_EXECUTABLE.includes(extension);
 };
@@ -103,9 +103,9 @@ const FileName = props => {
     const MAX_NAME_LENGTH = 80;
     const MAX_EXTENSION_LENGTH = 30;
 
-    const parts = props.name.split(".");
+    const parts = props.name.split('.');
     let extension = parts.length > 1 ? parts.pop() : null;
-    let name = parts.join(".");
+    let name = parts.join('.');
 
     if (name.length > MAX_NAME_LENGTH) {
         name = `${name.substring(0, MAX_NAME_LENGTH)}[...]`;
@@ -121,14 +121,14 @@ const FileName = props => {
     return (
         <span className={styles.fileName}>
             <span className={styles.name}>{name}</span>
-            <span className={styles.dot}>{"."}</span>
+            <span className={styles.dot}>{'.'}</span>
             <span className={styles.extension}>{extension}</span>
         </span>
     );
 };
 
 FileName.propTypes = {
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
 };
 
 const DownloadModal = props => (
@@ -140,7 +140,7 @@ const DownloadModal = props => (
                 description="Part of modal when a project attempts to save a file to someone's downloads folder"
                 id="tw.download.file"
                 values={{
-                    name: <FileName name={props.name} />,
+                    name: <FileName name={props.name} />
                 }}
             />
         </p>
@@ -152,7 +152,7 @@ const DownloadModal = props => (
                 description="Part of modal when a project attempts to save a file to someone's downloads folder."
                 id="tw.download.danger"
                 values={{
-                    APP_NAME,
+                    APP_NAME
                 }}
             />
         </p>
@@ -165,7 +165,7 @@ const DownloadModal = props => (
                     description="Part of modal when a project attempts to save a file to someone's downloads folder."
                     id="tw.download.executable"
                     values={{
-                        APP_NAME,
+                        APP_NAME
                     }}
                 />
             </p>
@@ -174,7 +174,7 @@ const DownloadModal = props => (
 );
 
 DownloadModal.propTypes = {
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
 };
 
 export default DownloadModal;

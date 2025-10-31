@@ -1,28 +1,25 @@
-import bindAll from "lodash.bindall";
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import bindAll from 'lodash.bindall';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
-import { setDimensions } from "../reducers/tw";
+import {setDimensions} from '../reducers/tw';
 
 const TWFullScreenResizerHOC = function (WrappedComponent) {
     class FullScreenResizer extends React.Component {
         constructor(props) {
             super(props);
-            bindAll(this, ["handleResize"]);
+            bindAll(this, ['handleResize']);
         }
         componentDidMount() {
-            window.addEventListener("resize", this.handleResize);
+            window.addEventListener('resize', this.handleResize);
         }
         componentWillUnmount() {
-            window.removeEventListener("resize", this.handleResize);
+            window.removeEventListener('resize', this.handleResize);
         }
         handleResize() {
             if (this.props.isFullScreen) {
-                this.props.onSetDimensions([
-                    window.innerWidth,
-                    window.innerHeight,
-                ]);
+                this.props.onSetDimensions([window.innerWidth, window.innerHeight]);
             }
         }
         render() {
@@ -38,17 +35,15 @@ const TWFullScreenResizerHOC = function (WrappedComponent) {
     }
     FullScreenResizer.propTypes = {
         isFullScreen: PropTypes.bool,
-        onSetDimensions: PropTypes.func,
+        onSetDimensions: PropTypes.func
     };
     const mapStateToProps = state => ({
-        isFullScreen:
-            state.scratchGui.mode.isFullScreen ||
-            state.scratchGui.mode.isEmbedded,
+        isFullScreen: state.scratchGui.mode.isFullScreen || state.scratchGui.mode.isEmbedded
     });
     const mapDispatchToProps = dispatch => ({
-        onSetDimensions: dimensions => dispatch(setDimensions(dimensions)),
+        onSetDimensions: dimensions => dispatch(setDimensions(dimensions))
     });
     return connect(mapStateToProps, mapDispatchToProps)(FullScreenResizer);
 };
 
-export { TWFullScreenResizerHOC as default };
+export {TWFullScreenResizerHOC as default};

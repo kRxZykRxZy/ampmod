@@ -1,43 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        color: black;
-        background-color: white;
-      }
-      main {
-        padding: 20px;
-        box-sizing: border-box;
-        width: 100%;
-        min-height: 100vh;
-        border: 20px solid hsla(0, 100%, 65%, 1);
-      }
-      pre {
-        font-size: inherit;
-        overflow-x: hidden;
-      }
-      h1 {
-        margin-top: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <main>
-      <h1>TurboWarp Desktop <span class="version"></span></h1>
-      <p class="more-version"></p>
-      <script>
-        var info = AboutPreload.getInfo();
-        document.querySelector('.version').textContent = info.version;
-        document.querySelector('.more-version').textContent = `(Debug info: Electron ${info.electron}, Platform ${info.platform} ${info.arch}, Distribution ${info.dist})`;
-      </script>
-      <p>TurboWarp is a better offline editor for Scratch 3. Learn more at <a href="https://desktop.turbowarp.org/">https://desktop.turbowarp.org/</a>.</p>
-      <p>TurboWarp Desktop is licensed under the GNU General Public License v3.0. The source code is published <a href="https://github.com/TurboWarp/" target="_blank" rel="noreferrer">on GitHub</a>. You can read the license below:</p>
-      <pre>
+    <head>
+        <meta charset="utf-8" />
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                color: black;
+                background-color: white;
+            }
+            main {
+                padding: 20px;
+                box-sizing: border-box;
+                width: 100%;
+                min-height: 100vh;
+                border: 20px solid hsla(0, 100%, 65%, 1);
+            }
+            pre {
+                font-size: inherit;
+                overflow-x: hidden;
+            }
+            h1 {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <h1>TurboWarp Desktop <span class="version"></span></h1>
+            <p class="more-version"></p>
+            <script>
+                var info = AboutPreload.getInfo();
+                document.querySelector('.version').textContent = info.version;
+                document.querySelector('.more-version').textContent =
+                    `(Debug info: Electron ${info.electron}, Platform ${info.platform} ${info.arch}, Distribution ${info.dist})`;
+            </script>
+            <p>
+                TurboWarp is a better offline editor for Scratch 3. Learn more at
+                <a href="https://desktop.turbowarp.org/">https://desktop.turbowarp.org/</a>.
+            </p>
+            <p>
+                TurboWarp Desktop is licensed under the GNU General Public License v3.0. The source code is published
+                <a href="https://github.com/TurboWarp/" target="_blank" rel="noreferrer">on GitHub</a>. You can read the
+                license below:
+            </p>
+            <pre>
                     GNU GENERAL PUBLIC LICENSE
                         Version 3, 29 June 2007
 
@@ -711,7 +719,8 @@ into proprietary programs.  If your program is a subroutine library, you
 may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
-&lt;https://www.gnu.org/licenses/why-not-lgpl.html&gt;.</pre>
-    </main>
-  </body>
+&lt;https://www.gnu.org/licenses/why-not-lgpl.html&gt;.</pre
+            >
+        </main>
+    </body>
 </html>

@@ -4,12 +4,7 @@
     <head>
         <meta charset="utf-8" />
         <title>Scratch VM Benchmark</title>
-        <link
-            rel="stylesheet"
-            href="./benchmark.css"
-            type="text/css"
-            media="screen"
-        />
+        <link rel="stylesheet" href="./benchmark.css" type="text/css" media="screen" />
         <script>
             // Track loading time with timestamps and if possible the performance
             // api.
@@ -19,15 +14,15 @@
             if (window.performance) {
                 // Mark for browser performance inspectors and if we want to use
                 // other performance apis.
-                performance.mark("Scratch.LoadStart");
+                performance.mark('Scratch.LoadStart');
             }
         </script>
     </head>
     <body>
         <h2>Scratch VM Benchmark</h2>
         <p class="description">
-            Welcome to the scratch-vm benchmark. This tool helps you profile a
-            scratch project. When you load the page, it:
+            Welcome to the scratch-vm benchmark. This tool helps you profile a scratch project. When you load the page,
+            it:
         </p>
         <ol class="description">
             <li>loads the default project and enables turbo mode</li>
@@ -35,17 +30,11 @@
             <li>profiles for 6 seconds</li>
             <li>stops and reports</li>
         </ol>
-        <p class="description">
-            The benchmark is not very useful when the compiler is enabled.
-        </p>
+        <p class="description">The benchmark is not very useful when the compiler is enabled.</p>
         <div class="run-form">
             <input id="project-id" type="text" value="119615668" />
             <label>
-                <input
-                    type="checkbox"
-                    id="enable-compiler"
-                    autocomplete="off"
-                />
+                <input type="checkbox" id="enable-compiler" autocomplete="off" />
                 Enable compiler
             </label>
             <button class="run">run</button>
@@ -83,23 +72,15 @@
             <div class="profile-count-group">
                 <div class="profile-count">
                     <label>Percent of time worked:</label>
-                    <span
-                        class="profile-count-value profile-count-amount-recorded"
-                        >...</span
-                    >
+                    <span class="profile-count-value profile-count-amount-recorded">...</span>
                 </div>
                 <div class="profile-count">
                     <label>Steps looped:</label>
-                    <span class="profile-count-value profile-count-steps-looped"
-                        >...</span
-                    >
+                    <span class="profile-count-value profile-count-steps-looped">...</span>
                 </div>
                 <div class="profile-count">
                     <label>Blocks executed:</label>
-                    <span
-                        class="profile-count-value profile-count-blocks-executed"
-                        >...</span
-                    >
+                    <span class="profile-count-value profile-count-blocks-executed">...</span>
                 </div>
                 <a class="share"
                     ><div class="profile-count">

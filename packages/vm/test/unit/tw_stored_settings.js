@@ -1,9 +1,8 @@
-const tap = require("tap");
-const path = require("path");
-const readFileToBuffer =
-    require("../fixtures/readProjectFile").readFileToBuffer;
-const makeTestStorage = require("../fixtures/make-test-storage");
-const VirtualMachine = require("../../src/virtual-machine");
+const tap = require('tap');
+const path = require('path');
+const readFileToBuffer = require('../fixtures/readProjectFile').readFileToBuffer;
+const makeTestStorage = require('../fixtures/make-test-storage');
+const VirtualMachine = require('../../src/virtual-machine');
 
 const test = tap.test;
 
@@ -13,11 +12,9 @@ const makeVM = () => {
     return vm;
 };
 
-for (const file of ["empty-comment.sb3", "no-comment.sb3"]) {
+for (const file of ['empty-comment.sb3', 'no-comment.sb3']) {
     test(`serializes and deserializes settings (${file})`, t => {
-        const project = readFileToBuffer(
-            path.resolve(__dirname, `../fixtures/tw-stored-settings/${file}`)
-        );
+        const project = readFileToBuffer(path.resolve(__dirname, `../fixtures/tw-stored-settings/${file}`));
         const vm = makeVM();
         vm.loadProject(project).then(() => {
             vm.setFramerate(45);
@@ -26,7 +23,7 @@ for (const file of ["empty-comment.sb3", "no-comment.sb3"]) {
             vm.setRuntimeOptions({
                 maxClones: Infinity,
                 miscLimits: false,
-                fencing: false,
+                fencing: false
             });
             vm.setStageSize(100, 101);
             vm.storeProjectOptions();
@@ -36,10 +33,7 @@ for (const file of ["empty-comment.sb3", "no-comment.sb3"]) {
                 t.equal(newVM.runtime.framerate, vm.runtime.framerate);
                 t.equal(newVM.runtime.turboMode, vm.runtime.turboMode);
                 t.same(newVM.runtime.runtimeOptions, vm.runtime.runtimeOptions);
-                t.equal(
-                    newVM.runtime.interpolationEnabled,
-                    vm.runtime.interpolationEnabled
-                );
+                t.equal(newVM.runtime.interpolationEnabled, vm.runtime.interpolationEnabled);
                 t.equal(newVM.runtime.stageWidth, vm.runtime.stageWidth);
                 t.equal(newVM.runtime.stageHeight, vm.runtime.stageHeight);
                 t.end();
@@ -48,13 +42,8 @@ for (const file of ["empty-comment.sb3", "no-comment.sb3"]) {
     });
 }
 
-test("Reuses comment if it already exists", t => {
-    const project = readFileToBuffer(
-        path.resolve(
-            __dirname,
-            `../fixtures/tw-stored-settings/empty-comment.sb3`
-        )
-    );
+test('Reuses comment if it already exists', t => {
+    const project = readFileToBuffer(path.resolve(__dirname, `../fixtures/tw-stored-settings/empty-comment.sb3`));
     const vm = makeVM();
     vm.loadProject(project).then(() => {
         t.equal(Object.keys(vm.runtime.getTargetForStage().comments).length, 1);
@@ -65,14 +54,12 @@ test("Reuses comment if it already exists", t => {
     });
 });
 
-test("Storing settings emits workspace update only when stage open", t => {
-    const project = readFileToBuffer(
-        path.resolve(__dirname, `../fixtures/tw-stored-settings/sprite.sb3`)
-    );
+test('Storing settings emits workspace update only when stage open', t => {
+    const project = readFileToBuffer(path.resolve(__dirname, `../fixtures/tw-stored-settings/sprite.sb3`));
     const vm = makeVM();
     vm.loadProject(project).then(() => {
         let didFireUpdate = false;
-        vm.on("workspaceUpdate", () => {
+        vm.on('workspaceUpdate', () => {
             didFireUpdate = true;
         });
         vm.storeProjectOptions();
@@ -84,14 +71,12 @@ test("Storing settings emits workspace update only when stage open", t => {
     });
 });
 
-test("Storing settings emits project changed", t => {
-    const project = readFileToBuffer(
-        path.resolve(__dirname, `../fixtures/tw-stored-settings/sprite.sb3`)
-    );
+test('Storing settings emits project changed', t => {
+    const project = readFileToBuffer(path.resolve(__dirname, `../fixtures/tw-stored-settings/sprite.sb3`));
     const vm = makeVM();
     vm.loadProject(project).then(() => {
         t.plan(1);
-        vm.on("PROJECT_CHANGED", () => {
+        vm.on('PROJECT_CHANGED', () => {
             t.pass();
         });
         vm.storeProjectOptions();
@@ -99,14 +84,12 @@ test("Storing settings emits project changed", t => {
     });
 });
 
-test("Stored turbo mode emits event on VM", async t => {
+test('Stored turbo mode emits event on VM', async t => {
     const vm = makeVM();
-    const project = readFileToBuffer(
-        path.resolve(__dirname, "../fixtures/tw-stored-settings/turbo-mode.sb3")
-    );
+    const project = readFileToBuffer(path.resolve(__dirname, '../fixtures/tw-stored-settings/turbo-mode.sb3'));
     t.plan(1);
-    vm.on("TURBO_MODE_ON", () => {
-        t.pass("emitted TURBO_MODE_ON");
+    vm.on('TURBO_MODE_ON', () => {
+        t.pass('emitted TURBO_MODE_ON');
     });
     await vm.loadProject(project);
     t.end();

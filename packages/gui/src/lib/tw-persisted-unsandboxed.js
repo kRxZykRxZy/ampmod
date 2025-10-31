@@ -2,7 +2,7 @@
 // User still has to manually confirm loading the extension and has
 // every opportunity to uncheck the box.
 
-import { lsNamespace } from "./amp-localstorage-namespace.js";
+import {lsNamespace} from './amp-localstorage-namespace.js';
 const PERSISTED_UNSANDBOXED_KEY = `${lsNamespace}persisted_unsandboxed`;
 
 /**
@@ -10,7 +10,7 @@ const PERSISTED_UNSANDBOXED_KEY = `${lsNamespace}persisted_unsandboxed`;
  */
 const getPersistedUnsandboxed = () => {
     try {
-        return localStorage.getItem(PERSISTED_UNSANDBOXED_KEY) === "true";
+        return localStorage.getItem(PERSISTED_UNSANDBOXED_KEY) === 'true';
     } catch (e) {
         return false;
     }
@@ -27,4 +27,4 @@ const setPersistedUnsandboxed = persisted => {
     }
 };
 
-export { getPersistedUnsandboxed, setPersistedUnsandboxed };
+export {getPersistedUnsandboxed, setPersistedUnsandboxed};

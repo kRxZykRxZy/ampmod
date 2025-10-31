@@ -1,4 +1,4 @@
-const Timer = require("../util/timer");
+const Timer = require('../util/timer');
 
 /**
  * This class uses the token bucket algorithm to control a queue of tasks.
@@ -17,22 +17,16 @@ class TaskQueue {
      * @property {number} maxTotalCost - reject a task if total queue cost would pass this limit (default: no limit).
      * @memberof TaskQueue
      */
-    constructor(maxTokens, refillRate, options = {}) {
+    constructor (maxTokens, refillRate, options = {}) {
         this._maxTokens = maxTokens;
         this._refillRate = refillRate;
         this._pendingTaskRecords = [];
-        this._tokenCount = Object.prototype.hasOwnProperty.call(
-            options,
-            "startingTokens"
-        )
-            ? options.startingTokens
-            : maxTokens;
-        this._maxTotalCost = Object.prototype.hasOwnProperty.call(
-            options,
-            "maxTotalCost"
-        )
-            ? options.maxTotalCost
-            : Infinity;
+        this._tokenCount = Object.prototype.hasOwnProperty.call(options, 'startingTokens') ?
+            options.startingTokens :
+            maxTokens;
+        this._maxTotalCost = Object.prototype.hasOwnProperty.call(options, 'maxTotalCost') ?
+            options.maxTotalCost :
+            Infinity;
         this._timer = new Timer();
         this._timer.start();
         this._timeout = null;
@@ -47,7 +41,7 @@ class TaskQueue {
      * @readonly
      * @memberof TaskQueue
      */
-    get length() {
+    get length () {
         return this._pendingTaskRecords.length;
     }
 
@@ -59,22 +53,19 @@ class TaskQueue {
      * @returns {Promise} - a promise for the task's return value.
      * @memberof TaskQueue
      */
-    do(task, cost = 1) {
+    do (task, cost = 1) {
         if (this._maxTotalCost < Infinity) {
-            const currentTotalCost = this._pendingTaskRecords.reduce(
-                (t, r) => t + r.cost,
-                0
-            );
+            const currentTotalCost = this._pendingTaskRecords.reduce((t, r) => t + r.cost, 0);
             if (currentTotalCost + cost > this._maxTotalCost) {
-                return Promise.reject(new Error("Maximum total cost exceeded"));
+                return Promise.reject(new Error('Maximum total cost exceeded'));
             }
         }
         const newRecord = {
-            cost,
+            cost
         };
         newRecord.promise = new Promise((resolve, reject) => {
             newRecord.cancel = () => {
-                reject(new Error("Task canceled"));
+                reject(new Error('Task canceled'));
             };
 
             // The caller, `_runTasks()`, is responsible for cost-checking and spending tokens.
@@ -103,10 +94,8 @@ class TaskQueue {
      * @returns {boolean} - true if the task was found, or false otherwise.
      * @memberof TaskQueue
      */
-    cancel(taskPromise) {
-        const taskIndex = this._pendingTaskRecords.findIndex(
-            r => r.promise === taskPromise
-        );
+    cancel (taskPromise) {
+        const taskIndex = this._pendingTaskRecords.findIndex(r => r.promise === taskPromise);
         if (taskIndex !== -1) {
             const [taskRecord] = this._pendingTaskRecords.splice(taskIndex, 1);
             taskRecord.cancel();
@@ -123,7 +112,7 @@ class TaskQueue {
      *
      * @memberof TaskQueue
      */
-    cancelAll() {
+    cancelAll () {
         if (this._timeout !== null) {
             this._timer.clearTimeout(this._timeout);
             this._timeout = null;
@@ -142,7 +131,7 @@ class TaskQueue {
      * @returns {boolean} true if we had enough tokens; false otherwise.
      * @memberof TaskQueue
      */
-    _refillAndSpend(cost) {
+    _refillAndSpend (cost) {
         this._refill();
         return this._spend(cost);
     }
@@ -152,7 +141,7 @@ class TaskQueue {
      *
      * @memberof TaskQueue
      */
-    _refill() {
+    _refill () {
         const now = this._timer.timeElapsed();
         const timeSinceRefill = now - this._lastUpdateTime;
         if (timeSinceRefill <= 0) return;
@@ -170,7 +159,7 @@ class TaskQueue {
      * @returns {boolean} true if we had enough tokens; false otherwise.
      * @memberof TaskQueue
      */
-    _spend(cost) {
+    _spend (cost) {
         if (cost <= this._tokenCount) {
             this._tokenCount -= cost;
             return true;
@@ -184,7 +173,7 @@ class TaskQueue {
      *
      * @memberof TaskQueue
      */
-    _runTasks() {
+    _runTasks () {
         if (this._timeout) {
             this._timer.clearTimeout(this._timeout);
             this._timeout = null;
@@ -196,9 +185,7 @@ class TaskQueue {
                 return;
             }
             if (nextRecord.cost > this._maxTokens) {
-                throw new Error(
-                    `Task cost ${nextRecord.cost} is greater than bucket limit ${this._maxTokens}`
-                );
+                throw new Error(`Task cost ${nextRecord.cost} is greater than bucket limit ${this._maxTokens}`);
             }
             // Refill before each task in case the time it took for the last task to run was enough to afford the next.
             if (this._refillAndSpend(nextRecord.cost)) {
@@ -206,17 +193,9 @@ class TaskQueue {
             } else {
                 // We can't currently afford this task. Put it back and wait until we can and try again.
                 this._pendingTaskRecords.unshift(nextRecord);
-                const tokensNeeded = Math.max(
-                    nextRecord.cost - this._tokenCount,
-                    0
-                );
-                const estimatedWait = Math.ceil(
-                    (1000 * tokensNeeded) / this._refillRate
-                );
-                this._timeout = this._timer.setTimeout(
-                    this._runTasks,
-                    estimatedWait
-                );
+                const tokensNeeded = Math.max(nextRecord.cost - this._tokenCount, 0);
+                const estimatedWait = Math.ceil((1000 * tokensNeeded) / this._refillRate);
+                this._timeout = this._timer.setTimeout(this._runTasks, estimatedWait);
                 return;
             }
         }

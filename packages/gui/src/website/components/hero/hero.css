@@ -1,6 +1,6 @@
-@import "../../../css/colors.css";
-@import "../../../css/default-colors.css";
-@import "../../../css/units.css";
+@import '../../../css/colors.css';
+@import '../../../css/default-colors.css';
+@import '../../../css/units.css';
 
 .primary-button {
     background-color: white;
@@ -40,7 +40,7 @@
     max-width: 40%;
 }
 
-[dir="rtl"] .header-image {
+[dir='rtl'] .header-image {
     transform: scaleX(-1);
 }
 

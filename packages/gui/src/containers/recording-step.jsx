@@ -1,49 +1,45 @@
-import React from "react";
-import PropTypes from "prop-types";
-import bindAll from "lodash.bindall";
-import RecordingStepComponent from "../components/record-modal/recording-step.jsx";
-import AudioRecorder from "../lib/audio/audio-recorder.js";
-import { defineMessages, injectIntl, intlShape } from "react-intl";
-import log from "../lib/log";
+import React from 'react';
+import PropTypes from 'prop-types';
+import bindAll from 'lodash.bindall';
+import RecordingStepComponent from '../components/record-modal/recording-step.jsx';
+import AudioRecorder from '../lib/audio/audio-recorder.js';
+import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import log from '../lib/log';
 
 const messages = defineMessages({
     alertMsg: {
-        defaultMessage: "Could not start recording",
-        description: "Alert for recording error",
-        id: "gui.recordingStep.alertMsg",
-    },
+        defaultMessage: 'Could not start recording',
+        description: 'Alert for recording error',
+        id: 'gui.recordingStep.alertMsg'
+    }
 });
 
 class RecordingStep extends React.Component {
     constructor(props) {
         super(props);
         bindAll(this, [
-            "handleRecord",
-            "handleStopRecording",
-            "handleStarted",
-            "handleLevelUpdate",
-            "handleRecordingError",
+            'handleRecord',
+            'handleStopRecording',
+            'handleStarted',
+            'handleLevelUpdate',
+            'handleRecordingError'
         ]);
 
         this.state = {
             listening: false,
             level: 0,
-            levels: null,
+            levels: null
         };
     }
     componentDidMount() {
         this.audioRecorder = new AudioRecorder();
-        this.audioRecorder.startListening(
-            this.handleStarted,
-            this.handleLevelUpdate,
-            this.handleRecordingError
-        );
+        this.audioRecorder.startListening(this.handleStarted, this.handleLevelUpdate, this.handleRecordingError);
     }
     componentWillUnmount() {
         this.audioRecorder.dispose();
     }
     handleStarted() {
-        this.setState({ listening: true });
+        this.setState({listening: true});
     }
     handleRecordingError(error) {
         log.error(error);
@@ -52,9 +48,7 @@ class RecordingStep extends React.Component {
     handleLevelUpdate(level) {
         this.setState({
             level: level,
-            levels: this.props.recording
-                ? (this.state.levels || []).concat([level])
-                : this.state.levels,
+            levels: this.props.recording ? (this.state.levels || []).concat([level]) : this.state.levels
         });
     }
     handleRecord() {
@@ -62,15 +56,8 @@ class RecordingStep extends React.Component {
         this.props.onRecord();
     }
     handleStopRecording() {
-        const { samples, sampleRate, levels, trimStart, trimEnd } =
-            this.audioRecorder.stop();
-        this.props.onStopRecording(
-            samples,
-            sampleRate,
-            levels,
-            trimStart,
-            trimEnd
-        );
+        const {samples, sampleRate, levels, trimStart, trimEnd} = this.audioRecorder.stop();
+        this.props.onStopRecording(samples, sampleRate, levels, trimStart, trimEnd);
     }
     render() {
         const {
@@ -95,7 +82,7 @@ RecordingStep.propTypes = {
     intl: intlShape.isRequired,
     onRecord: PropTypes.func.isRequired,
     onStopRecording: PropTypes.func.isRequired,
-    recording: PropTypes.bool,
+    recording: PropTypes.bool
 };
 
 export default injectIntl(RecordingStep);

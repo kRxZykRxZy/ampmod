@@ -1,11 +1,11 @@
-const UPDATE_METRICS = "scratch-gui/workspace-metrics/UPDATE_METRICS";
+const UPDATE_METRICS = 'scratch-gui/workspace-metrics/UPDATE_METRICS';
 
 const initialState = {
-    targets: {},
+    targets: {}
 };
 
 const reducer = function (state, action) {
-    if (typeof state === "undefined") state = initialState;
+    if (typeof state === 'undefined') state = initialState;
 
     switch (action.type) {
         case UPDATE_METRICS:
@@ -14,9 +14,9 @@ const reducer = function (state, action) {
                     [action.targetID]: {
                         scrollX: action.scrollX,
                         scrollY: action.scrollY,
-                        scale: action.scale,
-                    },
-                }),
+                        scale: action.scale
+                    }
+                })
             });
         default:
             return state;
@@ -26,12 +26,8 @@ const reducer = function (state, action) {
 const updateMetrics = function (metrics) {
     return {
         type: UPDATE_METRICS,
-        ...metrics,
+        ...metrics
     };
 };
 
-export {
-    reducer as default,
-    initialState as workspaceMetricsInitialState,
-    updateMetrics,
-};
+export {reducer as default, initialState as workspaceMetricsInitialState, updateMetrics};

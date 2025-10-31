@@ -1,20 +1,17 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
-import { defineMessages, injectIntl, intlShape } from "react-intl";
+import PropTypes from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
+import {defineMessages, injectIntl, intlShape} from 'react-intl';
 
-import {
-    getIsAnyCreatingNewState,
-    getIsShowingWithoutId,
-} from "../reducers/project-state";
-import { setProjectTitle } from "../reducers/project-title";
+import {getIsAnyCreatingNewState, getIsShowingWithoutId} from '../reducers/project-state';
+import {setProjectTitle} from '../reducers/project-title';
 
 const messages = defineMessages({
     defaultProjectTitle: {
-        id: "tw.gui.defaultProjectTitle",
-        description: "Default title for project",
-        defaultMessage: "Project",
-    },
+        id: 'tw.gui.defaultProjectTitle',
+        description: 'Default title for project',
+        defaultMessage: 'Project'
+    }
 });
 
 /* Higher Order Component to get and set the project title
@@ -31,10 +28,7 @@ const TitledHOC = function (WrappedComponent) {
                 this.handleReceivedProjectTitle(this.props.projectTitle);
             }
             // if project is a new default project, and has loaded,
-            if (
-                this.props.isShowingWithoutId &&
-                prevProps.isAnyCreatingNewState
-            ) {
+            if (this.props.isShowingWithoutId && prevProps.isAnyCreatingNewState) {
                 // reset title to default
                 const defaultProjectTitle = this.handleReceivedProjectTitle();
                 this.props.onUpdateProjectTitle(defaultProjectTitle, true);
@@ -45,9 +39,7 @@ const TitledHOC = function (WrappedComponent) {
                 this.props.reduxProjectTitle !== prevProps.reduxProjectTitle &&
                 this.props.reduxProjectTitle !== this.props.projectTitle
             ) {
-                const defaultProjectTitle = this.props.intl.formatMessage(
-                    messages.defaultProjectTitle
-                );
+                const defaultProjectTitle = this.props.intl.formatMessage(messages.defaultProjectTitle);
                 this.props.onUpdateProjectTitle(
                     this.props.reduxProjectTitle,
                     this.props.reduxProjectTitle === defaultProjectTitle
@@ -57,10 +49,8 @@ const TitledHOC = function (WrappedComponent) {
         handleReceivedProjectTitle(requestedTitle) {
             let newTitle = requestedTitle;
             let isDefault = false;
-            if (newTitle === null || typeof newTitle === "undefined") {
-                newTitle = this.props.intl.formatMessage(
-                    messages.defaultProjectTitle
-                );
+            if (newTitle === null || typeof newTitle === 'undefined') {
+                newTitle = this.props.intl.formatMessage(messages.defaultProjectTitle);
                 isDefault = true;
             }
             this.props.onChangedProjectTitle(newTitle, isDefault);
@@ -93,11 +83,11 @@ const TitledHOC = function (WrappedComponent) {
         onChangedProjectTitle: PropTypes.func,
         onUpdateProjectTitle: PropTypes.func,
         projectTitle: PropTypes.string,
-        reduxProjectTitle: PropTypes.string,
+        reduxProjectTitle: PropTypes.string
     };
 
     TitledComponent.defaultProps = {
-        onUpdateProjectTitle: () => {},
+        onUpdateProjectTitle: () => {}
     };
 
     const mapStateToProps = state => {
@@ -105,17 +95,15 @@ const TitledHOC = function (WrappedComponent) {
         return {
             isAnyCreatingNewState: getIsAnyCreatingNewState(loadingState),
             isShowingWithoutId: getIsShowingWithoutId(loadingState),
-            reduxProjectTitle: state.scratchGui.projectTitle,
+            reduxProjectTitle: state.scratchGui.projectTitle
         };
     };
 
     const mapDispatchToProps = dispatch => ({
-        onChangedProjectTitle: title => dispatch(setProjectTitle(title)),
+        onChangedProjectTitle: title => dispatch(setProjectTitle(title))
     });
 
-    return injectIntl(
-        connect(mapStateToProps, mapDispatchToProps)(TitledComponent)
-    );
+    return injectIntl(connect(mapStateToProps, mapDispatchToProps)(TitledComponent));
 };
 
-export { TitledHOC as default };
+export {TitledHOC as default};

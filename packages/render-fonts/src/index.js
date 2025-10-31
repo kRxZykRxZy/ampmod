@@ -6,15 +6,15 @@ const getFonts = function () {
     if (FONTS) return FONTS;
     /* eslint-disable global-require */
     FONTS = {
-        "Sans Serif": require("base64-loader!./NotoSans-Medium.woff2"),
-        Serif: require("base64-loader!./SourceSerifPro-Regular.woff2"),
-        Handwriting: require("base64-loader!./handlee-regular.woff2"),
-        Comic: require("base64-loader!./ComicNeue-Bold.woff2"),
-        Marker: require("base64-loader!./Knewave.woff2"),
-        Curly: require("base64-loader!./Griffy-Regular.woff2"),
-        Pixel: require("base64-loader!./Grand9K-Pixel.woff2"),
-        Scratch: require("base64-loader!./ScratchSavers_b2.woff2"),
-        AmpMod: require("base64-loader!./PixelifySans.woff2"),
+        'Sans Serif': require('base64-loader!./NotoSans-Medium.woff2'),
+        'Serif': require('base64-loader!./SourceSerifPro-Regular.woff2'),
+        'Handwriting': require('base64-loader!./handlee-regular.woff2'),
+        'Comic': require('base64-loader!./ComicNeue-Bold.woff2'),
+        'Marker': require('base64-loader!./Knewave.woff2'),
+        'Curly': require('base64-loader!./Griffy-Regular.woff2'),
+        'Pixel': require('base64-loader!./Grand9K-Pixel.woff2'),
+        'Scratch': require('base64-loader!./ScratchSavers_b2.woff2'),
+        'AmpMod': require('base64-loader!./PixelifySans.woff2')
     };
     /* eslint-enable global-require */
 
@@ -25,18 +25,17 @@ const getFonts = function () {
     for (const fontName in FONTS) {
         const fontData = FONTS[fontName];
         FONTS[fontName] =
-            "@font-face {" +
-            `font-family: "${fontName}";src: url("data:font/woff2;base64,${fontData}");}`;
+            '@font-face {' + `font-family: "${fontName}";src: url("data:font/woff2;base64,${fontData}");}`;
     }
 
-    if (!document.getElementById("scratch-font-styles")) {
-        let css = "";
+    if (!document.getElementById('scratch-font-styles')) {
+        let css = '';
         for (const fontName in FONTS) {
             css += FONTS[fontName];
         }
 
-        const documentStyleTag = document.createElement("style");
-        documentStyleTag.id = "scratch-font-styles";
+        const documentStyleTag = document.createElement('style');
+        documentStyleTag.id = 'scratch-font-styles';
         documentStyleTag.textContent = css;
         document.body.insertBefore(documentStyleTag, document.body.firstChild);
     }

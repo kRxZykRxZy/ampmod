@@ -1,24 +1,19 @@
-import bindAll from "lodash.bindall";
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
+import bindAll from 'lodash.bindall';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
 
-import VM from "scratch-vm";
-import AudioEngine from "scratch-audio";
+import VM from 'scratch-vm';
+import AudioEngine from 'scratch-audio';
 
-import { setProjectUnchanged } from "../reducers/project-changed";
-import {
-    LoadingStates,
-    getIsLoadingWithId,
-    onLoadedProject,
-    projectError,
-} from "../reducers/project-state";
-import log from "./log";
+import {setProjectUnchanged} from '../reducers/project-changed';
+import {LoadingStates, getIsLoadingWithId, onLoadedProject, projectError} from '../reducers/project-state';
+import log from './log';
 
 /**
  * List of fonts that could be used by security prompts.
  */
-const SECURITY_CRITICAL_FONTS = ["Helvetica Neue", "Helvetica", "Arial"];
+const SECURITY_CRITICAL_FONTS = ['Helvetica Neue', 'Helvetica', 'Arial'];
 
 /*
  * Higher Order Component to manage events emitted by the VM
@@ -29,7 +24,7 @@ const vmManagerHOC = function (WrappedComponent) {
     class VMManager extends React.Component {
         constructor(props) {
             super(props);
-            bindAll(this, ["loadProject"]);
+            bindAll(this, ['loadProject']);
         }
         componentDidMount() {
             if (!this.props.vm.initialized) {
@@ -38,7 +33,7 @@ const vmManagerHOC = function (WrappedComponent) {
                     this.audioEngine = new AudioEngine();
                     this.props.vm.attachAudioEngine(this.audioEngine);
                 } catch (e) {
-                    log.error("could not create scratch-audio", e);
+                    log.error('could not create scratch-audio', e);
                 }
                 for (const font of SECURITY_CRITICAL_FONTS) {
                     this.props.vm.runtime.fontManager.restrictFont(font);
@@ -71,10 +66,7 @@ const vmManagerHOC = function (WrappedComponent) {
             return this.props.vm
                 .loadProject(this.props.projectData)
                 .then(() => {
-                    this.props.onLoadedProject(
-                        this.props.loadingState,
-                        this.props.canSave
-                    );
+                    this.props.onLoadedProject(this.props.loadingState, this.props.canSave);
                     // Wrap in a setTimeout because skin loading in
                     // the renderer can be async.
                     setTimeout(() => this.props.onSetProjectUnchanged());
@@ -111,13 +103,7 @@ const vmManagerHOC = function (WrappedComponent) {
                 vm,
                 ...componentProps
             } = this.props;
-            return (
-                <WrappedComponent
-                    isLoading={isLoadingWithIdProp}
-                    vm={vm}
-                    {...componentProps}
-                />
-            );
+            return <WrappedComponent isLoading={isLoadingWithIdProp} vm={vm} {...componentProps} />;
         }
     }
 
@@ -137,7 +123,7 @@ const vmManagerHOC = function (WrappedComponent) {
         projectData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
         projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         username: PropTypes.string,
-        vm: PropTypes.instanceOf(VM).isRequired,
+        vm: PropTypes.instanceOf(VM).isRequired
     };
 
     const mapStateToProps = state => {
@@ -151,20 +137,18 @@ const vmManagerHOC = function (WrappedComponent) {
             projectId: state.scratchGui.projectState.projectId,
             loadingState: loadingState,
             isPlayerOnly: state.scratchGui.mode.isPlayerOnly,
-            isStarted: state.scratchGui.vmStatus.started,
+            isStarted: state.scratchGui.vmStatus.started
         };
     };
 
     const mapDispatchToProps = dispatch => ({
         onError: error => dispatch(projectError(error)),
-        onLoadedProject: (loadingState, canSave) =>
-            dispatch(onLoadedProject(loadingState, canSave, true)),
-        onSetProjectUnchanged: () => dispatch(setProjectUnchanged()),
+        onLoadedProject: (loadingState, canSave) => dispatch(onLoadedProject(loadingState, canSave, true)),
+        onSetProjectUnchanged: () => dispatch(setProjectUnchanged())
     });
 
     // Allow incoming props to override redux-provided props. Used to mock in tests.
-    const mergeProps = (stateProps, dispatchProps, ownProps) =>
-        Object.assign({}, stateProps, dispatchProps, ownProps);
+    const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign({}, stateProps, dispatchProps, ownProps);
 
     return connect(mapStateToProps, mapDispatchToProps, mergeProps)(VMManager);
 };

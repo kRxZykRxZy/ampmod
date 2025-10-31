@@ -6,57 +6,57 @@ const ArgumentType = {
     /**
      * Numeric value with angle picker
      */
-    ANGLE: "angle",
+    ANGLE: 'angle',
 
     /**
      * Boolean value with hexagonal placeholder
      */
-    BOOLEAN: "Boolean",
+    BOOLEAN: 'Boolean',
 
     /**
      * Numeric value with color picker
      */
-    COLOR: "color",
+    COLOR: 'color',
 
     /**
      * Numeric value with text field
      */
-    NUMBER: "number",
+    NUMBER: 'number',
 
     /**
      * String value with text field
      */
-    STRING: "string",
+    STRING: 'string',
 
     /**
      * Array value with array field
      */
-    ARRAY: "array",
+    ARRAY: 'array',
 
     /**
      * String value with matrix field
      */
-    MATRIX: "matrix",
+    MATRIX: 'matrix',
 
     /**
      * MIDI note number with note picker (piano) field
      */
-    NOTE: "note",
+    NOTE: 'note',
 
     /**
      * Inline image on block (as part of the label)
      */
-    IMAGE: "image",
+    IMAGE: 'image',
 
     /**
      * Name of costume in the current target
      */
-    COSTUME: "costume",
+    COSTUME: 'costume',
 
     /**
      * Name of sound in the current target
      */
-    SOUND: "sound",
+    SOUND: 'sound'
 };
 
 module.exports = ArgumentType;

@@ -13,7 +13,7 @@
  * @param {string} blockId - Id for whose block data is cached in this instance
  */
 class RuntimeScriptCache {
-    constructor(container, blockId) {
+    constructor (container, blockId) {
         /**
          * Container with block data for blockId.
          * @type {Blocks}
@@ -44,8 +44,7 @@ class RuntimeScriptCache {
         if (Object.keys(fields).length === 0) {
             const inputs = container.getInputs(block);
             for (const input in inputs) {
-                if (!Object.prototype.hasOwnProperty.call(inputs, input))
-                    continue;
+                if (!Object.prototype.hasOwnProperty.call(inputs, input)) continue;
                 const id = inputs[input].block;
                 const inputBlock = container.getBlock(id);
                 const inputFields = container.getFields(inputBlock);
@@ -53,10 +52,7 @@ class RuntimeScriptCache {
             }
         }
         for (const key in this.fieldsOfInputs) {
-            const field = (this.fieldsOfInputs[key] = Object.assign(
-                {},
-                this.fieldsOfInputs[key]
-            ));
+            const field = (this.fieldsOfInputs[key] = Object.assign({}, this.fieldsOfInputs[key]));
             if (field.value.toUpperCase) {
                 field.value = field.value.toUpperCase();
             }
@@ -70,7 +66,7 @@ class RuntimeScriptCache {
  * @param {string} opcode - Opcode to filter top blocks by
  */
 exports.getScripts = function () {
-    throw new Error("blocks.js has not initialized BlocksRuntimeCache");
+    throw new Error('blocks.js has not initialized BlocksRuntimeCache');
 };
 
 /**
@@ -79,4 +75,4 @@ exports.getScripts = function () {
  */
 exports._RuntimeScriptCache = RuntimeScriptCache;
 
-require("./blocks");
+require('./blocks');

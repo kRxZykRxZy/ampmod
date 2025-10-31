@@ -4,27 +4,28 @@
 // Wait for all SVG skins to be loaded.
 // TODO: this is extremely janky and should be removed once vm.loadProject waits for SVG skins to load
 // https://github.com/LLK/scratch-render/issues/563
-window.waitForSVGSkinLoad = renderer => new Promise(resolve => {
-    // eslint-disable-next-line prefer-const
-    let interval;
+window.waitForSVGSkinLoad = renderer =>
+    new Promise(resolve => {
+        // eslint-disable-next-line prefer-const
+        let interval;
 
-    const waitInner = () => {
-        let numSVGSkins = 0;
-        let numLoadedSVGSkins = 0;
-        for (const skin of renderer._allSkins) {
-            if (skin.constructor.name !== 'SVGSkin') continue;
-            numSVGSkins++;
-            if (skin._svgImage.complete) numLoadedSVGSkins++;
-        }
+        const waitInner = () => {
+            let numSVGSkins = 0;
+            let numLoadedSVGSkins = 0;
+            for (const skin of renderer._allSkins) {
+                if (skin.constructor.name !== 'SVGSkin') continue;
+                numSVGSkins++;
+                if (skin._svgImage.complete) numLoadedSVGSkins++;
+            }
 
-        if (numSVGSkins === numLoadedSVGSkins) {
-            clearInterval(interval);
-            resolve();
-        }
-    };
+            if (numSVGSkins === numLoadedSVGSkins) {
+                clearInterval(interval);
+                resolve();
+            }
+        };
 
-    interval = setInterval(waitInner, 1);
-});
+        interval = setInterval(waitInner, 1);
+    });
 
 window.loadFileInputIntoVM = (fileInput, vm, render) => {
     const reader = new FileReader();

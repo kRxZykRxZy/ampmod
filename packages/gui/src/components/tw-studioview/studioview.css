@@ -37,7 +37,7 @@ With changes to make it work properly in the scratch-gui environment.
 }
 .studioview-loaded:hover::before,
 .studioview-loaded:active::before {
-    content: "";
+    content: '';
     pointer-events: none;
     user-select: none;
     position: absolute;
@@ -77,7 +77,7 @@ With changes to make it work properly in the scratch-gui environment.
     height: 108px;
 }
 .studioview-thumbnail::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;

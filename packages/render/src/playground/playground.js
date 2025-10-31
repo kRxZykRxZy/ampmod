@@ -61,11 +61,17 @@ if (wantedSkin === WantedSkinType.pen) {
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
 
-        renderer.penLine(penSkinID, {
-            color4f: [Math.random(), Math.random(), Math.random(), 1],
-            diameter: 8
-        },
-        x - 240, 180 - y, (Math.random() * 480) - 240, (Math.random() * 360) - 180);
+        renderer.penLine(
+            penSkinID,
+            {
+                color4f: [Math.random(), Math.random(), Math.random(), 1],
+                diameter: 8
+            },
+            x - 240,
+            180 - y,
+            Math.random() * 480 - 240,
+            Math.random() * 360 - 180
+        );
     });
 }
 
@@ -114,51 +120,51 @@ const handleFudgeChanged = function (event) {
     fudge = event.target.valueAsNumber;
     const props = {};
     switch (fudgeProperty) {
-    case 'posx':
-        props.position = [fudge, posY];
-        posX = fudge;
-        break;
-    case 'posy':
-        props.position = [posX, fudge];
-        posY = fudge;
-        break;
-    case 'direction':
-        props.direction = fudge;
-        break;
-    case 'scalex':
-        props.scale = [fudge, scaleY];
-        scaleX = fudge;
-        break;
-    case 'scaley':
-        props.scale = [scaleX, fudge];
-        scaleY = fudge;
-        break;
-    case 'scaleboth':
-        props.scale = [fudge, fudge];
-        scaleX = fudge;
-        scaleY = fudge;
-        break;
-    case 'color':
-        props.color = fudge;
-        break;
-    case 'whirl':
-        props.whirl = fudge;
-        break;
-    case 'fisheye':
-        props.fisheye = fudge;
-        break;
-    case 'pixelate':
-        props.pixelate = fudge;
-        break;
-    case 'mosaic':
-        props.mosaic = fudge;
-        break;
-    case 'brightness':
-        props.brightness = fudge;
-        break;
-    case 'ghost':
-        props.ghost = fudge;
-        break;
+        case 'posx':
+            props.position = [fudge, posY];
+            posX = fudge;
+            break;
+        case 'posy':
+            props.position = [posX, fudge];
+            posY = fudge;
+            break;
+        case 'direction':
+            props.direction = fudge;
+            break;
+        case 'scalex':
+            props.scale = [fudge, scaleY];
+            scaleX = fudge;
+            break;
+        case 'scaley':
+            props.scale = [scaleX, fudge];
+            scaleY = fudge;
+            break;
+        case 'scaleboth':
+            props.scale = [fudge, fudge];
+            scaleX = fudge;
+            scaleY = fudge;
+            break;
+        case 'color':
+            props.color = fudge;
+            break;
+        case 'whirl':
+            props.whirl = fudge;
+            break;
+        case 'fisheye':
+            props.fisheye = fudge;
+            break;
+        case 'pixelate':
+            props.pixelate = fudge;
+            break;
+        case 'mosaic':
+            props.mosaic = fudge;
+            break;
+        case 'brightness':
+            props.brightness = fudge;
+            break;
+        case 'ghost':
+            props.ghost = fudge;
+            break;
     }
     renderer.updateDrawableProperties(drawableID2, props);
 };
@@ -184,7 +190,7 @@ canvas.addEventListener('mousemove', event => {
 canvas.addEventListener('click', event => {
     const mousePos = getMousePosition(event, canvas);
     const pickID = renderer.pick(mousePos.x, mousePos.y);
-    console.log(`You clicked on ${(pickID < 0 ? 'nothing' : `ID# ${pickID}`)}`);
+    console.log(`You clicked on ${pickID < 0 ? 'nothing' : `ID# ${pickID}`}`);
     if (pickID >= 0) {
         console.dir(renderer.extractDrawableScreenSpace(pickID, mousePos.x, mousePos.y));
     }

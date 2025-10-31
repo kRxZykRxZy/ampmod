@@ -1,0 +1,33 @@
+// TW Snapshot
+// Input SHA-256: ed5270d1d833cbaeddfd407cb4fd8f30fbfc8e6781d3009d678dcd0d96fabecc
+
+// Sprite1 script
+(function factoryXYZ(thread) { const target = thread.target; const runtime = target.runtime; const stage = runtime.getTargetForStage();
+const b0 = runtime.getOpcodeFunction("looks_say");
+const b1 = stage.variables["`jEk@4|i[#Fk?(8x)AV.-my variable"];
+return function* genXYZ () {
+yield* executeInCompatibilityLayer({"MESSAGE":"plan 4",}, b0, false, false, "g", null);
+b1.value = ("ampmod,turbowarp,scratch".split(","));
+if ((Array.isArray(toList(b1.value)) ? toList(b1.value).some(x => x == "ampmod") : false)) {
+yield* executeInCompatibilityLayer({"MESSAGE":"pass contains",}, b0, false, false, "n", null);
+} else {
+yield* executeInCompatibilityLayer({"MESSAGE":"fail contains",}, b0, false, false, "o", null);
+}
+if ((("" + (toList(b1.value)[Math.max(0, Math.min(toList(b1.value).length - 1, 2 - 1))]) || "").toLowerCase() === "turbowarp".toLowerCase())) {
+yield* executeInCompatibilityLayer({"MESSAGE":"pass item",}, b0, false, false, "q", null);
+} else {
+yield* executeInCompatibilityLayer({"MESSAGE":"fail item",}, b0, false, false, "p", null);
+}
+if ((toList(b1.value).length === 3)) {
+yield* executeInCompatibilityLayer({"MESSAGE":"pass length",}, b0, false, false, "s", null);
+} else {
+yield* executeInCompatibilityLayer({"MESSAGE":"fail length",}, b0, false, false, "t", null);
+}
+if (compareEqual([...toList(b1.value), "logo"], ("ampmod,turbowarp,scratch,logo".split(",")))) {
+yield* executeInCompatibilityLayer({"MESSAGE":"pass add",}, b0, false, false, "w", null);
+} else {
+yield* executeInCompatibilityLayer({"MESSAGE":"fail add",}, b0, false, false, "x", null);
+}
+yield* executeInCompatibilityLayer({"MESSAGE":"end",}, b0, false, false, "v", null);
+retire(); return;
+}; })

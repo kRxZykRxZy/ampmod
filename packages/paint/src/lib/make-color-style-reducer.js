@@ -1,7 +1,7 @@
-import log from "../log/log";
-import { CHANGE_SELECTED_ITEMS } from "../reducers/selected-items";
-import { getColorsFromSelection, MIXED } from "../helper/style-path";
-import GradientTypes from "./gradient-types";
+import log from '../log/log';
+import {CHANGE_SELECTED_ITEMS} from '../reducers/selected-items';
+import {getColorsFromSelection, MIXED} from '../helper/style-path';
+import GradientTypes from './gradient-types';
 
 // Matches hex colors
 const hexRegex = /^#[0-9a-f]{3,8}$/i;
@@ -33,38 +33,35 @@ const makeColorStyleReducer = ({
     selectionSecondaryColorKey,
     // The name of the property read from getColorsFromSelection to get the gradient type.
     // e.g. `fillGradientType` or `strokeGradientType`.
-    selectionGradientTypeKey,
+    selectionGradientTypeKey
 }) =>
     function colorReducer(state, action) {
-        if (typeof state === "undefined") {
+        if (typeof state === 'undefined') {
             state = {
                 primary: defaultColor,
                 secondary: null,
-                gradientType: GradientTypes.SOLID,
+                gradientType: GradientTypes.SOLID
             };
         }
         switch (action.type) {
             case changePrimaryColorAction:
                 if (!isValidHexColor(action.color)) return state;
-                return { ...state, primary: action.color };
+                return {...state, primary: action.color};
             case changeSecondaryColorAction:
                 if (!isValidHexColor(action.color)) return state;
-                return { ...state, secondary: action.color };
+                return {...state, secondary: action.color};
             case CHANGE_SELECTED_ITEMS: {
                 // Don't change state if no selection
                 if (!action.selectedItems || !action.selectedItems.length) {
                     return state;
                 }
-                const colors = getColorsFromSelection(
-                    action.selectedItems,
-                    action.bitmapMode
-                );
+                const colors = getColorsFromSelection(action.selectedItems, action.bitmapMode);
 
                 // Only set the primary color + gradient type if they exist in what getColorsFromSelection gave us.
                 // E.g. in bitmap mode, getColorsFromSelection will not return stroke color/gradient type. This allows us to
                 // preserve stroke swatch state across bitmap mode-- if getColorsFromSelection set them to null, then selecting
                 // anything in bitmap mode would overwrite the stroke state.
-                const newState = { ...state };
+                const newState = {...state};
                 if (selectionPrimaryColorKey in colors) {
                     newState.primary = colors[selectionPrimaryColorKey];
                 }
@@ -85,17 +82,15 @@ const makeColorStyleReducer = ({
             }
             case changeGradientTypeAction:
                 if (action.gradientType in GradientTypes) {
-                    return { ...state, gradientType: action.gradientType };
+                    return {...state, gradientType: action.gradientType};
                 }
-                log.warn(
-                    `Gradient type does not exist: ${action.gradientType}`
-                );
+                log.warn(`Gradient type does not exist: ${action.gradientType}`);
                 return state;
             case clearGradientAction:
                 return {
                     ...state,
                     secondary: null,
-                    gradientType: GradientTypes.SOLID,
+                    gradientType: GradientTypes.SOLID
                 };
             default:
                 return state;

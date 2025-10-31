@@ -1,16 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import {
-    FormattedMessage,
-    defineMessages,
-    injectIntl,
-    intlShape,
-} from "react-intl";
-import DragConstants from "../../lib/drag-constants";
-import { ComingSoonTooltip } from "../coming-soon/coming-soon.jsx";
-import SpriteSelectorItem from "../../containers/sprite-selector-item.jsx";
-import styles from "./backpack.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import {FormattedMessage, defineMessages, injectIntl, intlShape} from 'react-intl';
+import DragConstants from '../../lib/drag-constants';
+import {ComingSoonTooltip} from '../coming-soon/coming-soon.jsx';
+import SpriteSelectorItem from '../../containers/sprite-selector-item.jsx';
+import styles from './backpack.css';
 
 // TODO make sprite selector item not require onClick
 const noop = () => {};
@@ -20,30 +15,30 @@ const dragTypeMap = {
     costume: DragConstants.BACKPACK_COSTUME,
     sound: DragConstants.BACKPACK_SOUND,
     script: DragConstants.BACKPACK_CODE,
-    sprite: DragConstants.BACKPACK_SPRITE,
+    sprite: DragConstants.BACKPACK_SPRITE
 };
 
 const labelMap = defineMessages({
     costume: {
-        id: "gui.backpack.costumeLabel",
-        defaultMessage: "costume",
-        description: "Label for costume backpack item",
+        id: 'gui.backpack.costumeLabel',
+        defaultMessage: 'costume',
+        description: 'Label for costume backpack item'
     },
     sound: {
-        id: "gui.backpack.soundLabel",
-        defaultMessage: "sound",
-        description: "Label for sound backpack item",
+        id: 'gui.backpack.soundLabel',
+        defaultMessage: 'sound',
+        description: 'Label for sound backpack item'
     },
     script: {
-        id: "gui.backpack.scriptLabel",
-        defaultMessage: "script",
-        description: "Label for script backpack item",
+        id: 'gui.backpack.scriptLabel',
+        defaultMessage: 'script',
+        description: 'Label for script backpack item'
     },
     sprite: {
-        id: "gui.backpack.spriteLabel",
-        defaultMessage: "sprite",
-        description: "Label for sprite backpack item",
-    },
+        id: 'gui.backpack.spriteLabel',
+        defaultMessage: 'sprite',
+        description: 'Label for sprite backpack item'
+    }
 });
 
 const Backpack = ({
@@ -61,11 +56,11 @@ const Backpack = ({
     onRename,
     onMouseEnter,
     onMouseLeave,
-    onMore,
+    onMore
 }) => (
     <div
         className={styles.backpackContainer}
-        style={{ height: expanded ? "auto" : "2rem" }} // Add this line
+        style={{height: expanded ? 'auto' : '2rem'}} // Add this line
     >
         <div className={styles.backpackHeader} onClick={onToggle}>
             {onToggle ? (
@@ -87,12 +82,12 @@ const Backpack = ({
         {expanded ? (
             <div
                 className={classNames(styles.backpackList, {
-                    [styles.dragOver]: dragOver || blockDragOver,
+                    [styles.dragOver]: dragOver || blockDragOver
                 })}
                 ref={containerRef}
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
-                style={{ height: "auto" }} // Add this line
+                style={{height: 'auto'}} // Add this line
             >
                 {/* eslint-disable-next-line no-negated-condition */}
                 {error !== false ? (
@@ -128,9 +123,7 @@ const Backpack = ({
                                 onClick={noop}
                                 onDeleteButtonClick={onDelete}
                                 // Currently, renaming sprites is not supported.
-                                onRenameButtonClick={
-                                    item.type === "sprite" ? null : onRename
-                                }
+                                onRenameButtonClick={item.type === 'sprite' ? null : onRename}
                             />
                         ))}
                         {showMore && (
@@ -165,7 +158,7 @@ Backpack.propTypes = {
             id: PropTypes.string,
             thumbnailUrl: PropTypes.string,
             type: PropTypes.string,
-            name: PropTypes.string,
+            name: PropTypes.string
         })
     ),
     dragOver: PropTypes.bool,
@@ -179,7 +172,7 @@ Backpack.propTypes = {
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
     onToggle: PropTypes.func,
-    showMore: PropTypes.bool,
+    showMore: PropTypes.bool
 };
 
 Backpack.defaultProps = {
@@ -190,7 +183,7 @@ Backpack.defaultProps = {
     loading: false,
     showMore: false,
     onMore: null,
-    onToggle: null,
+    onToggle: null
 };
 
 export default injectIntl(Backpack);

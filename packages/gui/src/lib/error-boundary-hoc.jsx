@@ -1,5 +1,5 @@
-import React from "react";
-import ErrorBoundary from "../containers/error-boundary.jsx";
+import React from 'react';
+import ErrorBoundary from '../containers/error-boundary.jsx';
 
 /*
  * Higher Order Component to provide error boundary for wrapped component.

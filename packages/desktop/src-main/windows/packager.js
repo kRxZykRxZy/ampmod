@@ -1,8 +1,8 @@
-const AbstractWindow = require("./abstract");
-const { PACKAGER_NAME } = require("../brand");
-const PackagerPreviewWindow = require("./packager-preview");
-const prompts = require("../prompts");
-const FileAccessWindow = require("./file-access-window");
+const AbstractWindow = require('./abstract');
+const {PACKAGER_NAME} = require('../brand');
+const PackagerPreviewWindow = require('./packager-preview');
+const prompts = require('../prompts');
+const FileAccessWindow = require('./file-access-window');
 
 class PackagerWindow extends AbstractWindow {
     constructor(editorWindow) {
@@ -12,38 +12,34 @@ class PackagerWindow extends AbstractWindow {
         this.editorWindow = editorWindow;
 
         this.window.setTitle(PACKAGER_NAME);
-        this.window.on("page-title-updated", event => {
+        this.window.on('page-title-updated', event => {
             event.preventDefault();
         });
 
-        this.ipc.on("import-project-with-port", event => {
+        this.ipc.on('import-project-with-port', event => {
             const port = event.ports[0];
             if (this.editorWindow.window.isDestroyed()) {
                 port.postMessage({
-                    error: true,
+                    error: true
                 });
                 return;
             }
-            this.editorWindow.window.webContents.postMessage(
-                "export-project-to-port",
-                null,
-                [port]
-            );
+            this.editorWindow.window.webContents.postMessage('export-project-to-port', null, [port]);
         });
 
-        this.ipc.on("alert", (event, message) => {
+        this.ipc.on('alert', (event, message) => {
             event.returnValue = prompts.alert(this.window, message);
         });
 
-        this.ipc.on("confirm", (event, message) => {
+        this.ipc.on('confirm', (event, message) => {
             event.returnValue = prompts.confirm(this.window, message);
         });
 
-        this.ipc.handle("check-drag-and-drop-path", (event, path) => {
+        this.ipc.handle('check-drag-and-drop-path', (event, path) => {
             FileAccessWindow.check(path);
         });
 
-        this.window.webContents.on("did-finish-load", () => {
+        this.window.webContents.on('did-finish-load', () => {
             // We can't do this from the preload script
             this.window.webContents.executeJavaScript(`
         window.alert = (message) => PromptsPreload.alert(message);
@@ -54,26 +50,23 @@ class PackagerWindow extends AbstractWindow {
       `);
         });
 
-        this.window.webContents.on("did-create-window", newWindow => {
-            const childWindow = new PackagerPreviewWindow(
-                this.window,
-                newWindow
-            );
+        this.window.webContents.on('did-create-window', newWindow => {
+            const childWindow = new PackagerPreviewWindow(this.window, newWindow);
             childWindow.protocol = this.protocol;
         });
 
-        this.loadURL("tw-packager://./standalone.html");
+        this.loadURL('tw-packager://./standalone.html');
         this.show();
     }
 
     getPreload() {
-        return "packager";
+        return 'packager';
     }
 
     getDimensions() {
         return {
             width: 700,
-            height: 700,
+            height: 700
         };
     }
 
@@ -82,16 +75,15 @@ class PackagerWindow extends AbstractWindow {
     }
 
     getBackgroundColor() {
-        return "#111111";
+        return '#111111';
     }
 
     handleWindowOpen(details) {
-        if (details.url === "about:blank") {
+        if (details.url === 'about:blank') {
             return {
-                action: "allow",
+                action: 'allow',
                 outlivesOpener: true,
-                overrideBrowserWindowOptions:
-                    PackagerPreviewWindow.getBrowserWindowOverrides(),
+                overrideBrowserWindowOptions: PackagerPreviewWindow.getBrowserWindowOverrides()
             };
         }
         return super.handleWindowOpen(details);
@@ -99,13 +91,10 @@ class PackagerWindow extends AbstractWindow {
 
     onBeforeRequest(details, callback) {
         const parsed = new URL(details.url);
-        if (
-            parsed.origin === "https://ampmod.codeberg.page" &&
-            parsed.pathname.startsWith("/extensions/")
-        ) {
-            const newPath = parsed.pathname.replace(/^\/extensions\//, "");
+        if (parsed.origin === 'https://ampmod.codeberg.page' && parsed.pathname.startsWith('/extensions/')) {
+            const newPath = parsed.pathname.replace(/^\/extensions\//, '');
             return callback({
-                redirectURL: `tw-extensions://./${newPath}`,
+                redirectURL: `tw-extensions://./${newPath}`
             });
         }
 

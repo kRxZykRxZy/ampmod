@@ -1,12 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
-import { filterInlineAlerts } from "../reducers/alerts";
+import {filterInlineAlerts} from '../reducers/alerts';
 
-import InlineMessageComponent from "../components/alerts/inline-message.jsx";
+import InlineMessageComponent from '../components/alerts/inline-message.jsx';
 
-const InlineMessages = ({ alertsList, className }) => {
+const InlineMessages = ({alertsList, className}) => {
     if (!alertsList) {
         return null;
     }
@@ -18,25 +18,18 @@ const InlineMessages = ({ alertsList, className }) => {
 
     // get first alert
     const firstInlineAlert = inlineAlerts[0];
-    const { content, iconSpinner, level } = firstInlineAlert;
+    const {content, iconSpinner, level} = firstInlineAlert;
 
-    return (
-        <InlineMessageComponent
-            className={className}
-            content={content}
-            iconSpinner={iconSpinner}
-            level={level}
-        />
-    );
+    return <InlineMessageComponent className={className} content={content} iconSpinner={iconSpinner} level={level} />;
 };
 
 InlineMessages.propTypes = {
     alertsList: PropTypes.arrayOf(PropTypes.object),
-    className: PropTypes.string,
+    className: PropTypes.string
 };
 
 const mapStateToProps = state => ({
-    alertsList: state.scratchGui.alerts.alertsList,
+    alertsList: state.scratchGui.alerts.alertsList
 });
 
 const mapDispatchToProps = () => ({});

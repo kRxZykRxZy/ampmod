@@ -1,6 +1,6 @@
-import examplesList from "../examples/projects";
-import defaultPfp from "./default-pfp.svg";
-import { localise } from "../components/localise/localise";
+import examplesList from '../examples/projects';
+import defaultPfp from './default-pfp.svg';
+import {localise} from '../components/localise/localise';
 
 const shuffle = list => {
     for (let i = list.length - 1; i > 0; i--) {
@@ -12,19 +12,13 @@ const shuffle = list => {
     return list;
 };
 
-const fromHardcoded = ({
-    userID = "0",
-    username,
-    img = defaultPfp,
-    href = null,
-    role = null,
-}) => {
+const fromHardcoded = ({userID = '0', username, img = defaultPfp, href = null, role = null}) => {
     const result = {
         image: img,
         text: username,
-        role: role ? localise(role) : null,
+        role: role ? localise(role) : null
     };
-    if (username && userID !== "0") {
+    if (username && userID !== '0') {
         result.image = `https://trampoline.turbowarp.org/avatars/${userID}`;
         result.href = `https://scratch.mit.edu/users/${username}/`;
     }
@@ -38,362 +32,362 @@ const fromHardcoded = ({
 
 const contributors = [
     {
-        username: "8to16",
-        href: "https://scratch.mit.edu/users/8to16",
-        img: "https://codeberg.org/avatars/1ad3f7a52bee3f23fafe7944d16aca46cd76f7045fe14dbd255536fa0180466d?size=48",
-        role: "credits.roles.lead",
+        username: '8to16',
+        href: 'https://scratch.mit.edu/users/8to16',
+        img: 'https://codeberg.org/avatars/1ad3f7a52bee3f23fafe7944d16aca46cd76f7045fe14dbd255536fa0180466d?size=48',
+        role: 'credits.roles.lead'
     },
     {
-        userID: "82953483",
-        username: "50_scratch_tabs",
-        role: "credits.roles.developer",
+        userID: '82953483',
+        username: '50_scratch_tabs',
+        role: 'credits.roles.developer'
     },
     {
-        userID: "38055575",
-        username: "o97doge",
-        role: "credits.roles.bugfixer",
+        userID: '38055575',
+        username: 'o97doge',
+        role: 'credits.roles.bugfixer'
     },
     {
-        userID: "157650703",
-        username: "unconstructable13",
-        role: "credits.roles.images",
-    },
+        userID: '157650703',
+        username: 'unconstructable13',
+        role: 'credits.roles.images'
+    }
 ].map(fromHardcoded);
 
 const tw = [
     {
-        userID: "41219524",
-        username: "CubesterYT",
+        userID: '41219524',
+        username: 'CubesterYT'
     },
     {
-        userID: "64691048",
-        username: "CST1229",
+        userID: '64691048',
+        username: 'CST1229'
     },
     {
-        userID: "128887584",
-        username: "FurryR",
+        userID: '128887584',
+        username: 'FurryR'
     },
     {
-        userID: "17340565",
-        username: "GarboMuffin",
-        role: "credits.roles.tw-muffin",
+        userID: '17340565',
+        username: 'GarboMuffin',
+        role: 'credits.roles.tw-muffin'
     },
     {
-        userID: "12498592",
-        username: "LilyMakesThings",
+        userID: '12498592',
+        username: 'LilyMakesThings'
     },
     {
-        userID: "105362329",
-        username: "TrueFantom",
+        userID: '105362329',
+        username: 'TrueFantom'
     },
     {
-        userID: "9636514",
-        username: "Tacodiva7729",
-        role: "credits.roles.tw-tacodiva",
+        userID: '9636514',
+        username: 'Tacodiva7729',
+        role: 'credits.roles.tw-tacodiva'
     },
     {
-        userID: "141930175",
-        username: "SimonShiki",
+        userID: '141930175',
+        username: 'SimonShiki'
     },
     {
-        userID: "34824813",
-        username: "Geotale",
+        userID: '34824813',
+        username: 'Geotale'
     },
     {
-        username: "Wowfunhappy",
-    },
+        username: 'Wowfunhappy'
+    }
 ].map(fromHardcoded);
 
 const addonDevelopers = [
     {
-        userID: "34018398",
-        username: "Jeffalo",
+        userID: '34018398',
+        username: 'Jeffalo'
     },
     {
-        userID: "64184234",
-        username: "ErrorGamer2000",
+        userID: '64184234',
+        username: 'ErrorGamer2000'
     },
     {
-        userID: "41616512",
-        username: "pufferfish101007",
+        userID: '41616512',
+        username: 'pufferfish101007'
     },
     {
-        userID: "61409215",
-        username: "TheColaber",
+        userID: '61409215',
+        username: 'TheColaber'
     },
     {
-        userID: "1882674",
-        username: "griffpatch",
+        userID: '1882674',
+        username: 'griffpatch'
     },
     {
-        userID: "10817178",
-        username: "apple502j",
+        userID: '10817178',
+        username: 'apple502j'
     },
     {
-        userID: "16947341",
-        username: "--Explosion--",
+        userID: '16947341',
+        username: '--Explosion--'
     },
     {
-        userID: "14880401",
-        username: "Sheep_maker",
+        userID: '14880401',
+        username: 'Sheep_maker'
     },
     {
-        userID: "9981676",
-        username: "NitroCipher",
+        userID: '9981676',
+        username: 'NitroCipher'
     },
     {
-        userID: "2561680",
-        username: "lisa_wolfgang",
+        userID: '2561680',
+        username: 'lisa_wolfgang'
     },
     {
-        userID: "60000111",
-        username: "GDUcrash",
+        userID: '60000111',
+        username: 'GDUcrash'
     },
     {
-        userID: "4648559",
-        username: "World_Languages",
+        userID: '4648559',
+        username: 'World_Languages'
     },
     {
-        userID: "17340565",
-        username: "GarboMuffin",
+        userID: '17340565',
+        username: 'GarboMuffin'
     },
     {
-        userID: "5354974",
-        username: "Chrome_Cat",
+        userID: '5354974',
+        username: 'Chrome_Cat'
     },
     {
-        userID: "34455896",
-        username: "summerscar",
+        userID: '34455896',
+        username: 'summerscar'
     },
     {
-        userID: "55742784",
-        username: "RedGuy7",
+        userID: '55742784',
+        username: 'RedGuy7'
     },
     {
-        userID: "9636514",
-        username: "Tacodiva7729",
+        userID: '9636514',
+        username: 'Tacodiva7729'
     },
     {
-        userID: "14792872",
-        username: "_nix",
+        userID: '14792872',
+        username: '_nix'
     },
     {
-        userID: "30323614",
-        username: "BarelySmooth",
+        userID: '30323614',
+        username: 'BarelySmooth'
     },
     {
-        userID: "64691048",
-        username: "CST1229",
+        userID: '64691048',
+        username: 'CST1229'
     },
     {
-        username: "DNin01",
+        username: 'DNin01'
     },
     {
-        userID: "16426047",
-        username: "Maximouse",
+        userID: '16426047',
+        username: 'Maximouse'
     },
     {
-        username: "retronbv",
+        username: 'retronbv'
     },
     {
-        username: "GrahamSH",
+        username: 'GrahamSH'
     },
     {
-        userID: "22529928",
-        username: "simiagain",
+        userID: '22529928',
+        username: 'simiagain'
     },
     {
-        username: "Secret-chest",
+        username: 'Secret-chest'
     },
     {
-        userID: "11677378",
-        username: "Mr_MPH",
+        userID: '11677378',
+        username: 'Mr_MPH'
     },
     {
-        username: "TheKodeToad",
-    },
+        username: 'TheKodeToad'
+    }
 ].map(fromHardcoded);
 
 // generated by TurboWarp/extensions/scripts/get-credits-for-gui.js
 const extensionDevelopers = [
     {
-        username: "-SIPC-",
+        username: '-SIPC-'
     },
     {
-        username: "0832",
+        username: '0832'
     },
     {
-        userID: "74246431",
-        username: "0znzw",
+        userID: '74246431',
+        username: '0znzw'
     },
     {
-        userID: "17235330",
-        username: "aleb2005",
+        userID: '17235330',
+        username: 'aleb2005'
     },
     {
-        username: "BlueDome77",
+        username: 'BlueDome77'
     },
     {
-        username: "ClaytonTDM",
+        username: 'ClaytonTDM'
     },
     {
-        userID: "37070511",
-        username: "cs2627883",
+        userID: '37070511',
+        username: 'cs2627883'
     },
     {
-        userID: "64691048",
-        username: "CST1229",
+        userID: '64691048',
+        username: 'CST1229'
     },
     {
-        userID: "41219524",
-        username: "CubesterYT",
+        userID: '41219524',
+        username: 'CubesterYT'
     },
     {
-        userID: "33988895",
-        username: "D-ScratchNinja",
+        userID: '33988895',
+        username: 'D-ScratchNinja'
     },
     {
-        username: "DT",
+        username: 'DT'
     },
     {
-        userID: "1882674",
-        username: "griffpatch",
+        userID: '1882674',
+        username: 'griffpatch'
     },
     {
-        userID: "41876695",
-        username: "JeremyGamer13",
+        userID: '41876695',
+        username: 'JeremyGamer13'
     },
     {
-        userID: "12498592",
-        username: "LilyMakesThings",
+        userID: '12498592',
+        username: 'LilyMakesThings'
     },
     {
-        username: "MikeDEV",
+        username: 'MikeDEV'
     },
     {
-        userID: "62325737",
-        username: "mybearworld",
+        userID: '62325737',
+        username: 'mybearworld'
     },
     {
-        userID: "62950341",
-        username: "NamelessCat",
+        userID: '62950341',
+        username: 'NamelessCat'
     },
     {
-        username: "NOname-awa",
+        username: 'NOname-awa'
     },
     {
-        userID: "26959223",
-        username: "pinksheep2917",
+        userID: '26959223',
+        username: 'pinksheep2917'
     },
     {
-        username: "pumpkinhasapatch",
+        username: 'pumpkinhasapatch'
     },
     {
-        userID: "126715567",
-        username: "PwLDev",
+        userID: '126715567',
+        username: 'PwLDev'
     },
     {
-        userID: "139929771",
-        username: "qxsck",
+        userID: '139929771',
+        username: 'qxsck'
     },
     {
-        userID: "29118689",
-        username: "RedMan13",
+        userID: '29118689',
+        username: 'RedMan13'
     },
     {
-        userID: "80038021",
-        username: "RixTheTyrunt",
+        userID: '80038021',
+        username: 'RixTheTyrunt'
     },
     {
-        userID: "45777723",
-        username: "DemonX5",
+        userID: '45777723',
+        username: 'DemonX5'
     },
     {
-        userID: "14880401",
-        username: "Sheep_maker",
+        userID: '14880401',
+        username: 'Sheep_maker'
     },
     {
-        userID: "103496265",
-        username: "shreder95ua",
+        userID: '103496265',
+        username: 'shreder95ua'
     },
     {
-        userID: "72467731",
-        username: "Skyhigh173",
+        userID: '72467731',
+        username: 'Skyhigh173'
     },
     {
-        userID: "52066199",
-        username: "softed",
+        userID: '52066199',
+        username: 'softed'
     },
     {
-        username: "TheShovel",
+        username: 'TheShovel'
     },
     {
-        userID: "105362329",
-        username: "TrueFantom",
+        userID: '105362329',
+        username: 'TrueFantom'
     },
     {
-        userID: "19133274",
-        username: "Vadik1",
+        userID: '19133274',
+        username: 'Vadik1'
     },
     {
-        username: "veggiecan0419",
+        username: 'veggiecan0419'
     },
     {
-        userID: "82486672",
-        username: "lolecksdeehaha",
+        userID: '82486672',
+        username: 'lolecksdeehaha'
     },
     {
-        userID: "3318598",
-        username: "plant2014",
+        userID: '3318598',
+        username: 'plant2014'
     },
     {
-        userID: "128778351",
-        username: "XmerOriginals",
+        userID: '128778351',
+        username: 'XmerOriginals'
     },
     {
-        username: "ZXMushroom63",
-    },
+        username: 'ZXMushroom63'
+    }
 ].map(fromHardcoded);
 
 const docs = [
     {
-        userID: "12498592",
-        username: "LilyMakesThings",
+        userID: '12498592',
+        username: 'LilyMakesThings'
     },
     {
-        username: "DNin01",
+        username: 'DNin01'
     },
     {
-        username: "Samq64",
+        username: 'Samq64'
     },
     {
-        username: "61080GBA",
+        username: '61080GBA'
     },
     {
-        username: "adazem009",
+        username: 'adazem009'
     },
     {
-        username: "sajtosteszta32",
+        username: 'sajtosteszta32'
     },
     {
-        username: "yoyomonem",
+        username: 'yoyomonem'
     },
     {
-        userID: "55742784",
-        username: "RedGuy7",
+        userID: '55742784',
+        username: 'RedGuy7'
     },
     {
-        username: "28klotlucas2",
+        username: '28klotlucas2'
     },
     {
-        username: "PPPDUD",
+        username: 'PPPDUD'
     },
     {
-        username: "BackThePortal",
+        username: 'BackThePortal'
     },
     {
-        username: "Naleksuh",
-    },
+        username: 'Naleksuh'
+    }
 ].map(fromHardcoded);
 
 export default {
@@ -401,5 +395,5 @@ export default {
     addonDevelopers: shuffle(addonDevelopers),
     extensionDevelopers: shuffle(extensionDevelopers),
     docs: shuffle(docs),
-    contributors: shuffle(contributors),
+    contributors: shuffle(contributors)
 };

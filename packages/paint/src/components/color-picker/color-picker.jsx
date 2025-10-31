@@ -1,36 +1,31 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {
-    defineMessages,
-    FormattedMessage,
-    injectIntl,
-    intlShape,
-} from "react-intl";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {defineMessages, FormattedMessage, injectIntl, intlShape} from 'react-intl';
 
-import classNames from "classnames";
-import parseColor from "parse-color";
+import classNames from 'classnames';
+import parseColor from 'parse-color';
 
-import Slider, { CONTAINER_WIDTH, HANDLE_WIDTH } from "../forms/slider.jsx";
-import LabeledIconButton from "../labeled-icon-button/labeled-icon-button.jsx";
-import styles from "./color-picker.css";
-import GradientTypes from "../../lib/gradient-types";
-import { MIXED } from "../../helper/style-path";
+import Slider, {CONTAINER_WIDTH, HANDLE_WIDTH} from '../forms/slider.jsx';
+import LabeledIconButton from '../labeled-icon-button/labeled-icon-button.jsx';
+import styles from './color-picker.css';
+import GradientTypes from '../../lib/gradient-types';
+import {MIXED} from '../../helper/style-path';
 
-import eyeDropperIcon from "./icons/eye-dropper.svg";
-import noFillIcon from "../color-button/no-fill.svg";
-import mixedFillIcon from "../color-button/mixed-fill.svg";
-import fillHorzGradientIcon from "!../../tw-recolor/build!./icons/fill-horz-gradient-enabled.svg";
-import fillRadialIcon from "!../../tw-recolor/build!./icons/fill-radial-enabled.svg";
-import fillSolidIcon from "!../../tw-recolor/build!./icons/fill-solid-enabled.svg";
-import fillVertGradientIcon from "!../../tw-recolor/build!./icons/fill-vert-gradient-enabled.svg";
-import swapIcon from "!../../tw-recolor/build!./icons/swap.svg";
-import Modes from "../../lib/modes";
-import alphaBackground from "./alpha.png";
-import BufferedInputHOC from "../forms/buffered-input-hoc.jsx";
-import Input from "../forms/input.jsx";
-import { makeAlphaComponent } from "../../lib/tw-color-utils";
-import TWColorReadout from "../tw-color-readout/tw-color-readout.jsx";
-import TWRenderRecoloredImage from "../../tw-recolor/render.jsx";
+import eyeDropperIcon from './icons/eye-dropper.svg';
+import noFillIcon from '../color-button/no-fill.svg';
+import mixedFillIcon from '../color-button/mixed-fill.svg';
+import fillHorzGradientIcon from '!../../tw-recolor/build!./icons/fill-horz-gradient-enabled.svg';
+import fillRadialIcon from '!../../tw-recolor/build!./icons/fill-radial-enabled.svg';
+import fillSolidIcon from '!../../tw-recolor/build!./icons/fill-solid-enabled.svg';
+import fillVertGradientIcon from '!../../tw-recolor/build!./icons/fill-vert-gradient-enabled.svg';
+import swapIcon from '!../../tw-recolor/build!./icons/swap.svg';
+import Modes from '../../lib/modes';
+import alphaBackground from './alpha.png';
+import BufferedInputHOC from '../forms/buffered-input-hoc.jsx';
+import Input from '../forms/input.jsx';
+import {makeAlphaComponent} from '../../lib/tw-color-utils';
+import TWColorReadout from '../tw-color-readout/tw-color-readout.jsx';
+import TWRenderRecoloredImage from '../../tw-recolor/render.jsx';
 
 const BufferedInput = BufferedInputHOC(Input);
 
@@ -39,10 +34,10 @@ const hsvToHex = (h, s, v) =>
     parseColor(`hsv(${3.6 * h}, ${s}, ${v})`).hex;
 const messages = defineMessages({
     swap: {
-        defaultMessage: "Swap",
-        description: "Label for button that swaps the two colors in a gradient",
-        id: "paint.colorPicker.swap",
-    },
+        defaultMessage: 'Swap',
+        description: 'Label for button that swaps the two colors in a gradient',
+        id: 'paint.colorPicker.swap'
+    }
 });
 class ColorPickerComponent extends React.Component {
     _makeBackground(channel) {
@@ -51,36 +46,22 @@ class ColorPickerComponent extends React.Component {
         // color stops depending on the slider.
         for (let n = 100; n >= 0; n -= 10) {
             switch (channel) {
-                case "hue":
-                    stops.push(
-                        hsvToHex(
-                            n,
-                            this.props.saturation,
-                            this.props.brightness
-                        )
-                    );
+                case 'hue':
+                    stops.push(hsvToHex(n, this.props.saturation, this.props.brightness));
                     break;
-                case "saturation":
-                    stops.push(
-                        hsvToHex(this.props.hue, n, this.props.brightness)
-                    );
+                case 'saturation':
+                    stops.push(hsvToHex(this.props.hue, n, this.props.brightness));
                     break;
-                case "brightness":
-                    stops.push(
-                        hsvToHex(this.props.hue, this.props.saturation, n)
-                    );
+                case 'brightness':
+                    stops.push(hsvToHex(this.props.hue, this.props.saturation, n));
                     break;
-                case "alpha": {
+                case 'alpha': {
                     const alpha = makeAlphaComponent(n / 100);
-                    stops.push(
-                        `${hsvToHex(this.props.hue, this.props.saturation, this.props.brightness)}${alpha}`
-                    );
+                    stops.push(`${hsvToHex(this.props.hue, this.props.saturation, this.props.brightness)}${alpha}`);
                     break;
                 }
                 default:
-                    throw new Error(
-                        `Unknown channel for color sliders: ${channel}`
-                    );
+                    throw new Error(`Unknown channel for color sliders: ${channel}`);
             }
         }
 
@@ -91,128 +72,95 @@ class ColorPickerComponent extends React.Component {
         // to where the rounded cap begins.
         const halfHandleWidth = HANDLE_WIDTH / 2;
         stops[0] += ` 0 ${halfHandleWidth}px`;
-        stops[stops.length - 1] +=
-            ` ${CONTAINER_WIDTH - halfHandleWidth}px 100%`;
+        stops[stops.length - 1] += ` ${CONTAINER_WIDTH - halfHandleWidth}px 100%`;
 
-        let css = `linear-gradient(to left, ${stops.join(",")})`;
-        if (channel === "alpha") {
+        let css = `linear-gradient(to left, ${stops.join(',')})`;
+        if (channel === 'alpha') {
             css = `${css}, url("${alphaBackground}")`;
         }
         return css;
     }
     render() {
         return (
-            <div
-                className={styles.colorPickerContainer}
-                dir={this.props.rtl ? "rtl" : "ltr"}
-            >
+            <div className={styles.colorPickerContainer} dir={this.props.rtl ? 'rtl' : 'ltr'}>
                 {this.props.shouldShowGradientTools ? (
                     <div>
                         <div className={styles.row}>
                             <div className={styles.gradientPickerRow}>
                                 <TWRenderRecoloredImage
                                     className={classNames({
-                                        [styles.inactiveGradient]:
-                                            this.props.gradientType !==
-                                            GradientTypes.SOLID,
-                                        [styles.clickable]: true,
+                                        [styles.inactiveGradient]: this.props.gradientType !== GradientTypes.SOLID,
+                                        [styles.clickable]: true
                                     })}
                                     draggable={false}
                                     src={fillSolidIcon}
-                                    onClick={
-                                        this.props.onChangeGradientTypeSolid
-                                    }
+                                    onClick={this.props.onChangeGradientTypeSolid}
                                     width={20}
                                     height={20}
                                 />
                                 <TWRenderRecoloredImage
                                     className={classNames({
-                                        [styles.inactiveGradient]:
-                                            this.props.gradientType !==
-                                            GradientTypes.HORIZONTAL,
-                                        [styles.clickable]: true,
+                                        [styles.inactiveGradient]: this.props.gradientType !== GradientTypes.HORIZONTAL,
+                                        [styles.clickable]: true
                                     })}
                                     draggable={false}
                                     src={fillHorzGradientIcon}
-                                    onClick={
-                                        this.props
-                                            .onChangeGradientTypeHorizontal
-                                    }
+                                    onClick={this.props.onChangeGradientTypeHorizontal}
                                     width={20}
                                     height={20}
                                 />
                                 <TWRenderRecoloredImage
                                     className={classNames({
-                                        [styles.inactiveGradient]:
-                                            this.props.gradientType !==
-                                            GradientTypes.VERTICAL,
-                                        [styles.clickable]: true,
+                                        [styles.inactiveGradient]: this.props.gradientType !== GradientTypes.VERTICAL,
+                                        [styles.clickable]: true
                                     })}
                                     draggable={false}
                                     src={fillVertGradientIcon}
-                                    onClick={
-                                        this.props.onChangeGradientTypeVertical
-                                    }
+                                    onClick={this.props.onChangeGradientTypeVertical}
                                     width={20}
                                     height={20}
                                 />
                                 <TWRenderRecoloredImage
                                     className={classNames({
-                                        [styles.inactiveGradient]:
-                                            this.props.gradientType !==
-                                            GradientTypes.RADIAL,
-                                        [styles.clickable]: true,
+                                        [styles.inactiveGradient]: this.props.gradientType !== GradientTypes.RADIAL,
+                                        [styles.clickable]: true
                                     })}
                                     draggable={false}
                                     src={fillRadialIcon}
-                                    onClick={
-                                        this.props.onChangeGradientTypeRadial
-                                    }
+                                    onClick={this.props.onChangeGradientTypeRadial}
                                     width={20}
                                     height={20}
                                 />
                             </div>
                         </div>
                         <div className={styles.divider} />
-                        {this.props.gradientType ===
-                        GradientTypes.SOLID ? null : (
+                        {this.props.gradientType === GradientTypes.SOLID ? null : (
                             <div className={styles.row}>
-                                <div
-                                    className={classNames(
-                                        styles.gradientPickerRow,
-                                        styles.gradientSwatchesRow
-                                    )}
-                                >
+                                <div className={classNames(styles.gradientPickerRow, styles.gradientSwatchesRow)}>
                                     <div
                                         className={classNames({
                                             [styles.clickable]: true,
                                             [styles.swatch]: true,
                                             [styles.largeSwatch]: true,
-                                            [styles.activeSwatch]:
-                                                this.props.colorIndex === 0,
+                                            [styles.activeSwatch]: this.props.colorIndex === 0
                                         })}
                                         style={{
                                             backgroundColor:
-                                                this.props.color === null ||
-                                                this.props.color === MIXED
-                                                    ? "white"
-                                                    : this.props.color,
+                                                this.props.color === null || this.props.color === MIXED
+                                                    ? 'white'
+                                                    : this.props.color
                                         }}
                                         onClick={this.props.onSelectColor}
                                     >
                                         {this.props.color === null ? (
                                             <img
-                                                className={
-                                                    styles.largeSwatchIcon
-                                                }
+                                                className={styles.largeSwatchIcon}
                                                 draggable={false}
                                                 src={noFillIcon}
                                             />
                                         ) : this.props.color === MIXED ? (
                                             <img
-                                                className={
-                                                    styles.largeSwatchIcon
-                                                }
+                                                className={styles.largeSwatchIcon}
                                                 draggable={false}
                                                 src={mixedFillIcon}
                                             />
@@ -221,9 +169,7 @@ class ColorPickerComponent extends React.Component {
                                     <LabeledIconButton
                                         className={styles.swapButton}
                                         imgSrc={swapIcon}
-                                        title={this.props.intl.formatMessage(
-                                            messages.swap
-                                        )}
+                                        title={this.props.intl.formatMessage(messages.swap)}
                                         onClick={this.props.onSwap}
                                     />
                                     <div
@@ -231,31 +177,25 @@ class ColorPickerComponent extends React.Component {
                                             [styles.clickable]: true,
                                             [styles.swatch]: true,
                                             [styles.largeSwatch]: true,
-                                            [styles.activeSwatch]:
-                                                this.props.colorIndex === 1,
+                                            [styles.activeSwatch]: this.props.colorIndex === 1
                                         })}
                                         style={{
                                             backgroundColor:
-                                                this.props.color2 === null ||
-                                                this.props.color2 === MIXED
-                                                    ? "white"
-                                                    : this.props.color2,
+                                                this.props.color2 === null || this.props.color2 === MIXED
+                                                    ? 'white'
+                                                    : this.props.color2
                                         }}
                                         onClick={this.props.onSelectColor2}
                                     >
                                         {this.props.color2 === null ? (
                                             <img
-                                                className={
-                                                    styles.largeSwatchIcon
-                                                }
+                                                className={styles.largeSwatchIcon}
                                                 draggable={false}
                                                 src={noFillIcon}
                                             />
                                         ) : this.props.color2 === MIXED ? (
                                             <img
-                                                className={
-                                                    styles.largeSwatchIcon
-                                                }
+                                                className={styles.largeSwatchIcon}
                                                 draggable={false}
                                                 src={mixedFillIcon}
                                             />
@@ -275,14 +215,11 @@ class ColorPickerComponent extends React.Component {
                                 id="paint.paintEditor.hue"
                             />
                         </span>
-                        <TWColorReadout
-                            value={this.props.hue}
-                            onChange={this.props.onHueChange}
-                        />
+                        <TWColorReadout value={this.props.hue} onChange={this.props.onHueChange} />
                     </div>
                     <div className={styles.rowSlider}>
                         <Slider
-                            background={this._makeBackground("hue")}
+                            background={this._makeBackground('hue')}
                             value={this.props.hue}
                             onChange={this.props.onHueChange}
                         />
@@ -297,14 +234,11 @@ class ColorPickerComponent extends React.Component {
                                 id="paint.paintEditor.saturation"
                             />
                         </span>
-                        <TWColorReadout
-                            value={this.props.saturation}
-                            onChange={this.props.onSaturationChange}
-                        />
+                        <TWColorReadout value={this.props.saturation} onChange={this.props.onSaturationChange} />
                     </div>
                     <div className={styles.rowSlider}>
                         <Slider
-                            background={this._makeBackground("saturation")}
+                            background={this._makeBackground('saturation')}
                             value={this.props.saturation}
                             onChange={this.props.onSaturationChange}
                         />
@@ -319,14 +253,11 @@ class ColorPickerComponent extends React.Component {
                                 id="paint.paintEditor.brightness"
                             />
                         </span>
-                        <TWColorReadout
-                            value={this.props.brightness}
-                            onChange={this.props.onBrightnessChange}
-                        />
+                        <TWColorReadout value={this.props.brightness} onChange={this.props.onBrightnessChange} />
                     </div>
                     <div className={styles.rowSlider}>
                         <Slider
-                            background={this._makeBackground("brightness")}
+                            background={this._makeBackground('brightness')}
                             value={this.props.brightness}
                             onChange={this.props.onBrightnessChange}
                         />
@@ -341,15 +272,12 @@ class ColorPickerComponent extends React.Component {
                                 id="tw.paint.alpha"
                             />
                         </span>
-                        <TWColorReadout
-                            value={this.props.alpha}
-                            onChange={this.props.onAlphaChange}
-                        />
+                        <TWColorReadout value={this.props.alpha} onChange={this.props.onAlphaChange} />
                     </div>
                     <div className={styles.rowSlider}>
                         <Slider
                             lastSlider
-                            background={this._makeBackground("alpha")}
+                            background={this._makeBackground('alpha')}
                             value={this.props.alpha}
                             onChange={this.props.onAlphaChange}
                         />
@@ -360,17 +288,13 @@ class ColorPickerComponent extends React.Component {
                         type="color"
                         className={styles.pickerColor}
                         // HTML color input does not understand transparency
-                        value={
-                            this.props.hexColor
-                                ? this.props.hexColor.substr(0, 7)
-                                : "#000000"
-                        }
+                        value={this.props.hexColor ? this.props.hexColor.substr(0, 7) : '#000000'}
                         onChange={this.props.onHexColorChange}
                     />
                     <BufferedInput
                         type="text"
                         className={styles.pickerText}
-                        value={this.props.hexColor || "#00000000"}
+                        value={this.props.hexColor || '#00000000'}
                         onSubmit={this.props.onHexColorChange}
                         placeholder="#123abc"
                     />
@@ -386,18 +310,12 @@ class ColorPickerComponent extends React.Component {
                                     [styles.clickable]: true,
                                     [styles.swatch]: true,
                                     [styles.activeSwatch]:
-                                        (this.props.colorIndex === 0 &&
-                                            this.props.color === null) ||
-                                        (this.props.colorIndex === 1 &&
-                                            this.props.color2 === null),
+                                        (this.props.colorIndex === 0 && this.props.color === null) ||
+                                        (this.props.colorIndex === 1 && this.props.color2 === null)
                                 })}
                                 onClick={this.props.onTransparent}
                             >
-                                <img
-                                    className={styles.swatchIcon}
-                                    draggable={false}
-                                    src={noFillIcon}
-                                />
+                                <img className={styles.swatchIcon} draggable={false} src={noFillIcon} />
                             </div>
                         )}
                     </div>
@@ -406,15 +324,12 @@ class ColorPickerComponent extends React.Component {
                             className={classNames({
                                 [styles.clickable]: true,
                                 [styles.swatch]: true,
-                                [styles.activeSwatch]: this.props.isEyeDropping,
+                                [styles.activeSwatch]: this.props.isEyeDropping
                             })}
                             onClick={this.props.onActivateEyeDropper}
                         >
                             <img
-                                className={classNames(
-                                    styles.swatchIcon,
-                                    styles.pickerIcon
-                                )}
+                                className={classNames(styles.swatchIcon, styles.pickerIcon)}
                                 draggable={false}
                                 src={eyeDropperIcon}
                             />
@@ -454,7 +369,7 @@ ColorPickerComponent.propTypes = {
     onTransparent: PropTypes.func.isRequired,
     rtl: PropTypes.bool.isRequired,
     saturation: PropTypes.number.isRequired,
-    shouldShowGradientTools: PropTypes.bool.isRequired,
+    shouldShowGradientTools: PropTypes.bool.isRequired
 };
 
 export default injectIntl(ColorPickerComponent);

@@ -1,5 +1,5 @@
 const FakeRenderer = function () {
-    this.unused = "";
+    this.unused = '';
     this.x = 0;
     this.y = 0;
     this.order = 0;
@@ -44,11 +44,7 @@ FakeRenderer.prototype.updateDrawablePosition = function (d, position) {
     this.y = position[1];
 };
 
-FakeRenderer.prototype.updateDrawableDirectionScale = function (
-    d,
-    direction,
-    scale
-) {}; // eslint-disable-line no-unused-vars
+FakeRenderer.prototype.updateDrawableDirectionScale = function (d, direction, scale) {}; // eslint-disable-line no-unused-vars
 
 FakeRenderer.prototype.updateDrawableVisible = function (d, visible) {
     // eslint-disable-line no-unused-vars
@@ -80,7 +76,7 @@ FakeRenderer.prototype.isTouchingColor = function (d, c) {
 
 FakeRenderer.prototype.getBounds = function (d) {
     // eslint-disable-line no-unused-vars
-    return { left: this.x, right: this.x, top: this.y, bottom: this.y };
+    return {left: this.x, right: this.x, top: this.y, bottom: this.y};
 };
 
 FakeRenderer.prototype.setDrawableOrder = function (d, a, optG, optA, optB) {
@@ -99,7 +95,7 @@ FakeRenderer.prototype.setDrawableOrder = function (d, a, optG, optA, optB) {
 
 FakeRenderer.prototype.getDrawableOrder = function (d) {
     // eslint-disable-line no-unused-vars
-    return "stub";
+    return 'stub';
 };
 
 FakeRenderer.prototype.pick = function (x, y, a, b, c) {

@@ -14,16 +14,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {
-    APP_BLOG,
-    APP_FORUMS,
-    APP_NAME,
-    APP_SOURCE,
-    APP_WIKI,
-} from "@ampmod/branding";
-import LangSelect from "./lang-select";
-import styles from "./footer.css";
-import Localise from "../localise/localise";
+import {APP_BLOG, APP_FORUMS, APP_NAME, APP_SOURCE, APP_WIKI} from '@ampmod/branding';
+import LangSelect from './lang-select';
+import styles from './footer.css';
+import Localise from '../localise/localise';
 
 const Footer = () => {
     const isAprilFools = () => {
@@ -44,7 +38,7 @@ const Footer = () => {
                                 <a href="LICENSE.txt">
                                     <Localise id="amp.footer.copyright.freeSoftware" />
                                 </a>
-                            ),
+                            )
                         }}
                     />
                 </div>
@@ -54,20 +48,12 @@ const Footer = () => {
                         values={{
                             APP_NAME,
                             scratchLink: (
-                                <a
-                                    href="https://scratch.mit.edu"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >
+                                <a href="https://scratch.mit.edu" target="_blank" rel="noreferrer">
                                     Scratch
                                 </a>
                             ),
                             twLink: (
-                                <a
-                                    href="https://turbowarp.org"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >
+                                <a href="https://turbowarp.org" target="_blank" rel="noreferrer">
                                     TurboWarp
                                 </a>
                             ),
@@ -75,7 +61,7 @@ const Footer = () => {
                                 <a href="https://scratchfoundation.org/donate">
                                     <Localise id="amp.footer.disclaimer.supportScratch" />
                                 </a>
-                            ),
+                            )
                         }}
                     />
                 </div>
@@ -100,16 +86,10 @@ const Footer = () => {
                         {APP_FORUMS && (
                             <>
                                 <a href="https://scratch.mit.edu/discuss/topic/806311/">
-                                    <Localise
-                                        id="amp.onScratch"
-                                        values={{ APP_NAME }}
-                                    />
+                                    <Localise id="amp.onScratch" values={{APP_NAME}} />
                                 </a>
                                 <a href={APP_FORUMS}>
-                                    <Localise
-                                        id="tw.topicButton"
-                                        values={{ APP_NAME }}
-                                    />
+                                    <Localise id="tw.topicButton" values={{APP_NAME}} />
                                 </a>
                             </>
                         )}
@@ -135,7 +115,7 @@ const Footer = () => {
                         <a href={APP_SOURCE}>
                             <Localise id="tw.code" />
                         </a>
-                        {process.env.ampmod_mode === "canary" ? (
+                        {process.env.ampmod_mode === 'canary' ? (
                             <a href="https://ampmod.codeberg.page/">
                                 <Localise id="amp.production" />
                             </a>

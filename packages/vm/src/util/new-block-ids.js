@@ -1,4 +1,4 @@
-const uid = require("./uid");
+const uid = require('./uid');
 
 /**
  * Mutate the given blocks to have new IDs and update all internal ID references.

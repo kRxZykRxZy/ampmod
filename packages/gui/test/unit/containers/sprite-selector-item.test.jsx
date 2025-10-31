@@ -1,12 +1,12 @@
-import React from "react";
-import { mountWithIntl } from "../../helpers/intl-helpers.jsx";
-import configureStore from "redux-mock-store";
-import { Provider } from "react-redux";
+import React from 'react';
+import {mountWithIntl} from '../../helpers/intl-helpers.jsx';
+import configureStore from 'redux-mock-store';
+import {Provider} from 'react-redux';
 
-import SpriteSelectorItem from "../../../src/containers/sprite-selector-item";
-import DeleteButton from "../../../src/components/delete-button/delete-button";
+import SpriteSelectorItem from '../../../src/containers/sprite-selector-item';
+import DeleteButton from '../../../src/components/delete-button/delete-button';
 
-describe("SpriteSelectorItem Container", () => {
+describe('SpriteSelectorItem Container', () => {
     const mockStore = configureStore();
     let className;
     let costumeURL;
@@ -38,23 +38,23 @@ describe("SpriteSelectorItem Container", () => {
     beforeEach(() => {
         store = mockStore({
             scratchGui: {
-                hoveredTarget: { receivedBlocks: false, sprite: null },
-                assetDrag: { dragging: false },
-            },
+                hoveredTarget: {receivedBlocks: false, sprite: null},
+                assetDrag: {dragging: false}
+            }
         });
-        className = "ponies";
-        costumeURL = "https://scratch.mit.edu/foo/bar/pony";
+        className = 'ponies';
+        costumeURL = 'https://scratch.mit.edu/foo/bar/pony';
         id = 1337;
-        name = "Pony sprite";
+        name = 'Pony sprite';
         onClick = jest.fn();
         onDeleteButtonClick = jest.fn();
         dispatchSetHoveredSprite = jest.fn();
         selected = true;
     });
 
-    test("should delete the sprite", () => {
+    test('should delete the sprite', () => {
         const wrapper = mountWithIntl(getContainer());
-        wrapper.find(DeleteButton).simulate("click");
+        wrapper.find(DeleteButton).simulate('click');
         expect(onDeleteButtonClick).toHaveBeenCalledWith(1337);
     });
 });

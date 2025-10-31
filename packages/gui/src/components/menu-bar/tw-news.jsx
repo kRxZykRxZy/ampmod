@@ -1,11 +1,11 @@
-import React from "react";
-import { APP_NAME } from "@ampmod/branding";
-import { isScratchDesktop } from "../../lib/isScratchDesktop";
-import CloseButton from "../close-button/close-button.jsx";
-import styles from "./tw-news.css";
+import React from 'react';
+import {APP_NAME} from '@ampmod/branding';
+import {isScratchDesktop} from '../../lib/isScratchDesktop';
+import CloseButton from '../close-button/close-button.jsx';
+import styles from './tw-news.css';
 
-const LOCAL_STORAGE_KEY = `${process.env.ampmod_mode === "canary" ? "canary" : "amp"}:closedNews`;
-const NEWS_ID = "privacy-1";
+const LOCAL_STORAGE_KEY = `${process.env.ampmod_mode === 'canary' ? 'canary' : 'amp'}:closedNews`;
+const NEWS_ID = 'privacy-1';
 
 const getIsClosedInLocalStorage = () => {
     try {
@@ -27,7 +27,7 @@ class TWNews extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            closed: getIsClosedInLocalStorage(),
+            closed: getIsClosedInLocalStorage()
         };
         this.handleClose = this.handleClose.bind(this);
     }
@@ -35,22 +35,17 @@ class TWNews extends React.Component {
         markAsClosedInLocalStorage();
         this.setState(
             {
-                closed: true,
+                closed: true
             },
             () => {
-                window.dispatchEvent(new Event("resize"));
+                window.dispatchEvent(new Event('resize'));
             }
         );
     }
     render() {
         const today = new Date();
         const is911 = today.getMonth() === 8 && today.getDate() === 11; // September is month 8 (0-indexed)
-        if (
-            this.state.closed ||
-            isScratchDesktop() ||
-            is911 ||
-            process.env.ampmod_mode === "lab"
-        ) {
+        if (this.state.closed || isScratchDesktop() || is911 || process.env.ampmod_mode === 'lab') {
             return null;
         }
         return (
@@ -59,13 +54,10 @@ class TWNews extends React.Component {
                     {/* eslint-disable-next-line max-len */}
                     {`The ${APP_NAME} privacy policy has been updated. You can also disable analytics. `}
                     <a href="privacy.html" target="_blank" rel="noreferrer">
-                        {"View it here."}
+                        {'View it here.'}
                     </a>
                 </div>
-                <CloseButton
-                    className={styles.close}
-                    onClick={this.handleClose}
-                />
+                <CloseButton className={styles.close} onClick={this.handleClose} />
             </div>
         );
     }

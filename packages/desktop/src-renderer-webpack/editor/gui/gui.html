@@ -58,18 +58,16 @@
     </head>
     <body>
         <div class="splash-screen" id="splash-waiting-for-js" hidden>
-            <div class="loading-dots">
-                <span></span><span></span><span></span>
-            </div>
+            <div class="loading-dots"><span></span><span></span><span></span></div>
         </div>
 
         <script>
             (function () {
-                var theme = "light";
-                var accent = "#59c059";
+                var theme = 'light';
+                var accent = '#59c059';
 
                 try {
-                    var themeSetting = localStorage.getItem("amp:theme");
+                    var themeSetting = localStorage.getItem('amp:theme');
                 } catch (e) {
                     // ignore
                 }
@@ -77,21 +75,18 @@
                 if (themeSetting) {
                     try {
                         var parsed = JSON.parse(themeSetting);
-                        if (parsed.accent === "purple") accent = "#855cd6";
-                        if (parsed.accent === "blue") accent = "#4c97ff";
+                        if (parsed.accent === 'purple') accent = '#855cd6';
+                        if (parsed.accent === 'blue') accent = '#4c97ff';
                     } catch (e) {}
                 }
 
                 if (!theme) {
-                    theme = window.matchMedia("(prefers-color-scheme: dark)")
-                        .matches
-                        ? "dark"
-                        : "light";
+                    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
                 }
 
-                var splash = document.getElementById("splash-waiting-for-js");
-                splash.setAttribute("data-theme", theme);
-                if (theme !== "dark") splash.style.backgroundColor = accent;
+                var splash = document.getElementById('splash-waiting-for-js');
+                splash.setAttribute('data-theme', theme);
+                if (theme !== 'dark') splash.style.backgroundColor = accent;
                 splash.hidden = false;
             })();
         </script>

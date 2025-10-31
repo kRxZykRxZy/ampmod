@@ -1,12 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import bindAll from "lodash.bindall";
+import bindAll from 'lodash.bindall';
 
 class SortableAsset extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["setRef"]);
+        bindAll(this, ['setRef']);
     }
     componentDidMount() {
         this.props.onAddSortable(this.ref);
@@ -23,7 +23,7 @@ class SortableAsset extends React.Component {
                 className={this.props.className}
                 ref={this.setRef}
                 style={{
-                    order: this.props.index,
+                    order: this.props.index
                 }}
             >
                 {this.props.children}
@@ -37,7 +37,7 @@ SortableAsset.propTypes = {
     className: PropTypes.string,
     index: PropTypes.number.isRequired,
     onAddSortable: PropTypes.func.isRequired,
-    onRemoveSortable: PropTypes.func.isRequired,
+    onRemoveSortable: PropTypes.func.isRequired
 };
 
 export default SortableAsset;

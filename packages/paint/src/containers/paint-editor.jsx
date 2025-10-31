@@ -1,41 +1,33 @@
-import paper from "@turbowarp/paper";
-import PropTypes from "prop-types";
-import log from "../log/log";
-import React from "react";
-import { connect } from "react-redux";
+import paper from '@turbowarp/paper';
+import PropTypes from 'prop-types';
+import log from '../log/log';
+import React from 'react';
+import {connect} from 'react-redux';
 
-import PaintEditorComponent from "../components/paint-editor/paint-editor.jsx";
-import KeyboardShortcutsHOC from "../hocs/keyboard-shortcuts-hoc.jsx";
-import SelectionHOC from "../hocs/selection-hoc.jsx";
-import UndoHOC from "../hocs/undo-hoc.jsx";
-import UpdateImageHOC from "../hocs/update-image-hoc.jsx";
+import PaintEditorComponent from '../components/paint-editor/paint-editor.jsx';
+import KeyboardShortcutsHOC from '../hocs/keyboard-shortcuts-hoc.jsx';
+import SelectionHOC from '../hocs/selection-hoc.jsx';
+import UndoHOC from '../hocs/undo-hoc.jsx';
+import UpdateImageHOC from '../hocs/update-image-hoc.jsx';
 
-import { changeMode } from "../reducers/modes";
-import { changeFormat } from "../reducers/format";
-import {
-    clearSelectedItems,
-    setSelectedItems,
-} from "../reducers/selected-items";
-import { deactivateEyeDropper } from "../reducers/eye-dropper";
-import { setTextEditTarget } from "../reducers/text-edit-target";
-import { updateViewBounds } from "../reducers/view-bounds";
-import { setLayout } from "../reducers/layout";
-import { setTheme as setReduxTheme } from "../reducers/theme";
-import { setCustomFonts } from "../reducers/custom-fonts";
+import {changeMode} from '../reducers/modes';
+import {changeFormat} from '../reducers/format';
+import {clearSelectedItems, setSelectedItems} from '../reducers/selected-items';
+import {deactivateEyeDropper} from '../reducers/eye-dropper';
+import {setTextEditTarget} from '../reducers/text-edit-target';
+import {updateViewBounds} from '../reducers/view-bounds';
+import {setLayout} from '../reducers/layout';
+import {setTheme as setReduxTheme} from '../reducers/theme';
+import {setCustomFonts} from '../reducers/custom-fonts';
 
-import { getSelectedLeafItems } from "../helper/selection";
-import { convertToBitmap, convertToVector } from "../helper/bitmap";
-import {
-    resizeView,
-    resetZoom,
-    zoomOnSelection,
-    OUTERMOST_ZOOM_LEVEL,
-} from "../helper/view";
-import EyeDropperTool from "../helper/tools/eye-dropper";
+import {getSelectedLeafItems} from '../helper/selection';
+import {convertToBitmap, convertToVector} from '../helper/bitmap';
+import {resizeView, resetZoom, zoomOnSelection, OUTERMOST_ZOOM_LEVEL} from '../helper/view';
+import EyeDropperTool from '../helper/tools/eye-dropper';
 
-import Modes, { BitmapModes, VectorModes } from "../lib/modes";
-import Formats, { isBitmap, isVector } from "../lib/format";
-import bindAll from "lodash.bindall";
+import Modes, {BitmapModes, VectorModes} from '../lib/modes';
+import Formats, {isBitmap, isVector} from '../lib/format';
+import bindAll from 'lodash.bindall';
 
 window.paper = paper;
 
@@ -87,36 +79,36 @@ class PaintEditor extends React.Component {
     constructor(props) {
         super(props);
         bindAll(this, [
-            "switchModeForFormat",
-            "onMouseDown",
-            "onMouseUp",
-            "setCanvas",
-            "setTextArea",
-            "startEyeDroppingLoop",
-            "stopEyeDroppingLoop",
-            "handleSetSelectedItems",
-            "handleChangeTheme",
-            "handleZoomIn",
-            "handleZoomOut",
-            "handleZoomReset",
+            'switchModeForFormat',
+            'onMouseDown',
+            'onMouseUp',
+            'setCanvas',
+            'setTextArea',
+            'startEyeDroppingLoop',
+            'stopEyeDroppingLoop',
+            'handleSetSelectedItems',
+            'handleChangeTheme',
+            'handleZoomIn',
+            'handleZoomOut',
+            'handleZoomReset'
         ]);
         this.state = {
             canvas: null,
-            colorInfo: null,
+            colorInfo: null
         };
-        this.props.setLayout(this.props.rtl ? "rtl" : "ltr");
+        this.props.setLayout(this.props.rtl ? 'rtl' : 'ltr');
         this.props.onCustomFontsChanged(this.props.customFonts);
         resizeView(this.props.width, this.props.height);
     }
     componentDidMount() {
-        document.addEventListener("keydown", this.props.onKeyPress);
+        document.addEventListener('keydown', this.props.onKeyPress);
 
         // document listeners used to detect if a mouse is down outside of the
         // canvas, and should therefore stop the eye dropper
-        document.addEventListener("mousedown", this.onMouseDown);
-        document.addEventListener("touchstart", this.onMouseDown);
-        document.addEventListener("mouseup", this.onMouseUp);
-        document.addEventListener("touchend", this.onMouseUp);
+        document.addEventListener('mousedown', this.onMouseDown);
+        document.addEventListener('touchstart', this.onMouseDown);
+        document.addEventListener('mouseup', this.onMouseUp);
+        document.addEventListener('touchend', this.onMouseUp);
     }
     componentWillReceiveProps(newProps) {
         if (!isBitmap(this.props.format) && isBitmap(newProps.format)) {
@@ -125,10 +117,10 @@ class PaintEditor extends React.Component {
             this.switchModeForFormat(Formats.VECTOR);
         }
         if (newProps.rtl !== this.props.rtl) {
-            this.props.setLayout(newProps.rtl ? "rtl" : "ltr");
+            this.props.setLayout(newProps.rtl ? 'rtl' : 'ltr');
         }
         if (this.props.theme !== newProps.theme) {
-            this.props.setReduxTheme("default");
+            this.props.setReduxTheme('default');
         }
         if (this.props.customFonts !== newProps.customFonts) {
             this.props.onCustomFontsChanged(newProps.customFonts);
@@ -139,41 +131,25 @@ class PaintEditor extends React.Component {
             this.startEyeDroppingLoop();
         } else if (!this.props.isEyeDropping && prevProps.isEyeDropping) {
             this.stopEyeDroppingLoop();
-        } else if (
-            this.props.isEyeDropping &&
-            this.props.viewBounds !== prevProps.viewBounds
-        ) {
+        } else if (this.props.isEyeDropping && this.props.viewBounds !== prevProps.viewBounds) {
             if (this.props.previousTool) this.props.previousTool.activate();
             this.props.onDeactivateEyeDropper();
             this.stopEyeDroppingLoop();
         }
 
-        if (
-            this.props.format === Formats.VECTOR &&
-            isBitmap(prevProps.format)
-        ) {
-            convertToVector(
-                this.props.clearSelectedItems,
-                this.props.onUpdateImage
-            );
-        } else if (
-            isVector(prevProps.format) &&
-            this.props.format === Formats.BITMAP
-        ) {
-            convertToBitmap(
-                this.props.clearSelectedItems,
-                this.props.onUpdateImage,
-                this.props.fontInlineFn
-            );
+        if (this.props.format === Formats.VECTOR && isBitmap(prevProps.format)) {
+            convertToVector(this.props.clearSelectedItems, this.props.onUpdateImage);
+        } else if (isVector(prevProps.format) && this.props.format === Formats.BITMAP) {
+            convertToBitmap(this.props.clearSelectedItems, this.props.onUpdateImage, this.props.fontInlineFn);
         }
     }
     componentWillUnmount() {
-        document.removeEventListener("keydown", this.props.onKeyPress);
+        document.removeEventListener('keydown', this.props.onKeyPress);
         this.stopEyeDroppingLoop();
-        document.removeEventListener("mousedown", this.onMouseDown);
-        document.removeEventListener("touchstart", this.onMouseDown);
-        document.removeEventListener("mouseup", this.onMouseUp);
-        document.removeEventListener("touchend", this.onMouseUp);
+        document.removeEventListener('mousedown', this.onMouseDown);
+        document.removeEventListener('touchstart', this.onMouseDown);
+        document.removeEventListener('mouseup', this.onMouseUp);
+        document.removeEventListener('touchend', this.onMouseUp);
     }
     switchModeForFormat(newFormat) {
         if (
@@ -248,16 +224,11 @@ class PaintEditor extends React.Component {
         }
     }
     getEffectiveTheme() {
-        return this.props.reduxTheme === "default"
-            ? this.props.theme
-            : this.props.reduxTheme;
+        return this.props.reduxTheme === 'default' ? this.props.theme : this.props.reduxTheme;
     }
     handleChangeTheme() {
-        const newTheme =
-            this.getEffectiveTheme() === "light" ? "dark" : "light";
-        this.props.setReduxTheme(
-            newTheme === this.props.theme ? "default" : newTheme
-        );
+        const newTheme = this.getEffectiveTheme() === 'light' ? 'dark' : 'light';
+        this.props.setReduxTheme(newTheme === this.props.theme ? 'default' : newTheme);
     }
     handleZoomIn() {
         // Make the "next step" after the outermost zoom level be the default
@@ -284,24 +255,18 @@ class PaintEditor extends React.Component {
         this.props.setSelectedItems(this.props.format);
     }
     setCanvas(canvas) {
-        this.setState({ canvas: canvas });
+        this.setState({canvas: canvas});
         this.canvas = canvas;
     }
     setTextArea(element) {
-        this.setState({ textArea: element });
+        this.setState({textArea: element});
     }
     onMouseDown(event) {
-        if (
-            event.target === paper.view.element &&
-            document.activeElement instanceof HTMLInputElement
-        ) {
+        if (event.target === paper.view.element && document.activeElement instanceof HTMLInputElement) {
             document.activeElement.blur();
         }
 
-        if (
-            event.target !== paper.view.element &&
-            event.target !== this.state.textArea
-        ) {
+        if (event.target !== paper.view.element && event.target !== this.state.textArea) {
             // Exit text edit mode if you click anywhere outside of canvas
             this.props.removeTextEditTarget();
         }
@@ -351,7 +316,7 @@ class PaintEditor extends React.Component {
                 this.state.colorInfo.y !== colorInfo.y
             ) {
                 this.setState({
-                    colorInfo: colorInfo,
+                    colorInfo: colorInfo
                 });
             }
         };
@@ -359,7 +324,7 @@ class PaintEditor extends React.Component {
     }
     stopEyeDroppingLoop() {
         cancelAnimationFrame(this.animationFrameId);
-        this.setState({ colorInfo: null });
+        this.setState({colorInfo: null});
     }
     render() {
         return (
@@ -406,7 +371,7 @@ PaintEditor.propTypes = {
     customFonts: PropTypes.arrayOf(
         PropTypes.shape({
             name: PropTypes.string.isRequired,
-            family: PropTypes.string.isRequired,
+            family: PropTypes.string.isRequired
         })
     ).isRequired,
     onCustomFontsChanged: PropTypes.func.isRequired,
@@ -415,10 +380,7 @@ PaintEditor.propTypes = {
     fontInlineFn: PropTypes.func,
     handleSwitchToBitmap: PropTypes.func.isRequired,
     handleSwitchToVector: PropTypes.func.isRequired,
-    image: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.instanceOf(HTMLImageElement),
-    ]),
+    image: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(HTMLImageElement)]),
     imageFormat: PropTypes.string, // The incoming image's data format, used during import
     imageId: PropTypes.string,
     isEyeDropping: PropTypes.bool,
@@ -433,7 +395,7 @@ PaintEditor.propTypes = {
     previousTool: PropTypes.shape({
         // paper.Tool
         activate: PropTypes.func.isRequired,
-        remove: PropTypes.func.isRequired,
+        remove: PropTypes.func.isRequired
     }),
     removeTextEditTarget: PropTypes.func.isRequired,
     rotationCenterX: PropTypes.number,
@@ -443,21 +405,21 @@ PaintEditor.propTypes = {
     setSelectedItems: PropTypes.func.isRequired,
     shouldShowRedo: PropTypes.func.isRequired,
     shouldShowUndo: PropTypes.func.isRequired,
-    theme: PropTypes.oneOf(["light", "dark"]),
-    reduxTheme: PropTypes.oneOf(["default", "light", "dark"]),
+    theme: PropTypes.oneOf(['light', 'dark']),
+    reduxTheme: PropTypes.oneOf(['default', 'light', 'dark']),
     setReduxTheme: PropTypes.func.isRequired,
     width: PropTypes.number,
     height: PropTypes.number,
     updateViewBounds: PropTypes.func.isRequired,
     viewBounds: PropTypes.instanceOf(paper.Matrix).isRequired,
-    zoomLevelId: PropTypes.string,
+    zoomLevelId: PropTypes.string
 };
 
 PaintEditor.defaultProps = {
     width: 480,
     height: 360,
-    theme: "light",
-    customFonts: [],
+    theme: 'light',
+    customFonts: []
 };
 
 const mapStateToProps = state => ({
@@ -467,7 +429,7 @@ const mapStateToProps = state => ({
     mode: state.scratchPaint.mode,
     previousTool: state.scratchPaint.color.eyeDropper.previousTool,
     reduxTheme: state.scratchPaint.theme,
-    viewBounds: state.scratchPaint.viewBounds,
+    viewBounds: state.scratchPaint.viewBounds
 });
 const mapDispatchToProps = dispatch => ({
     changeMode: mode => {
@@ -503,15 +465,9 @@ const mapDispatchToProps = dispatch => ({
     },
     updateViewBounds: matrix => {
         dispatch(updateViewBounds(matrix));
-    },
+    }
 });
 
 export default UpdateImageHOC(
-    SelectionHOC(
-        UndoHOC(
-            KeyboardShortcutsHOC(
-                connect(mapStateToProps, mapDispatchToProps)(PaintEditor)
-            )
-        )
-    )
+    SelectionHOC(UndoHOC(KeyboardShortcutsHOC(connect(mapStateToProps, mapDispatchToProps)(PaintEditor))))
 );

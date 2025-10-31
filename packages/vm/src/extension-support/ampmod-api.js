@@ -1,11 +1,11 @@
 const VERSION = process.env.ampmod_version;
 
 export class AmpMod {
-    constructor() {
+    constructor () {
         this.version = VERSION;
     }
 
-    ampmodWebLoggedIn() {
+    ampmodWebLoggedIn () {
         return false;
     }
 }

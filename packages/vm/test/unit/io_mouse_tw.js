@@ -1,8 +1,8 @@
-const test = require("tap").test;
-const Mouse = require("../../src/io/mouse");
-const Runtime = require("../../src/engine/runtime");
+const test = require('tap').test;
+const Mouse = require('../../src/io/mouse');
+const Runtime = require('../../src/engine/runtime');
 
-test("position clamping", t => {
+test('position clamping', t => {
     const rt = new Runtime();
     const m = new Mouse(rt);
 
@@ -11,7 +11,7 @@ test("position clamping", t => {
         x: BIG,
         y: BIG,
         canvasWidth: 480,
-        canvasHeight: 360,
+        canvasHeight: 360
     });
     t.strictEquals(m.getClientX(), BIG);
     t.strictEquals(m.getClientY(), BIG);
@@ -20,7 +20,7 @@ test("position clamping", t => {
     t.end();
 });
 
-test("mouseButtonDown", t => {
+test('mouseButtonDown', t => {
     const rt = new Runtime();
     const m = new Mouse(rt);
 
@@ -29,21 +29,21 @@ test("mouseButtonDown", t => {
     t.strictEquals(m.getButtonIsDown(2), false);
     m.postData({
         isDown: true,
-        button: 0,
+        button: 0
     });
     t.strictEquals(m.getButtonIsDown(0), true);
     t.strictEquals(m.getButtonIsDown(1), false);
     t.strictEquals(m.getButtonIsDown(2), false);
     m.postData({
         isDown: true,
-        button: 2,
+        button: 2
     });
     t.strictEquals(m.getButtonIsDown(0), true);
     t.strictEquals(m.getButtonIsDown(1), false);
     t.strictEquals(m.getButtonIsDown(2), true);
     m.postData({
         isDown: false,
-        button: 2,
+        button: 2
     });
     t.strictEquals(m.getButtonIsDown(0), true);
     t.strictEquals(m.getButtonIsDown(1), false);
@@ -51,46 +51,46 @@ test("mouseButtonDown", t => {
     t.end();
 });
 
-test("mouseDown with buttons", t => {
+test('mouseDown with buttons', t => {
     const rt = new Runtime();
     const m = new Mouse(rt);
 
     t.strictEquals(m.getIsDown(), false);
     m.postData({
         isDown: true,
-        button: 0,
+        button: 0
     });
     t.strictEquals(m.getIsDown(), true);
     m.postData({
         isDown: true,
-        button: 2,
+        button: 2
     });
     t.strictEquals(m.getIsDown(), true);
     m.postData({
         isDown: false,
-        button: 2,
+        button: 2
     });
     t.strictEquals(m.getIsDown(), false);
     t.end();
 });
 
-test("missing button is treated as left", t => {
+test('missing button is treated as left', t => {
     const rt = new Runtime();
     const m = new Mouse(rt);
 
     t.strictEquals(m.getButtonIsDown(0), false);
     m.postData({
-        isDown: true,
+        isDown: true
     });
     t.strictEquals(m.getButtonIsDown(0), true);
     m.postData({
-        isDown: false,
+        isDown: false
     });
     t.strictEquals(m.getButtonIsDown(0), false);
     t.end();
 });
 
-test("usesRightClickDown", t => {
+test('usesRightClickDown', t => {
     const rt = new Runtime();
     const m = new Mouse(rt);
 
@@ -100,7 +100,7 @@ test("usesRightClickDown", t => {
     t.end();
 });
 
-test("no rounding when misc limits disabled", t => {
+test('no rounding when misc limits disabled', t => {
     const rt = new Runtime();
     const m = new Mouse(rt);
 
@@ -108,13 +108,13 @@ test("no rounding when misc limits disabled", t => {
         x: 241,
         y: 541,
         canvasWidth: 960,
-        canvasHeight: 720,
+        canvasHeight: 720
     });
     t.equal(m.getScratchX(), -119);
     t.equal(m.getScratchY(), -90);
 
     rt.setRuntimeOptions({
-        miscLimits: false,
+        miscLimits: false
     });
     t.equal(m.getScratchX(), -119.5);
     t.equal(m.getScratchY(), -90.5);
@@ -122,7 +122,7 @@ test("no rounding when misc limits disabled", t => {
     t.end();
 });
 
-test("accepts 0 as x and y position", t => {
+test('accepts 0 as x and y position', t => {
     const rt = new Runtime();
     const m = new Mouse(rt);
 
@@ -130,7 +130,7 @@ test("accepts 0 as x and y position", t => {
         x: 1,
         y: 2,
         canvasWidth: 480,
-        canvasHeight: 360,
+        canvasHeight: 360
     });
     t.equal(m.getClientX(), 1);
     t.equal(m.getClientY(), 2);
@@ -139,7 +139,7 @@ test("accepts 0 as x and y position", t => {
         x: 0,
         y: 0,
         canvasWidth: 480,
-        canvasHeight: 360,
+        canvasHeight: 360
     });
     t.equal(m.getClientX(), 0);
     t.equal(m.getClientY(), 0);

@@ -75,7 +75,7 @@
                     "opcode": "looks_effectmenu",
                     "inputs": {},
                     "fields": {
-                        "EFFECT": { "name": "EFFECT", "value": "color" }
+                        "EFFECT": {"name": "EFFECT", "value": "color"}
                     },
                     "next": null,
                     "topLevel": false,
@@ -86,7 +86,7 @@
                     "id": "woYo[[v=PD(`R;qW{PZ%",
                     "opcode": "math_number",
                     "inputs": {},
-                    "fields": { "NUM": { "name": "NUM", "value": 1 } },
+                    "fields": {"NUM": {"name": "NUM", "value": 1}},
                     "next": null,
                     "topLevel": false,
                     "parent": "nlnk{2XqtVI*Qg,admbW",

@@ -1,20 +1,18 @@
-const tap = require("tap");
-const fs = require("fs");
-const path = require("path");
-const VirtualMachine = require("../../src/virtual-machine");
-const Thread = require("../../src/engine/thread");
+const tap = require('tap');
+const fs = require('fs');
+const path = require('path');
+const VirtualMachine = require('../../src/virtual-machine');
+const Thread = require('../../src/engine/thread');
 
-const fixtureData = fs.readFileSync(
-    path.join(__dirname, "..", "fixtures", "tw-addon-blocks.sb3")
-);
+const fixtureData = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'tw-addon-blocks.sb3'));
 
 const runExecutionTests = compilerEnabled => test => {
     const load = async () => {
         const vm = new VirtualMachine();
         vm.setCompilerOptions({
-            enabled: compilerEnabled,
+            enabled: compilerEnabled
         });
-        vm.on("COMPILE_ERROR", (target, error) => {
+        vm.on('COMPILE_ERROR', (target, error) => {
             test.fail(`Compile error in ${target.getName()}: ${error}`);
         });
         await vm.loadProject(fixtureData);
@@ -22,34 +20,32 @@ const runExecutionTests = compilerEnabled => test => {
     };
 
     const getVar = (vm, variableName) => {
-        const variable = vm.runtime
-            .getTargetForStage()
-            .lookupVariableByNameAndType(variableName, "");
+        const variable = vm.runtime.getTargetForStage().lookupVariableByNameAndType(variableName, '');
         return variable.value;
     };
 
-    test.test("baseline - no addon blocks", t => {
+    test.test('baseline - no addon blocks', t => {
         load().then(vm => {
-            t.equal(getVar(vm, "block 1"), "initial");
-            t.equal(getVar(vm, "block 2"), "initial");
-            t.equal(getVar(vm, "block 3"), "initial");
-            t.equal(getVar(vm, "block 4"), "initial");
-            t.equal(getVar(vm, "block 4 output"), "initial");
+            t.equal(getVar(vm, 'block 1'), 'initial');
+            t.equal(getVar(vm, 'block 2'), 'initial');
+            t.equal(getVar(vm, 'block 3'), 'initial');
+            t.equal(getVar(vm, 'block 4'), 'initial');
+            t.equal(getVar(vm, 'block 4 output'), 'initial');
 
             vm.greenFlag();
             vm.runtime._step();
 
-            t.equal(getVar(vm, "block 1"), "block 1 ran");
-            t.equal(getVar(vm, "block 2"), "block 2: banana");
-            t.equal(getVar(vm, "block 3"), "block 3 ran");
-            t.equal(getVar(vm, "block 4"), "block 4 ran");
-            t.equal(getVar(vm, "block 4 output"), "block 4: apple");
+            t.equal(getVar(vm, 'block 1'), 'block 1 ran');
+            t.equal(getVar(vm, 'block 2'), 'block 2: banana');
+            t.equal(getVar(vm, 'block 3'), 'block 3 ran');
+            t.equal(getVar(vm, 'block 4'), 'block 4 ran');
+            t.equal(getVar(vm, 'block 4 output'), 'block 4: apple');
 
             t.end();
         });
     });
 
-    test.test("simple statement blocks", t => {
+    test.test('simple statement blocks', t => {
         load().then(vm => {
             t.plan(9);
 
@@ -57,27 +53,27 @@ const runExecutionTests = compilerEnabled => test => {
             let calledBlock2 = false;
 
             vm.addAddonBlock({
-                procedureCode: "block 1",
+                procedureCode: 'block 1',
                 callback: (args, util) => {
                     calledBlock1 = true;
                     t.same(args, {});
                     t.ok(util.thread instanceof Thread);
                     // may have to update when project changes
-                    t.equal(util.thread.peekStack(), "d");
-                },
+                    t.equal(util.thread.peekStack(), 'd');
+                }
             });
 
             vm.addAddonBlock({
-                procedureCode: "block 2 %s",
-                arguments: ["number or text"],
+                procedureCode: 'block 2 %s',
+                arguments: ['number or text'],
                 callback: (args, util) => {
                     calledBlock2 = true;
                     t.same(args, {
-                        "number or text": "banana",
+                        'number or text': 'banana'
                     });
                     // may have to update when project changes
-                    t.equal(util.thread.peekStack(), "c");
-                },
+                    t.equal(util.thread.peekStack(), 'c');
+                }
             });
 
             vm.greenFlag();
@@ -87,27 +83,27 @@ const runExecutionTests = compilerEnabled => test => {
             t.ok(calledBlock2);
 
             // Overridden blocks should not run
-            t.equal(getVar(vm, "block 1"), "false");
-            t.equal(getVar(vm, "block 2"), "false");
+            t.equal(getVar(vm, 'block 1'), 'false');
+            t.equal(getVar(vm, 'block 2'), 'false');
 
             t.end();
         });
     });
 
-    test.test("yield with thread.status = STATUS_PROMISE_WAIT", t => {
+    test.test('yield with thread.status = STATUS_PROMISE_WAIT', t => {
         load().then(vm => {
             t.plan(7);
 
             let threadToResume;
             let ranBlock3 = false;
             vm.addAddonBlock({
-                procedureCode: "block 3",
+                procedureCode: 'block 3',
                 callback: (args, util) => {
                     ranBlock3 = true;
                     util.thread.status = Thread.STATUS_PROMISE_WAIT;
                     threadToResume = util.thread;
                 },
-                arguments: [],
+                arguments: []
             });
 
             vm.greenFlag();
@@ -118,22 +114,22 @@ const runExecutionTests = compilerEnabled => test => {
             t.equal(threadToResume.status, Thread.STATUS_PROMISE_WAIT);
 
             // Should've stopped after block 2
-            t.equal(getVar(vm, "block 2"), "block 2: banana");
-            t.equal(getVar(vm, "block 3"), "false");
-            t.equal(getVar(vm, "block 4"), "false");
+            t.equal(getVar(vm, 'block 2'), 'block 2: banana');
+            t.equal(getVar(vm, 'block 3'), 'false');
+            t.equal(getVar(vm, 'block 4'), 'false');
 
             threadToResume.status = Thread.STATUS_RUNNING;
             vm.runtime._step();
 
             // Should've finished running
-            t.equal(getVar(vm, "block 3"), "false"); // overridden, should not run
-            t.equal(getVar(vm, "block 4"), "block 4 ran");
+            t.equal(getVar(vm, 'block 3'), 'false'); // overridden, should not run
+            t.equal(getVar(vm, 'block 4'), 'block 4 ran');
 
             t.end();
         });
     });
 
-    test.test("yield with util.yield()", t => {
+    test.test('yield with util.yield()', t => {
         load().then(vm => {
             t.plan(10);
 
@@ -141,7 +137,7 @@ const runExecutionTests = compilerEnabled => test => {
             let calledBlock1 = 0;
 
             vm.addAddonBlock({
-                procedureCode: "block 1",
+                procedureCode: 'block 1',
                 callback: (args, util) => {
                     calledBlock1++;
 
@@ -150,7 +146,7 @@ const runExecutionTests = compilerEnabled => test => {
                         util.yield();
                     }
                 },
-                arguments: [],
+                arguments: []
             });
 
             vm.greenFlag();
@@ -159,34 +155,34 @@ const runExecutionTests = compilerEnabled => test => {
             }
 
             t.equal(calledBlock1, 10);
-            t.equal(getVar(vm, "block 1"), "false");
-            t.equal(getVar(vm, "block 2"), "false");
-            t.equal(getVar(vm, "block 3"), "false");
-            t.equal(getVar(vm, "block 4"), "false");
+            t.equal(getVar(vm, 'block 1'), 'false');
+            t.equal(getVar(vm, 'block 2'), 'false');
+            t.equal(getVar(vm, 'block 3'), 'false');
+            t.equal(getVar(vm, 'block 4'), 'false');
 
             shouldYield = false;
             vm.runtime._step();
 
             t.equal(calledBlock1, 11);
-            t.equal(getVar(vm, "block 1"), "false"); // overrridden, should not run
-            t.equal(getVar(vm, "block 2"), "block 2: banana");
-            t.equal(getVar(vm, "block 3"), "block 3 ran");
-            t.equal(getVar(vm, "block 4"), "block 4 ran");
+            t.equal(getVar(vm, 'block 1'), 'false'); // overrridden, should not run
+            t.equal(getVar(vm, 'block 2'), 'block 2: banana');
+            t.equal(getVar(vm, 'block 3'), 'block 3 ran');
+            t.equal(getVar(vm, 'block 4'), 'block 4 ran');
 
             t.end();
         });
     });
 
-    test.test("yield with resolved Promise", t => {
+    test.test('yield with resolved Promise', t => {
         load().then(vm => {
             let resolveCallback;
             vm.addAddonBlock({
-                procedureCode: "block 2 %s",
-                arguments: ["number or text"],
+                procedureCode: 'block 2 %s',
+                arguments: ['number or text'],
                 callback: () =>
                     new Promise(resolve => {
                         resolveCallback = resolve;
-                    }),
+                    })
             });
 
             vm.greenFlag();
@@ -194,18 +190,18 @@ const runExecutionTests = compilerEnabled => test => {
                 vm.runtime._step();
             }
 
-            t.type(resolveCallback, "function");
-            t.equal(getVar(vm, "block 1"), "block 1 ran");
-            t.equal(getVar(vm, "block 2"), "false");
-            t.equal(getVar(vm, "block 3"), "false");
-            t.equal(getVar(vm, "block 4"), "false");
+            t.type(resolveCallback, 'function');
+            t.equal(getVar(vm, 'block 1'), 'block 1 ran');
+            t.equal(getVar(vm, 'block 2'), 'false');
+            t.equal(getVar(vm, 'block 3'), 'false');
+            t.equal(getVar(vm, 'block 4'), 'false');
 
             resolveCallback();
             Promise.resolve().then(() => {
                 vm.runtime._step();
-                t.equal(getVar(vm, "block 2"), "false"); // overridden, should not run
-                t.equal(getVar(vm, "block 3"), "block 3 ran");
-                t.equal(getVar(vm, "block 4"), "block 4 ran");
+                t.equal(getVar(vm, 'block 2'), 'false'); // overridden, should not run
+                t.equal(getVar(vm, 'block 3'), 'block 3 ran');
+                t.equal(getVar(vm, 'block 4'), 'block 4 ran');
 
                 t.end();
             });
@@ -249,30 +245,27 @@ const runExecutionTests = compilerEnabled => test => {
     });
     */
 
-    test.test("returning values", t => {
+    test.test('returning values', t => {
         load().then(vm => {
             vm.addAddonBlock({
-                procedureCode: "block 4 %s",
+                procedureCode: 'block 4 %s',
                 callback: args => {
                     t.same(args, {
-                        "number or text": "apple",
+                        'number or text': 'apple'
                     });
-                    return `value from addon block: ${args["number or text"]}`;
+                    return `value from addon block: ${args['number or text']}`;
                 },
-                arguments: ["number or text"],
+                arguments: ['number or text']
             });
 
             vm.greenFlag();
             vm.runtime._step();
 
-            t.equal(getVar(vm, "block 1"), "block 1 ran");
-            t.equal(getVar(vm, "block 2"), "block 2: banana");
-            t.equal(getVar(vm, "block 3"), "block 3 ran");
-            t.equal(getVar(vm, "block 4"), "false"); // block 4 itself should not have run, we overrode it
-            t.equal(
-                getVar(vm, "block 4 output"),
-                "value from addon block: apple"
-            );
+            t.equal(getVar(vm, 'block 1'), 'block 1 ran');
+            t.equal(getVar(vm, 'block 2'), 'block 2: banana');
+            t.equal(getVar(vm, 'block 3'), 'block 3 ran');
+            t.equal(getVar(vm, 'block 4'), 'false'); // block 4 itself should not have run, we overrode it
+            t.equal(getVar(vm, 'block 4 output'), 'value from addon block: apple');
 
             t.end();
         });
@@ -281,53 +274,53 @@ const runExecutionTests = compilerEnabled => test => {
     test.end();
 };
 
-tap.test("with compiler disabled", runExecutionTests(false));
-tap.test("with compiler enabled", runExecutionTests(true));
+tap.test('with compiler disabled', runExecutionTests(false));
+tap.test('with compiler enabled', runExecutionTests(true));
 
-tap.test("block info", t => {
+tap.test('block info', t => {
     const vm = new VirtualMachine();
 
-    const BLOCK_INFO_ID = "a-b";
+    const BLOCK_INFO_ID = 'a-b';
 
     vm.addAddonBlock({
-        procedureCode: "hidden %s",
-        arguments: ["number or text"],
+        procedureCode: 'hidden %s',
+        arguments: ['number or text'],
         callback: () => {},
-        hidden: true,
+        hidden: true
     });
 
     let blockInfo = vm.runtime._blockInfo.find(i => i.id === BLOCK_INFO_ID);
     t.equal(blockInfo, undefined);
 
     vm.addAddonBlock({
-        procedureCode: "statement %s",
-        arguments: ["number or text"],
-        callback: () => {},
+        procedureCode: 'statement %s',
+        arguments: ['number or text'],
+        callback: () => {}
     });
     vm.addAddonBlock({
-        procedureCode: "input %s",
-        arguments: ["an argument"],
+        procedureCode: 'input %s',
+        arguments: ['an argument'],
         callback: () => {},
-        return: 1,
+        return: 1
     });
 
     blockInfo = vm.runtime._blockInfo.find(i => i.id === BLOCK_INFO_ID);
-    t.type(blockInfo.id, "string");
-    t.type(blockInfo.name, "string");
-    t.type(blockInfo.color1, "string");
-    t.type(blockInfo.color2, "string");
-    t.type(blockInfo.color3, "string");
+    t.type(blockInfo.id, 'string');
+    t.type(blockInfo.name, 'string');
+    t.type(blockInfo.color1, 'string');
+    t.type(blockInfo.color2, 'string');
+    t.type(blockInfo.color3, 'string');
     t.same(blockInfo.blocks, [
         {
             info: {},
             // eslint-disable-next-line max-len
-            xml: '<block type="procedures_call" gap="16"><mutation generateshadows="true" warp="false" proccode="statement %s" argumentnames="[&quot;number or text&quot;]" argumentids="[&quot;arg0&quot;]" argumentdefaults="[&quot;&quot;]"></mutation></block>',
+            xml: '<block type="procedures_call" gap="16"><mutation generateshadows="true" warp="false" proccode="statement %s" argumentnames="[&quot;number or text&quot;]" argumentids="[&quot;arg0&quot;]" argumentdefaults="[&quot;&quot;]"></mutation></block>'
         },
         {
             info: {},
             // eslint-disable-next-line max-len
-            xml: '<block type="procedures_call" gap="16"><mutation generateshadows="true" warp="false" proccode="input %s" argumentnames="[&quot;an argument&quot;]" argumentids="[&quot;arg0&quot;]" argumentdefaults="[&quot;&quot;]" return="1"></mutation></block>',
-        },
+            xml: '<block type="procedures_call" gap="16"><mutation generateshadows="true" warp="false" proccode="input %s" argumentnames="[&quot;an argument&quot;]" argumentids="[&quot;arg0&quot;]" argumentdefaults="[&quot;&quot;]" return="1"></mutation></block>'
+        }
     ]);
 
     t.end();

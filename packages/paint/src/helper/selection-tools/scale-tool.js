@@ -1,7 +1,7 @@
-import paper from "@turbowarp/paper";
-import { getItems } from "../selection";
-import { getActionBounds } from "../view";
-import { BitmapModes } from "../../lib/modes";
+import paper from '@turbowarp/paper';
+import {getItems} from '../selection';
+import {getActionBounds} from '../view';
+import {BitmapModes} from '../../lib/modes';
 
 const MIN_SCALE_FACTOR = 0.0001;
 
@@ -40,16 +40,9 @@ class ScaleTool {
         this.active = true;
 
         const index = hitResult.item.data.index;
-        this.pivot =
-            boundsPath.bounds[
-                this._getOpposingRectCornerNameByIndex(index)
-            ].clone();
-        this.origPivot =
-            boundsPath.bounds[
-                this._getOpposingRectCornerNameByIndex(index)
-            ].clone();
-        this.corner =
-            boundsPath.bounds[this._getRectCornerNameByIndex(index)].clone();
+        this.pivot = boundsPath.bounds[this._getOpposingRectCornerNameByIndex(index)].clone();
+        this.origPivot = boundsPath.bounds[this._getOpposingRectCornerNameByIndex(index)].clone();
+        this.corner = boundsPath.bounds[this._getRectCornerNameByIndex(index)].clone();
         this.selectionAnchor = boundsPath.selectionAnchor;
         this.origSize = this.corner.subtract(this.pivot);
         this.origCenter = boundsPath.bounds.center;
@@ -69,7 +62,7 @@ class ScaleTool {
                     }
                 }
                 return true;
-            },
+            }
         });
         if (items.length > 0) {
             this.itemToInsertBelow = items[0];
@@ -99,11 +92,7 @@ class ScaleTool {
             if (this.centered) {
                 // Reset position if we were just in alt
                 this.centered = false;
-                this.itemGroup.scale(
-                    1 / this.lastSx,
-                    1 / this.lastSy,
-                    this.pivot
-                );
+                this.itemGroup.scale(1 / this.lastSx, 1 / this.lastSy, this.pivot);
                 if (this.selectionAnchor) {
                     this.selectionAnchor.scale(this.lastSx, this.lastSy);
                 }
@@ -187,41 +176,41 @@ class ScaleTool {
     _getRectCornerNameByIndex(index) {
         switch (index) {
             case 0:
-                return "bottomLeft";
+                return 'bottomLeft';
             case 1:
-                return "leftCenter";
+                return 'leftCenter';
             case 2:
-                return "topLeft";
+                return 'topLeft';
             case 3:
-                return "topCenter";
+                return 'topCenter';
             case 4:
-                return "topRight";
+                return 'topRight';
             case 5:
-                return "rightCenter";
+                return 'rightCenter';
             case 6:
-                return "bottomRight";
+                return 'bottomRight';
             case 7:
-                return "bottomCenter";
+                return 'bottomCenter';
         }
     }
     _getOpposingRectCornerNameByIndex(index) {
         switch (index) {
             case 0:
-                return "topRight";
+                return 'topRight';
             case 1:
-                return "rightCenter";
+                return 'rightCenter';
             case 2:
-                return "bottomRight";
+                return 'bottomRight';
             case 3:
-                return "bottomCenter";
+                return 'bottomCenter';
             case 4:
-                return "bottomLeft";
+                return 'bottomLeft';
             case 5:
-                return "leftCenter";
+                return 'leftCenter';
             case 6:
-                return "topLeft";
+                return 'topLeft';
             case 7:
-                return "topCenter";
+                return 'topCenter';
         }
     }
     _isCorner(index) {

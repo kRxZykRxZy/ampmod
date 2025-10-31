@@ -1,38 +1,38 @@
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const defaultsDeep = require("lodash.defaultsdeep");
-const webpack = require("webpack");
-const path = require("path");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const defaultsDeep = require('lodash.defaultsdeep');
+const webpack = require('webpack');
+const path = require('path');
 
 const base = {
-    mode: process.env.NODE_ENV === "production" ? "production" : "development",
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     devServer: {
         contentBase: false,
-        host: "0.0.0.0",
-        port: process.env.PORT || 8073,
+        host: '0.0.0.0',
+        port: process.env.PORT || 8073
     },
-    devtool: "cheap-module-source-map",
+    devtool: 'cheap-module-source-map',
     output: {
-        library: "VirtualMachine",
-        filename: "[name].js",
+        library: 'VirtualMachine',
+        filename: '[name].js'
     },
     module: {
         rules: [
             {
                 test: /\.js$/,
-                loader: "babel-loader",
-                include: path.resolve(__dirname, "src"),
+                loader: 'babel-loader',
+                include: path.resolve(__dirname, 'src'),
                 query: {
-                    presets: [["@babel/preset-env"]],
-                },
+                    presets: [['@babel/preset-env']]
+                }
             },
             {
                 test: /\.mp3$/,
-                loader: "file-loader",
+                loader: 'file-loader',
                 options: {
-                    outputPath: "media/music/",
-                },
-            },
-        ],
+                    outputPath: 'media/music/'
+                }
+            }
+        ]
     },
     plugins: [
         new webpack.BannerPlugin({
@@ -40,120 +40,117 @@ const base = {
 This Source Code Form is subject to the terms of the Mozilla Public
 License, v. 2.0. If a copy of the MPL was not distributed with this
 file, You can obtain one at https://mozilla.org/MPL/2.0/.
-            `.trim(),
-        }),
-    ],
+            `.trim()
+        })
+    ]
 };
 
 module.exports = [
     // Web-compatible
     defaultsDeep({}, base, {
-        target: "web",
+        target: 'web',
         entry: {
-            "scratch-vm": "./src/index.js",
-            "scratch-vm.min": "./src/index.js",
+            'scratch-vm': './src/index.js',
+            'scratch-vm.min': './src/index.js'
         },
         output: {
-            libraryTarget: "umd",
-            path: path.resolve("dist", "web"),
+            libraryTarget: 'umd',
+            path: path.resolve('dist', 'web')
         },
         module: {
             rules: base.module.rules.concat([
                 {
-                    test: require.resolve("./src/index.js"),
-                    loader: "expose-loader?VirtualMachine",
-                },
-            ]),
-        },
+                    test: require.resolve('./src/index.js'),
+                    loader: 'expose-loader?VirtualMachine'
+                }
+            ])
+        }
     }),
     // Node-compatible
     defaultsDeep({}, base, {
-        target: "node",
+        target: 'node',
         entry: {
-            "scratch-vm": "./src/index.js",
+            'scratch-vm': './src/index.js'
         },
         output: {
-            libraryTarget: "commonjs2",
-            path: path.resolve("dist", "node"),
+            libraryTarget: 'commonjs2',
+            path: path.resolve('dist', 'node')
         },
         externals: {
-            "decode-html": true,
-            "format-message": true,
-            htmlparser2: true,
-            immutable: true,
-            "scratch-parser": true,
-            "socket.io-client": true,
-            "text-encoding": true,
-        },
+            'decode-html': true,
+            'format-message': true,
+            'htmlparser2': true,
+            'immutable': true,
+            'scratch-parser': true,
+            'socket.io-client': true,
+            'text-encoding': true
+        }
     }),
     // Playground
     defaultsDeep({}, base, {
-        target: "web",
+        target: 'web',
         entry: {
-            benchmark: "./src/playground/benchmark",
-            "video-sensing-extension-debug":
-                "./src/extensions/scratch3_video_sensing/debug",
+            'benchmark': './src/playground/benchmark',
+            'video-sensing-extension-debug': './src/extensions/scratch3_video_sensing/debug'
         },
         output: {
-            path: path.resolve(__dirname, "playground"),
-            filename: "[name].js",
+            path: path.resolve(__dirname, 'playground'),
+            filename: '[name].js'
         },
         module: {
             rules: base.module.rules.concat([
                 {
-                    test: require.resolve("./src/index.js"),
-                    loader: "expose-loader?VirtualMachine",
+                    test: require.resolve('./src/index.js'),
+                    loader: 'expose-loader?VirtualMachine'
                 },
                 {
-                    test: require.resolve(
-                        "./src/extensions/scratch3_video_sensing/debug.js"
-                    ),
-                    loader: "expose-loader?Scratch3VideoSensingDebug",
+                    test: require.resolve('./src/extensions/scratch3_video_sensing/debug.js'),
+                    loader: 'expose-loader?Scratch3VideoSensingDebug'
                 },
                 {
-                    test: require.resolve("stats.js/build/stats.min.js"),
-                    loader: "script-loader",
+                    test: require.resolve('stats.js/build/stats.min.js'),
+                    loader: 'script-loader'
                 },
                 {
-                    test: require.resolve("scratch-blocks/dist/vertical.js"),
-                    loader: "expose-loader?Blockly",
+                    test: require.resolve('scratch-blocks/dist/vertical.js'),
+                    loader: 'expose-loader?Blockly'
                 },
                 {
-                    test: require.resolve("scratch-audio/src/index.js"),
-                    loader: "expose-loader?AudioEngine",
+                    test: require.resolve('scratch-audio/src/index.js'),
+                    loader: 'expose-loader?AudioEngine'
                 },
                 {
-                    test: require.resolve("scratch-storage/src/index.js"),
-                    loader: "expose-loader?ScratchStorage",
+                    test: require.resolve('scratch-storage/src/index.js'),
+                    loader: 'expose-loader?ScratchStorage'
                 },
                 {
-                    test: require.resolve("scratch-render/src/index.js"),
-                    loader: "expose-loader?ScratchRender",
-                },
-            ]),
+                    test: require.resolve('scratch-render/src/index.js'),
+                    loader: 'expose-loader?ScratchRender'
+                }
+            ])
         },
         performance: {
-            hints: false,
+            hints: false
         },
         plugins: base.plugins.concat([
             new CopyWebpackPlugin([
                 {
-                    from: "node_modules/scratch-blocks/media",
-                    to: "media",
+                    from: 'node_modules/scratch-blocks/media',
+                    to: 'media'
                 },
                 {
-                    from: "node_modules/scratch-storage/dist/web",
+                    from: 'node_modules/scratch-storage/dist/web'
                 },
                 {
-                    from: "node_modules/scratch-render/dist/web",
+                    from: 'node_modules/scratch-render/dist/web'
                 },
                 {
-                    from: "node_modules/@turbowarp/scratch-svg-renderer/dist/web",
+                    from: 'node_modules/@turbowarp/scratch-svg-renderer/dist/web'
                 },
                 {
-                    from: "src/playground",
-                },
-            ]),
-        ]),
-    }),
+                    from: 'src/playground'
+                }
+            ])
+        ])
+    })
 ];

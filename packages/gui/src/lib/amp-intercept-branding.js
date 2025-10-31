@@ -1,11 +1,11 @@
-import branding from "real-branding";
-import { localise } from "../website/components/localise/localise.jsx";
+import branding from 'real-branding';
+import {localise} from '../website/components/localise/localise.jsx';
 
-export const APP_SLOGAN = localise("appSlogan", {
-    APP_NAME: branding.APP_NAME,
+export const APP_SLOGAN = localise('appSlogan', {
+    APP_NAME: branding.APP_NAME
 });
-export const APP_DESCRIPTION = localise("appShortDescription", {
-    APP_NAME: branding.APP_NAME,
+export const APP_DESCRIPTION = localise('appShortDescription', {
+    APP_NAME: branding.APP_NAME
 });
 
 // Leave these unchanged

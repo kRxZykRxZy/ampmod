@@ -1,17 +1,17 @@
-const fs = require("fs");
-const VirtualMachine = require("../index");
+const fs = require('fs');
+const VirtualMachine = require('../index');
 
 /* eslint-env node */
 /* eslint-disable no-console */
 
 const file = process.argv[2];
 if (!file) {
-    throw new Error("Invalid file");
+    throw new Error('Invalid file');
 }
 
 const runProject = async buffer => {
     const vm = new VirtualMachine();
-    vm.runtime.on("SAY", (target, type, text) => {
+    vm.runtime.on('SAY', (target, type, text) => {
         console.log(text);
     });
     vm.setCompatibilityMode(true);

@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FormattedMessage } from "react-intl";
-import { MenuItem } from "../menu/menu.jsx";
-import icon from "./tw-advanced.svg";
-import styles from "./settings-menu.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {FormattedMessage} from 'react-intl';
+import {MenuItem} from '../menu/menu.jsx';
+import icon from './tw-advanced.svg';
+import styles from './settings-menu.css';
 
 const TWDesktopSettings = props => (
     <MenuItem onClick={props.onClick}>
@@ -19,7 +19,7 @@ const TWDesktopSettings = props => (
 );
 
 TWDesktopSettings.propTypes = {
-    onClick: PropTypes.func,
+    onClick: PropTypes.func
 };
 
 export default TWDesktopSettings;

@@ -1,14 +1,14 @@
-import "web-audio-test-api";
+import 'web-audio-test-api';
 
-import React from "react";
-import configureStore from "redux-mock-store";
-import { mount } from "enzyme";
-import { LoadingState } from "../../../src/reducers/project-state";
-import VM from "scratch-vm";
+import React from 'react';
+import configureStore from 'redux-mock-store';
+import {mount} from 'enzyme';
+import {LoadingState} from '../../../src/reducers/project-state';
+import VM from 'scratch-vm';
 
-import projectSaverHOC from "../../../src/lib/project-saver-hoc.jsx";
+import projectSaverHOC from '../../../src/lib/project-saver-hoc.jsx';
 
-describe("projectSaverHOC", () => {
+describe('projectSaverHOC', () => {
     const mockStore = configureStore();
     let store;
     let vm;
@@ -18,20 +18,20 @@ describe("projectSaverHOC", () => {
             scratchGui: {
                 projectChanged: false,
                 projectState: {},
-                projectTitle: "Scratch Project",
+                projectTitle: 'Scratch Project',
                 timeout: {
-                    autoSaveTimeoutId: null,
-                },
+                    autoSaveTimeoutId: null
+                }
             },
             locales: {
-                locale: "en",
-            },
+                locale: 'en'
+            }
         });
         vm = new VM();
         jest.useFakeTimers();
     });
 
-    test("if canSave becomes true when showing a project with an id, project will be saved", () => {
+    test('if canSave becomes true when showing a project with an id, project will be saved', () => {
         const mockedUpdateProject = jest.fn();
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
@@ -51,12 +51,12 @@ describe("projectSaverHOC", () => {
         );
         mounted.setProps({
             canSave: true,
-            isShowingSaveable: true,
+            isShowingSaveable: true
         });
         expect(mockedUpdateProject).toHaveBeenCalled();
     });
 
-    test("if canSave is already true and we show a project with an id, project will NOT be saved", () => {
+    test('if canSave is already true and we show a project with an id, project will NOT be saved', () => {
         const mockedSaveProject = jest.fn();
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
@@ -76,12 +76,12 @@ describe("projectSaverHOC", () => {
         mounted.setProps({
             canSave: true,
             isShowingWithId: true,
-            loadingState: LoadingState.SHOWING_WITH_ID,
+            loadingState: LoadingState.SHOWING_WITH_ID
         });
         expect(mockedSaveProject).not.toHaveBeenCalled();
     });
 
-    test("if canSave is false when showing a project without an id, project will NOT be created", () => {
+    test('if canSave is false when showing a project without an id, project will NOT be created', () => {
         const mockedCreateProject = jest.fn();
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
@@ -100,12 +100,12 @@ describe("projectSaverHOC", () => {
         );
         mounted.setProps({
             isShowingWithoutId: true,
-            loadingState: LoadingState.SHOWING_WITHOUT_ID,
+            loadingState: LoadingState.SHOWING_WITHOUT_ID
         });
         expect(mockedCreateProject).not.toHaveBeenCalled();
     });
 
-    test("if canCreateNew becomes true when showing a project without an id, project will be created", () => {
+    test('if canCreateNew becomes true when showing a project without an id, project will be created', () => {
         const mockedCreateProject = jest.fn();
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
@@ -123,12 +123,12 @@ describe("projectSaverHOC", () => {
             />
         );
         mounted.setProps({
-            canCreateNew: true,
+            canCreateNew: true
         });
         expect(mockedCreateProject).toHaveBeenCalled();
     });
 
-    test("if canCreateNew is true and we transition to showing new project, project will be created", () => {
+    test('if canCreateNew is true and we transition to showing new project, project will be created', () => {
         const mockedCreateProject = jest.fn();
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
@@ -147,18 +147,17 @@ describe("projectSaverHOC", () => {
         );
         mounted.setProps({
             isShowingWithoutId: true,
-            loadingState: LoadingState.SHOWING_WITHOUT_ID,
+            loadingState: LoadingState.SHOWING_WITHOUT_ID
         });
         expect(mockedCreateProject).toHaveBeenCalled();
     });
 
-    test("if we enter creating new state, vm project should be requested", () => {
+    test('if we enter creating new state, vm project should be requested', () => {
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
         const mockedStoreProject = jest.fn(() => Promise.resolve());
         // The first wrapper is redux's Connect HOC
-        WrappedComponent.WrappedComponent.prototype.storeProject =
-            mockedStoreProject;
+        WrappedComponent.WrappedComponent.prototype.storeProject = mockedStoreProject;
         const mounted = mount(
             <WrappedComponent
                 canSave
@@ -169,26 +168,25 @@ describe("projectSaverHOC", () => {
                 isShowingWithoutId={false}
                 isUpdating={false}
                 loadingState={LoadingState.LOADING_VM_NEW_DEFAULT}
-                reduxProjectId={"100"}
+                reduxProjectId={'100'}
                 store={store}
                 vm={vm}
             />
         );
         mounted.setProps({
             isCreatingNew: true,
-            loadingState: LoadingState.CREATING_NEW,
+            loadingState: LoadingState.CREATING_NEW
         });
         expect(mockedStoreProject).toHaveBeenCalled();
     });
 
-    test("if we enter remixing state, vm project should be requested, and alert should show", () => {
+    test('if we enter remixing state, vm project should be requested, and alert should show', () => {
         const mockedShowCreatingRemixAlert = jest.fn();
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
         const mockedStoreProject = jest.fn(() => Promise.resolve());
         // The first wrapper is redux's Connect HOC
-        WrappedComponent.WrappedComponent.prototype.storeProject =
-            mockedStoreProject;
+        WrappedComponent.WrappedComponent.prototype.storeProject = mockedStoreProject;
         const mounted = mount(
             <WrappedComponent
                 canSave
@@ -199,7 +197,7 @@ describe("projectSaverHOC", () => {
                 isShowingWithoutId={false}
                 isUpdating={false}
                 loadingState={LoadingState.SHOWING_WITH_ID}
-                reduxProjectId={"100"}
+                reduxProjectId={'100'}
                 store={store}
                 vm={vm}
                 onShowCreatingRemixAlert={mockedShowCreatingRemixAlert}
@@ -207,20 +205,19 @@ describe("projectSaverHOC", () => {
         );
         mounted.setProps({
             isRemixing: true,
-            loadingState: LoadingState.REMIXING,
+            loadingState: LoadingState.REMIXING
         });
         expect(mockedStoreProject).toHaveBeenCalled();
         expect(mockedShowCreatingRemixAlert).toHaveBeenCalled();
     });
 
-    test("if we enter creating copy state, vm project should be requested, and alert should show", () => {
+    test('if we enter creating copy state, vm project should be requested, and alert should show', () => {
         const mockedShowCreatingCopyAlert = jest.fn();
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
         const mockedStoreProject = jest.fn(() => Promise.resolve());
         // The first wrapper is redux's Connect HOC
-        WrappedComponent.WrappedComponent.prototype.storeProject =
-            mockedStoreProject;
+        WrappedComponent.WrappedComponent.prototype.storeProject = mockedStoreProject;
         const mounted = mount(
             <WrappedComponent
                 canSave
@@ -231,7 +228,7 @@ describe("projectSaverHOC", () => {
                 isShowingWithoutId={false}
                 isUpdating={false}
                 loadingState={LoadingState.SHOWING_WITH_ID}
-                reduxProjectId={"100"}
+                reduxProjectId={'100'}
                 store={store}
                 vm={vm}
                 onShowCreatingCopyAlert={mockedShowCreatingCopyAlert}
@@ -239,19 +236,18 @@ describe("projectSaverHOC", () => {
         );
         mounted.setProps({
             isCreatingCopy: true,
-            loadingState: LoadingState.CREATING_COPY,
+            loadingState: LoadingState.CREATING_COPY
         });
         expect(mockedStoreProject).toHaveBeenCalled();
         expect(mockedShowCreatingCopyAlert).toHaveBeenCalled();
     });
 
-    test("if we enter updating/saving state, vm project should be requested", () => {
+    test('if we enter updating/saving state, vm project should be requested', () => {
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
         const mockedStoreProject = jest.fn(() => Promise.resolve());
         // The first wrapper is redux's Connect HOC
-        WrappedComponent.WrappedComponent.prototype.storeProject =
-            mockedStoreProject;
+        WrappedComponent.WrappedComponent.prototype.storeProject = mockedStoreProject;
         const mounted = mount(
             <WrappedComponent
                 canSave
@@ -260,29 +256,27 @@ describe("projectSaverHOC", () => {
                 isShowingWithoutId={false}
                 isUpdating={false}
                 loadingState={LoadingState.LOADING_VM_WITH_ID}
-                reduxProjectId={"100"}
+                reduxProjectId={'100'}
                 store={store}
                 vm={vm}
             />
         );
         mounted.setProps({
             isUpdating: true,
-            loadingState: LoadingState.MANUAL_UPDATING,
+            loadingState: LoadingState.MANUAL_UPDATING
         });
         expect(mockedStoreProject).toHaveBeenCalled();
     });
 
     test(
-        "if we are already in updating/saving state, vm project " +
-            "should NOT requested, alert should NOT show",
+        'if we are already in updating/saving state, vm project ' + 'should NOT requested, alert should NOT show',
         () => {
             const mockedShowCreatingAlert = jest.fn();
             const Component = () => <div />;
             const WrappedComponent = projectSaverHOC(Component);
             const mockedStoreProject = jest.fn(() => Promise.resolve());
             // The first wrapper is redux's Connect HOC
-            WrappedComponent.WrappedComponent.prototype.storeProject =
-                mockedStoreProject;
+            WrappedComponent.WrappedComponent.prototype.storeProject = mockedStoreProject;
             const mounted = mount(
                 <WrappedComponent
                     canSave
@@ -291,7 +285,7 @@ describe("projectSaverHOC", () => {
                     isShowingWithId={false}
                     isShowingWithoutId={false}
                     loadingState={LoadingState.MANUAL_UPDATING}
-                    reduxProjectId={"100"}
+                    reduxProjectId={'100'}
                     store={store}
                     vm={vm}
                     onShowCreatingAlert={mockedShowCreatingAlert}
@@ -300,14 +294,14 @@ describe("projectSaverHOC", () => {
             mounted.setProps({
                 isUpdating: true,
                 loadingState: LoadingState.AUTO_UPDATING,
-                reduxProjectId: "99", // random change to force a re-render and componentDidUpdate
+                reduxProjectId: '99' // random change to force a re-render and componentDidUpdate
             });
             expect(mockedStoreProject).not.toHaveBeenCalled();
             expect(mockedShowCreatingAlert).not.toHaveBeenCalled();
         }
     );
 
-    test("if user saves, inline saving alert should show", () => {
+    test('if user saves, inline saving alert should show', () => {
         const mockedShowSavingAlert = jest.fn();
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
@@ -328,12 +322,12 @@ describe("projectSaverHOC", () => {
         );
         mounted.setProps({
             isManualUpdating: true,
-            isUpdating: true,
+            isUpdating: true
         });
         expect(mockedShowSavingAlert).toHaveBeenCalled();
     });
 
-    test("if project is changed, it should autosave after interval", () => {
+    test('if project is changed, it should autosave after interval', () => {
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
         const mockedAutoUpdate = jest.fn(() => Promise.resolve());
@@ -349,14 +343,14 @@ describe("projectSaverHOC", () => {
             />
         );
         mounted.setProps({
-            projectChanged: true,
+            projectChanged: true
         });
         // Fast-forward until all timers have been executed
         jest.runAllTimers();
         expect(mockedAutoUpdate).toHaveBeenCalled();
     });
 
-    test("if project is changed several times in a row, it should only autosave once", () => {
+    test('if project is changed several times in a row, it should only autosave once', () => {
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
         const mockedAutoUpdate = jest.fn(() => Promise.resolve());
@@ -373,22 +367,22 @@ describe("projectSaverHOC", () => {
         );
         mounted.setProps({
             projectChanged: true,
-            reduxProjectTitle: "a",
+            reduxProjectTitle: 'a'
         });
         mounted.setProps({
             projectChanged: true,
-            reduxProjectTitle: "b",
+            reduxProjectTitle: 'b'
         });
         mounted.setProps({
             projectChanged: true,
-            reduxProjectTitle: "c",
+            reduxProjectTitle: 'c'
         });
         // Fast-forward until all timers have been executed
         jest.runAllTimers();
         expect(mockedAutoUpdate).toHaveBeenCalledTimes(1);
     });
 
-    test("if project is not changed, it should not autosave after interval", () => {
+    test('if project is not changed, it should not autosave after interval', () => {
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
         const mockedAutoUpdate = jest.fn(() => Promise.resolve());
@@ -404,73 +398,51 @@ describe("projectSaverHOC", () => {
             />
         );
         mounted.setProps({
-            projectChanged: false,
+            projectChanged: false
         });
         // Fast-forward until all timers have been executed
         jest.runAllTimers();
         expect(mockedAutoUpdate).not.toHaveBeenCalled();
     });
 
-    test("when starting to remix, onRemixing should be called with param true", () => {
+    test('when starting to remix, onRemixing should be called with param true', () => {
         const mockedOnRemixing = jest.fn();
         const mockedStoreProject = jest.fn(() => Promise.resolve());
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
-        WrappedComponent.WrappedComponent.prototype.storeProject =
-            mockedStoreProject;
+        WrappedComponent.WrappedComponent.prototype.storeProject = mockedStoreProject;
         const mounted = mount(
-            <WrappedComponent
-                isRemixing={false}
-                store={store}
-                vm={vm}
-                onRemixing={mockedOnRemixing}
-            />
+            <WrappedComponent isRemixing={false} store={store} vm={vm} onRemixing={mockedOnRemixing} />
         );
         mounted.setProps({
-            isRemixing: true,
+            isRemixing: true
         });
         expect(mockedOnRemixing).toHaveBeenCalledWith(true);
     });
 
-    test("when starting to remix, onRemixing should be called with param false", () => {
+    test('when starting to remix, onRemixing should be called with param false', () => {
         const mockedOnRemixing = jest.fn();
         const mockedStoreProject = jest.fn(() => Promise.resolve());
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
-        WrappedComponent.WrappedComponent.prototype.storeProject =
-            mockedStoreProject;
-        const mounted = mount(
-            <WrappedComponent
-                isRemixing
-                store={store}
-                vm={vm}
-                onRemixing={mockedOnRemixing}
-            />
-        );
+        WrappedComponent.WrappedComponent.prototype.storeProject = mockedStoreProject;
+        const mounted = mount(<WrappedComponent isRemixing store={store} vm={vm} onRemixing={mockedOnRemixing} />);
         mounted.setProps({
-            isRemixing: false,
+            isRemixing: false
         });
         expect(mockedOnRemixing).toHaveBeenCalledWith(false);
     });
 
-    test("uses onSetProjectThumbnailer on mount/unmount", () => {
+    test('uses onSetProjectThumbnailer on mount/unmount', () => {
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
         const setThumb = jest.fn();
-        const mounted = mount(
-            <WrappedComponent
-                store={store}
-                vm={vm}
-                onSetProjectThumbnailer={setThumb}
-            />
-        );
+        const mounted = mount(<WrappedComponent store={store} vm={vm} onSetProjectThumbnailer={setThumb} />);
         // Set project thumbnailer should be called on mount
         expect(setThumb).toHaveBeenCalledTimes(1);
 
         // And it should not pass that function on to wrapped element
-        expect(
-            mounted.find(Component).props().onSetProjectThumbnailer
-        ).toBeUndefined();
+        expect(mounted.find(Component).props().onSetProjectThumbnailer).toBeUndefined();
 
         // Unmounting should call it again with null
         mounted.unmount();
@@ -478,24 +450,16 @@ describe("projectSaverHOC", () => {
         expect(setThumb.mock.calls[1][0]).toBe(null);
     });
 
-    test("uses onSetProjectSaver on mount/unmount", () => {
+    test('uses onSetProjectSaver on mount/unmount', () => {
         const Component = () => <div />;
         const WrappedComponent = projectSaverHOC(Component);
         const setSaver = jest.fn();
-        const mounted = mount(
-            <WrappedComponent
-                store={store}
-                vm={vm}
-                onSetProjectSaver={setSaver}
-            />
-        );
+        const mounted = mount(<WrappedComponent store={store} vm={vm} onSetProjectSaver={setSaver} />);
         // Set project saver should be called on mount
         expect(setSaver).toHaveBeenCalledTimes(1);
 
         // And it should not pass that function on to wrapped element
-        expect(
-            mounted.find(Component).props().onSetProjectSaver
-        ).toBeUndefined();
+        expect(mounted.find(Component).props().onSetProjectSaver).toBeUndefined();
 
         // Unmounting should call it again with null
         mounted.unmount();

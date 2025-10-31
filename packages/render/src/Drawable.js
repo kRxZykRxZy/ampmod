@@ -31,12 +31,12 @@ const getLocalPosition = (drawable, vec) => {
     const v1 = vec[1];
     const m = drawable._inverseMatrix;
     // var v2 = v[2];
-    const d = (v0 * m[3]) + (v1 * m[7]) + m[15];
+    const d = v0 * m[3] + v1 * m[7] + m[15];
     // The RenderWebGL quad flips the texture's X axis. So rendered bottom
     // left is 1, 0 and the top right is 0, 1. Flip the X axis so
     // localPosition matches that transformation.
-    localPosition[0] = 0.5 - (((v0 * m[0]) + (v1 * m[4]) + m[12]) / d);
-    localPosition[1] = (((v0 * m[1]) + (v1 * m[5]) + m[13]) / d) + 0.5;
+    localPosition[0] = 0.5 - (v0 * m[0] + v1 * m[4] + m[12]) / d;
+    localPosition[1] = (v0 * m[1] + v1 * m[5] + m[13]) / d + 0.5;
     // Fix floating point issues near 0. Filed https://github.com/LLK/scratch-render/issues/688 that
     // they're happening in the first place.
     // TODO: Check if this can be removed after render pull 479 is merged
@@ -44,10 +44,13 @@ const getLocalPosition = (drawable, vec) => {
     if (Math.abs(localPosition[1]) < FLOATING_POINT_ERROR_ALLOWANCE) localPosition[1] = 0;
     // Apply texture effect transform if the localPosition is within the drawable's space,
     // and any effects are currently active.
-    if (drawable.enabledEffects !== 0 &&
-        (localPosition[0] >= 0 && localPosition[0] < 1) &&
-        (localPosition[1] >= 0 && localPosition[1] < 1)) {
-
+    if (
+        drawable.enabledEffects !== 0 &&
+        localPosition[0] >= 0 &&
+        localPosition[0] < 1 &&
+        localPosition[1] >= 0 &&
+        localPosition[1] < 1
+    ) {
         EffectTransform.transformPoint(drawable, localPosition, localPosition);
     }
     return localPosition;
@@ -61,7 +64,7 @@ class Drawable {
      * @param {!RenderWebGL} renderer - The renderer that created this Drawable
      * @constructor
      */
-    constructor (id, renderer) {
+    constructor(id, renderer) {
         /** @type {!int} */
         this._id = id;
         this._renderer = renderer;
@@ -137,14 +140,14 @@ class Drawable {
         this.interactive = true;
     }
 
-    setHighQuality (highQuality) {
+    setHighQuality(highQuality) {
         this._highQuality = highQuality;
     }
 
     /**
      * Dispose of this Drawable. Do not use it after calling this method.
      */
-    dispose () {
+    dispose() {
         // Use the setter: disconnect events
         this.skin = null;
     }
@@ -153,7 +156,7 @@ class Drawable {
      * Mark this Drawable's transform as dirty.
      * It will be recalculated next time it's needed.
      */
-    setTransformDirty () {
+    setTransformDirty() {
         this._transformDirty = true;
         this._inverseTransformDirty = true;
         this._transformedHullDirty = true;
@@ -162,21 +165,21 @@ class Drawable {
     /**
      * @returns {number} The ID for this Drawable.
      */
-    get id () {
+    get id() {
         return this._id;
     }
 
     /**
      * @returns {Skin} the current skin for this Drawable.
      */
-    get skin () {
+    get skin() {
         return this._skin;
     }
 
     /**
      * @param {Skin} newSkin - A new Skin for this Drawable.
      */
-    set skin (newSkin) {
+    set skin(newSkin) {
         if (this._skin !== newSkin) {
             this._skin = newSkin;
             this._skinWasAltered();
@@ -186,14 +189,14 @@ class Drawable {
     /**
      * @returns {Array<number>} the current scaling percentages applied to this Drawable. [100,100] is normal size.
      */
-    get scale () {
+    get scale() {
         return [this._scale[0], this._scale[1]];
     }
 
     /**
      * @returns {object.<string, *>} the shader uniforms to be used when rendering this Drawable.
      */
-    getUniforms () {
+    getUniforms() {
         if (this._transformDirty) {
             this._calculateTransform();
         }
@@ -203,7 +206,7 @@ class Drawable {
     /**
      * @returns {boolean} whether this Drawable is visible.
      */
-    getVisible () {
+    getVisible() {
         return this._visible;
     }
 
@@ -211,9 +214,8 @@ class Drawable {
      * Update the position if it is different. Marks the transform as dirty.
      * @param {Array.<number>} position A new position.
      */
-    updatePosition (position) {
-        if (this._position[0] !== position[0] ||
-            this._position[1] !== position[1]) {
+    updatePosition(position) {
+        if (this._position[0] !== position[0] || this._position[1] !== position[1]) {
             if (this._highQuality) {
                 this._position[0] = position[0];
                 this._position[1] = position[1];
@@ -230,7 +232,7 @@ class Drawable {
      * Update the direction if it is different. Marks the transform as dirty.
      * @param {number} direction A new direction.
      */
-    updateDirection (direction) {
+    updateDirection(direction) {
         if (this._direction !== direction) {
             this._direction = direction;
             this._renderer.dirty = true;
@@ -243,9 +245,8 @@ class Drawable {
      * Update the scale if it is different. Marks the transform as dirty.
      * @param {Array.<number>} scale A new scale.
      */
-    updateScale (scale) {
-        if (this._scale[0] !== scale[0] ||
-            this._scale[1] !== scale[1]) {
+    updateScale(scale) {
+        if (this._scale[0] !== scale[0] || this._scale[1] !== scale[1]) {
             this._scale[0] = scale[0];
             this._scale[1] = scale[1];
             this._renderer.dirty = true;
@@ -259,7 +260,7 @@ class Drawable {
      * Update visibility if it is different. Marks the convex hull as dirty.
      * @param {boolean} visible A new visibility state.
      */
-    updateVisible (visible) {
+    updateVisible(visible) {
         if (this._visible !== visible) {
             this._visible = visible;
             this._renderer.dirty = true;
@@ -272,7 +273,7 @@ class Drawable {
      * @param {string} effectName The name of the effect.
      * @param {number} rawValue A new effect value.
      */
-    updateEffect (effectName, rawValue) {
+    updateEffect(effectName, rawValue) {
         this._renderer.dirty = true;
         const effectInfo = ShaderManager.EFFECT_INFO[effectName];
         if (rawValue) {
@@ -292,7 +293,7 @@ class Drawable {
      * @deprecated Use specific update* methods instead.
      * @param {object.<string,*>} properties The new property values to set.
      */
-    updateProperties (properties) {
+    updateProperties(properties) {
         if ('position' in properties) {
             this.updatePosition(properties.position);
         }
@@ -318,9 +319,9 @@ class Drawable {
      * Calculate the transform to use when rendering this Drawable.
      * @private
      */
-    _calculateTransform () {
+    _calculateTransform() {
         if (this._rotationTransformDirty) {
-            const rotation = (270 - this._direction) * Math.PI / 180;
+            const rotation = ((270 - this._direction) * Math.PI) / 180;
 
             // Calling rotationZ sets the destination matrix to a rotation
             // around the Z axis setting matrix components 0, 1, 4 and 5 with
@@ -382,8 +383,8 @@ class Drawable {
             const scale1 = this._scale[1];
 
             const rotationAdjusted = this._rotationAdjusted;
-            rotationAdjusted[0] = (center0 - (skinSize0 / 2)) * scale0 / 100;
-            rotationAdjusted[1] = ((center1 - (skinSize1 / 2)) * scale1 / 100) * -1;
+            rotationAdjusted[0] = ((center0 - skinSize0 / 2) * scale0) / 100;
+            rotationAdjusted[1] = (((center1 - skinSize1 / 2) * scale1) / 100) * -1;
             // rotationAdjusted[2] = 0;
 
             this._rotationCenterDirty = false;
@@ -402,8 +403,8 @@ class Drawable {
             // properties called twice.
             const skinSize = this.skin.size;
             const scaledSize = this._skinScale;
-            scaledSize[0] = skinSize[0] * this._scale[0] / 100;
-            scaledSize[1] = skinSize[1] * this._scale[1] / 100;
+            scaledSize[0] = (skinSize[0] * this._scale[0]) / 100;
+            scaledSize[1] = (skinSize[1] * this._scale[1]) / 100;
             // scaledSize[2] = 0;
 
             this._skinScaleDirty = false;
@@ -450,8 +451,8 @@ class Drawable {
         // modelMatrix[9] = 0;
         // modelMatrix[10] = 1;
         // modelMatrix[11] = 0;
-        modelMatrix[12] = (rotation00 * adjusted0) + (rotation10 * adjusted1) + position0;
-        modelMatrix[13] = (rotation01 * adjusted0) + (rotation11 * adjusted1) + position1;
+        modelMatrix[12] = rotation00 * adjusted0 + rotation10 * adjusted1 + position0;
+        modelMatrix[13] = rotation01 * adjusted0 + rotation11 * adjusted1 + position1;
         // modelMatrix[14] = 0;
         // modelMatrix[15] = 1;
 
@@ -462,7 +463,7 @@ class Drawable {
      * Whether the Drawable needs convex hull points provided by the renderer.
      * @return {boolean} True when no convex hull known, or it's dirty.
      */
-    needsConvexHullPoints () {
+    needsConvexHullPoints() {
         return !this._convexHullPoints || this._convexHullDirty || this._convexHullPoints.length === 0;
     }
 
@@ -470,7 +471,7 @@ class Drawable {
      * Set the convex hull to be dirty.
      * Do this whenever the Drawable's shape has possibly changed.
      */
-    setConvexHullDirty () {
+    setConvexHullDirty() {
         this._convexHullDirty = true;
     }
 
@@ -478,7 +479,7 @@ class Drawable {
      * Set the convex hull points for the Drawable.
      * @param {Array<Array<number>>} points Convex hull points, as [[x, y], ...]
      */
-    setConvexHullPoints (points) {
+    setConvexHullPoints(points) {
         this._convexHullPoints = points;
         this._convexHullDirty = false;
 
@@ -509,15 +510,15 @@ class Drawable {
     // This allows several checks to be moved from the `isTouching` function to `updateCPURenderAttributes`.
 
     // eslint-disable-next-line no-unused-vars
-    _isTouchingNever (vec) {
+    _isTouchingNever(vec) {
         return false;
     }
 
-    _isTouchingNearest (vec) {
+    _isTouchingNearest(vec) {
         return this.skin.isTouchingNearest(getLocalPosition(this, vec));
     }
 
-    _isTouchingLinear (vec) {
+    _isTouchingLinear(vec) {
         return this.skin.isTouchingLinear(getLocalPosition(this, vec));
     }
 
@@ -529,7 +530,7 @@ class Drawable {
      * @param {?Rectangle} result optional destination for bounds calculation
      * @return {!Rectangle} Bounds for a tight box around the Drawable.
      */
-    getBounds (result) {
+    getBounds(result) {
         if (this.needsConvexHullPoints()) {
             throw new Error('Needs updated convex hull points before bounds calculation.');
         }
@@ -550,7 +551,7 @@ class Drawable {
      * @param {?Rectangle} result optional destination for bounds calculation
      * @return {!Rectangle} Bounds for a tight box around a slice of the Drawable.
      */
-    getBoundsForBubble (result) {
+    getBoundsForBubble(result) {
         if (this.needsConvexHullPoints()) {
             throw new Error('Needs updated convex hull points before bubble bounds calculation.');
         }
@@ -559,7 +560,10 @@ class Drawable {
         }
         const slice = 8; // px, how tall the top slice to measure should be.
         const transformedHullPoints = this._getTransformedHullPoints();
-        const maxY = Math.max.apply(null, transformedHullPoints.map(p => p[1]));
+        const maxY = Math.max.apply(
+            null,
+            transformedHullPoints.map(p => p[1])
+        );
         const filteredHullPoints = transformedHullPoints.filter(p => p[1] > maxY - slice);
         // Search through filtered points to generate box on axes.
         result = result || new Rectangle();
@@ -577,7 +581,7 @@ class Drawable {
      * @param {?Rectangle} result optional destination for bounds calculation
      * @return {!Rectangle} Rough axis-aligned bounding box for Drawable.
      */
-    getAABB (result) {
+    getAABB(result) {
         if (this._transformDirty) {
             this._calculateTransform();
         }
@@ -594,7 +598,7 @@ class Drawable {
      * @param {?Rectangle} result optional destination for bounds calculation
      * @return {!Rectangle} Bounds for the Drawable.
      */
-    getFastBounds (result) {
+    getFastBounds(result) {
         if (!this.needsConvexHullPoints()) {
             return this.getBounds(result);
         }
@@ -608,7 +612,7 @@ class Drawable {
      * @return {!Array.<!Array.number>} Array of glPoints which are Array<x, y>
      * @private
      */
-    _getTransformedHullPoints () {
+    _getTransformedHullPoints() {
         if (!this._transformedHullDirty) {
             return this._transformedHullPoints;
         }
@@ -622,8 +626,8 @@ class Drawable {
             const point = this._convexHullPoints[i];
             const dstPoint = this._transformedHullPoints[i];
 
-            dstPoint[0] = 0.5 + (-point[0] / skinSize[0]) - halfXPixel;
-            dstPoint[1] = (point[1] / skinSize[1]) - 0.5 + halfYPixel;
+            dstPoint[0] = 0.5 + -point[0] / skinSize[0] - halfXPixel;
+            dstPoint[1] = point[1] / skinSize[1] - 0.5 + halfYPixel;
             twgl.m4.transformPoint(tm, dstPoint, dstPoint);
         }
 
@@ -636,7 +640,7 @@ class Drawable {
      * Update the transform matrix and calculate it's inverse for collision
      * and local texture position purposes.
      */
-    updateMatrix () {
+    updateMatrix() {
         if (this._transformDirty) {
             this._calculateTransform();
         }
@@ -656,7 +660,7 @@ class Drawable {
     /**
      * Update everything necessary to render this drawable on the CPU.
      */
-    updateCPURenderAttributes () {
+    updateCPURenderAttributes() {
         this.updateMatrix();
         // CPU rendering always occurs at the "native" size, so no need to scale up this._scale
         if (this.skin) {
@@ -677,7 +681,7 @@ class Drawable {
     /**
      * Respond to an internal change in the current Skin.
      */
-    _skinWasAltered () {
+    _skinWasAltered() {
         this._renderer.dirty = true;
         this._rotationCenterDirty = true;
         this._skinScaleDirty = true;
@@ -691,7 +695,7 @@ class Drawable {
      * @param {int} id The ID to convert.
      * @returns {Array<number>} An array of [r,g,b,a], each component in the range [0,1].
      */
-    static color4fFromID (id) {
+    static color4fFromID(id) {
         id -= RenderConstants.ID_NONE;
         const r = ((id >> 0) & 255) / 255.0;
         const g = ((id >> 8) & 255) / 255.0;
@@ -708,7 +712,7 @@ class Drawable {
      * @param {int} b The blue value of the color, in the range [0,255].
      * @returns {int} The ID represented by that color.
      */
-    static color3bToID (r, g, b) {
+    static color3bToID(r, g, b) {
         let id;
         id = (r & 255) << 0;
         id |= (g & 255) << 8;
@@ -726,10 +730,9 @@ class Drawable {
      * @param {number} [effectMask] A bitmask for which effects to use. Optional.
      * @returns {Uint8ClampedArray} The dst object filled with the color4b
      */
-    static sampleColor4b (vec, drawable, dst, effectMask) {
+    static sampleColor4b(vec, drawable, dst, effectMask) {
         const localPosition = getLocalPosition(drawable, vec);
-        if (localPosition[0] < 0 || localPosition[1] < 0 ||
-            localPosition[0] > 1 || localPosition[1] > 1) {
+        if (localPosition[0] < 0 || localPosition[1] < 0 || localPosition[0] > 1 || localPosition[1] > 1) {
             dst[0] = 0;
             dst[1] = 0;
             dst[2] = 0;
@@ -738,9 +741,9 @@ class Drawable {
         }
 
         const textColor =
-        // commenting out to only use nearest for now
-        // drawable.skin.useNearest(drawable._scale, drawable) ?
-             drawable.skin._silhouette.colorAtNearest(localPosition, dst);
+            // commenting out to only use nearest for now
+            // drawable.skin.useNearest(drawable._scale, drawable) ?
+            drawable.skin._silhouette.colorAtNearest(localPosition, dst);
         // : drawable.skin._silhouette.colorAtLinear(localPosition, dst);
 
         if (drawable.enabledEffects === 0) return textColor;

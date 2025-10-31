@@ -1,19 +1,14 @@
-import PropTypes from "prop-types";
-import React from "react";
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import locales from "@turbowarp/scratch-l10n";
-import styles from "./language-selector.css";
+import locales from '@turbowarp/scratch-l10n';
+import styles from './language-selector.css';
 
 // supported languages to exclude from the menu, but allow as a URL option
 const ignore = [];
 
-const LanguageSelector = ({ currentLocale, label, onChange }) => (
-    <select
-        aria-label={label}
-        className={styles.languageSelect}
-        value={currentLocale}
-        onChange={onChange}
-    >
+const LanguageSelector = ({currentLocale, label, onChange}) => (
+    <select aria-label={label} className={styles.languageSelect} value={currentLocale} onChange={onChange}>
         {Object.keys(locales)
             .filter(l => !ignore.includes(l))
             .map(locale => (
@@ -27,7 +22,7 @@ const LanguageSelector = ({ currentLocale, label, onChange }) => (
 LanguageSelector.propTypes = {
     currentLocale: PropTypes.string,
     label: PropTypes.string,
-    onChange: PropTypes.func,
+    onChange: PropTypes.func
 };
 
 export default LanguageSelector;

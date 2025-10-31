@@ -1,15 +1,15 @@
-import PropTypes from "prop-types";
-import { FormattedMessage } from "react-intl";
-import { connect } from "react-redux";
+import PropTypes from 'prop-types';
+import {FormattedMessage} from 'react-intl';
+import {connect} from 'react-redux';
 
-import { MenuItem } from "../menu/menu.jsx";
-import { closeSettingsMenu } from "../../reducers/menus.js";
-import styles from "./settings-menu.css";
-import { notScratchDesktop } from "../../lib/isScratchDesktop.js";
+import {MenuItem} from '../menu/menu.jsx';
+import {closeSettingsMenu} from '../../reducers/menus.js';
+import styles from './settings-menu.css';
+import {notScratchDesktop} from '../../lib/isScratchDesktop.js';
 
 let showPwaButton = false;
 let deferredPrompt;
-window.addEventListener("beforeinstallprompt", e => {
+window.addEventListener('beforeinstallprompt', e => {
     e.preventDefault();
     deferredPrompt = e;
     showPwaButton = true;

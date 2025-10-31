@@ -2,13 +2,13 @@ export default class MockAudioEffects {
     static get effectTypes() {
         // @todo can this be imported from the real file?
         return {
-            ROBOT: "robot",
-            REVERSE: "reverse",
-            LOUDER: "higher",
-            SOFTER: "lower",
-            FASTER: "faster",
-            SLOWER: "slower",
-            ECHO: "echo",
+            ROBOT: 'robot',
+            REVERSE: 'reverse',
+            LOUDER: 'higher',
+            SOFTER: 'lower',
+            FASTER: 'faster',
+            SLOWER: 'slower',
+            ECHO: 'echo'
         };
     }
     constructor(buffer, name) {

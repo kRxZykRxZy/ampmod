@@ -1,10 +1,7 @@
-const {
-    parseVectorMetadata,
-    exportCostume,
-} = require("../../src/serialization/tw-costume-import-export");
-const { test } = require("tap");
+const {parseVectorMetadata, exportCostume} = require('../../src/serialization/tw-costume-import-export');
+const {test} = require('tap');
 
-test("parseVectorMetadata", t => {
+test('parseVectorMetadata', t => {
     /* eslint-disable max-len */
     t.same(
         parseVectorMetadata(
@@ -53,55 +50,49 @@ test("parseVectorMetadata", t => {
     t.end();
 });
 
-test("exportCostume", t => {
+test('exportCostume', t => {
     // PNG and JPG costumes are exported as-is
     t.same(
         exportCostume({
-            dataFormat: "png",
+            dataFormat: 'png',
             asset: {
-                data: new Uint8Array([10, 20, 30]),
-            },
+                data: new Uint8Array([10, 20, 30])
+            }
         }),
         new Uint8Array([10, 20, 30])
     );
     t.same(
         exportCostume({
-            dataFormat: "jpg",
+            dataFormat: 'jpg',
             asset: {
-                data: new Uint8Array([40, 50, 60]),
-            },
+                data: new Uint8Array([40, 50, 60])
+            }
         }),
         new Uint8Array([40, 50, 60])
     );
 
     t.same(
         exportCostume({
-            dataFormat: "svg",
+            dataFormat: 'svg',
             asset: {
-                data: new TextEncoder().encode("<svg></svg>"),
+                data: new TextEncoder().encode('<svg></svg>')
             },
             rotationCenterX: 89.339393,
-            rotationCenterY: -3.7373,
+            rotationCenterY: -3.7373
         }),
-        new TextEncoder().encode(
-            "<svg></svg><!--rotationCenter:89.339393:-3.7373-->"
-        )
+        new TextEncoder().encode('<svg></svg><!--rotationCenter:89.339393:-3.7373-->')
     );
 
     t.same(
         exportCostume({
-            dataFormat: "svg",
+            dataFormat: 'svg',
             asset: {
-                data: new TextEncoder().encode(
-                    "<svg></svg><!--rotationCenter:78.23:-9-->"
-                ),
+                data: new TextEncoder().encode('<svg></svg><!--rotationCenter:78.23:-9-->')
             },
             rotationCenterX: 89.339393,
-            rotationCenterY: -3.7373,
+            rotationCenterY: -3.7373
         }),
-        new TextEncoder().encode(
-            "<svg></svg><!--rotationCenter:89.339393:-3.7373-->"
-        )
+        new TextEncoder().encode('<svg></svg><!--rotationCenter:89.339393:-3.7373-->')
     );
 
     t.end();

@@ -1,16 +1,16 @@
-import blockToImage from "./block-to-image";
-import createThumbnail from "./thumbnail";
-import { BLOCKS_DEFAULT_SCALE } from "../layout-constants";
-import { Base64 } from "js-base64";
+import blockToImage from './block-to-image';
+import createThumbnail from './thumbnail';
+import {BLOCKS_DEFAULT_SCALE} from '../layout-constants';
+import {Base64} from 'js-base64';
 
-const codePayload = ({ blockObjects, topBlockId }) => {
+const codePayload = ({blockObjects, topBlockId}) => {
     const payload = {
-        type: "script", // Needs to match backpack-server type name
-        name: "code", // All code currently gets the same name
-        mime: "application/json",
+        type: 'script', // Needs to match backpack-server type name
+        name: 'code', // All code currently gets the same name
+        mime: 'application/json',
         // Backpack expects a base64 encoded string to store. Cannot use btoa because
         // the code can contain characters outside the 0-255 code-point range supported by btoa
-        body: Base64.encode(JSON.stringify(blockObjects)), // Base64 encode the json
+        body: Base64.encode(JSON.stringify(blockObjects)) // Base64 encode the json
     };
 
     return blockToImage(topBlockId)
@@ -29,10 +29,10 @@ const findTopBlock = payload => {
 const placeInViewport = (payload, workspaceMetrics, isRtl) => {
     const topBlock = findTopBlock(payload);
     if (topBlock) {
-        const { scrollX, scrollY, scale } = workspaceMetrics || {
+        const {scrollX, scrollY, scale} = workspaceMetrics || {
             scrollX: 0,
             scrollY: 0,
-            scale: BLOCKS_DEFAULT_SCALE,
+            scale: BLOCKS_DEFAULT_SCALE
         };
 
         const posY = -scrollY + 30;
@@ -50,4 +50,4 @@ const placeInViewport = (payload, workspaceMetrics, isRtl) => {
     return payload;
 };
 
-export { codePayload as default, findTopBlock, placeInViewport };
+export {codePayload as default, findTopBlock, placeInViewport};

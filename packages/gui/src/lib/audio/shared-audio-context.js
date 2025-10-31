@@ -1,25 +1,20 @@
-import StartAudioContext from "@turbowarp/startaudiocontext";
-import log from "../log";
+import StartAudioContext from '@turbowarp/startaudiocontext';
+import log from '../log';
 
 let AUDIO_CONTEXT;
 
 /**
  * AudioContext can be initialized only when user interaction event happens
  */
-const event =
-    typeof document.ontouchstart === "undefined" ? "mousedown" : "touchstart";
+const event = typeof document.ontouchstart === 'undefined' ? 'mousedown' : 'touchstart';
 const initAudioContext = () => {
     document.removeEventListener(event, initAudioContext);
 
     try {
-        AUDIO_CONTEXT = new (window.AudioContext ||
-            window.webkitAudioContext)();
+        AUDIO_CONTEXT = new (window.AudioContext || window.webkitAudioContext)();
         StartAudioContext(AUDIO_CONTEXT);
     } catch (e) {
-        log.error(
-            "could not create shared audio context; sound-related features will not be available",
-            e
-        );
+        log.error('could not create shared audio context; sound-related features will not be available', e);
     }
 };
 document.addEventListener(event, initAudioContext);

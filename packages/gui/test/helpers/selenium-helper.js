@@ -1,12 +1,12 @@
 jest.setTimeout(30000); // eslint-disable-line no-undef
 
-import bindAll from "lodash.bindall";
-import "chromedriver"; // register path
-import webdriver from "selenium-webdriver";
+import bindAll from 'lodash.bindall';
+import 'chromedriver'; // register path
+import webdriver from 'selenium-webdriver';
 
-const { Button, By, until } = webdriver;
+const {Button, By, until} = webdriver;
 
-const USE_HEADLESS = process.env.USE_HEADLESS !== "no";
+const USE_HEADLESS = process.env.USE_HEADLESS !== 'no';
 
 // The main reason for this timeout is so that we can control the timeout message and report details;
 // if we hit the Jasmine default timeout then we get a terse message that we can't control.
@@ -31,18 +31,16 @@ const enhanceError = async (outerError, cause, driver) => {
         outerError.cause = cause;
     }
     if (cause && cause.message) {
-        outerError.message += `\n${["Cause:", ...cause.message.split("\n")].join("\n    ")}`;
+        outerError.message += `\n${['Cause:', ...cause.message.split('\n')].join('\n    ')}`;
     } else {
-        outerError.message += "\nCause: unknown";
+        outerError.message += '\nCause: unknown';
     }
     if (driver) {
         const url = await driver.getCurrentUrl();
         const title = await driver.getTitle();
         const pageSource = await driver.getPageSource();
-        const browserLogEntries = await driver.manage().logs().get("browser");
-        const browserLogText = browserLogEntries
-            .map(entry => entry.message)
-            .join("\n");
+        const browserLogEntries = await driver.manage().logs().get('browser');
+        const browserLogText = browserLogEntries.map(entry => entry.message).join('\n');
         outerError.message += `\nBrowser URL: ${url}`;
         outerError.message += `\nBrowser title: ${title}`;
         outerError.message += `\nBrowser logs:\n*****\n${browserLogText}\n*****\n`;
@@ -54,20 +52,20 @@ const enhanceError = async (outerError, cause, driver) => {
 class SeleniumHelper {
     constructor() {
         bindAll(this, [
-            "clickText",
-            "clickButton",
-            "clickXpath",
-            "clickBlocksCategory",
-            "elementIsVisible",
-            "findByText",
-            "textToXpath",
-            "findByXpath",
-            "textExists",
-            "getDriver",
-            "getSauceDriver",
-            "getLogs",
-            "loadUri",
-            "rightClickText",
+            'clickText',
+            'clickButton',
+            'clickXpath',
+            'clickBlocksCategory',
+            'elementIsVisible',
+            'findByText',
+            'textToXpath',
+            'findByXpath',
+            'textExists',
+            'getDriver',
+            'getSauceDriver',
+            'getLogs',
+            'loadUri',
+            'rightClickText'
         ]);
 
         this.Key = webdriver.Key; // map Key constants, for sending special keys
@@ -83,10 +81,7 @@ class SeleniumHelper {
      * @returns {Promise<void>} A promise that resolves when the title is set.
      */
     async setTitle(title) {
-        await this.driver.executeScript(
-            `document.title = arguments[0];`,
-            title
-        );
+        await this.driver.executeScript(`document.title = arguments[0];`, title);
     }
 
     /**
@@ -95,13 +90,10 @@ class SeleniumHelper {
      * @returns {Promise<void>} A promise that resolves when the element is visible.
      */
     async elementIsVisible(element) {
-        const outerError = new Error("elementIsVisible failed");
+        const outerError = new Error('elementIsVisible failed');
         try {
             await this.setTitle(`elementIsVisible ${await element.getId()}`);
-            await this.driver.wait(
-                until.elementIsVisible(element),
-                DEFAULT_TIMEOUT_MILLISECONDS
-            );
+            await this.driver.wait(until.elementIsVisible(element), DEFAULT_TIMEOUT_MILLISECONDS);
         } catch (cause) {
             throw await enhanceError(outerError, cause, this.driver);
         }
@@ -121,7 +113,7 @@ class SeleniumHelper {
             spriteTile: '*[starts-with(@class,"react-contextmenu-wrapper")]',
             menuBar: '*[contains(@class,"menu-bar_menu-bar_")]',
             monitors: '*[starts-with(@class,"stage_monitor-wrapper")]',
-            contextMenu: '*[starts-with(@class,"react-contextmenu")]',
+            contextMenu: '*[starts-with(@class,"react-contextmenu")]'
         };
     }
 
@@ -133,24 +125,21 @@ class SeleniumHelper {
         const chromeCapabilities = webdriver.Capabilities.chrome();
         const args = [];
         if (USE_HEADLESS) {
-            args.push("--headless");
+            args.push('--headless');
         }
 
         // Stub getUserMedia to always not allow access
-        args.push("--use-fake-ui-for-media-stream=deny");
+        args.push('--use-fake-ui-for-media-stream=deny');
 
         // Suppress complaints about AudioContext starting before a user gesture
         // This is especially important on Windows, where Selenium directs JS console messages to stdout
-        args.push("--autoplay-policy=no-user-gesture-required");
+        args.push('--autoplay-policy=no-user-gesture-required');
 
-        chromeCapabilities.set("chromeOptions", { args });
+        chromeCapabilities.set('chromeOptions', {args});
         chromeCapabilities.setLoggingPrefs({
-            performance: "ALL",
+            performance: 'ALL'
         });
-        this.driver = new webdriver.Builder()
-            .forBrowser("chrome")
-            .withCapabilities(chromeCapabilities)
-            .build();
+        this.driver = new webdriver.Builder().forBrowser('chrome').withCapabilities(chromeCapabilities).build();
         return this.driver;
     }
 
@@ -171,11 +160,9 @@ class SeleniumHelper {
                 platform: configs.platform,
                 version: configs.version,
                 username: username,
-                accessKey: accessKey,
+                accessKey: accessKey
             })
-            .usingServer(
-                `http://${username}:${accessKey}@ondemand.saucelabs.com:80/wd/hub`
-            )
+            .usingServer(`http://${username}:${accessKey}@ondemand.saucelabs.com:80/wd/hub`)
             .build();
         return this.driver;
     }
@@ -186,15 +173,10 @@ class SeleniumHelper {
      * @returns {Promise<webdriver.WebElement>} A promise that resolves to the element.
      */
     async findByXpath(xpath) {
-        const outerError = new Error(
-            `findByXpath failed with arguments:\n\txpath: ${xpath}`
-        );
+        const outerError = new Error(`findByXpath failed with arguments:\n\txpath: ${xpath}`);
         try {
             await this.setTitle(`findByXpath ${xpath}`);
-            const el = await this.driver.wait(
-                until.elementLocated(By.xpath(xpath)),
-                DEFAULT_TIMEOUT_MILLISECONDS
-            );
+            const el = await this.driver.wait(until.elementLocated(By.xpath(xpath)), DEFAULT_TIMEOUT_MILLISECONDS);
             // await this.driver.wait(() => el.isDisplayed(), DEFAULT_TIMEOUT_MILLISECONDS);
             return el;
         } catch (cause) {
@@ -209,7 +191,7 @@ class SeleniumHelper {
      * @returns {string} The xpath.
      */
     textToXpath(text, scope) {
-        return `//body//${scope || "*"}//*[contains(text(), '${text}')]`;
+        return `//body//${scope || '*'}//*[contains(text(), '${text}')]`;
     }
 
     /**
@@ -229,14 +211,10 @@ class SeleniumHelper {
      * @returns {Promise<boolean>} A promise that resolves to true if the element exists.
      */
     async textExists(text, scope) {
-        const outerError = new Error(
-            `textExists failed with arguments:\n\ttext: ${text}\n\tscope: ${scope}`
-        );
+        const outerError = new Error(`textExists failed with arguments:\n\ttext: ${text}\n\tscope: ${scope}`);
         try {
             await this.setTitle(`textExists ${text}`);
-            const elements = await this.driver.findElements(
-                By.xpath(this.textToXpath(text, scope))
-            );
+            const elements = await this.driver.findElements(By.xpath(this.textToXpath(text, scope)));
             return elements.length > 0;
         } catch (cause) {
             throw await enhanceError(outerError, cause, this.driver);
@@ -249,26 +227,16 @@ class SeleniumHelper {
      * @returns {Promise} A promise that resolves when the URI is loaded.
      */
     async loadUri(uri) {
-        const outerError = new Error(
-            `loadUri failed with arguments:\n\turi: ${uri}`
-        );
+        const outerError = new Error(`loadUri failed with arguments:\n\turi: ${uri}`);
         try {
             await this.setTitle(`loadUri ${uri}`);
             const WINDOW_WIDTH = 1024;
             const WINDOW_HEIGHT = 768;
             await this.driver.get(`file://${uri}`);
-            await this.driver.executeScript(
-                "window.onbeforeunload = undefined;"
-            );
-            await this.driver
-                .manage()
-                .window()
-                .setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+            await this.driver.executeScript('window.onbeforeunload = undefined;');
+            await this.driver.manage().window().setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
             await this.driver.wait(
-                async () =>
-                    (await this.driver.executeScript(
-                        "return document.readyState;"
-                    )) === "complete",
+                async () => (await this.driver.executeScript('return document.readyState;')) === 'complete',
                 DEFAULT_TIMEOUT_MILLISECONDS
             );
         } catch (cause) {
@@ -282,9 +250,7 @@ class SeleniumHelper {
      * @returns {Promise<void>} A promise that resolves when the element is clicked.
      */
     async clickXpath(xpath) {
-        const outerError = new Error(
-            `clickXpath failed with arguments:\n\txpath: ${xpath}`
-        );
+        const outerError = new Error(`clickXpath failed with arguments:\n\txpath: ${xpath}`);
         try {
             await this.setTitle(`clickXpath ${xpath}`);
             const el = await this.findByXpath(xpath);
@@ -301,9 +267,7 @@ class SeleniumHelper {
      * @returns {Promise<void>} A promise that resolves when the element is clicked.
      */
     async clickText(text, scope) {
-        const outerError = new Error(
-            `clickText failed with arguments:\n\ttext: ${text}\n\tscope: ${scope}`
-        );
+        const outerError = new Error(`clickText failed with arguments:\n\ttext: ${text}\n\tscope: ${scope}`);
         try {
             await this.setTitle(`clickText ${text}`);
             const el = await this.findByText(text, scope);
@@ -319,9 +283,7 @@ class SeleniumHelper {
      * @returns {Promise<void>} A promise that resolves when the category is clicked.
      */
     async clickBlocksCategory(categoryText) {
-        const outerError = new Error(
-            `clickBlocksCategory failed with arguments:\n\tcategoryText: ${categoryText}`
-        );
+        const outerError = new Error(`clickBlocksCategory failed with arguments:\n\tcategoryText: ${categoryText}`);
         // The toolbox is destroyed and recreated several times, so avoid clicking on a nonexistent element and erroring
         // out. First we wait for the block pane itself to appear, then wait 100ms for the toolbox to finish refreshing,
         // then finally click the toolbox text.
@@ -329,10 +291,7 @@ class SeleniumHelper {
             await this.setTitle(`clickBlocksCategory ${categoryText}`);
             await this.findByXpath('//div[contains(@class, "blocks_blocks")]');
             await this.driver.sleep(100);
-            await this.clickText(
-                categoryText,
-                'div[contains(@class, "blocks_blocks")]'
-            );
+            await this.clickText(categoryText, 'div[contains(@class, "blocks_blocks")]');
             await this.driver.sleep(500); // Wait for scroll to finish
         } catch (cause) {
             throw await enhanceError(outerError, cause);
@@ -346,9 +305,7 @@ class SeleniumHelper {
      * @returns {Promise<void>} A promise that resolves when the element is right clicked.
      */
     async rightClickText(text, scope) {
-        const outerError = new Error(
-            `rightClickText failed with arguments:\n\ttext: ${text}\n\tscope: ${scope}`
-        );
+        const outerError = new Error(`rightClickText failed with arguments:\n\ttext: ${text}\n\tscope: ${scope}`);
         try {
             await this.setTitle(`rightClickText ${text}`);
             const el = await this.findByText(text, scope);
@@ -364,9 +321,7 @@ class SeleniumHelper {
      * @returns {Promise<void>} A promise that resolves when the button is clicked.
      */
     async clickButton(text) {
-        const outerError = new Error(
-            `clickButton failed with arguments:\n\ttext: ${text}`
-        );
+        const outerError = new Error(`clickButton failed with arguments:\n\ttext: ${text}`);
         try {
             await this.setTitle(`clickButton ${text}`);
             await this.clickXpath(`//button//*[contains(text(), '${text}')]`);
@@ -381,24 +336,20 @@ class SeleniumHelper {
      * @returns {Promise<Array.<webdriver.logging.Entry>>} A promise that resolves to the log entries.
      */
     async getLogs(whitelist) {
-        const outerError = new Error(
-            `getLogs failed with arguments:\n\twhitelist: ${whitelist}`
-        );
+        const outerError = new Error(`getLogs failed with arguments:\n\twhitelist: ${whitelist}`);
         try {
             await this.setTitle(`getLogs ${whitelist}`);
             if (!whitelist) {
                 // Default whitelist
-                whitelist = [
-                    "The play() request was interrupted by a call to pause()",
-                ];
+                whitelist = ['The play() request was interrupted by a call to pause()'];
             }
-            const entries = await this.driver.manage().logs().get("browser");
+            const entries = await this.driver.manage().logs().get('browser');
             return entries.filter(entry => {
                 const message = entry.message;
                 for (const element of whitelist) {
                     if (message.indexOf(element) !== -1) {
                         return false;
-                    } else if (entry.level !== "SEVERE") {
+                    } else if (entry.level !== 'SEVERE') {
                         // WARNING: this doesn't do what it looks like it does!
                         return false;
                     }

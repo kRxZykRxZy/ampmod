@@ -1,12 +1,12 @@
-import paper from "@turbowarp/paper";
-import Modes from "../../lib/modes";
-import { styleShape } from "../../helper/style-path";
-import { commitRectToBitmap } from "../bitmap";
-import { getRaster } from "../layer";
-import { clearSelection } from "../selection";
-import { getSquareDimensions } from "../math";
-import BoundingBoxTool from "../selection-tools/bounding-box-tool";
-import NudgeTool from "../selection-tools/nudge-tool";
+import paper from '@turbowarp/paper';
+import Modes from '../../lib/modes';
+import {styleShape} from '../../helper/style-path';
+import {commitRectToBitmap} from '../bitmap';
+import {getRaster} from '../layer';
+import {clearSelection} from '../selection';
+import {getSquareDimensions} from '../math';
+import BoundingBoxTool from '../selection-tools/bounding-box-tool';
+import NudgeTool from '../selection-tools/nudge-tool';
 
 /**
  * Tool for drawing rects.
@@ -21,12 +21,7 @@ class RectTool extends paper.Tool {
      * @param {function} setCursor Callback to set the visible mouse cursor
      * @param {!function} onUpdateImage A callback to call when the image visibly changes
      */
-    constructor(
-        setSelectedItems,
-        clearSelectedItems,
-        setCursor,
-        onUpdateImage
-    ) {
+    constructor(setSelectedItems, clearSelectedItems, setCursor, onUpdateImage) {
         super();
         this.setSelectedItems = setSelectedItems;
         this.clearSelectedItems = clearSelectedItems;
@@ -38,11 +33,7 @@ class RectTool extends paper.Tool {
             setCursor,
             onUpdateImage
         );
-        const nudgeTool = new NudgeTool(
-            Modes.BIT_RECT,
-            this.boundingBoxTool,
-            onUpdateImage
-        );
+        const nudgeTool = new NudgeTool(Modes.BIT_RECT, this.boundingBoxTool, onUpdateImage);
 
         // We have to set these functions instead of just declaring them because
         // paper.js tools hook up the listeners in the setter functions.
@@ -65,11 +56,9 @@ class RectTool extends paper.Tool {
             fill: true,
             guide: false,
             match: hitResult =>
-                (hitResult.item.data &&
-                    (hitResult.item.data.isScaleHandle ||
-                        hitResult.item.data.isRotHandle)) ||
+                (hitResult.item.data && (hitResult.item.data.isScaleHandle || hitResult.item.data.isRotHandle)) ||
                 hitResult.item.selected, // Allow hits on bounding box and selected only
-            tolerance: RectTool.TOLERANCE / paper.view.zoom,
+            tolerance: RectTool.TOLERANCE / paper.view.zoom
         };
     }
     /**
@@ -82,14 +71,12 @@ class RectTool extends paper.Tool {
             (!this.rect || !this.rect.isInserted()) &&
             selectedItems &&
             selectedItems.length === 1 &&
-            selectedItems[0].shape === "rectangle"
+            selectedItems[0].shape === 'rectangle'
         ) {
             // Infer that an undo occurred and get back the active rect
             this.rect = selectedItems[0];
             if (this.rect.data.zoomLevel !== paper.view.zoom) {
-                this.rect.strokeWidth =
-                    (this.rect.strokeWidth / this.rect.data.zoomLevel) *
-                    paper.view.zoom;
+                this.rect.strokeWidth = (this.rect.strokeWidth / this.rect.data.zoomLevel) * paper.view.zoom;
                 this.rect.data.zoomLevel = paper.view.zoom;
                 this.thickness = this.rect.strokeWidth;
             }
@@ -103,7 +90,7 @@ class RectTool extends paper.Tool {
         styleShape(this.rect, {
             fillColor: this.filled ? this.color : null,
             strokeColor: this.filled ? null : this.color,
-            strokeWidth: this.filled ? 0 : this.thickness,
+            strokeWidth: this.filled ? 0 : this.thickness
         });
     }
     setColor(color) {
@@ -159,19 +146,16 @@ class RectTool extends paper.Tool {
 
         const dimensions = event.point.subtract(event.downPoint);
         const baseRect = new paper.Rectangle(event.downPoint, event.point);
-        const squareDimensions = getSquareDimensions(
-            event.downPoint,
-            event.point
-        );
+        const squareDimensions = getSquareDimensions(event.downPoint, event.point);
         if (event.modifiers.shift) {
             baseRect.size = squareDimensions.size.abs();
         }
 
         if (this.rect) this.rect.remove();
         this.rect = new paper.Shape.Rectangle(baseRect);
-        this.rect.strokeJoin = "round";
+        this.rect.strokeJoin = 'round';
         this.rect.strokeScaling = false;
-        this.rect.data = { zoomLevel: paper.view.zoom };
+        this.rect.data = {zoomLevel: paper.view.zoom};
         this.styleRect();
 
         if (event.modifiers.alt) {
@@ -195,19 +179,13 @@ class RectTool extends paper.Tool {
         }
 
         if (this.rect) {
-            if (
-                Math.abs(this.rect.size.width * this.rect.size.height) <
-                RectTool.TOLERANCE / paper.view.zoom
-            ) {
+            if (Math.abs(this.rect.size.width * this.rect.size.height) < RectTool.TOLERANCE / paper.view.zoom) {
                 // Tiny shape created unintentionally?
                 this.rect.remove();
                 this.rect = null;
             } else {
                 // Hit testing does not work correctly unless the width and height are positive
-                this.rect.size = new paper.Point(
-                    Math.abs(this.rect.size.width),
-                    Math.abs(this.rect.size.height)
-                );
+                this.rect.size = new paper.Point(Math.abs(this.rect.size.width), Math.abs(this.rect.size.height));
                 this.rect.selected = true;
                 this.styleRect();
                 this.setSelectedItems();

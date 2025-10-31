@@ -1,8 +1,8 @@
 // @ts-check
 
-const { IRGenerator } = require("./irgen");
-const { IROptimizer } = require("./iroptimizer");
-const JSGenerator = require("./jsgen");
+const {IRGenerator} = require('./irgen');
+const {IROptimizer} = require('./iroptimizer');
+const JSGenerator = require('./jsgen');
 
 const compile = (/** @type {import("../engine/thread")} */ thread) => {
     const irGenerator = new IRGenerator(thread);
@@ -14,9 +14,7 @@ const compile = (/** @type {import("../engine/thread")} */ thread) => {
     const procedures = {};
     const target = thread.target;
 
-    const compileScript = (
-        /** @type {import("./intermediate").IntermediateScript} */ script
-    ) => {
+    const compileScript = (/** @type {import("./intermediate").IntermediateScript} */ script) => {
         if (script.cachedCompileResult) {
             return script.cachedCompileResult;
         }
@@ -38,7 +36,7 @@ const compile = (/** @type {import("../engine/thread")} */ thread) => {
     return {
         startingFunction: entry,
         procedures,
-        executableHat: ir.entry.executableHat,
+        executableHat: ir.entry.executableHat
     };
 };
 

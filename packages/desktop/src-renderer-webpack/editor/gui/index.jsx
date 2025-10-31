@@ -14,15 +14,15 @@ ReactDOM.render(<GUI />, appTarget);
 require('./addons');
 
 EditorPreload.getAdvancedCustomizations().then(({userscript, userstyle}) => {
-  if (userstyle) {
-    const style = document.createElement('style');
-    style.textContent = userstyle;
-    document.body.appendChild(style);
-  }
+    if (userstyle) {
+        const style = document.createElement('style');
+        style.textContent = userstyle;
+        document.body.appendChild(style);
+    }
 
-  if (userscript) {
-    const script = document.createElement('script');
-    script.textContent = userscript;
-    document.body.appendChild(script);
-  }
+    if (userscript) {
+        const script = document.createElement('script');
+        script.textContent = userscript;
+        document.body.appendChild(script);
+    }
 });

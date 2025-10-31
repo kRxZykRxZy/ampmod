@@ -1,12 +1,12 @@
-import log from "../log/log";
-import { CHANGE_FILL_GRADIENT_TYPE } from "./fill-style";
-import GradientTypes from "../lib/gradient-types";
+import log from '../log/log';
+import {CHANGE_FILL_GRADIENT_TYPE} from './fill-style';
+import GradientTypes from '../lib/gradient-types';
 
-const CHANGE_COLOR_INDEX = "scratch-paint/color-index/CHANGE_COLOR_INDEX";
+const CHANGE_COLOR_INDEX = 'scratch-paint/color-index/CHANGE_COLOR_INDEX';
 const initialState = 0;
 
 const reducer = function (state, action) {
-    if (typeof state === "undefined") state = initialState;
+    if (typeof state === 'undefined') state = initialState;
     switch (action.type) {
         case CHANGE_COLOR_INDEX:
             if (action.index !== 1 && action.index !== 0) {
@@ -26,8 +26,8 @@ const reducer = function (state, action) {
 const changeColorIndex = function (index) {
     return {
         type: CHANGE_COLOR_INDEX,
-        index: index,
+        index: index
     };
 };
 
-export { reducer as default, changeColorIndex };
+export {reducer as default, changeColorIndex};

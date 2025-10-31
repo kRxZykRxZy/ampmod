@@ -1,6 +1,6 @@
 const GoogleAnalytics = {
     // Disable Scratch's analytics
-    event() {},
+    event() {}
 };
 
 export default GoogleAnalytics;

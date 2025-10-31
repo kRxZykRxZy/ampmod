@@ -1,6 +1,6 @@
-@import "../../css/units.css";
-@import "../../css/default-colors.css";
-@import "../../css/z-index.css";
+@import '../../css/units.css';
+@import '../../css/default-colors.css';
+@import '../../css/z-index.css';
 
 .monitor-container {
     position: absolute;
@@ -8,8 +8,7 @@
     z-index: $z-index-monitor;
     border: 1px solid $ui-black-transparent-default;
     border-radius: calc($space / 2);
-    font-family:
-        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.75rem;
     transition: box-shadow 0.2s;
     pointer-events: all;
@@ -173,8 +172,7 @@
     background: none;
     outline: none;
     font-size: 0.75rem;
-    font-family:
-        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     /* Workaround for Firefox */
     width: 0;
     flex: 1 1 auto;

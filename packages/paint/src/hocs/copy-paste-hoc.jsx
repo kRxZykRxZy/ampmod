@@ -1,31 +1,23 @@
-import paper from "@turbowarp/paper";
-import bindAll from "lodash.bindall";
-import PropTypes from "prop-types";
-import React from "react";
-import omit from "lodash.omit";
-import { connect } from "react-redux";
+import paper from '@turbowarp/paper';
+import bindAll from 'lodash.bindall';
+import PropTypes from 'prop-types';
+import React from 'react';
+import omit from 'lodash.omit';
+import {connect} from 'react-redux';
 
-import {
-    clearSelection,
-    getAllRootItems,
-    getSelectedLeafItems,
-    getSelectedRootItems,
-} from "../helper/selection";
-import { getTrimmedRaster } from "../helper/bitmap";
-import Formats, { isBitmap } from "../lib/format";
-import Modes from "../lib/modes";
+import {clearSelection, getAllRootItems, getSelectedLeafItems, getSelectedRootItems} from '../helper/selection';
+import {getTrimmedRaster} from '../helper/bitmap';
+import Formats, {isBitmap} from '../lib/format';
+import Modes from '../lib/modes';
 
-import {
-    clearSelectedItems,
-    setSelectedItems,
-} from "../reducers/selected-items";
-import { incrementPasteOffset, setClipboardItems } from "../reducers/clipboard";
+import {clearSelectedItems, setSelectedItems} from '../reducers/selected-items';
+import {incrementPasteOffset, setClipboardItems} from '../reducers/clipboard';
 
 const CopyPasteHOC = function (WrappedComponent) {
     class CopyPasteWrapper extends React.Component {
         constructor(props) {
             super(props);
-            bindAll(this, ["handleCopy", "handlePaste"]);
+            bindAll(this, ['handleCopy', 'handlePaste']);
         }
         handleCopy() {
             let selectedItems = [];
@@ -33,10 +25,7 @@ const CopyPasteHOC = function (WrappedComponent) {
                 const leafItems = getSelectedLeafItems();
                 // Copy root of compound paths
                 for (const item of leafItems) {
-                    if (
-                        item.parent &&
-                        item.parent instanceof paper.CompoundPath
-                    ) {
+                    if (item.parent && item.parent instanceof paper.CompoundPath) {
                         selectedItems.push(item.parent);
                     } else {
                         selectedItems.push(item);
@@ -57,7 +46,7 @@ const CopyPasteHOC = function (WrappedComponent) {
             const clipboardItems = [];
             for (let i = 0; i < selectedItems.length; i++) {
                 const jsonItem = selectedItems[i].exportJSON({
-                    asString: false,
+                    asString: false
                 });
                 clipboardItems.push(jsonItem);
             }
@@ -70,27 +59,20 @@ const CopyPasteHOC = function (WrappedComponent) {
 
             let items = [];
             for (let i = 0; i < this.props.clipboardItems.length; i++) {
-                const item = paper.Base.importJSON(
-                    this.props.clipboardItems[i]
-                );
+                const item = paper.Base.importJSON(this.props.clipboardItems[i]);
                 if (item) {
                     items.push(item);
                 }
             }
             if (!items.length) return;
             // If pasting a group or non-raster to bitmap, rasterize first
-            if (
-                isBitmap(this.props.format) &&
-                !(items.length === 1 && items[0] instanceof paper.Raster)
-            ) {
+            if (isBitmap(this.props.format) && !(items.length === 1 && items[0] instanceof paper.Raster)) {
                 const group = new paper.Group(items);
                 items = [group.rasterize()];
                 group.remove();
             }
             for (const item of items) {
-                const placedItem = paper.project
-                    .getActiveLayer()
-                    .addChild(item);
+                const placedItem = paper.project.getActiveLayer().addChild(item);
                 placedItem.selected = true;
                 placedItem.position.x += 10 * this.props.pasteOffset;
                 placedItem.position.y += 10 * this.props.pasteOffset;
@@ -101,14 +83,14 @@ const CopyPasteHOC = function (WrappedComponent) {
         }
         render() {
             const componentProps = omit(this.props, [
-                "clearSelectedItems",
-                "clipboardItems",
-                "format",
-                "incrementPasteOffset",
-                "mode",
-                "pasteOffset",
-                "setClipboardItems",
-                "setSelectedItems",
+                'clearSelectedItems',
+                'clipboardItems',
+                'format',
+                'incrementPasteOffset',
+                'mode',
+                'pasteOffset',
+                'setClipboardItems',
+                'setSelectedItems'
             ]);
             return (
                 <WrappedComponent
@@ -129,13 +111,13 @@ const CopyPasteHOC = function (WrappedComponent) {
         onUpdateImage: PropTypes.func.isRequired,
         pasteOffset: PropTypes.number,
         setClipboardItems: PropTypes.func.isRequired,
-        setSelectedItems: PropTypes.func.isRequired,
+        setSelectedItems: PropTypes.func.isRequired
     };
     const mapStateToProps = state => ({
         clipboardItems: state.scratchPaint.clipboard.items,
         format: state.scratchPaint.format,
         mode: state.scratchPaint.mode,
-        pasteOffset: state.scratchPaint.clipboard.pasteOffset,
+        pasteOffset: state.scratchPaint.clipboard.pasteOffset
     });
     const mapDispatchToProps = dispatch => ({
         setClipboardItems: items => {
@@ -148,10 +130,8 @@ const CopyPasteHOC = function (WrappedComponent) {
             dispatch(clearSelectedItems());
         },
         setSelectedItems: format => {
-            dispatch(
-                setSelectedItems(getSelectedLeafItems(), isBitmap(format))
-            );
-        },
+            dispatch(setSelectedItems(getSelectedLeafItems(), isBitmap(format)));
+        }
     });
 
     return connect(mapStateToProps, mapDispatchToProps)(CopyPasteWrapper);

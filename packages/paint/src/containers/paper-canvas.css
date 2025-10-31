@@ -7,6 +7,6 @@
     position: absolute;
     background-color: #d9e3f2;
 }
-[data-paint-theme="dark"] .paper-canvas {
+[data-paint-theme='dark'] .paper-canvas {
     background-color: #222;
 }

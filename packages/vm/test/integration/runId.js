@@ -1,24 +1,22 @@
-const Worker = require("tiny-worker");
-const path = require("path");
-const test = require("tap").test;
+const Worker = require('tiny-worker');
+const path = require('path');
+const test = require('tap').test;
 
-const VirtualMachine = require("../../src/index");
-const dispatch = require("../../src/dispatch/central-dispatch");
+const VirtualMachine = require('../../src/index');
+const dispatch = require('../../src/dispatch/central-dispatch');
 
-const makeTestStorage = require("../fixtures/make-test-storage");
-const readFileToBuffer =
-    require("../fixtures/readProjectFile").readFileToBuffer;
+const makeTestStorage = require('../fixtures/make-test-storage');
+const readFileToBuffer = require('../fixtures/readProjectFile').readFileToBuffer;
 
 // it doesn't really matter which project we use: we're testing side effects of loading any project
-const uri = path.resolve(__dirname, "../fixtures/default.sb3");
+const uri = path.resolve(__dirname, '../fixtures/default.sb3');
 const project = readFileToBuffer(uri);
 
 // By default Central Dispatch works with the Worker class built into the browser. Tell it to use TinyWorker instead.
 dispatch.workerClass = Worker;
 
-test("runId", async t => {
-    const guidRegex =
-        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+test('runId', async t => {
+    const guidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
     const isGuid = data => guidRegex.test(data);
 
     const storage = makeTestStorage();
@@ -26,14 +24,8 @@ test("runId", async t => {
     // add to this list every time the RunId should have changed
     const runIdLog = [];
     const pushRunId = () => {
-        const runId = storage.scratchFetch.getMetadata(
-            storage.scratchFetch.RequestMetadata.RunId
-        );
-        t.ok(
-            isGuid(runId),
-            "Run IDs should always be a properly-formatted GUID",
-            { runId }
-        );
+        const runId = storage.scratchFetch.getMetadata(storage.scratchFetch.RequestMetadata.RunId);
+        t.ok(isGuid(runId), 'Run IDs should always be a properly-formatted GUID', {runId});
         runIdLog.push(runId);
     };
 
@@ -56,7 +48,7 @@ test("runId", async t => {
 
     // Turn the playgroundData event into a Promise that we can await
     const playgroundDataPromise = new Promise(resolve => {
-        vm.on("playgroundData", data => resolve(data));
+        vm.on('playgroundData', data => resolve(data));
     });
 
     // Let the project run for a bit, then get playground data and stop the project
@@ -72,12 +64,7 @@ test("runId", async t => {
 
     for (let i = 0; i < runIdLog.length - 1; ++i) {
         for (let j = i + 1; j < runIdLog.length; ++j) {
-            t.notSame(
-                runIdLog[i],
-                runIdLog[j],
-                "Run IDs should always be unique",
-                { runIdLog }
-            );
+            t.notSame(runIdLog[i], runIdLog[j], 'Run IDs should always be unique', {runIdLog});
         }
     }
 

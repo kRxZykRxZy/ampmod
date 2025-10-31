@@ -1,19 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Provider } from "react-redux";
-import { createStore, combineReducers, compose } from "redux";
-import ConnectedIntlProvider from "./connected-intl-provider.jsx";
-import AddonHooks from "../addons/hooks";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {Provider} from 'react-redux';
+import {createStore, combineReducers, compose} from 'redux';
+import ConnectedIntlProvider from './connected-intl-provider.jsx';
+import AddonHooks from '../addons/hooks';
 
-import localesReducer, {
-    initLocale,
-    localesInitialState,
-} from "../reducers/locales";
+import localesReducer, {initLocale, localesInitialState} from '../reducers/locales';
 
-import { setPlayer, setFullScreen } from "../reducers/mode.js";
+import {setPlayer, setFullScreen} from '../reducers/mode.js';
 
-import locales from "@turbowarp/scratch-l10n";
-import { detectLocale } from "./detect-locale";
+import locales from '@turbowarp/scratch-l10n';
+import {detectLocale} from './detect-locale';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -36,29 +33,23 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
 
             let initializedLocales = localesInitialState;
             const locale = detectLocale(Object.keys(locales));
-            if (locale !== "en") {
+            if (locale !== 'en') {
                 initializedLocales = initLocale(initializedLocales, locale);
             }
             if (localesOnly) {
                 // Used for instantiating minimal state for the unsupported
                 // browser modal
-                reducers = { locales: localesReducer };
-                initialState = { locales: initializedLocales };
+                reducers = {locales: localesReducer};
+                initialState = {locales: initializedLocales};
                 enhancer = composeEnhancers();
             } else {
                 // You are right, this is gross. But it's necessary to avoid
                 // importing unneeded code that will crash unsupported browsers.
-                const guiRedux = require("../reducers/gui");
+                const guiRedux = require('../reducers/gui');
                 const guiReducer = guiRedux.default;
-                const {
-                    guiInitialState,
-                    guiMiddleware,
-                    initFullScreen,
-                    initPlayer,
-                    initEmbedded,
-                    initTelemetryModal,
-                } = guiRedux;
-                const { ScratchPaintReducer } = require("./tw-scratch-paint");
+                const {guiInitialState, guiMiddleware, initFullScreen, initPlayer, initEmbedded, initTelemetryModal} =
+                    guiRedux;
+                const {ScratchPaintReducer} = require('./tw-scratch-paint');
 
                 let initializedGui = guiInitialState;
                 if (props.isFullScreen || props.isPlayerOnly) {
@@ -77,11 +68,11 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                 reducers = {
                     locales: localesReducer,
                     scratchGui: guiReducer,
-                    scratchPaint: ScratchPaintReducer,
+                    scratchPaint: ScratchPaintReducer
                 };
                 initialState = {
                     locales: initializedLocales,
-                    scratchGui: initializedGui,
+                    scratchGui: initializedGui
                 };
                 enhancer = composeEnhancers(guiMiddleware);
             }
@@ -125,7 +116,7 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
         isPlayerOnly: PropTypes.bool,
         isTelemetryEnabled: PropTypes.bool,
         showTelemetryModal: PropTypes.bool,
-        isEmbedded: PropTypes.bool,
+        isEmbedded: PropTypes.bool
     };
     return AppStateWrapper;
 };

@@ -1,18 +1,18 @@
-const OPEN_MENU = "scratch-gui/menus/OPEN_MENU";
-const CLOSE_MENU = "scratch-gui/menus/CLOSE_MENU";
+const OPEN_MENU = 'scratch-gui/menus/OPEN_MENU';
+const CLOSE_MENU = 'scratch-gui/menus/CLOSE_MENU';
 
-const MENU_ABOUT = "aboutMenu";
-const MENU_ACCOUNT = "accountMenu";
-const MENU_EDIT = "editMenu";
-const MENU_FILE = "fileMenu";
-const MENU_LANGUAGE = "languageMenu";
-const MENU_LOGIN = "loginMenu";
-const MENU_MODE = "modeMenu";
-const MENU_SETTINGS = "settingsMenu";
-const MENU_ACCENT = "accentMenu";
-const MENU_BLOCKS_THEME = "blocksThemeMenu";
-const MENU_GUI_THEME = "guiThemeMenu";
-const MENU_ERRORS = "errorsMenu";
+const MENU_ABOUT = 'aboutMenu';
+const MENU_ACCOUNT = 'accountMenu';
+const MENU_EDIT = 'editMenu';
+const MENU_FILE = 'fileMenu';
+const MENU_LANGUAGE = 'languageMenu';
+const MENU_LOGIN = 'loginMenu';
+const MENU_MODE = 'modeMenu';
+const MENU_SETTINGS = 'settingsMenu';
+const MENU_ACCENT = 'accentMenu';
+const MENU_BLOCKS_THEME = 'blocksThemeMenu';
+const MENU_GUI_THEME = 'guiThemeMenu';
+const MENU_ERRORS = 'errorsMenu';
 
 class Menu {
     constructor(id) {
@@ -50,7 +50,7 @@ class Menu {
 }
 
 // Structure of nested menus, used for collapsing submenus logic.
-const rootMenu = new Menu("root")
+const rootMenu = new Menu('root')
     .addChild(new Menu(MENU_ERRORS))
     .addChild(
         new Menu(MENU_SETTINGS)
@@ -78,23 +78,21 @@ const initialState = {
     [MENU_SETTINGS]: false,
     [MENU_ACCENT]: false,
     [MENU_BLOCKS_THEME]: false,
-    [MENU_ERRORS]: false,
+    [MENU_ERRORS]: false
 };
 
 const reducer = function (state, action) {
-    if (typeof state === "undefined") state = initialState;
+    if (typeof state === 'undefined') state = initialState;
     switch (action.type) {
         case OPEN_MENU: {
             const menu = rootMenu.findById(action.menu);
             // Close siblings when opening a menu
-            const toClose = menu
-                .siblings()
-                .flatMap(sibling => [sibling, ...sibling.descendants()]);
+            const toClose = menu.siblings().flatMap(sibling => [sibling, ...sibling.descendants()]);
 
             return {
                 ...state,
                 [action.menu]: true,
-                ...Object.fromEntries(toClose.map(({ id }) => [id, false])),
+                ...Object.fromEntries(toClose.map(({id}) => [id, false]))
             };
         }
         case CLOSE_MENU: {
@@ -104,7 +102,7 @@ const reducer = function (state, action) {
 
             return {
                 ...state,
-                ...Object.fromEntries(toClose.map(({ id }) => [id, false])),
+                ...Object.fromEntries(toClose.map(({id}) => [id, false]))
             };
         }
         default:
@@ -113,11 +111,11 @@ const reducer = function (state, action) {
 };
 const openMenu = menu => ({
     type: OPEN_MENU,
-    menu: menu,
+    menu: menu
 });
 const closeMenu = menu => ({
     type: CLOSE_MENU,
-    menu: menu,
+    menu: menu
 });
 
 const openAboutMenu = () => openMenu(MENU_ABOUT);
@@ -206,5 +204,5 @@ export {
     guiThemeMenuOpen,
     openErrorsMenu,
     closeErrorsMenu,
-    errorsMenuOpen,
+    errorsMenuOpen
 };

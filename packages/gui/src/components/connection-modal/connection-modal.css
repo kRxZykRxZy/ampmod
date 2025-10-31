@@ -1,5 +1,5 @@
-@import "../../css/colors.css";
-@import "../../css/units.css";
+@import '../../css/colors.css';
+@import '../../css/units.css';
 
 .modal-content {
     width: 480px;
@@ -51,11 +51,11 @@
     align-items: center;
 }
 
-[dir="ltr"] .peripheral-tile-image {
+[dir='ltr'] .peripheral-tile-image {
     margin-right: 0.5rem;
 }
 
-[dir="rtl"] .peripheral-tile-image {
+[dir='rtl'] .peripheral-tile-image {
     margin-left: 0.5rem;
 }
 
@@ -95,11 +95,11 @@
     height: 16px;
 }
 
-[dir="ltr"] .signal-strength-meter {
+[dir='ltr'] .signal-strength-meter {
     margin-right: 1rem;
 }
 
-[dir="rtl"] .signal-strength-meter {
+[dir='rtl'] .signal-strength-meter {
     margin-left: 1rem;
 }
 
@@ -131,11 +131,11 @@
     height: 40px;
 }
 
-[dir="ltr"] .radar-small {
+[dir='ltr'] .radar-small {
     margin-right: 0.5rem;
 }
 
-[dir="rtl"] .radar-small {
+[dir='rtl'] .radar-small {
     margin-left: 0.5rem;
 }
 
@@ -148,11 +148,11 @@
     animation: spin 4s linear infinite;
 }
 
-[dir="ltr"] .radar {
+[dir='ltr'] .radar {
     margin-right: 0.5rem;
 }
 
-[dir="rtl"] .radar {
+[dir='rtl'] .radar {
     margin-left: 0.5rem;
 }
 
@@ -261,11 +261,11 @@
     align-items: center;
 }
 
-[dir="ltr"] .scratch-link-help-step {
+[dir='ltr'] .scratch-link-help-step {
     margin-left: 2.5rem;
 }
 
-[dir="rtl"] .scratch-link-help-step {
+[dir='rtl'] .scratch-link-help-step {
     margin-right: 2.5rem;
 }
 
@@ -277,11 +277,11 @@
     max-width: 40px;
 }
 
-[dir="ltr"] .help-step-image {
+[dir='ltr'] .help-step-image {
     margin-right: 0.5rem;
 }
 
-[dir="rtl"] .help-step-image {
+[dir='rtl'] .help-step-image {
     margin-left: 0.5rem;
 }
 
@@ -297,11 +297,11 @@
     height: 2rem;
 }
 
-[dir="ltr"] .help-step-number {
+[dir='ltr'] .help-step-number {
     margin-right: 0.5rem;
 }
 
-[dir="rtl"] .help-step-number {
+[dir='rtl'] .help-step-number {
     margin-left: 0.5rem;
 }
 
@@ -350,23 +350,23 @@
     border-bottom-left-radius: 0;
 }
 
-[dir="ltr"] .button-icon-right {
+[dir='ltr'] .button-icon-right {
     margin-left: 0.5rem;
 }
-[dir="rtl"] .button-icon-right {
+[dir='rtl'] .button-icon-right {
     margin-right: 0.5rem;
 }
 
-[dir="ltr"] .button-icon-left {
+[dir='ltr'] .button-icon-left {
     margin-right: 0.5rem;
 }
 
-[dir="rtl"] .button-icon-left {
+[dir='rtl'] .button-icon-left {
     margin-left: 0.5rem;
 }
 
 /* reverse back arrow icon for RTL, don't reverse other connection icons */
-[dir="rtl"] .button-icon-back {
+[dir='rtl'] .button-icon-back {
     transform: scaleX(-1);
 }
 

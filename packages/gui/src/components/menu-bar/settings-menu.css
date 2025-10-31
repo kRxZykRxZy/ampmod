@@ -1,5 +1,5 @@
-@import "../../css/colors.css";
-@import "../../css/units.css";
+@import '../../css/colors.css';
+@import '../../css/units.css';
 
 .icon {
     width: 1.5rem;
@@ -20,7 +20,7 @@
     visibility: hidden;
 }
 
-[dir="rtl"] .check {
+[dir='rtl'] .check {
     margin: 0 0 0 0.25rem;
 }
 
@@ -37,7 +37,7 @@
     margin: 0 0.5rem 0 0.25rem;
 }
 
-[dir="rtl"] .dropdown-label {
+[dir='rtl'] .dropdown-label {
     margin: 0 0.25rem 0 0.5rem;
 }
 
@@ -47,7 +47,7 @@
     filter: var(--menu-bar-icon-filter);
 }
 
-[dir="rtl"] .expand-caret {
+[dir='rtl'] .expand-caret {
     transform: rotate(90deg);
     margin-left: 0;
     margin-right: auto;
@@ -69,11 +69,11 @@
 
 /* Extra padding to deal with scrollbar overlapping options in Firefox */
 
-[dir="ltr"] .language-menu-item {
+[dir='ltr'] .language-menu-item {
     padding-right: 1rem;
 }
 
-[dir="rtl"] .language-menu-item {
+[dir='rtl'] .language-menu-item {
     padding-left: 1rem;
 }
 

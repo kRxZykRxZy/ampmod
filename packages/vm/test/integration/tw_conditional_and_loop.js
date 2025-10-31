@@ -1,62 +1,62 @@
-const fs = require("fs");
-const path = require("path");
-const { test } = require("tap");
-const VirtualMachine = require("../../src/virtual-machine");
-const Scratch = require("../../src/extension-support/tw-extension-api-common");
+const fs = require('fs');
+const path = require('path');
+const {test} = require('tap');
+const VirtualMachine = require('../../src/virtual-machine');
+const Scratch = require('../../src/extension-support/tw-extension-api-common');
 
 // Based on https://github.com/TurboWarp/scratch-vm/pull/141
 class TestExtensionUsingReturn {
     getInfo() {
         return {
-            id: "loopsAndThings",
-            name: "Loops and things test - return",
+            id: 'loopsAndThings',
+            name: 'Loops and things test - return',
             blocks: [
                 {
-                    opcode: "conditional",
+                    opcode: 'conditional',
                     blockType: Scratch.BlockType.CONDITIONAL,
-                    text: "run branch [BRANCH] of",
+                    text: 'run branch [BRANCH] of',
                     arguments: {
                         BRANCH: {
                             type: Scratch.ArgumentType.NUMBER,
-                            defaultValue: 1,
-                        },
+                            defaultValue: 1
+                        }
                     },
-                    branchCount: 3,
+                    branchCount: 3
                 },
                 {
-                    opcode: "loop",
+                    opcode: 'loop',
                     blockType: Scratch.BlockType.LOOP,
-                    text: "my repeat [TIMES]",
+                    text: 'my repeat [TIMES]',
                     arguments: {
                         TIMES: {
                             type: Scratch.ArgumentType.NUMBER,
-                            defaultValue: 10,
-                        },
-                    },
+                            defaultValue: 10
+                        }
+                    }
                 },
-                "---",
+                '---',
                 {
-                    opcode: "testPromise",
+                    opcode: 'testPromise',
                     blockType: Scratch.BlockType.REPORTER,
-                    text: "return [VALUE] in a Promise",
+                    text: 'return [VALUE] in a Promise',
                     arguments: {
                         VALUE: {
                             type: Scratch.ArgumentType.STRING,
-                            defaultValue: "",
-                        },
-                    },
-                },
-            ],
+                            defaultValue: ''
+                        }
+                    }
+                }
+            ]
         };
     }
 
-    conditional({ BRANCH }) {
+    conditional({BRANCH}) {
         return Scratch.Cast.toNumber(BRANCH);
     }
 
-    loop({ TIMES }, util) {
+    loop({TIMES}, util) {
         const times = Math.round(Scratch.Cast.toNumber(TIMES));
-        if (typeof util.stackFrame.loopCounter === "undefined") {
+        if (typeof util.stackFrame.loopCounter === 'undefined') {
             util.stackFrame.loopCounter = times;
         }
         util.stackFrame.loopCounter--;
@@ -65,7 +65,7 @@ class TestExtensionUsingReturn {
         }
     }
 
-    testPromise({ VALUE }) {
+    testPromise({VALUE}) {
         return Promise.resolve(VALUE);
     }
 }
@@ -73,55 +73,55 @@ class TestExtensionUsingReturn {
 class TestExtensionUsingStartBranch {
     getInfo() {
         return {
-            id: "loopsAndThings",
-            name: "Loops and things test - startBranch",
+            id: 'loopsAndThings',
+            name: 'Loops and things test - startBranch',
             blocks: [
                 {
-                    opcode: "conditional",
+                    opcode: 'conditional',
                     blockType: Scratch.BlockType.CONDITIONAL,
-                    text: "run branch [BRANCH] of",
+                    text: 'run branch [BRANCH] of',
                     arguments: {
                         BRANCH: {
                             type: Scratch.ArgumentType.NUMBER,
-                            defaultValue: 1,
-                        },
+                            defaultValue: 1
+                        }
                     },
-                    branchCount: 3,
+                    branchCount: 3
                 },
                 {
-                    opcode: "loop",
+                    opcode: 'loop',
                     blockType: Scratch.BlockType.LOOP,
-                    text: "my repeat [TIMES]",
+                    text: 'my repeat [TIMES]',
                     arguments: {
                         TIMES: {
                             type: Scratch.ArgumentType.NUMBER,
-                            defaultValue: 10,
-                        },
-                    },
+                            defaultValue: 10
+                        }
+                    }
                 },
-                "---",
+                '---',
                 {
-                    opcode: "testPromise",
+                    opcode: 'testPromise',
                     blockType: Scratch.BlockType.REPORTER,
-                    text: "return [VALUE] in a Promise",
+                    text: 'return [VALUE] in a Promise',
                     arguments: {
                         VALUE: {
                             type: Scratch.ArgumentType.STRING,
-                            defaultValue: "",
-                        },
-                    },
-                },
-            ],
+                            defaultValue: ''
+                        }
+                    }
+                }
+            ]
         };
     }
 
-    conditional({ BRANCH }, util) {
+    conditional({BRANCH}, util) {
         util.startBranch(Scratch.Cast.toNumber(BRANCH), false);
     }
 
-    loop({ TIMES }, util) {
+    loop({TIMES}, util) {
         const times = Math.round(Scratch.Cast.toNumber(TIMES));
-        if (typeof util.stackFrame.loopCounter === "undefined") {
+        if (typeof util.stackFrame.loopCounter === 'undefined') {
             util.stackFrame.loopCounter = times;
         }
         util.stackFrame.loopCounter--;
@@ -130,43 +130,33 @@ class TestExtensionUsingStartBranch {
         }
     }
 
-    testPromise({ VALUE }) {
+    testPromise({VALUE}) {
         return Promise.resolve(VALUE);
     }
 }
 
 /* eslint-disable no-loop-func */
 
-for (const Extension of [
-    TestExtensionUsingReturn,
-    TestExtensionUsingStartBranch,
-]) {
+for (const Extension of [TestExtensionUsingReturn, TestExtensionUsingStartBranch]) {
     for (const compilerEnabled of [false, true]) {
-        test(`CONDITIONAL - ${Extension.name} - ${compilerEnabled ? "compiled" : "interpreted"}`, t => {
+        test(`CONDITIONAL - ${Extension.name} - ${compilerEnabled ? 'compiled' : 'interpreted'}`, t => {
             t.plan(1);
 
             const vm = new VirtualMachine();
             vm.setCompilerOptions({
-                enabled: compilerEnabled,
+                enabled: compilerEnabled
             });
-            vm.extensionManager.addBuiltinExtension(
-                "loopsAndThings",
-                Extension
-            );
-            vm.runtime.on("COMPILE_ERROR", () => {
-                t.fail("Compile error");
+            vm.extensionManager.addBuiltinExtension('loopsAndThings', Extension);
+            vm.runtime.on('COMPILE_ERROR', () => {
+                t.fail('Compile error');
             });
 
-            vm.loadProject(
-                fs.readFileSync(
-                    path.join(__dirname, "../fixtures/tw-conditional.sb3")
-                )
-            ).then(() => {
+            vm.loadProject(fs.readFileSync(path.join(__dirname, '../fixtures/tw-conditional.sb3'))).then(() => {
                 let okayCount = 0;
-                vm.runtime.on("SAY", (target, type, text) => {
-                    if (text === "OK!") {
+                vm.runtime.on('SAY', (target, type, text) => {
+                    if (text === 'OK!') {
                         okayCount++;
-                    } else if (text === "end") {
+                    } else if (text === 'end') {
                         vm.quit();
                         t.equal(okayCount, 5);
                         t.end();
@@ -180,27 +170,22 @@ for (const Extension of [
             });
         });
 
-        test(`LOOP - ${Extension.name} - ${compilerEnabled ? "compiled" : "interpreted"}`, t => {
+        test(`LOOP - ${Extension.name} - ${compilerEnabled ? 'compiled' : 'interpreted'}`, t => {
             t.plan(1);
 
             const vm = new VirtualMachine();
             vm.setCompilerOptions({
-                enabled: compilerEnabled,
+                enabled: compilerEnabled
             });
-            vm.extensionManager.addBuiltinExtension(
-                "loopsAndThings",
-                Extension
-            );
-            vm.runtime.on("COMPILE_ERROR", () => {
-                t.fail("Compile error");
+            vm.extensionManager.addBuiltinExtension('loopsAndThings', Extension);
+            vm.runtime.on('COMPILE_ERROR', () => {
+                t.fail('Compile error');
             });
 
-            vm.loadProject(
-                fs.readFileSync(path.join(__dirname, "../fixtures/tw-loop.sb3"))
-            ).then(() => {
-                vm.runtime.on("SAY", (target, type, text) => {
+            vm.loadProject(fs.readFileSync(path.join(__dirname, '../fixtures/tw-loop.sb3'))).then(() => {
+                vm.runtime.on('SAY', (target, type, text) => {
                     vm.quit();
-                    t.equal(text, "a 3 b 12 c 48 frames 64");
+                    t.equal(text, 'a 3 b 12 c 48 frames 64');
                     t.end();
                 });
 
@@ -209,33 +194,23 @@ for (const Extension of [
             });
         });
 
-        test(`beyond branchCount - ${Extension.name} - ${compilerEnabled ? "compiled" : "interpreted"}`, t => {
+        test(`beyond branchCount - ${Extension.name} - ${compilerEnabled ? 'compiled' : 'interpreted'}`, t => {
             t.plan(1);
 
             const vm = new VirtualMachine();
             vm.setCompilerOptions({
-                enabled: compilerEnabled,
+                enabled: compilerEnabled
             });
-            vm.extensionManager.addBuiltinExtension(
-                "loopsAndThings",
-                Extension
-            );
-            vm.runtime.on("COMPILE_ERROR", () => {
-                t.fail("Compile error");
+            vm.extensionManager.addBuiltinExtension('loopsAndThings', Extension);
+            vm.runtime.on('COMPILE_ERROR', () => {
+                t.fail('Compile error');
             });
 
-            vm.loadProject(
-                fs.readFileSync(
-                    path.join(
-                        __dirname,
-                        "../fixtures/tw-beyond-branchCount.sb3"
-                    )
-                )
-            ).then(() => {
-                vm.runtime.on("SAY", (target, type, text) => {
-                    if (text === "BeyondBranchCount") {
-                        t.pass("BeyondBranchCount");
-                    } else if (text === "end") {
+            vm.loadProject(fs.readFileSync(path.join(__dirname, '../fixtures/tw-beyond-branchCount.sb3'))).then(() => {
+                vm.runtime.on('SAY', (target, type, text) => {
+                    if (text === 'BeyondBranchCount') {
+                        t.pass('BeyondBranchCount');
+                    } else if (text === 'end') {
                         vm.quit();
                         t.end();
                     }

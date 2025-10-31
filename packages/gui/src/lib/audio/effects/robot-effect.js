@@ -29,13 +29,8 @@ class RobotEffect {
             // Piecewise function given by (2) in Parker paper
             const transform = (v, vb = 0.2, vl = 0.4, h = 0.65) => {
                 if (v <= vb) return 0;
-                if (v <= vl)
-                    return h * (Math.pow(v - vb, 2) / (2 * vl - 2 * vb));
-                return (
-                    h * v -
-                    h * vl +
-                    h * (Math.pow(v - vb, 2) / (2 * vl - 2 * vb))
-                );
+                if (v <= vl) return h * (Math.pow(v - vb, 2) / (2 * vl - 2 * vb));
+                return h * v - h * vl + h * (Math.pow(v - vb, 2) / (2 * vl - 2 * vb));
             };
 
             // Create the waveshaper curve with the voltage transform above
@@ -82,7 +77,7 @@ class RobotEffect {
         compressor.release.value = 0.25;
 
         const biquadFilter = this.audioContext.createBiquadFilter();
-        biquadFilter.type = "highpass";
+        biquadFilter.type = 'highpass';
         biquadFilter.frequency.value = 1000;
         biquadFilter.gain.value = 1.25;
 

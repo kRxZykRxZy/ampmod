@@ -10,7 +10,7 @@ class Skin {
      * @param {RenderWebGL} renderer - The renderer which will use this skin.
      * @constructor
      */
-    constructor (id, renderer) {
+    constructor(id, renderer) {
         /** @type {RenderWebGL} */
         this._renderer = renderer;
 
@@ -58,21 +58,21 @@ class Skin {
     /**
      * Dispose of this object. Do not use it after calling this method.
      */
-    dispose () {
+    dispose() {
         this._id = RenderConstants.ID_NONE;
     }
 
     /**
      * @return {int} the unique ID for this Skin.
      */
-    get id () {
+    get id() {
         return this._id;
     }
 
     /**
      * @returns {Vec3} the origin, in object space, about which this Skin should rotate.
      */
-    get rotationCenter () {
+    get rotationCenter() {
         return this._rotationCenter;
     }
 
@@ -80,7 +80,7 @@ class Skin {
      * @abstract
      * @return {Array<number>} the "native" size, in texels, of this skin.
      */
-    get size () {
+    get size() {
         return [0, 0];
     }
 
@@ -93,7 +93,7 @@ class Skin {
      * nearest-neighbor interpolation.
      */
     // eslint-disable-next-line no-unused-vars
-    useNearest (scale, drawable) {
+    useNearest(scale, drawable) {
         return true;
     }
 
@@ -101,7 +101,7 @@ class Skin {
      * Get the center of the current bounding box
      * @return {Array<number>} the center of the current bounding box
      */
-    calculateRotationCenter () {
+    calculateRotationCenter() {
         return [this.size[0] / 2, this.size[1] / 2];
     }
 
@@ -111,7 +111,7 @@ class Skin {
      * @return {WebGLTexture} The GL texture representation of this skin when drawing at the given size.
      */
     // eslint-disable-next-line no-unused-vars
-    getTexture (scale) {
+    getTexture(scale) {
         return this._emptyImageTexture;
     }
 
@@ -122,7 +122,7 @@ class Skin {
      * should override appropriately if getTexture() is known to be slow.
      * @returns {boolean} true if size and rotation center are accurate.
      */
-    isMetricsReady () {
+    isMetricsReady() {
         return !!this.getTexture([100, 100]);
     }
 
@@ -132,7 +132,7 @@ class Skin {
      * @param {?Rectangle} result - Optional destination for bounds calculation.
      * @return {!Rectangle} The drawable's bounds. For compatibility with Scratch 2, we always use getAABB.
      */
-    getFenceBounds (drawable, result) {
+    getFenceBounds(drawable, result) {
         return drawable.getAABB(result);
     }
 
@@ -141,13 +141,13 @@ class Skin {
      * @param {Array<number>} scale - The scaling factors to be used.
      * @returns {object.<string, *>} the shader uniforms to be used when rendering with this Skin.
      */
-    getUniforms (scale) {
+    getUniforms(scale) {
         this._uniforms.u_skin = this.getTexture(scale);
         this._uniforms.u_skinSize = this.size;
         return this._uniforms;
     }
 
-    emitWasAltered () {
+    emitWasAltered() {
         this._renderer.skinWasAltered(this);
     }
 
@@ -155,7 +155,7 @@ class Skin {
      * If the skin defers silhouette operations until the last possible minute,
      * this will be called before isTouching uses the silhouette.
      */
-    updateSilhouette () {
+    updateSilhouette() {
         this._silhouette.unlazy();
     }
 
@@ -163,7 +163,7 @@ class Skin {
      * Set this skin's texture to the given image.
      * @param {ImageData|HTMLCanvasElement} textureData - The canvas or image data to set the texture to.
      */
-    _setTexture (textureData) {
+    _setTexture(textureData) {
         const gl = this._renderer.gl;
 
         gl.bindTexture(gl.TEXTURE_2D, this._texture);
@@ -180,7 +180,7 @@ class Skin {
      * Set the contents of this skin to an empty skin.
      * @fires Skin.event:WasAltered
      */
-    setEmptyImageData () {
+    setEmptyImageData() {
         // Free up the current reference to the _texture
         this._texture = null;
 
@@ -220,7 +220,7 @@ class Skin {
      * @param {twgl.v3} vec A texture coordinate.
      * @return {boolean} Did it touch?
      */
-    isTouchingNearest (vec) {
+    isTouchingNearest(vec) {
         return this._silhouette.isTouchingNearest(vec);
     }
 
@@ -233,10 +233,9 @@ class Skin {
      * @param {twgl.v3} vec A texture coordinate.
      * @return {boolean} Did it touch?
      */
-    isTouchingLinear (vec) {
+    isTouchingLinear(vec) {
         return this._silhouette.isTouchingLinear(vec);
     }
-
 }
 
 module.exports = Skin;

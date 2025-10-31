@@ -1,26 +1,22 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
-import bindAll from "lodash.bindall";
-import Modes from "../lib/modes";
-import { MIXED } from "../helper/style-path";
+import PropTypes from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
+import bindAll from 'lodash.bindall';
+import Modes from '../lib/modes';
+import {MIXED} from '../helper/style-path';
 
-import {
-    changeFillColor,
-    clearFillGradient,
-    DEFAULT_COLOR,
-} from "../reducers/fill-style";
-import { changeMode } from "../reducers/modes";
-import { clearSelectedItems } from "../reducers/selected-items";
-import { clearSelection } from "../helper/selection";
+import {changeFillColor, clearFillGradient, DEFAULT_COLOR} from '../reducers/fill-style';
+import {changeMode} from '../reducers/modes';
+import {clearSelectedItems} from '../reducers/selected-items';
+import {clearSelection} from '../helper/selection';
 
-import BitBrushModeComponent from "../components/bit-brush-mode/bit-brush-mode.jsx";
-import BitBrushTool from "../helper/bit-tools/brush-tool";
+import BitBrushModeComponent from '../components/bit-brush-mode/bit-brush-mode.jsx';
+import BitBrushTool from '../helper/bit-tools/brush-tool';
 
 class BitBrushMode extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["activateTool", "deactivateTool"]);
+        bindAll(this, ['activateTool', 'deactivateTool']);
     }
     componentDidMount() {
         if (this.props.isBitBrushModeActive) {
@@ -35,22 +31,14 @@ class BitBrushMode extends React.Component {
             this.tool.setBrushSize(nextProps.bitBrushSize);
         }
 
-        if (
-            nextProps.isBitBrushModeActive &&
-            !this.props.isBitBrushModeActive
-        ) {
+        if (nextProps.isBitBrushModeActive && !this.props.isBitBrushModeActive) {
             this.activateTool();
-        } else if (
-            !nextProps.isBitBrushModeActive &&
-            this.props.isBitBrushModeActive
-        ) {
+        } else if (!nextProps.isBitBrushModeActive && this.props.isBitBrushModeActive) {
             this.deactivateTool();
         }
     }
     shouldComponentUpdate(nextProps) {
-        return (
-            nextProps.isBitBrushModeActive !== this.props.isBitBrushModeActive
-        );
+        return nextProps.isBitBrushModeActive !== this.props.isBitBrushModeActive;
     }
     componentWillUnmount() {
         if (this.tool) {
@@ -95,13 +83,13 @@ BitBrushMode.propTypes = {
     handleMouseDown: PropTypes.func.isRequired,
     isBitBrushModeActive: PropTypes.bool.isRequired,
     onChangeFillColor: PropTypes.func.isRequired,
-    onUpdateImage: PropTypes.func.isRequired,
+    onUpdateImage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
     bitBrushSize: state.scratchPaint.bitBrushSize,
     color: state.scratchPaint.color.fillColor.primary,
-    isBitBrushModeActive: state.scratchPaint.mode === Modes.BIT_BRUSH,
+    isBitBrushModeActive: state.scratchPaint.mode === Modes.BIT_BRUSH
 });
 const mapDispatchToProps = dispatch => ({
     clearSelectedItems: () => {
@@ -115,7 +103,7 @@ const mapDispatchToProps = dispatch => ({
     },
     onChangeFillColor: fillColor => {
         dispatch(changeFillColor(fillColor));
-    },
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BitBrushMode);

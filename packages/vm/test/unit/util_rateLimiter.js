@@ -1,14 +1,14 @@
-const test = require("tap").test;
-const RateLimiter = require("../../src/util/rateLimiter.js");
+const test = require('tap').test;
+const RateLimiter = require('../../src/util/rateLimiter.js');
 
-test("rate limiter", t => {
+test('rate limiter', t => {
     // Create a rate limiter with maximum of 20 sends per second
     const rate = 20;
     const limiter = new RateLimiter(rate);
 
     // Simulate time passing with a stubbed timer
     let simulatedTime = Date.now();
-    limiter._timer = { timeElapsed: () => simulatedTime };
+    limiter._timer = {timeElapsed: () => simulatedTime};
 
     // The rate limiter starts with a number of tokens equal to the max rate
     t.equal(limiter._count, rate);

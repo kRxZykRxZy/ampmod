@@ -1,62 +1,41 @@
-import paper from "@turbowarp/paper";
-import {
-    createCanvas,
-    clearRaster,
-    getRaster,
-    hideGuideLayers,
-    showGuideLayers,
-} from "./layer";
-import { getGuideColor } from "./guides";
-import { clearSelection } from "./selection";
-import {
-    ART_BOARD_WIDTH,
-    ART_BOARD_HEIGHT,
-    CENTER,
-    MAX_WORKSPACE_BOUNDS,
-} from "./view";
-import Formats from "../lib/format";
-import log from "../log/log";
+import paper from '@turbowarp/paper';
+import {createCanvas, clearRaster, getRaster, hideGuideLayers, showGuideLayers} from './layer';
+import {getGuideColor} from './guides';
+import {clearSelection} from './selection';
+import {ART_BOARD_WIDTH, ART_BOARD_HEIGHT, CENTER, MAX_WORKSPACE_BOUNDS} from './view';
+import Formats from '../lib/format';
+import log from '../log/log';
 
 /**
  * @param {string|CanvasGradient} color The canvas's fillStyle.
  * @returns {boolean} True if the style will require using a mask to draw.
  */
 const doesColorRequireMask = color =>
-    color instanceof CanvasGradient ||
-    color.startsWith("rgba(") ||
-    (color.startsWith("#") && color.length > 7);
+    color instanceof CanvasGradient || color.startsWith('rgba(') || (color.startsWith('#') && color.length > 7);
 
 const createMaskingCanvas = (originalContext, fillStyle) => {
     const originalCanvas = originalContext.canvas;
     if (fillStyle === null) {
-        fillStyle = "#00000000";
+        fillStyle = '#00000000';
     }
     if (doesColorRequireMask(fillStyle)) {
-        const tempCanvas = createCanvas(
-            originalCanvas.width,
-            originalCanvas.height
-        );
-        const tempContext = tempCanvas.getContext("2d");
+        const tempCanvas = createCanvas(originalCanvas.width, originalCanvas.height);
+        const tempContext = tempCanvas.getContext('2d');
         return {
             context: tempContext,
             unmask: () => {
-                tempContext.globalCompositeOperation = "source-in";
+                tempContext.globalCompositeOperation = 'source-in';
                 tempContext.fillStyle = fillStyle;
-                tempContext.fillRect(
-                    0,
-                    0,
-                    originalCanvas.width,
-                    originalCanvas.height
-                );
+                tempContext.fillRect(0, 0, originalCanvas.width, originalCanvas.height);
                 originalContext.drawImage(tempCanvas, 0, 0);
-            },
+            }
         };
     }
     // Simple colors do not require any tricks to draw.
     originalContext.fillStyle = fillStyle;
     return {
         context: originalContext,
-        unmask: () => {},
+        unmask: () => {}
     };
 };
 
@@ -125,8 +104,7 @@ const drawShearedEllipse_ = function (options, context) {
         return false;
     }
     // A, B, and C represent Ax^2 + Bxy + Cy^2 = 1 coefficients in a skewed ellipse formula
-    const A =
-        1 / radiusX / radiusX + (shearSlope * shearSlope) / radiusY / radiusY;
+    const A = 1 / radiusX / radiusX + (shearSlope * shearSlope) / radiusY / radiusY;
     const B = (-2 * shearSlope) / radiusY / radiusY;
     const C = 1 / radiusY / radiusY;
     // Line with slope1 intersects the ellipse where its derivative is 1
@@ -154,18 +132,8 @@ const drawShearedEllipse_ = function (options, context) {
             pX1 = Math.floor(x[0]);
             pX2 = Math.floor(x[1]);
             if (isFilled) {
-                context.fillRect(
-                    centerX - pX1 - 1,
-                    centerY + pY,
-                    pX1 - pX2 + 1,
-                    1
-                );
-                context.fillRect(
-                    centerX + pX2,
-                    centerY - pY - 1,
-                    pX1 - pX2 + 1,
-                    1
-                );
+                context.fillRect(centerX - pX1 - 1, centerY + pY, pX1 - pX2 + 1, 1);
+                context.fillRect(centerX + pX2, centerY - pY - 1, pX1 - pX2 + 1, 1);
             } else {
                 drawFn(centerX - pX1 - 1, centerY + pY);
                 drawFn(centerX + pX1, centerY - pY - 1);
@@ -173,7 +141,7 @@ const drawShearedEllipse_ = function (options, context) {
             y--;
             x = solveQuadratic_(A, B * y, C * y * y - 1);
         }
-        return pX1 || pY ? { x: pX1, y: pY } : null;
+        return pX1 || pY ? {x: pX1, y: pY} : null;
     };
 
     /**
@@ -195,18 +163,8 @@ const drawShearedEllipse_ = function (options, context) {
             pY1 = Math.floor(y[0]);
             pY2 = Math.floor(y[1]);
             if (isFilled) {
-                context.fillRect(
-                    centerX - pX - 1,
-                    centerY + pY2,
-                    1,
-                    pY1 - pY2 + 1
-                );
-                context.fillRect(
-                    centerX + pX,
-                    centerY - pY1 - 1,
-                    1,
-                    pY1 - pY2 + 1
-                );
+                context.fillRect(centerX - pX - 1, centerY + pY2, 1, pY1 - pY2 + 1);
+                context.fillRect(centerX + pX, centerY - pY1 - 1, 1, pY1 - pY2 + 1);
             } else {
                 drawFn(centerX - pX - 1, centerY + pY1);
                 drawFn(centerX + pX, centerY - pY1 - 1);
@@ -214,7 +172,7 @@ const drawShearedEllipse_ = function (options, context) {
             x++;
             y = solveQuadratic_(C, B * x, A * x * x - 1);
         }
-        return pX || pY1 ? { x: pX, y: pY1 } : null;
+        return pX || pY1 ? {x: pX, y: pY1} : null;
     };
 
     // Last point drawn
@@ -224,19 +182,16 @@ const drawShearedEllipse_ = function (options, context) {
         if (slope1 > 0) forwardLeaning = true;
 
         // step vertically
-        lastPoint = drawEllipseStepVertical_(
-            forwardLeaning ? -radiusY : radiusY,
-            (x, y) => {
-                if (x === 0 && y > 0) return true;
-                if (x === 0 && y < 0) return false;
-                return y / x > slope1;
-            }
-        );
+        lastPoint = drawEllipseStepVertical_(forwardLeaning ? -radiusY : radiusY, (x, y) => {
+            if (x === 0 && y > 0) return true;
+            if (x === 0 && y < 0) return false;
+            return y / x > slope1;
+        });
         // step horizontally while slope is flat
-        lastPoint = drawEllipseStepHorizontal_(
-            lastPoint ? -lastPoint.x + 0.5 : 0.5,
-            (x, y) => y / x > slope2
-        ) || { x: -lastPoint.x - 0.5, y: -lastPoint.y - 0.5 };
+        lastPoint = drawEllipseStepHorizontal_(lastPoint ? -lastPoint.x + 0.5 : 0.5, (x, y) => y / x > slope2) || {
+            x: -lastPoint.x - 0.5,
+            y: -lastPoint.y - 0.5
+        };
         // step vertically until back to start
         drawEllipseStepVertical_(lastPoint.y - 0.5, (x, y) => {
             if (forwardLeaning) return y > -radiusY;
@@ -247,14 +202,11 @@ const drawShearedEllipse_ = function (options, context) {
         lastPoint = drawEllipseStepHorizontal_(0.5, (x, y) => y / x > slope2);
         // step vertically while slope is steep
         lastPoint =
-            drawEllipseStepVertical_(
-                lastPoint ? lastPoint.y - 0.5 : radiusY,
-                (x, y) => {
-                    if (x === 0 && y > 0) return true;
-                    if (x === 0 && y < 0) return false;
-                    return y / x > slope1;
-                }
-            ) || lastPoint;
+            drawEllipseStepVertical_(lastPoint ? lastPoint.y - 0.5 : radiusY, (x, y) => {
+                if (x === 0 && y > 0) return true;
+                if (x === 0 && y < 0) return false;
+                return y / x > slope1;
+            }) || lastPoint;
         // step horizontally until back to start
         drawEllipseStepHorizontal_(-lastPoint.x + 0.5, x => x < 0);
     }
@@ -269,14 +221,11 @@ const drawShearedEllipse_ = function (options, context) {
  */
 const getBrushMark = function (size, color, isEraser) {
     size = ~~size;
-    const canvas = document.createElement("canvas");
+    const canvas = document.createElement('canvas');
     const roundedUpRadius = Math.ceil(size / 2);
     canvas.width = roundedUpRadius * 2;
     canvas.height = roundedUpRadius * 2;
-    const { context, unmask } = createMaskingCanvas(
-        canvas.getContext("2d"),
-        isEraser ? "white" : color
-    );
+    const {context, unmask} = createMaskingCanvas(canvas.getContext('2d'), isEraser ? 'white' : color);
     context.imageSmoothingEnabled = false;
     // Small squares for pixel artists
     if (size <= 5) {
@@ -285,7 +234,7 @@ const getBrushMark = function (size, color, isEraser) {
         if (isEraser) {
             context.fillStyle = getGuideColor();
             context.fillRect(offset, offset, size, size);
-            context.fillStyle = "white";
+            context.fillStyle = 'white';
             context.fillRect(offset + 1, offset + 1, size - 2, size - 2);
         } else {
             context.fillRect(offset, offset, size, size);
@@ -298,7 +247,7 @@ const getBrushMark = function (size, color, isEraser) {
                 radiusX: size / 2,
                 radiusY: size / 2,
                 shearSlope: 0,
-                isFilled: true,
+                isFilled: true
             },
             context
         );
@@ -313,7 +262,7 @@ const getBrushMark = function (size, color, isEraser) {
                     radiusY: size / 2,
                     shearSlope: 0,
                     isFilled: false,
-                    drawFn: (x, y) => context.fillRect(x, y, 1, 1),
+                    drawFn: (x, y) => context.fillRect(x, y, 1, 1)
                 },
                 context
             );
@@ -360,39 +309,26 @@ const drawEllipse = function (options, context) {
     // Outlines are drawn as a series of brush mark images and as such can't be drawn as gradients in the first place.
     let origContext;
     let tmpCanvas;
-    const { width: canvasWidth, height: canvasHeight } = context.canvas;
+    const {width: canvasWidth, height: canvasHeight} = context.canvas;
     if (needsMask) {
         tmpCanvas = createCanvas(canvasWidth, canvasHeight);
         origContext = context;
-        context = tmpCanvas.getContext("2d");
+        context = tmpCanvas.getContext('2d');
     }
 
     if (!isFilled) {
-        const brushMark = getBrushMark(
-            thickness,
-            needsMask ? "black" : context.fillStyle
-        );
+        const brushMark = getBrushMark(thickness, needsMask ? 'black' : context.fillStyle);
         const roundedUpRadius = Math.ceil(thickness / 2);
         drawFn = (x, y) => {
-            context.drawImage(
-                brushMark,
-                ~~x - roundedUpRadius,
-                ~~y - roundedUpRadius
-            );
+            context.drawImage(brushMark, ~~x - roundedUpRadius, ~~y - roundedUpRadius);
         };
     }
 
     // Calculate the ellipse formula
     // A, B, and C represent Ax^2 + Bxy + Cy^2 = 1 coefficients in a transformed ellipse formula
-    const A =
-        (inverse.a * inverse.a) / radiusX / radiusX +
-        (inverse.b * inverse.b) / radiusY / radiusY;
-    const B =
-        (2 * inverse.a * inverse.c) / radiusX / radiusX +
-        (2 * inverse.b * inverse.d) / radiusY / radiusY;
-    const C =
-        (inverse.c * inverse.c) / radiusX / radiusX +
-        (inverse.d * inverse.d) / radiusY / radiusY;
+    const A = (inverse.a * inverse.a) / radiusX / radiusX + (inverse.b * inverse.b) / radiusY / radiusY;
+    const B = (2 * inverse.a * inverse.c) / radiusX / radiusX + (2 * inverse.b * inverse.d) / radiusY / radiusY;
+    const C = (inverse.c * inverse.c) / radiusX / radiusX + (inverse.d * inverse.d) / radiusY / radiusY;
 
     // Convert to a sheared ellipse formula. All ellipses are equivalent to some sheared axis-aligned ellipse.
     // radiusA, radiusB, and slope are parameters of a skewed ellipse with the above formula
@@ -408,7 +344,7 @@ const drawEllipse = function (options, context) {
             radiusY: radiusB,
             shearSlope: slope,
             isFilled: isFilled,
-            drawFn: drawFn,
+            drawFn: drawFn
         },
         context
     );
@@ -416,7 +352,7 @@ const drawEllipse = function (options, context) {
     // Mask in the gradient only where the shape was drawn, and draw it. Then draw the gradientified shape onto the
     // original canvas normally.
     if (needsMask && wasDrawn) {
-        context.globalCompositeOperation = "source-in";
+        context.globalCompositeOperation = 'source-in';
         context.fillStyle = origContext.fillStyle;
         context.fillRect(0, 0, canvasWidth, canvasHeight);
         origContext.drawImage(tmpCanvas, 0, 0);
@@ -467,10 +403,7 @@ const getHitBounds = function (raster, rect) {
     while (left < right && columnBlank_(imageData, width, left, top, bottom)) {
         ++left;
     }
-    while (
-        right - 1 > left &&
-        columnBlank_(imageData, width, right - 1, top, bottom)
-    ) {
+    while (right - 1 > left && columnBlank_(imageData, width, right - 1, top, bottom)) {
         --right;
     }
 
@@ -482,12 +415,7 @@ const getHitBounds = function (raster, rect) {
         left = right = imageData.width / 2;
     }
 
-    return new paper.Rectangle(
-        left + bounds.left,
-        top + bounds.top,
-        right - left,
-        bottom - top
-    );
+    return new paper.Rectangle(left + bounds.left, top + bounds.top, right - left, bottom - top);
 };
 
 const trim_ = function (raster) {
@@ -514,11 +442,7 @@ const getTrimmedRaster = function (shouldInsert) {
     return trimmedRaster;
 };
 
-const convertToBitmap = function (
-    clearSelectedItems,
-    onUpdateImage,
-    optFontInlineFn
-) {
+const convertToBitmap = function (clearSelectedItems, onUpdateImage, optFontInlineFn) {
     // @todo if the active layer contains only rasters, drawing them directly to the raster layer
     // would be more efficient.
 
@@ -528,41 +452,29 @@ const convertToBitmap = function (
     const guideLayers = hideGuideLayers(true /* includeRaster */);
     const bounds = paper.project.activeLayer.drawnBounds;
     const svg = paper.project.exportSVG({
-        bounds: "content",
-        matrix: new paper.Matrix().translate(-bounds.x, -bounds.y),
+        bounds: 'content',
+        matrix: new paper.Matrix().translate(-bounds.x, -bounds.y)
     });
     showGuideLayers(guideLayers);
 
     // Get rid of anti-aliasing
     // @todo get crisp text https://github.com/LLK/scratch-paint/issues/508
-    svg.setAttribute("shape-rendering", "crispEdges");
+    svg.setAttribute('shape-rendering', 'crispEdges');
 
     let svgString = new XMLSerializer().serializeToString(svg);
     if (optFontInlineFn) {
         svgString = optFontInlineFn(svgString);
     } else {
-        log.error(
-            "Fonts may be converted to bitmap incorrectly if fontInlineFn prop is not set on PaintEditor."
-        );
+        log.error('Fonts may be converted to bitmap incorrectly if fontInlineFn prop is not set on PaintEditor.');
     }
 
     // Put anti-aliased SVG into image, and dump image back into canvas
     const img = new Image();
     img.onload = () => {
         if (img.width && img.height) {
-            getRaster().drawImage(
-                img,
-                new paper.Point(
-                    Math.floor(bounds.topLeft.x),
-                    Math.floor(bounds.topLeft.y)
-                )
-            );
+            getRaster().drawImage(img, new paper.Point(Math.floor(bounds.topLeft.x), Math.floor(bounds.topLeft.y)));
         }
-        for (
-            let i = paper.project.activeLayer.children.length - 1;
-            i >= 0;
-            i--
-        ) {
+        for (let i = paper.project.activeLayer.children.length - 1; i >= 0; i--) {
             const item = paper.project.activeLayer.children[i];
             if (item.clipMask === false || !item.guide) {
                 item.remove();
@@ -573,27 +485,18 @@ const convertToBitmap = function (
                 item.setPosition(CENTER);
             }
         }
-        onUpdateImage(
-            false /* skipSnapshot */,
-            Formats.BITMAP /* formatOverride */
-        );
+        onUpdateImage(false /* skipSnapshot */, Formats.BITMAP /* formatOverride */);
     };
     img.onerror = () => {
         // Fallback if browser does not support SVG data URIs in images.
         // The problem with rasterize is that it will anti-alias.
-        const raster = paper.project.activeLayer.rasterize(
-            72,
-            false /* insert */
-        );
+        const raster = paper.project.activeLayer.rasterize(72, false /* insert */);
         raster.onLoad = () => {
             if (raster.canvas.width && raster.canvas.height) {
                 getRaster().drawImage(raster.canvas, raster.bounds.topLeft);
             }
             paper.project.activeLayer.removeChildren();
-            onUpdateImage(
-                false /* skipSnapshot */,
-                Formats.BITMAP /* formatOverride */
-            );
+            onUpdateImage(false /* skipSnapshot */, Formats.BITMAP /* formatOverride */);
         };
     };
     // Hash tags will break image loading without being encoded first
@@ -613,10 +516,7 @@ const convertToVector = function (clearSelectedItems, onUpdateImage) {
     getTrimmedRaster(true /* shouldInsert */);
 
     clearRaster();
-    onUpdateImage(
-        false /* skipSnapshot */,
-        Formats.VECTOR /* formatOverride */
-    );
+    onUpdateImage(false /* skipSnapshot */, Formats.VECTOR /* formatOverride */);
 };
 
 const getColor_ = function (x, y, context) {
@@ -655,15 +555,7 @@ const colorPixel_ = function (x, y, imageData, newColor) {
  *     This must be different from newColor.
  * @param {!Array<Array<int>>} stack The stack of pixels we need to look at
  */
-const floodFillInternal_ = function (
-    x,
-    y,
-    sourceImageData,
-    destImageData,
-    newColor,
-    oldColor,
-    stack
-) {
+const floodFillInternal_ = function (x, y, sourceImageData, destImageData, newColor, oldColor, stack) {
     while (y > 0 && matchesColor_(x, y - 1, sourceImageData, oldColor)) {
         y--;
     }
@@ -702,10 +594,10 @@ const floodFillInternal_ = function (
  * @return {Array<int>} Color, a length 4 array
  */
 const fillStyleToColor_ = function (fillStyleString) {
-    const tmpCanvas = document.createElement("canvas");
+    const tmpCanvas = document.createElement('canvas');
     tmpCanvas.width = 1;
     tmpCanvas.height = 1;
-    const context = tmpCanvas.getContext("2d");
+    const context = tmpCanvas.getContext('2d');
     context.fillStyle = fillStyleString;
     context.fillRect(0, 0, 1, 1);
     return context.getImageData(0, 0, 1, 1).data;
@@ -726,18 +618,10 @@ const floodFill = function (x, y, color, sourceContext, destContext) {
     y = ~~y;
     const newColor = fillStyleToColor_(color);
     const oldColor = getColor_(x, y, sourceContext);
-    const sourceImageData = sourceContext.getImageData(
-        0,
-        0,
-        sourceContext.canvas.width,
-        sourceContext.canvas.height
-    );
+    const sourceImageData = sourceContext.getImageData(0, 0, sourceContext.canvas.width, sourceContext.canvas.height);
     let destImageData = sourceImageData;
     if (destContext !== sourceContext) {
-        destImageData = new ImageData(
-            sourceContext.canvas.width,
-            sourceContext.canvas.height
-        );
+        destImageData = new ImageData(sourceContext.canvas.width, sourceContext.canvas.height);
     }
     if (
         oldColor[0] === newColor[0] &&
@@ -751,15 +635,7 @@ const floodFill = function (x, y, color, sourceContext, destContext) {
     const stack = [[x, y]];
     while (stack.length) {
         const pop = stack.pop();
-        floodFillInternal_(
-            pop[0],
-            pop[1],
-            sourceImageData,
-            destImageData,
-            newColor,
-            oldColor,
-            stack
-        );
+        floodFillInternal_(pop[0], pop[1], sourceImageData, destImageData, newColor, oldColor, stack);
     }
     destContext.putImageData(destImageData, 0, 0);
     return true;
@@ -779,18 +655,10 @@ const floodFillAll = function (x, y, color, sourceContext, destContext) {
     y = ~~y;
     const newColor = fillStyleToColor_(color);
     const oldColor = getColor_(x, y, sourceContext);
-    const sourceImageData = sourceContext.getImageData(
-        0,
-        0,
-        sourceContext.canvas.width,
-        sourceContext.canvas.height
-    );
+    const sourceImageData = sourceContext.getImageData(0, 0, sourceContext.canvas.width, sourceContext.canvas.height);
     let destImageData = sourceImageData;
     if (destContext !== sourceContext) {
-        destImageData = new ImageData(
-            sourceContext.canvas.width,
-            sourceContext.canvas.height
-        );
+        destImageData = new ImageData(sourceContext.canvas.width, sourceContext.canvas.height);
     }
     if (
         oldColor[0] === newColor[0] &&
@@ -829,47 +697,27 @@ const fillRect = function (rect, context) {
         );
         return;
     }
-    const startPoint = rect.matrix.transform(
-        new paper.Point(-rect.size.width / 2, -rect.size.height / 2)
-    );
-    const widthPoint = rect.matrix.transform(
-        new paper.Point(rect.size.width / 2, -rect.size.height / 2)
-    );
-    const heightPoint = rect.matrix.transform(
-        new paper.Point(-rect.size.width / 2, rect.size.height / 2)
-    );
-    const endPoint = rect.matrix.transform(
-        new paper.Point(rect.size.width / 2, rect.size.height / 2)
-    );
+    const startPoint = rect.matrix.transform(new paper.Point(-rect.size.width / 2, -rect.size.height / 2));
+    const widthPoint = rect.matrix.transform(new paper.Point(rect.size.width / 2, -rect.size.height / 2));
+    const heightPoint = rect.matrix.transform(new paper.Point(-rect.size.width / 2, rect.size.height / 2));
+    const endPoint = rect.matrix.transform(new paper.Point(rect.size.width / 2, rect.size.height / 2));
     const center = rect.matrix.transform(new paper.Point());
-    const points = [startPoint, widthPoint, heightPoint, endPoint].sort(
-        (a, b) => a.x - b.x
-    );
+    const points = [startPoint, widthPoint, heightPoint, endPoint].sort((a, b) => a.x - b.x);
 
     const solveY = (point1, point2, x) => {
         if (point2.x === point1.x) {
-            return center.x > point1.x
-                ? Number.NEGATIVE_INFINITY
-                : Number.POSITIVE_INFINITY;
+            return center.x > point1.x ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY;
         }
-        return (
-            ((point2.y - point1.y) / (point2.x - point1.x)) * (x - point1.x) +
-            point1.y
-        );
+        return ((point2.y - point1.y) / (point2.x - point1.x)) * (x - point1.x) + point1.y;
     };
     for (let x = Math.round(points[0].x); x < Math.round(points[3].x); x++) {
         const ys = [
             solveY(startPoint, widthPoint, x + 0.5),
             solveY(startPoint, heightPoint, x + 0.5),
             solveY(endPoint, widthPoint, x + 0.5),
-            solveY(endPoint, heightPoint, x + 0.5),
+            solveY(endPoint, heightPoint, x + 0.5)
         ].sort((a, b) => a - b);
-        context.fillRect(
-            x,
-            Math.round(ys[1]),
-            1,
-            Math.max(1, Math.round(ys[2]) - Math.round(ys[1]))
-        );
+        context.fillRect(x, Math.round(ys[1]), 1, Math.max(1, Math.round(ys[2]) - Math.round(ys[1])));
     }
 };
 
@@ -882,11 +730,7 @@ const outlineRect = function (rect, thickness, context) {
     const brushMark = getBrushMark(thickness, context.fillStyle);
     const roundedUpRadius = Math.ceil(thickness / 2);
     const drawFn = (x, y) => {
-        context.drawImage(
-            brushMark,
-            ~~x - roundedUpRadius,
-            ~~y - roundedUpRadius
-        );
+        context.drawImage(brushMark, ~~x - roundedUpRadius, ~~y - roundedUpRadius);
     };
 
     const needsMask = doesColorRequireMask(context.fillStyle);
@@ -896,25 +740,17 @@ const outlineRect = function (rect, thickness, context) {
     // gradients.
     let origContext;
     let tmpCanvas;
-    const { width: canvasWidth, height: canvasHeight } = context.canvas;
+    const {width: canvasWidth, height: canvasHeight} = context.canvas;
     if (needsMask) {
         tmpCanvas = createCanvas(canvasWidth, canvasHeight);
         origContext = context;
-        context = tmpCanvas.getContext("2d");
+        context = tmpCanvas.getContext('2d');
     }
 
-    const startPoint = rect.matrix.transform(
-        new paper.Point(-rect.size.width / 2, -rect.size.height / 2)
-    );
-    const widthPoint = rect.matrix.transform(
-        new paper.Point(rect.size.width / 2, -rect.size.height / 2)
-    );
-    const heightPoint = rect.matrix.transform(
-        new paper.Point(-rect.size.width / 2, rect.size.height / 2)
-    );
-    const endPoint = rect.matrix.transform(
-        new paper.Point(rect.size.width / 2, rect.size.height / 2)
-    );
+    const startPoint = rect.matrix.transform(new paper.Point(-rect.size.width / 2, -rect.size.height / 2));
+    const widthPoint = rect.matrix.transform(new paper.Point(rect.size.width / 2, -rect.size.height / 2));
+    const heightPoint = rect.matrix.transform(new paper.Point(-rect.size.width / 2, rect.size.height / 2));
+    const endPoint = rect.matrix.transform(new paper.Point(rect.size.width / 2, rect.size.height / 2));
 
     forEachLinePoint(startPoint, widthPoint, drawFn);
     forEachLinePoint(startPoint, heightPoint, drawFn);
@@ -924,7 +760,7 @@ const outlineRect = function (rect, thickness, context) {
     // Mask in the gradient only where the shape was drawn, and draw it. Then draw the gradientified shape onto the
     // original canvas normally.
     if (needsMask) {
-        context.globalCompositeOperation = "source-in";
+        context.globalCompositeOperation = 'source-in';
         context.fillStyle = origContext.fillStyle;
         context.fillRect(0, 0, canvasWidth, canvasHeight);
         origContext.drawImage(tmpCanvas, 0, 0);
@@ -933,7 +769,7 @@ const outlineRect = function (rect, thickness, context) {
 
 const flipBitmapHorizontal = function (canvas) {
     const tmpCanvas = createCanvas(canvas.width, canvas.height);
-    const context = tmpCanvas.getContext("2d");
+    const context = tmpCanvas.getContext('2d');
     context.save();
     context.scale(-1, 1);
     context.drawImage(canvas, 0, 0, -tmpCanvas.width, tmpCanvas.height);
@@ -943,7 +779,7 @@ const flipBitmapHorizontal = function (canvas) {
 
 const flipBitmapVertical = function (canvas) {
     const tmpCanvas = createCanvas(canvas.width, canvas.height);
-    const context = tmpCanvas.getContext("2d");
+    const context = tmpCanvas.getContext('2d');
     context.save();
     context.scale(1, -1);
     context.drawImage(canvas, 0, 0, tmpCanvas.width, -tmpCanvas.height);
@@ -952,27 +788,17 @@ const flipBitmapVertical = function (canvas) {
 };
 
 const scaleBitmap = function (canvas, scale) {
-    let tmpCanvas = createCanvas(
-        Math.round(canvas.width * Math.abs(scale.x)),
-        canvas.height
-    );
+    let tmpCanvas = createCanvas(Math.round(canvas.width * Math.abs(scale.x)), canvas.height);
     if (scale.x < 0) {
         canvas = flipBitmapHorizontal(canvas);
     }
-    tmpCanvas
-        .getContext("2d")
-        .drawImage(canvas, 0, 0, tmpCanvas.width, tmpCanvas.height);
+    tmpCanvas.getContext('2d').drawImage(canvas, 0, 0, tmpCanvas.width, tmpCanvas.height);
     canvas = tmpCanvas;
-    tmpCanvas = createCanvas(
-        canvas.width,
-        Math.round(canvas.height * Math.abs(scale.y))
-    );
+    tmpCanvas = createCanvas(canvas.width, Math.round(canvas.height * Math.abs(scale.y)));
     if (scale.y < 0) {
         canvas = flipBitmapVertical(canvas);
     }
-    tmpCanvas
-        .getContext("2d")
-        .drawImage(canvas, 0, 0, tmpCanvas.width, tmpCanvas.height);
+    tmpCanvas.getContext('2d').drawImage(canvas, 0, 0, tmpCanvas.width, tmpCanvas.height);
     return tmpCanvas;
 };
 
@@ -995,19 +821,11 @@ const maybeApplyScaleToCanvas_ = function (item) {
     ) {
         item.canvas = scaleBitmap(item.canvas, decomposed.scaling);
         if (item.data && item.data.expanded) {
-            item.data.expanded.canvas = scaleBitmap(
-                item.data.expanded.canvas,
-                decomposed.scaling
-            );
+            item.data.expanded.canvas = scaleBitmap(item.data.expanded.canvas, decomposed.scaling);
         }
         // Remove the scale from the item's matrix
         item.matrix.append(
-            new paper.Matrix().scale(
-                new paper.Point(
-                    1 / decomposed.scaling.x,
-                    1 / decomposed.scaling.y
-                )
-            )
+            new paper.Matrix().scale(new paper.Point(1 / decomposed.scaling.x, 1 / decomposed.scaling.y))
         );
     }
 };
@@ -1021,13 +839,13 @@ const maybeApplyScaleToCanvas_ = function (item) {
 const commitArbitraryTransformation_ = function (item, destination) {
     // Create a canvas to perform masking
     const tmpCanvas = createCanvas();
-    const context = tmpCanvas.getContext("2d");
+    const context = tmpCanvas.getContext('2d');
     // Draw mask
     const rect = new paper.Shape.Rectangle(new paper.Point(), item.size);
     rect.matrix = item.matrix;
     fillRect(rect, context);
     rect.remove();
-    context.globalCompositeOperation = "source-in";
+    context.globalCompositeOperation = 'source-in';
 
     // Draw image onto mask
     const m = item.matrix;
@@ -1069,13 +887,13 @@ const commitSelectionToBitmap = function (selection, bitmap) {
  */
 const _paperColorToCanvasStyle = function (color, context) {
     if (!color) return null;
-    if (color.type === "gradient") {
+    if (color.type === 'gradient') {
         let canvasGradient;
-        const { origin, destination } = color;
+        const {origin, destination} = color;
         if (color.gradient.radial) {
             // Adapted from:
             // https://github.com/paperjs/paper.js/blob/b081fd72c72cd61331313c3961edb48f3dfaffbd/src/style/Color.js#L926-L935
-            let { highlight } = color;
+            let {highlight} = color;
             const start = highlight || origin;
             const radius = destination.getDistance(origin);
             if (highlight) {
@@ -1085,33 +903,18 @@ const _paperColorToCanvasStyle = function (color, context) {
                     highlight = origin.add(vector.normalize(radius - 0.1));
                 }
             }
-            canvasGradient = context.createRadialGradient(
-                start.x,
-                start.y,
-                0,
-                origin.x,
-                origin.y,
-                radius
-            );
+            canvasGradient = context.createRadialGradient(start.x, start.y, 0, origin.x, origin.y, radius);
         } else {
-            canvasGradient = context.createLinearGradient(
-                origin.x,
-                origin.y,
-                destination.x,
-                destination.y
-            );
+            canvasGradient = context.createLinearGradient(origin.x, origin.y, destination.x, destination.y);
         }
 
-        const { stops } = color.gradient;
+        const {stops} = color.gradient;
         // Adapted from:
         // https://github.com/paperjs/paper.js/blob/b081fd72c72cd61331313c3961edb48f3dfaffbd/src/style/Color.js#L940-L950
         for (let i = 0, len = stops.length; i < len; i++) {
             const stop = stops[i];
             const offset = stop.offset;
-            canvasGradient.addColorStop(
-                offset || i / (len - 1),
-                stop.color.toCSS()
-            );
+            canvasGradient.addColorStop(offset || i / (len - 1), stop.color.toCSS());
         }
         return canvasGradient;
     }
@@ -1126,13 +929,10 @@ const _paperColorToCanvasStyle = function (color, context) {
 const commitOvalToBitmap = function (oval, bitmap) {
     const radiusX = Math.abs(oval.size.width / 2);
     const radiusY = Math.abs(oval.size.height / 2);
-    const context = bitmap.getContext("2d");
+    const context = bitmap.getContext('2d');
     const filled = oval.strokeWidth === 0;
 
-    const canvasColor = _paperColorToCanvasStyle(
-        filled ? oval.fillColor : oval.strokeColor,
-        context
-    );
+    const canvasColor = _paperColorToCanvasStyle(filled ? oval.fillColor : oval.strokeColor, context);
     // If the color is null (e.g. fully transparent/"no fill"), don't bother drawing anything
     if (!canvasColor) return;
 
@@ -1145,7 +945,7 @@ const commitOvalToBitmap = function (oval, bitmap) {
             radiusY,
             matrix: oval.matrix,
             isFilled: filled,
-            thickness: oval.strokeWidth / paper.view.zoom,
+            thickness: oval.strokeWidth / paper.view.zoom
         },
         context
     );
@@ -1159,13 +959,10 @@ const commitOvalToBitmap = function (oval, bitmap) {
  */
 const commitRectToBitmap = function (rect, bitmap) {
     const tmpCanvas = createCanvas();
-    const context = tmpCanvas.getContext("2d");
+    const context = tmpCanvas.getContext('2d');
     const filled = rect.strokeWidth === 0;
 
-    const canvasColor = _paperColorToCanvasStyle(
-        filled ? rect.fillColor : rect.strokeColor,
-        context
-    );
+    const canvasColor = _paperColorToCanvasStyle(filled ? rect.fillColor : rect.strokeColor, context);
     // If the color is null (e.g. fully transparent/"no fill"), don't bother drawing anything
     if (!canvasColor) return;
 
@@ -1212,5 +1009,5 @@ export {
     flipBitmapHorizontal,
     flipBitmapVertical,
     scaleBitmap,
-    selectAllBitmap,
+    selectAllBitmap
 };

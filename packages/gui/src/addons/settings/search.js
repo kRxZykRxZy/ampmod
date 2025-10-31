@@ -16,23 +16,23 @@
 
 const normalize = text =>
     text
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
         .toLowerCase()
-        .replace(/['"()\-+,./[\]]/g, " ")
+        .replace(/['"()\-+,./[\]]/g, ' ')
         .trim();
 
 const splitToWords = text =>
     normalize(text)
-        .split(" ")
+        .split(' ')
         .filter(i => i);
 
 const parseTexts = texts => {
     const result = [];
-    for (const { score, text } of texts) {
+    for (const {score, text} of texts) {
         result.push({
             score,
-            words: splitToWords(text),
+            words: splitToWords(text)
         });
     }
     return result;
@@ -79,7 +79,7 @@ class Search {
             if (score > 0) {
                 result.push({
                     index: i,
-                    score,
+                    score
                 });
             }
         }

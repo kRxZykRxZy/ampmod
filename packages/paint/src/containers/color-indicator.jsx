@@ -1,39 +1,34 @@
-import PropTypes from "prop-types";
-import React from "react";
-import bindAll from "lodash.bindall";
-import parseColor from "parse-color";
-import { injectIntl, intlShape } from "react-intl";
+import PropTypes from 'prop-types';
+import React from 'react';
+import bindAll from 'lodash.bindall';
+import parseColor from 'parse-color';
+import {injectIntl, intlShape} from 'react-intl';
 
-import { getSelectedLeafItems } from "../helper/selection";
-import Formats, { isBitmap } from "../lib/format";
-import GradientTypes from "../lib/gradient-types";
+import {getSelectedLeafItems} from '../helper/selection';
+import Formats, {isBitmap} from '../lib/format';
+import GradientTypes from '../lib/gradient-types';
 
-import ColorIndicatorComponent from "../components/color-indicator.jsx";
+import ColorIndicatorComponent from '../components/color-indicator.jsx';
 import {
     applyColorToSelection,
     applyGradientTypeToSelection,
     applyStrokeWidthToSelection,
     generateSecondaryColor,
     swapColorsInSelection,
-    MIXED,
-} from "../helper/style-path";
+    MIXED
+} from '../helper/style-path';
 
 const makeColorIndicator = (label, isStroke) => {
     class ColorIndicator extends React.Component {
         constructor(props) {
             super(props);
-            bindAll(this, [
-                "handleChangeColor",
-                "handleChangeGradientType",
-                "handleCloseColor",
-                "handleSwap",
-            ]);
+            bindAll(this, ['handleChangeColor', 'handleChangeGradientType', 'handleCloseColor', 'handleSwap']);
 
             // Flag to track whether an svg-update-worthy change has been made
             this._hasChanged = false;
         }
         componentWillReceiveProps(newProps) {
-            const { colorModalVisible, onUpdateImage } = this.props;
+            const {colorModalVisible, onUpdateImage} = this.props;
             if (colorModalVisible && !newProps.colorModalVisible) {
                 // Submit the new SVG, which also stores a single undo/redo action.
                 if (this._hasChanged) onUpdateImage();
@@ -50,13 +45,9 @@ const makeColorIndicator = (label, isStroke) => {
                 const oldStyleWasNull =
                     this.props.gradientType === GradientTypes.SOLID
                         ? this.props.color === null
-                        : this.props.color === null &&
-                          this.props.color2 === null;
+                        : this.props.color === null && this.props.color2 === null;
 
-                const otherColor =
-                    this.props.colorIndex === 1
-                        ? this.props.color
-                        : this.props.color2;
+                const otherColor = this.props.colorIndex === 1 ? this.props.color : this.props.color2;
                 // Whether the new color style in this color indicator is null.
                 const newStyleIsNull =
                     this.props.gradientType === GradientTypes.SOLID
@@ -64,18 +55,10 @@ const makeColorIndicator = (label, isStroke) => {
                         : newColor === null && otherColor === null;
 
                 if (oldStyleWasNull && !newStyleIsNull) {
-                    this._hasChanged =
-                        applyStrokeWidthToSelection(
-                            1,
-                            this.props.textEditTarget
-                        ) || this._hasChanged;
+                    this._hasChanged = applyStrokeWidthToSelection(1, this.props.textEditTarget) || this._hasChanged;
                     this.props.onChangeStrokeWidth(1);
                 } else if (!oldStyleWasNull && newStyleIsNull) {
-                    this._hasChanged =
-                        applyStrokeWidthToSelection(
-                            0,
-                            this.props.textEditTarget
-                        ) || this._hasChanged;
+                    this._hasChanged = applyStrokeWidthToSelection(0, this.props.textEditTarget) || this._hasChanged;
                     this.props.onChangeStrokeWidth(0);
                 }
             }
@@ -110,21 +93,14 @@ const makeColorIndicator = (label, isStroke) => {
                     this.props.setSelectedItems(this.props.format);
                 }
             }
-            if (
-                this.props.gradientType === GradientTypes.SOLID &&
-                gradientType !== GradientTypes.SOLID
-            ) {
+            if (this.props.gradientType === GradientTypes.SOLID && gradientType !== GradientTypes.SOLID) {
                 // Generate color 2 and change to the 2nd swatch when switching from solid to gradient
                 if (!hasSelectedItems) {
-                    this.props.onChangeColor(
-                        generateSecondaryColor(this.props.color),
-                        1
-                    );
+                    this.props.onChangeColor(generateSecondaryColor(this.props.color), 1);
                 }
                 this.props.onChangeColorIndex(1);
             }
-            if (this.props.onChangeGradientType)
-                this.props.onChangeGradientType(gradientType);
+            if (this.props.onChangeGradientType) this.props.onChangeGradientType(gradientType);
         }
         handleCloseColor() {
             // If the eyedropper is currently being used, don't
@@ -141,8 +117,7 @@ const makeColorIndicator = (label, isStroke) => {
             if (getSelectedLeafItems().length) {
                 const formatIsBitmap = isBitmap(this.props.format);
                 const isDifferent = swapColorsInSelection(
-                    isStroke ||
-                        (formatIsBitmap && !this.props.fillBitmapShapes),
+                    isStroke || (formatIsBitmap && !this.props.fillBitmapShapes),
                     this.props.textEditTarget
                 );
                 this.props.setSelectedItems(this.props.format);
@@ -150,14 +125,8 @@ const makeColorIndicator = (label, isStroke) => {
             } else {
                 let color1 = this.props.color;
                 let color2 = this.props.color2;
-                color1 =
-                    color1 === null || color1 === MIXED
-                        ? color1
-                        : parseColor(color1).hex;
-                color2 =
-                    color2 === null || color2 === MIXED
-                        ? color2
-                        : parseColor(color2).hex;
+                color1 = color1 === null || color1 === MIXED ? color1 : parseColor(color1).hex;
+                color2 = color2 === null || color2 === MIXED ? color2 : parseColor(color2).hex;
                 this.props.onChangeColor(color1, 1);
                 this.props.onChangeColor(color2, 0);
             }
@@ -195,7 +164,7 @@ const makeColorIndicator = (label, isStroke) => {
         onCloseColor: PropTypes.func.isRequired,
         onUpdateImage: PropTypes.func.isRequired,
         setSelectedItems: PropTypes.func.isRequired,
-        textEditTarget: PropTypes.number,
+        textEditTarget: PropTypes.number
     };
 
     return injectIntl(ColorIndicator);

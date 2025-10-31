@@ -1,26 +1,22 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
-import bindAll from "lodash.bindall";
-import Modes from "../lib/modes";
-import { MIXED } from "../helper/style-path";
+import PropTypes from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
+import bindAll from 'lodash.bindall';
+import Modes from '../lib/modes';
+import {MIXED} from '../helper/style-path';
 
-import {
-    changeFillColor,
-    clearFillGradient,
-    DEFAULT_COLOR,
-} from "../reducers/fill-style";
-import { changeMode } from "../reducers/modes";
-import { clearSelectedItems } from "../reducers/selected-items";
-import { clearSelection } from "../helper/selection";
+import {changeFillColor, clearFillGradient, DEFAULT_COLOR} from '../reducers/fill-style';
+import {changeMode} from '../reducers/modes';
+import {clearSelectedItems} from '../reducers/selected-items';
+import {clearSelection} from '../helper/selection';
 
-import BitLineModeComponent from "../components/bit-line-mode/bit-line-mode.jsx";
-import BitLineTool from "../helper/bit-tools/line-tool";
+import BitLineModeComponent from '../components/bit-line-mode/bit-line-mode.jsx';
+import BitLineTool from '../helper/bit-tools/line-tool';
 
 class BitLineMode extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["activateTool", "deactivateTool"]);
+        bindAll(this, ['activateTool', 'deactivateTool']);
     }
     componentDidMount() {
         if (this.props.isBitLineModeActive) {
@@ -37,10 +33,7 @@ class BitLineMode extends React.Component {
 
         if (nextProps.isBitLineModeActive && !this.props.isBitLineModeActive) {
             this.activateTool();
-        } else if (
-            !nextProps.isBitLineModeActive &&
-            this.props.isBitLineModeActive
-        ) {
+        } else if (!nextProps.isBitLineModeActive && this.props.isBitLineModeActive) {
             this.deactivateTool();
         }
     }
@@ -90,13 +83,13 @@ BitLineMode.propTypes = {
     handleMouseDown: PropTypes.func.isRequired,
     isBitLineModeActive: PropTypes.bool.isRequired,
     onChangeFillColor: PropTypes.func.isRequired,
-    onUpdateImage: PropTypes.func.isRequired,
+    onUpdateImage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
     bitBrushSize: state.scratchPaint.bitBrushSize,
     color: state.scratchPaint.color.fillColor.primary,
-    isBitLineModeActive: state.scratchPaint.mode === Modes.BIT_LINE,
+    isBitLineModeActive: state.scratchPaint.mode === Modes.BIT_LINE
 });
 const mapDispatchToProps = dispatch => ({
     clearSelectedItems: () => {
@@ -110,7 +103,7 @@ const mapDispatchToProps = dispatch => ({
     },
     onChangeFillColor: fillColor => {
         dispatch(changeFillColor(fillColor));
-    },
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BitLineMode);

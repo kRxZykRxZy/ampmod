@@ -1,6 +1,6 @@
-@import "../../css/units.css";
-@import "../../css/colors.css";
-@import "../../css/z-index.css";
+@import '../../css/units.css';
+@import '../../css/colors.css';
+@import '../../css/z-index.css';
 
 .alert {
     width: 100%;
@@ -89,11 +89,11 @@
     outline-style: none;
 }
 
-[dir="ltr"] .alert-connection-button {
+[dir='ltr'] .alert-connection-button {
     margin-right: 13px;
 }
 
-[dir="rtl"] .alert-connection-button {
+[dir='rtl'] .alert-connection-button {
     margin-left: 13px;
 }
 

@@ -1,4 +1,4 @@
-@import "../../css/colors.css";
+@import '../../css/colors.css';
 
 .menu {
     position: absolute;
@@ -10,8 +10,7 @@
     min-width: 186px;
     overflow: visible;
     box-shadow: 0 8px 8px 0 $shadow;
-    font-family:
-        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .menu.left {
@@ -31,8 +30,7 @@
     margin: 0;
     font-weight: bold;
     position: relative;
-    font-family:
-        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     transition: background-color 0.2s;
 }
 

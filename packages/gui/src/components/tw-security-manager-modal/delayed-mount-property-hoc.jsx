@@ -1,21 +1,17 @@
-import React from "react";
+import React from 'react';
 
-const DelayedMountPropertyHOC = function (
-    WrappedComponent,
-    duration,
-    delayedProps
-) {
+const DelayedMountPropertyHOC = function (WrappedComponent, duration, delayedProps) {
     class DelayedMountProperty extends React.Component {
         constructor(props) {
             super(props);
             this.state = {
-                done: false,
+                done: false
             };
         }
         componentDidMount() {
             this.timeout = setTimeout(() => {
                 this.setState({
-                    done: true,
+                    done: true
                 });
             }, duration);
         }
@@ -28,7 +24,7 @@ const DelayedMountPropertyHOC = function (
                     {...(this.state.done
                         ? {
                               ...this.props,
-                              ...delayedProps,
+                              ...delayedProps
                           }
                         : this.props)}
                 />

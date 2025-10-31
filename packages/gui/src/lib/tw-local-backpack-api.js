@@ -1,20 +1,19 @@
-import storage from "./storage";
-import md5 from "js-md5";
-import { soundThumbnail } from "./backpack/sound-payload";
-import { arrayBufferToBase64, base64ToArrayBuffer } from "./tw-base64-utils";
-import { requestPersistentStorage } from "./tw-persistent-storage";
+import storage from './storage';
+import md5 from 'js-md5';
+import {soundThumbnail} from './backpack/sound-payload';
+import {arrayBufferToBase64, base64ToArrayBuffer} from './tw-base64-utils';
+import {requestPersistentStorage} from './tw-persistent-storage';
 
 // Special constants -- do not change without care.
-const DATABASE_NAME =
-    process.env.ampmod_mode === "canary" ? "Canary_Backpack" : "Amp_Backpack";
-const DATABASE_VERSION = process.env.ampmod_mode === "canary" ? 1 : 2;
-const STORE_NAME = "backpack";
+const DATABASE_NAME = process.env.ampmod_mode === 'canary' ? 'Canary_Backpack' : 'Amp_Backpack';
+const DATABASE_VERSION = process.env.ampmod_mode === 'canary' ? 1 : 2;
+const STORE_NAME = 'backpack';
 
 const idbItemToBackpackItem = item => {
     // convert id to string
     item.id = `${item.id}`;
 
-    if (item.type === "sound") {
+    if (item.type === 'sound') {
         // For sounds, use the local thumbnail instead of what was stored in the backpack.
         // The thumbnail was updated and it doesn't make sense for already backpacked sounds to
         // use the old icon instead of the new one.
@@ -25,17 +24,17 @@ const idbItemToBackpackItem = item => {
     }
 
     let assetType;
-    if (item.type === "script") {
+    if (item.type === 'script') {
         item.bodyUrl = `data:application/json;base64,${arrayBufferToBase64(item.bodyData)}`;
-    } else if (item.type === "sprite") {
+    } else if (item.type === 'sprite') {
         item.bodyUrl = `data:application/zip;base64,${arrayBufferToBase64(item.bodyData)}`;
-    } else if (item.type === "costume") {
-        if (item.mime === "image/svg+xml") {
+    } else if (item.type === 'costume') {
+        if (item.mime === 'image/svg+xml') {
             assetType = storage.AssetType.ImageVector;
-        } else if (item.mime === "image/png" || item.mime === "image/jpeg") {
+        } else if (item.mime === 'image/png' || item.mime === 'image/jpeg') {
             assetType = storage.AssetType.ImageBitmap;
         }
-    } else if (item.type === "sound") {
+    } else if (item.type === 'sound') {
         assetType = storage.AssetType.Sound;
     }
 
@@ -44,12 +43,7 @@ const idbItemToBackpackItem = item => {
         const itemMD5 = item.bodyMD5;
         const md5ext = `${itemMD5}.${extension}`;
         item.body = md5ext;
-        storage.builtinHelper._store(
-            assetType,
-            extension,
-            new Uint8Array(item.bodyData),
-            itemMD5
-        );
+        storage.builtinHelper._store(assetType, extension, new Uint8Array(item.bodyData), itemMD5);
     }
 
     return item;
@@ -64,7 +58,7 @@ const openDB = () =>
         }
 
         if (!window.indexedDB) {
-            reject(new Error("indexedDB is not supported"));
+            reject(new Error('indexedDB is not supported'));
             return;
         }
 
@@ -73,8 +67,8 @@ const openDB = () =>
         request.onupgradeneeded = event => {
             const db = event.target.result;
             db.createObjectStore(STORE_NAME, {
-                keyPath: "id",
-                autoIncrement: true,
+                keyPath: 'id',
+                autoIncrement: true
             });
         };
 
@@ -88,16 +82,16 @@ const openDB = () =>
         };
     });
 
-const getBackpackContents = async ({ limit, offset }) => {
+const getBackpackContents = async ({limit, offset}) => {
     const db = await openDB();
     return new Promise((resolve, reject) => {
-        const transaction = db.transaction(STORE_NAME, "readonly");
+        const transaction = db.transaction(STORE_NAME, 'readonly');
         transaction.onerror = event => {
             reject(new Error(`Getting contents: ${event.target.error}`));
         };
         const store = transaction.objectStore(STORE_NAME);
         const items = [];
-        const request = store.openCursor(null, "prev");
+        const request = store.openCursor(null, 'prev');
         let first = true;
         request.onsuccess = e => {
             const cursor = e.target.result;
@@ -118,13 +112,13 @@ const getBackpackContents = async ({ limit, offset }) => {
     });
 };
 
-const saveBackpackObject = async ({ type, mime, name, body, thumbnail }) => {
+const saveBackpackObject = async ({type, mime, name, body, thumbnail}) => {
     // User interaction -- fine to show a permission dialog
     requestPersistentStorage();
 
     const db = await openDB();
     return new Promise((resolve, reject) => {
-        const transaction = db.transaction(STORE_NAME, "readwrite");
+        const transaction = db.transaction(STORE_NAME, 'readwrite');
         transaction.onerror = event => {
             reject(new Error(`Sving object: ${event.target.error}`));
         };
@@ -137,7 +131,7 @@ const saveBackpackObject = async ({ type, mime, name, body, thumbnail }) => {
             name,
             bodyData,
             bodyMD5,
-            thumbnailData: base64ToArrayBuffer(thumbnail),
+            thumbnailData: base64ToArrayBuffer(thumbnail)
         };
         const putRequest = store.put(idbItem);
         putRequest.onsuccess = () => {
@@ -147,11 +141,11 @@ const saveBackpackObject = async ({ type, mime, name, body, thumbnail }) => {
     });
 };
 
-const deleteBackpackObject = async ({ id }) => {
+const deleteBackpackObject = async ({id}) => {
     id = +id;
     const db = await openDB();
     return new Promise((resolve, reject) => {
-        const transaction = db.transaction(STORE_NAME, "readwrite");
+        const transaction = db.transaction(STORE_NAME, 'readwrite');
         transaction.onerror = event => {
             reject(new Error(`Deleting object: ${event.target.error}`));
         };
@@ -164,11 +158,11 @@ const deleteBackpackObject = async ({ id }) => {
     });
 };
 
-const updateBackpackObject = async ({ id, name }) => {
+const updateBackpackObject = async ({id, name}) => {
     id = +id;
     const db = await openDB();
     return new Promise((resolve, reject) => {
-        const transaction = db.transaction(STORE_NAME, "readwrite");
+        const transaction = db.transaction(STORE_NAME, 'readwrite');
         transaction.onerror = event => {
             reject(new Error(`Updating object: ${event.target.error}`));
         };
@@ -177,7 +171,7 @@ const updateBackpackObject = async ({ id, name }) => {
         getRequest.onsuccess = () => {
             const newItem = {
                 ...getRequest.result,
-                name: name,
+                name: name
             };
             const putRequest = store.put(newItem);
             putRequest.onsuccess = () => {
@@ -191,5 +185,5 @@ export default {
     getBackpackContents,
     saveBackpackObject,
     deleteBackpackObject,
-    updateBackpackObject,
+    updateBackpackObject
 };

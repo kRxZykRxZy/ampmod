@@ -1,9 +1,7 @@
 // Utility functions for updating variables in the VM
 // TODO (VM#1145) these should be moved to top-level VM API
 const getVariable = (vm, targetId, variableId) => {
-    const target = targetId
-        ? vm.runtime.getTargetById(targetId)
-        : vm.runtime.getTargetForStage();
+    const target = targetId ? vm.runtime.getTargetById(targetId) : vm.runtime.getTargetForStage();
     return target.variables[variableId];
 };
 
@@ -18,11 +16,8 @@ const setVariableValue = (vm, targetId, variableId, value) => {
     const variable = getVariable(vm, targetId, variableId);
     variable.value = value;
     if (variable.isCloud) {
-        vm.runtime.ioDevices.cloud.requestUpdateVariable(
-            variable.name,
-            variable.value
-        );
+        vm.runtime.ioDevices.cloud.requestUpdateVariable(variable.name, variable.value);
     }
 };
 
-export { getVariable, getVariableValue, setVariableValue };
+export {getVariable, getVariableValue, setVariableValue};

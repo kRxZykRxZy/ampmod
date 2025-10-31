@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import omit from "lodash.omit";
-import { connect } from "react-redux";
-import { setFontsLoaded } from "../reducers/fonts-loaded";
-import { loadFonts } from "scratch-render-fonts";
+import React from 'react';
+import PropTypes from 'prop-types';
+import omit from 'lodash.omit';
+import {connect} from 'react-redux';
+import {setFontsLoaded} from '../reducers/fonts-loaded';
+import {loadFonts} from 'scratch-render-fonts';
 
 /* Higher Order Component to provide behavior for loading fonts.
  * @param {React.Component} WrappedComponent component to receive fontsLoaded prop
@@ -17,22 +17,22 @@ const FontLoaderHOC = function (WrappedComponent) {
             loadFonts().then(() => this.props.onSetFontsLoaded());
         }
         render() {
-            const componentProps = omit(this.props, ["onSetFontsLoaded"]);
+            const componentProps = omit(this.props, ['onSetFontsLoaded']);
             return <WrappedComponent {...componentProps} />;
         }
     }
 
     FontLoaderComponent.propTypes = {
         fontsLoaded: PropTypes.bool.isRequired,
-        onSetFontsLoaded: PropTypes.func.isRequired,
+        onSetFontsLoaded: PropTypes.func.isRequired
     };
     const mapStateToProps = state => ({
-        fontsLoaded: state.scratchGui.fontsLoaded,
+        fontsLoaded: state.scratchGui.fontsLoaded
     });
     const mapDispatchToProps = dispatch => ({
-        onSetFontsLoaded: () => dispatch(setFontsLoaded()),
+        onSetFontsLoaded: () => dispatch(setFontsLoaded())
     });
     return connect(mapStateToProps, mapDispatchToProps)(FontLoaderComponent);
 };
 
-export { FontLoaderHOC as default };
+export {FontLoaderHOC as default};

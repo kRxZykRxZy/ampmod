@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import Box from "../box/box.jsx";
-import Selector from "./selector.jsx";
-import styles from "./asset-panel.css";
+import Box from '../box/box.jsx';
+import Selector from './selector.jsx';
+import styles from './asset-panel.css';
 
 const AssetPanel = props => (
     <Box className={styles.wrapper}>
@@ -12,7 +12,7 @@ const AssetPanel = props => (
 );
 
 AssetPanel.propTypes = {
-    ...Selector.propTypes,
+    ...Selector.propTypes
 };
 
 export default AssetPanel;

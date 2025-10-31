@@ -20,7 +20,7 @@ class SVGSkin extends Skin {
      * @constructor
      * @extends Skin
      */
-    constructor (id, renderer) {
+    constructor(id, renderer) {
         super(id, renderer);
 
         /** @type {HTMLImageElement} */
@@ -45,16 +45,16 @@ class SVGSkin extends Skin {
         this._largestMIPScale = 0;
 
         /**
-        * Ratio of the size of the SVG and the max size of the WebGL texture
-        * @type {Number}
-        */
+         * Ratio of the size of the SVG and the max size of the WebGL texture
+         * @type {Number}
+         */
         this._maxTextureScale = 1;
     }
 
     /**
      * Dispose of this object. Do not use it after calling this method.
      */
-    dispose () {
+    dispose() {
         this.resetMIPs();
         super.dispose();
     }
@@ -62,18 +62,20 @@ class SVGSkin extends Skin {
     /**
      * @return {Array<number>} the natural size, in Scratch units, of this skin.
      */
-    get size () {
+    get size() {
         return [this._size[0], this._size[1]];
     }
 
-    useNearest (scale, drawable) {
+    useNearest(scale, drawable) {
         // If the effect bits for mosaic, pixelate, whirl, or fisheye are set, use linear
-        if ((drawable.enabledEffects & (
-            ShaderManager.EFFECT_INFO.fisheye.mask |
-            ShaderManager.EFFECT_INFO.whirl.mask |
-            ShaderManager.EFFECT_INFO.pixelate.mask |
-            ShaderManager.EFFECT_INFO.mosaic.mask
-        )) !== 0) {
+        if (
+            (drawable.enabledEffects &
+                (ShaderManager.EFFECT_INFO.fisheye.mask |
+                    ShaderManager.EFFECT_INFO.whirl.mask |
+                    ShaderManager.EFFECT_INFO.pixelate.mask |
+                    ShaderManager.EFFECT_INFO.mosaic.mask)) !==
+            0
+        ) {
             return false;
         }
 
@@ -88,8 +90,12 @@ class SVGSkin extends Skin {
         // TODO: Make this check more precise. We should use nearest if there's less than one pixel's difference
         // between the screen-space and texture-space sizes of the skin. Mipmaps make this harder because there are
         // multiple textures (and hence multiple texture spaces) and we need to know which one to choose.
-        if (Math.abs(scale[0]) > 99 && Math.abs(scale[0]) < 101 &&
-            Math.abs(scale[1]) > 99 && Math.abs(scale[1]) < 101) {
+        if (
+            Math.abs(scale[0]) > 99 &&
+            Math.abs(scale[0]) < 101 &&
+            Math.abs(scale[1]) > 99 &&
+            Math.abs(scale[1]) < 101
+        ) {
             return true;
         }
         return false;
@@ -100,7 +106,7 @@ class SVGSkin extends Skin {
      * @param {number} scale - The relative size of the MIP
      * @return {SVGMIP} An object that handles creating and updating SVG textures.
      */
-    createMIP (scale) {
+    createMIP(scale) {
         const isLargestMIP = this._largestMIPScale < scale;
         // TW: Silhouette will lazily read image data from our <canvas>. However, this canvas is shared
         // between the Skin and Silhouette so changing it here can mess up Silhouette. To prevent that,
@@ -123,7 +129,8 @@ class SVGSkin extends Skin {
             // drawn at that scale, resulting in an IndexSizeError if we attempt to draw it.
             this._svgImage.naturalWidth <= 0 ||
             this._svgImage.naturalHeight <= 0
-        ) return super.getTexture();
+        )
+            return super.getTexture();
         this._context.clearRect(0, 0, this._canvas.width, this._canvas.height);
         this._context.setTransform(scale, 0, 0, scale, 0, 0);
         this._context.drawImage(this._svgImage, 0, 0);
@@ -150,7 +157,7 @@ class SVGSkin extends Skin {
         return mip;
     }
 
-    updateSilhouette (scale = [100, 100]) {
+    updateSilhouette(scale = [100, 100]) {
         // Ensure a silhouette exists.
         this.getTexture(scale);
         this._silhouette.unlazy();
@@ -160,7 +167,7 @@ class SVGSkin extends Skin {
      * @param {Array<number>} scale - The scaling factors to be used, each in the [0,100] range.
      * @return {WebGLTexture} The GL texture representation of this skin when drawing at the given scale.
      */
-    getTexture (scale) {
+    getTexture(scale) {
         // The texture only ever gets uniform scale. Take the larger of the two axes.
         const scaleMax = scale ? Math.max(Math.abs(scale[0]), Math.abs(scale[1])) : 100;
         const requestedScale = Math.min(scaleMax / 100, this._maxTextureScale);
@@ -183,7 +190,7 @@ class SVGSkin extends Skin {
     /**
      * Do a hard reset of the existing MIPs by deleting them.
      */
-    resetMIPs () {
+    resetMIPs() {
         this._scaledMIPs.forEach(oldMIP => this._renderer.gl.deleteTexture(oldMIP));
         this._scaledMIPs.length = 0;
         this._largestMIPScale = 0;
@@ -196,7 +203,7 @@ class SVGSkin extends Skin {
      * calculated from the bounding box
      * @fires Skin.event:WasAltered
      */
-    setSVG (svgData, rotationCenter) {
+    setSVG(svgData, rotationCenter) {
         const svgTag = loadSvgString(svgData);
         const svgText = serializeSvgToString(svgTag, this._renderer.customFonts);
         this._svgImageLoaded = false;
@@ -239,7 +246,6 @@ class SVGSkin extends Skin {
 
         this._svgImage.src = `data:image/svg+xml;utf8,${encodeURIComponent(svgText)}`;
     }
-
 }
 
 module.exports = SVGSkin;

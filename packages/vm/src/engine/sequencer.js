@@ -1,25 +1,25 @@
-const Timer = require("../util/timer");
-const Thread = require("./thread");
-const execute = require("./execute.js");
-const compilerExecute = require("../compiler/jsexecute");
+const Timer = require('../util/timer');
+const Thread = require('./thread');
+const execute = require('./execute.js');
+const compilerExecute = require('../compiler/jsexecute');
 
 /**
  * Profiler frame name for stepping a single thread.
  * @const {string}
  */
-const stepThreadProfilerFrame = "Sequencer.stepThread";
+const stepThreadProfilerFrame = 'Sequencer.stepThread';
 
 /**
  * Profiler frame name for the inner loop of stepThreads.
  * @const {string}
  */
-const stepThreadsInnerProfilerFrame = "Sequencer.stepThreads#inner";
+const stepThreadsInnerProfilerFrame = 'Sequencer.stepThreads#inner';
 
 /**
  * Profiler frame name for execute.
  * @const {string}
  */
-const executeProfilerFrame = "execute";
+const executeProfilerFrame = 'execute';
 
 /**
  * Profiler frame ID for stepThreadProfilerFrame.
@@ -40,7 +40,7 @@ let stepThreadsInnerProfilerId = -1;
 let executeProfilerId = -1;
 
 class Sequencer {
-    constructor(runtime) {
+    constructor (runtime) {
         /**
          * A utility timer for timing thread sequencing.
          * @type {!Timer}
@@ -60,7 +60,7 @@ class Sequencer {
      * Time to run a warp-mode thread, in ms.
      * @type {number}
      */
-    static get WARP_TIME() {
+    static get WARP_TIME () {
         return 500;
     }
 
@@ -68,7 +68,7 @@ class Sequencer {
      * Step through all threads in `this.runtime.threads`, running them in order.
      * @return {Array.<!Thread>} List of inactive threads after stepping.
      */
-    stepThreads() {
+    stepThreads () {
         // Work time is 75% of the thread stepping interval.
         const WORK_TIME = 0.75 * this.runtime.currentStepTime;
         // For compatibility with Scatch 2, update the millisecond clock
@@ -94,9 +94,7 @@ class Sequencer {
         ) {
             if (this.runtime.profiler !== null) {
                 if (stepThreadsInnerProfilerId === -1) {
-                    stepThreadsInnerProfilerId = this.runtime.profiler.idByName(
-                        stepThreadsInnerProfilerFrame
-                    );
+                    stepThreadsInnerProfilerId = this.runtime.profiler.idByName(stepThreadsInnerProfilerFrame);
                 }
                 this.runtime.profiler.start(stepThreadsInnerProfilerId);
             }
@@ -108,32 +106,20 @@ class Sequencer {
             for (let i = 0; i < threads.length; i++) {
                 const activeThread = (this.activeThread = threads[i]);
                 // Check if the thread is done so it is not executed.
-                if (
-                    activeThread.stack.length === 0 ||
-                    activeThread.status === Thread.STATUS_DONE
-                ) {
+                if (activeThread.stack.length === 0 || activeThread.status === Thread.STATUS_DONE) {
                     // Finished with this thread.
                     stoppedThread = true;
                     continue;
                 }
-                if (
-                    activeThread.status === Thread.STATUS_YIELD_TICK &&
-                    !ranFirstTick
-                ) {
+                if (activeThread.status === Thread.STATUS_YIELD_TICK && !ranFirstTick) {
                     // Clear single-tick yield from the last call of `stepThreads`.
                     activeThread.status = Thread.STATUS_RUNNING;
                 }
-                if (
-                    activeThread.status === Thread.STATUS_RUNNING ||
-                    activeThread.status === Thread.STATUS_YIELD
-                ) {
+                if (activeThread.status === Thread.STATUS_RUNNING || activeThread.status === Thread.STATUS_YIELD) {
                     // Normal-mode thread: step.
                     if (this.runtime.profiler !== null) {
                         if (stepThreadProfilerId === -1) {
-                            stepThreadProfilerId =
-                                this.runtime.profiler.idByName(
-                                    stepThreadProfilerFrame
-                                );
+                            stepThreadProfilerId = this.runtime.profiler.idByName(stepThreadProfilerFrame);
                         }
 
                         // Increment the number of times stepThread is called.
@@ -147,10 +133,7 @@ class Sequencer {
                 }
                 // Check if the thread completed while it just stepped to make
                 // sure we remove it before the next iteration of all threads.
-                if (
-                    activeThread.stack.length === 0 ||
-                    activeThread.status === Thread.STATUS_DONE
-                ) {
+                if (activeThread.stack.length === 0 || activeThread.status === Thread.STATUS_DONE) {
                     // Finished with this thread.
                     stoppedThread = true;
                 }
@@ -168,10 +151,7 @@ class Sequencer {
                 let nextActiveThread = 0;
                 for (let i = 0; i < this.runtime.threads.length; i++) {
                     const thread = this.runtime.threads[i];
-                    if (
-                        thread.stack.length !== 0 &&
-                        thread.status !== Thread.STATUS_DONE
-                    ) {
+                    if (thread.stack.length !== 0 && thread.status !== Thread.STATUS_DONE) {
                         this.runtime.threads[nextActiveThread] = thread;
                         nextActiveThread++;
                     } else {
@@ -192,7 +172,7 @@ class Sequencer {
      * Step the requested thread for as long as necessary.
      * @param {!Thread} thread Thread object to step.
      */
-    stepThread(thread) {
+    stepThread (thread) {
         if (thread.isCompiled) {
             compilerExecute(thread);
             return;
@@ -222,8 +202,7 @@ class Sequencer {
             // Execute the current block.
             if (this.runtime.profiler !== null) {
                 if (executeProfilerId === -1) {
-                    executeProfilerId =
-                        this.runtime.profiler.idByName(executeProfilerFrame);
+                    executeProfilerId = this.runtime.profiler.idByName(executeProfilerFrame);
                 }
 
                 // Increment the number of times execute is called.
@@ -240,10 +219,7 @@ class Sequencer {
                 // Mark as running for next iteration.
                 thread.status = Thread.STATUS_RUNNING;
                 // In warp mode, yielded blocks are re-executed immediately.
-                if (
-                    isWarpMode &&
-                    thread.warpTimer.timeElapsed() <= Sequencer.WARP_TIME
-                ) {
+                if (isWarpMode && thread.warpTimer.timeElapsed() <= Sequencer.WARP_TIME) {
                     continue;
                 }
                 return;
@@ -285,10 +261,7 @@ class Sequencer {
                     // Return to yield for the frame/tick in general.
                     // Unless we're in warp mode - then only return if the
                     // warp timer is up.
-                    if (
-                        !isWarpMode ||
-                        thread.warpTimer.timeElapsed() > Sequencer.WARP_TIME
-                    ) {
+                    if (!isWarpMode || thread.warpTimer.timeElapsed() > Sequencer.WARP_TIME) {
                         // Don't do anything to the stack, since loops need
                         // to be re-executed.
                         return;
@@ -314,15 +287,12 @@ class Sequencer {
      * @param {number} branchNum Which branch to step to (i.e., 1, 2).
      * @param {boolean} isLoop Whether this block is a loop.
      */
-    stepToBranch(thread, branchNum, isLoop) {
+    stepToBranch (thread, branchNum, isLoop) {
         if (!branchNum) {
             branchNum = 1;
         }
         const currentBlockId = thread.peekStack();
-        const branchId = thread.target.blocks.getBranch(
-            currentBlockId,
-            branchNum
-        );
+        const branchId = thread.target.blocks.getBranch(currentBlockId, branchNum);
         thread.peekStackFrame().isLoop = isLoop;
         if (branchId) {
             // Push branch ID to the thread's stack.
@@ -337,9 +307,8 @@ class Sequencer {
      * @param {!Thread} thread Thread object to step to procedure.
      * @param {!string} procedureCode Procedure code of procedure to step to.
      */
-    stepToProcedure(thread, procedureCode) {
-        const definition =
-            thread.target.blocks.getProcedureDefinition(procedureCode);
+    stepToProcedure (thread, procedureCode) {
+        const definition = thread.target.blocks.getProcedureDefinition(procedureCode);
         if (!definition) {
             return;
         }
@@ -353,24 +322,19 @@ class Sequencer {
         // from the stack by the sequencer, returning control to the caller.
         thread.pushStack(definition);
         // In known warp-mode threads, only yield when time is up.
-        if (
-            thread.peekStackFrame().warpMode &&
-            thread.warpTimer.timeElapsed() > Sequencer.WARP_TIME
-        ) {
+        if (thread.peekStackFrame().warpMode && thread.warpTimer.timeElapsed() > Sequencer.WARP_TIME) {
             thread.status = Thread.STATUS_YIELD;
         } else {
             // Look for warp-mode flag on definition, and set the thread
             // to warp-mode if needed.
             const definitionBlock = thread.target.blocks.getBlock(definition);
-            const innerBlock = thread.target.blocks.getBlock(
-                definitionBlock.inputs.custom_block.block
-            );
+            const innerBlock = thread.target.blocks.getBlock(definitionBlock.inputs.custom_block.block);
             let doWarp = false;
             if (innerBlock && innerBlock.mutation) {
                 const warp = innerBlock.mutation.warp;
-                if (typeof warp === "boolean") {
+                if (typeof warp === 'boolean') {
                     doWarp = warp;
-                } else if (typeof warp === "string") {
+                } else if (typeof warp === 'string') {
                     doWarp = JSON.parse(warp);
                 }
             }
@@ -387,7 +351,7 @@ class Sequencer {
      * Retire a thread in the middle, without considering further blocks.
      * @param {!Thread} thread Thread object to retire.
      */
-    retireThread(thread) {
+    retireThread (thread) {
         thread.stack = [];
         thread.stackFrame = [];
         thread.requestScriptGlowInFrame = false;

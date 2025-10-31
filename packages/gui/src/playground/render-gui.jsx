@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
-import GUI from "../containers/gui.jsx";
+import React, {useEffect} from 'react';
+import GUI from '../containers/gui.jsx';
 
 const searchParams = new URLSearchParams(location.search);
-const cloudHost =
-    searchParams.get("cloud_host") || "wss://clouddata.turbowarp.org";
+const cloudHost = searchParams.get('cloud_host') || 'wss://clouddata.turbowarp.org';
 
 const RenderGUI = props => {
     return (

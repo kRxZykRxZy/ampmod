@@ -1,5 +1,5 @@
-@import "../../css/colors.css";
-@import "../../css/units.css";
+@import '../../css/colors.css';
+@import '../../css/units.css';
 
 .modal-content {
     width: 600px;
@@ -8,8 +8,7 @@
 .body {
     background: $ui-modal-background;
     padding: 1.5rem 2.25rem;
-    font-family:
-        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .visualization-container {
@@ -43,12 +42,11 @@
 
 .help-text {
     margin: 10px auto 0;
-    font-family:
-        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: rgb(167, 170, 181);
     font-size: 0.95rem;
     font-weight: 500;
-    font-family: "Inter Variable", "Helvetica Neue", Helvetica, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 .playing-text {
@@ -128,6 +126,6 @@ svg.record-button {
     transition: 0.1s;
 }
 
-[dir="rtl"] .rerecord-button img {
+[dir='rtl'] .rerecord-button img {
     transform: scaleX(-1);
 }

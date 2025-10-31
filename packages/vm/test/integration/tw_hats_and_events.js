@@ -1,28 +1,26 @@
-const fs = require("fs");
-const path = require("path");
-const { test } = require("tap");
-const VM = require("../../src/virtual-machine");
-const BlockType = require("../../src/extension-support/block-type");
-const ArgumentType = require("../../src/extension-support/argument-type");
+const fs = require('fs');
+const path = require('path');
+const {test} = require('tap');
+const VM = require('../../src/virtual-machine');
+const BlockType = require('../../src/extension-support/block-type');
+const ArgumentType = require('../../src/extension-support/argument-type');
 
 const compilerAndInterpreter = (name, callback) => {
     test(`${name} - interpreted`, t => {
         callback(t, {
-            enabled: false,
+            enabled: false
         });
     });
     test(`${name} - compiled`, t => {
         callback(t, {
-            enabled: true,
+            enabled: true
         });
     });
 };
 
-const fixture = fs.readFileSync(
-    path.join(__dirname, "..", "fixtures", "tw-hats-and-events.sb3")
-);
+const fixture = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'tw-hats-and-events.sb3'));
 
-compilerAndInterpreter("hats and events", (t, co) => {
+compilerAndInterpreter('hats and events', (t, co) => {
     const vm = new VM();
     vm.setCompilerOptions(co);
 
@@ -31,199 +29,159 @@ compilerAndInterpreter("hats and events", (t, co) => {
     class TestExtension {
         getInfo() {
             return {
-                id: "testpredicate",
-                name: "Test Predicate",
+                id: 'testpredicate',
+                name: 'Test Predicate',
                 blocks: [
                     {
-                        opcode: "event",
+                        opcode: 'event',
                         blockType: BlockType.EVENT,
-                        text: "event block",
-                        isEdgeActivated: false,
+                        text: 'event block',
+                        isEdgeActivated: false
                     },
                     {
-                        opcode: "hat",
+                        opcode: 'hat',
                         blockType: BlockType.HAT,
-                        text: "hat block",
-                        isEdgeActivated: false,
+                        text: 'hat block',
+                        isEdgeActivated: false
                     },
                     {
-                        opcode: "complexhat",
+                        opcode: 'complexhat',
                         blockType: BlockType.HAT,
-                        text: "complex hat [MENU] if [INPUT]",
+                        text: 'complex hat [MENU] if [INPUT]',
                         isEdgeActivated: false,
                         arguments: {
                             MENU: {
-                                menu: "test",
+                                menu: 'test'
                             },
                             INPUT: {
                                 type: ArgumentType.STRING,
-                                defaultValue: "default",
-                            },
-                        },
+                                defaultValue: 'default'
+                            }
+                        }
                     },
                     {
-                        opcode: "clickme",
+                        opcode: 'clickme',
                         blockType: BlockType.HAT,
-                        text: "stack click test [INPUT]",
+                        text: 'stack click test [INPUT]',
                         isEdgeActivated: false,
                         arguments: {
                             INPUT: {
                                 type: ArgumentType.STRING,
-                                defaultValue: "default",
-                            },
-                        },
-                    },
+                                defaultValue: 'default'
+                            }
+                        }
+                    }
                 ],
                 menus: {
                     test: {
                         acceptReporters: false,
-                        items: ["a", "b", "c"],
-                    },
-                },
+                        items: ['a', 'b', 'c']
+                    }
+                }
             };
         }
         event() {
-            log.push("this should never run");
+            log.push('this should never run');
         }
         hat() {
             log.push(`hat ${hatReturns}`);
             return hatReturns;
         }
-        complexhat({ INPUT }) {
+        complexhat({INPUT}) {
             log.push(`complex hat ${INPUT}`);
             return !!INPUT;
         }
         clickme() {
-            log.push("clickme");
+            log.push('clickme');
             return Promise.resolve(false);
         }
     }
-    vm.extensionManager.addBuiltinExtension("testpredicate", TestExtension);
+    vm.extensionManager.addBuiltinExtension('testpredicate', TestExtension);
 
-    vm.on("COMPILE_ERROR", () => {
-        t.fail("Compile error");
+    vm.on('COMPILE_ERROR', () => {
+        t.fail('Compile error');
     });
 
     vm.loadProject(fixture).then(async () => {
-        log = vm.runtime
-            .getTargetForStage()
-            .lookupVariableByNameAndType("log", "list").value;
-        t.same(log, [], "sanity check - log starts empty");
+        log = vm.runtime.getTargetForStage().lookupVariableByNameAndType('log', 'list').value;
+        t.same(log, [], 'sanity check - log starts empty');
 
         // Let it run for a bit. Nothing should happen on its own.
         for (let i = 0; i < 5; i++) {
             vm.runtime._step();
         }
-        t.same(log, [], "nothing happens initially");
+        t.same(log, [], 'nothing happens initially');
 
         // See if events work
-        vm.runtime.startHats("testpredicate_event");
-        t.same(
-            log,
-            [],
-            "event function does not get called, even if it exists"
-        );
+        vm.runtime.startHats('testpredicate_event');
+        t.same(log, [], 'event function does not get called, even if it exists');
         vm.runtime._step();
-        t.same(log, ["event"], "ran event script");
+        t.same(log, ['event'], 'ran event script');
 
         log.length = 0;
 
         // Test hat that returns false
         hatReturns = false;
-        vm.runtime.startHats("testpredicate_hat");
-        t.same(log, ["hat false"], "ran hat function");
+        vm.runtime.startHats('testpredicate_hat');
+        t.same(log, ['hat false'], 'ran hat function');
         vm.runtime._step();
-        t.same(log, ["hat false"], "did not run hat script");
+        t.same(log, ['hat false'], 'did not run hat script');
 
         // Test hat that returns true
         hatReturns = true;
-        vm.runtime.startHats("testpredicate_hat");
-        t.same(log, ["hat false", "hat true"], "ran hat function");
+        vm.runtime.startHats('testpredicate_hat');
+        t.same(log, ['hat false', 'hat true'], 'ran hat function');
         vm.runtime._step();
-        t.same(log, ["hat false", "hat true", "hat"], "ran hat script");
+        t.same(log, ['hat false', 'hat true', 'hat'], 'ran hat script');
 
         log.length = 0;
 
         // Test hat that returns false in a Promise
         hatReturns = Promise.resolve(false);
-        vm.runtime.startHats("testpredicate_hat");
-        t.same(log, ["hat [object Promise]"], "ran hat function");
+        vm.runtime.startHats('testpredicate_hat');
+        t.same(log, ['hat [object Promise]'], 'ran hat function');
         vm.runtime._step();
-        t.same(
-            log,
-            ["hat [object Promise]"],
-            "hat script does not run before promise finishes"
-        );
+        t.same(log, ['hat [object Promise]'], 'hat script does not run before promise finishes');
         await Promise.resolve(); // Allow promise to be processed
         vm.runtime._step();
-        t.same(log, ["hat [object Promise]"], "hat script still does not run");
+        t.same(log, ['hat [object Promise]'], 'hat script still does not run');
 
         log.length = 0;
 
         // Test hat that returns true in a Promise
         hatReturns = Promise.resolve(true);
-        vm.runtime.startHats("testpredicate_hat");
-        t.same(log, ["hat [object Promise]"], "ran hat function");
+        vm.runtime.startHats('testpredicate_hat');
+        t.same(log, ['hat [object Promise]'], 'ran hat function');
         vm.runtime._step();
-        t.same(
-            log,
-            ["hat [object Promise]"],
-            "hat script does not run before promise finishes"
-        );
+        t.same(log, ['hat [object Promise]'], 'hat script does not run before promise finishes');
         await Promise.resolve();
         vm.runtime._step();
-        t.same(
-            log,
-            ["hat [object Promise]", "hat"],
-            "hat script runs after promise finishes"
-        );
+        t.same(log, ['hat [object Promise]', 'hat'], 'hat script runs after promise finishes');
 
         log.length = 0;
 
         // Test complex hat
-        vm.runtime.startHats("testpredicate_complexhat", {
-            MENU: "a",
+        vm.runtime.startHats('testpredicate_complexhat', {
+            MENU: 'a'
         });
-        t.same(
-            log,
-            ["complex hat ", "complex hat 1"],
-            "ran complex hat functions"
-        );
+        t.same(log, ['complex hat ', 'complex hat 1'], 'ran complex hat functions');
         vm.runtime._step();
-        t.same(
-            log,
-            ["complex hat ", "complex hat 1", "complex hat a 2"],
-            "ran complex hat script"
-        );
+        t.same(log, ['complex hat ', 'complex hat 1', 'complex hat a 2'], 'ran complex hat script');
 
         log.length = 0;
 
         // Test complex hat with a complex input
-        vm.runtime.startHats("testpredicate_complexhat", {
-            MENU: "b",
+        vm.runtime.startHats('testpredicate_complexhat', {
+            MENU: 'b'
         });
-        t.same(
-            log,
-            [],
-            "control flow in complex inputs is not run immediately"
-        );
+        t.same(log, [], 'control flow in complex inputs is not run immediately');
+        vm.runtime._step();
+        t.same(log, ['evaluated block ', 'evaluated block 1'], 'evaluated complex inputs but not hat function');
         vm.runtime._step();
         t.same(
             log,
-            ["evaluated block ", "evaluated block 1"],
-            "evaluated complex inputs but not hat function"
-        );
-        vm.runtime._step();
-        t.same(
-            log,
-            [
-                "evaluated block ",
-                "evaluated block 1",
-                "complex hat ",
-                "complex hat 1",
-                "complex hat b 2",
-            ],
-            "evaluated complex hat functions and scripts"
+            ['evaluated block ', 'evaluated block 1', 'complex hat ', 'complex hat 1', 'complex hat b 2'],
+            'evaluated complex hat functions and scripts'
         );
 
         log.length = 0;
@@ -231,28 +189,18 @@ compilerAndInterpreter("hats and events", (t, co) => {
         // Test that in stackClick mode, the hat block still gets run, but the result is ignored
         const sprite = vm.runtime.targets[1];
         const allBlocks = Object.values(sprite.sprite.blocks._blocks);
-        const clickBlockId = allBlocks.find(
-            i => i.opcode === "testpredicate_clickme"
-        ).id;
+        const clickBlockId = allBlocks.find(i => i.opcode === 'testpredicate_clickme').id;
         vm.runtime._pushThread(clickBlockId, sprite, {
-            stackClick: true,
+            stackClick: true
         });
-        t.same(log, [], "stackClick does not run anything immediately");
+        t.same(log, [], 'stackClick does not run anything immediately');
         vm.runtime._step();
-        t.same(log, ["evaluated block something"], "stackClick hat ran input");
+        t.same(log, ['evaluated block something'], 'stackClick hat ran input');
         vm.runtime._step();
-        t.same(
-            log,
-            ["evaluated block something", "clickme"],
-            "stackClick hat input evaluated"
-        );
+        t.same(log, ['evaluated block something', 'clickme'], 'stackClick hat input evaluated');
         await Promise.resolve(); // Allow promise to be processed
         vm.runtime._step();
-        t.same(
-            log,
-            ["evaluated block something", "clickme", "stack click"],
-            "stackClick hat script ran"
-        );
+        t.same(log, ['evaluated block something', 'clickme', 'stack click'], 'stackClick hat script ran');
 
         t.end();
     });

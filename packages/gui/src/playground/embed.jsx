@@ -1,15 +1,15 @@
-import "./import-first";
+import './import-first';
 
-import React from "react";
-import { compose } from "redux";
-import AppStateHOC from "../lib/app-state-hoc.jsx";
-import TWEmbedFullScreenHOC from "../lib/tw-embed-fullscreen-hoc.jsx";
-import TWStateManagerHOC from "../lib/tw-state-manager-hoc.jsx";
-import runAddons from "../addons/entry";
-import { Theme, GUI_MAP } from "../lib/themes/index.js";
+import React from 'react';
+import {compose} from 'redux';
+import AppStateHOC from '../lib/app-state-hoc.jsx';
+import TWEmbedFullScreenHOC from '../lib/tw-embed-fullscreen-hoc.jsx';
+import TWStateManagerHOC from '../lib/tw-state-manager-hoc.jsx';
+import runAddons from '../addons/entry';
+import {Theme, GUI_MAP} from '../lib/themes/index.js';
 
-import GUI from "./render-gui.jsx";
-import render from "./app-target";
+import GUI from './render-gui.jsx';
+import render from './app-target';
 
 const getProjectId = () => {
     // For compatibility reasons, we first look at the hash.
@@ -24,7 +24,7 @@ const getProjectId = () => {
     if (pathMatch !== null) {
         return pathMatch[pathMatch.length - 1];
     }
-    return "0";
+    return '0';
 };
 
 const projectId = getProjectId();
@@ -37,17 +37,13 @@ const onVmInit = _vm => {
 };
 
 const onProjectLoaded = () => {
-    if (urlParams.has("autoplay")) {
+    if (urlParams.has('autoplay')) {
         vm.start();
         vm.greenFlag();
     }
 };
 
-const WrappedGUI = compose(
-    AppStateHOC,
-    TWStateManagerHOC,
-    TWEmbedFullScreenHOC
-)(GUI);
+const WrappedGUI = compose(AppStateHOC, TWStateManagerHOC, TWEmbedFullScreenHOC)(GUI);
 
 render(
     <WrappedGUI
@@ -56,10 +52,10 @@ render(
         onVmInit={onVmInit}
         onProjectLoaded={onProjectLoaded}
         routingStyle="none"
-        {...(!urlParams.has("use-user-theme") ? { theme: Theme.light } : {})}
+        {...(!urlParams.has('use-user-theme') ? {theme: Theme.light} : {})}
     />
 );
 
-if (urlParams.has("addons")) {
+if (urlParams.has('addons')) {
     runAddons();
 }

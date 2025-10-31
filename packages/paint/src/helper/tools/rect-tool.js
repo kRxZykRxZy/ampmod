@@ -1,10 +1,10 @@
-import paper from "@turbowarp/paper";
-import Modes from "../../lib/modes";
-import { styleShape } from "../style-path";
-import { clearSelection } from "../selection";
-import { getSquareDimensions } from "../math";
-import BoundingBoxTool from "../selection-tools/bounding-box-tool";
-import NudgeTool from "../selection-tools/nudge-tool";
+import paper from '@turbowarp/paper';
+import Modes from '../../lib/modes';
+import {styleShape} from '../style-path';
+import {clearSelection} from '../selection';
+import {getSquareDimensions} from '../math';
+import BoundingBoxTool from '../selection-tools/bounding-box-tool';
+import NudgeTool from '../selection-tools/nudge-tool';
 
 /**
  * Tool for drawing rectangles.
@@ -19,12 +19,7 @@ class RectTool extends paper.Tool {
      * @param {function} setCursor Callback to set the visible mouse cursor
      * @param {!function} onUpdateImage A callback to call when the image visibly changes
      */
-    constructor(
-        setSelectedItems,
-        clearSelectedItems,
-        setCursor,
-        onUpdateImage
-    ) {
+    constructor(setSelectedItems, clearSelectedItems, setCursor, onUpdateImage) {
         super();
         this.setSelectedItems = setSelectedItems;
         this.clearSelectedItems = clearSelectedItems;
@@ -36,11 +31,7 @@ class RectTool extends paper.Tool {
             setCursor,
             onUpdateImage
         );
-        const nudgeTool = new NudgeTool(
-            Modes.RECT,
-            this.boundingBoxTool,
-            onUpdateImage
-        );
+        const nudgeTool = new NudgeTool(Modes.RECT, this.boundingBoxTool, onUpdateImage);
 
         // We have to set these functions instead of just declaring them because
         // paper.js tools hook up the listeners in the setter functions.
@@ -64,11 +55,9 @@ class RectTool extends paper.Tool {
             fill: true,
             guide: false,
             match: hitResult =>
-                (hitResult.item.data &&
-                    (hitResult.item.data.isScaleHandle ||
-                        hitResult.item.data.isRotHandle)) ||
+                (hitResult.item.data && (hitResult.item.data.isScaleHandle || hitResult.item.data.isRotHandle)) ||
                 hitResult.item.selected, // Allow hits on bounding box and selected only
-            tolerance: RectTool.TOLERANCE / paper.view.zoom,
+            tolerance: RectTool.TOLERANCE / paper.view.zoom
         };
     }
     /**
@@ -113,10 +102,7 @@ class RectTool extends paper.Tool {
         }
 
         const rect = new paper.Rectangle(event.downPoint, event.point);
-        const squareDimensions = getSquareDimensions(
-            event.downPoint,
-            event.point
-        );
+        const squareDimensions = getSquareDimensions(event.downPoint, event.point);
         if (event.modifiers.shift) {
             rect.size = squareDimensions.size.abs();
         }

@@ -1,7 +1,7 @@
-const { test } = require("tap");
-const VirtualMachine = require("../../src/virtual-machine");
+const {test} = require('tap');
+const VirtualMachine = require('../../src/virtual-machine');
 
-test("Loading project uses default extension URLs", t => {
+test('Loading project uses default extension URLs', t => {
     t.plan(1);
 
     const vm = new VirtualMachine();
@@ -19,13 +19,13 @@ test("Loading project uses default extension URLs", t => {
         targets: [
             {
                 isStage: true,
-                name: "Stage",
+                name: 'Stage',
                 variables: {},
                 lists: {},
                 broadcasts: {},
                 blocks: {
                     a: {
-                        opcode: "text_clearText",
+                        opcode: 'text_clearText',
                         next: null,
                         parent: null,
                         inputs: {},
@@ -33,10 +33,10 @@ test("Loading project uses default extension URLs", t => {
                         shadow: false,
                         topLevel: true,
                         x: 203,
-                        y: 250,
+                        y: 250
                     },
                     b: {
-                        opcode: "pen_clear",
+                        opcode: 'pen_clear',
                         next: null,
                         parent: null,
                         inputs: {},
@@ -44,10 +44,10 @@ test("Loading project uses default extension URLs", t => {
                         shadow: false,
                         topLevel: true,
                         x: 203,
-                        y: 250,
+                        y: 250
                     },
                     c: {
-                        opcode: "griffpatch_doTick",
+                        opcode: 'griffpatch_doTick',
                         next: null,
                         parent: null,
                         inputs: {},
@@ -55,48 +55,48 @@ test("Loading project uses default extension URLs", t => {
                         shadow: false,
                         topLevel: true,
                         x: 203,
-                        y: 250,
-                    },
+                        y: 250
+                    }
                 },
                 comments: {},
                 currentCostume: 0,
                 costumes: [
                     {
-                        assetId: "cd21514d0531fdffb22204e0ec5ed84a",
-                        dataFormat: "svg",
-                        md5ext: "cd21514d0531fdffb22204e0ec5ed84a.svg",
-                        name: "backdrop1",
+                        assetId: 'cd21514d0531fdffb22204e0ec5ed84a',
+                        dataFormat: 'svg',
+                        md5ext: 'cd21514d0531fdffb22204e0ec5ed84a.svg',
+                        name: 'backdrop1',
                         rotationCenterX: 240,
-                        rotationCenterY: 180,
-                    },
+                        rotationCenterY: 180
+                    }
                 ],
                 sounds: [],
                 volume: 100,
                 layerOrder: 0,
                 tempo: 60,
                 videoTransparency: 50,
-                videoState: "on",
-                textToSpeechLanguage: null,
-            },
+                videoState: 'on',
+                textToSpeechLanguage: null
+            }
         ],
         monitors: [],
         extensions: [
             // this list intentionally wrong to make sure we don't rely on its contents
         ],
         extensionURLs: {
-            griffpatch: "https://example.com/box2d.js",
+            griffpatch: 'https://example.com/box2d.js'
         },
         meta: {
-            semver: "3.0.0",
-            vm: "0.2.0",
-            agent: "",
-        },
+            semver: '3.0.0',
+            vm: '0.2.0',
+            agent: ''
+        }
     }).then(() => {
         t.same(events, [
-            "canLoadExtensionFromProject https://extensions.turbowarp.org/lab/text.js",
-            "loadExtensionURL https://extensions.turbowarp.org/lab/text.js",
-            "canLoadExtensionFromProject https://example.com/box2d.js",
-            "loadExtensionURL https://example.com/box2d.js",
+            'canLoadExtensionFromProject https://extensions.turbowarp.org/lab/text.js',
+            'loadExtensionURL https://extensions.turbowarp.org/lab/text.js',
+            'canLoadExtensionFromProject https://example.com/box2d.js',
+            'loadExtensionURL https://example.com/box2d.js'
         ]);
 
         t.end();

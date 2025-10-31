@@ -24,7 +24,7 @@ class TextWrapper {
      * Construct a text wrapper which will measure text using the specified measurement provider.
      * @param {MeasurementProvider} measurementProvider - a helper object to provide text measurement services.
      */
-    constructor (measurementProvider) {
+    constructor(measurementProvider) {
         this._measurementProvider = measurementProvider;
         this._cache = {};
     }
@@ -35,7 +35,7 @@ class TextWrapper {
      * @param {string} text - the text to be wrapped. Will be split on whitespace.
      * @returns {Array.<string>} an array containing the wrapped lines of text.
      */
-    wrapText (maxWidth, text) {
+    wrapText(maxWidth, text) {
         // Normalize to canonical composition (see Unicode Standard Annex (UAX) #15)
         text = text.normalize();
 
@@ -69,7 +69,7 @@ class TextWrapper {
                         const cluster = word.substring(lastCluster, nextCluster);
                         proposedLine = (currentLine || '').concat(cluster);
                         proposedLineWidth = this._measurementProvider.measureText(proposedLine);
-                        if ((currentLine === null) || (proposedLineWidth <= maxWidth)) {
+                        if (currentLine === null || proposedLineWidth <= maxWidth) {
                             // first cluster of a new line or the cluster fits
                             currentLine = proposedLine;
                         } else {

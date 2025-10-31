@@ -12,7 +12,7 @@
     opacity: 90%;
     z-index: 50;
     pointer-events: none;
-    background: transparent url("./background.png") center center;
+    background: transparent url('./background.png') center center;
     animation: jitter 2.5s linear infinite;
 }
 

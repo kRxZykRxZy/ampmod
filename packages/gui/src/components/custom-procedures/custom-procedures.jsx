@@ -1,27 +1,22 @@
-import PropTypes from "prop-types";
-import React from "react";
-import Modal from "../../containers/modal.jsx";
-import Box from "../box/box.jsx";
-import {
-    defineMessages,
-    injectIntl,
-    intlShape,
-    FormattedMessage,
-} from "react-intl";
+import PropTypes from 'prop-types';
+import React from 'react';
+import Modal from '../../containers/modal.jsx';
+import Box from '../box/box.jsx';
+import {defineMessages, injectIntl, intlShape, FormattedMessage} from 'react-intl';
 
-import booleanInputIcon from "./icon--boolean-input.svg";
-import textInputIcon from "./icon--text-input.svg";
-import squareTextIcon from "./icon--square-text-input.svg";
-import labelIcon from "./icon--label.svg";
+import booleanInputIcon from './icon--boolean-input.svg';
+import textInputIcon from './icon--text-input.svg';
+import squareTextIcon from './icon--square-text-input.svg';
+import labelIcon from './icon--label.svg';
 
-import styles from "./custom-procedures.css";
+import styles from './custom-procedures.css';
 
 const messages = defineMessages({
     myblockModalTitle: {
-        defaultMessage: "Make a Block",
-        description: "Title for the modal where you create a custom block.",
-        id: "gui.customProcedures.myblockModalTitle",
-    },
+        defaultMessage: 'Make a Block',
+        description: 'Title for the modal where you create a custom block.',
+        id: 'gui.customProcedures.myblockModalTitle'
+    }
 });
 
 const CustomProcedures = props => (
@@ -35,17 +30,8 @@ const CustomProcedures = props => (
         <Box className={styles.body}>
             <h3>Add an input</h3>
             <div className={styles.optionsRow}>
-                <div
-                    className={styles.optionCard}
-                    role="button"
-                    tabIndex="0"
-                    onClick={props.onAddTextNumber}
-                >
-                    <img
-                        className={styles.optionIcon}
-                        src={squareTextIcon}
-                        draggable={false}
-                    />
+                <div className={styles.optionCard} role="button" tabIndex="0" onClick={props.onAddTextNumber}>
+                    <img className={styles.optionIcon} src={squareTextIcon} draggable={false} />
                     <div className={styles.optionTitle}>
                         <FormattedMessage
                             defaultMessage="Add an input"
@@ -61,17 +47,8 @@ const CustomProcedures = props => (
                         />
                     </div>
                 </div>
-                <div
-                    className={styles.optionCard}
-                    role="button"
-                    tabIndex="0"
-                    onClick={props.onAddNumber}
-                >
-                    <img
-                        className={styles.optionIcon}
-                        src={textInputIcon}
-                        draggable={false}
-                    />
+                <div className={styles.optionCard} role="button" tabIndex="0" onClick={props.onAddNumber}>
+                    <img className={styles.optionIcon} src={textInputIcon} draggable={false} />
                     <div className={styles.optionTitle}>
                         <FormattedMessage
                             defaultMessage="Add an input"
@@ -87,17 +64,8 @@ const CustomProcedures = props => (
                         />
                     </div>
                 </div>
-                <div
-                    className={styles.optionCard}
-                    role="button"
-                    tabIndex="0"
-                    onClick={props.onAddBoolean}
-                >
-                    <img
-                        className={styles.optionIcon}
-                        src={booleanInputIcon}
-                        draggable={false}
-                    />
+                <div className={styles.optionCard} role="button" tabIndex="0" onClick={props.onAddBoolean}>
+                    <img className={styles.optionIcon} src={booleanInputIcon} draggable={false} />
                     <div className={styles.optionTitle}>
                         <FormattedMessage
                             defaultMessage="Add an input"
@@ -113,17 +81,8 @@ const CustomProcedures = props => (
                         />
                     </div>
                 </div>
-                <div
-                    className={styles.optionCard}
-                    role="button"
-                    tabIndex="0"
-                    onClick={props.onAddLabel}
-                >
-                    <img
-                        className={styles.optionIcon}
-                        src={labelIcon}
-                        draggable={false}
-                    />
+                <div className={styles.optionCard} role="button" tabIndex="0" onClick={props.onAddLabel}>
+                    <img className={styles.optionIcon} src={labelIcon} draggable={false} />
                     <div className={styles.optionTitle}>
                         <FormattedMessage
                             defaultMessage="Add a label"
@@ -135,11 +94,7 @@ const CustomProcedures = props => (
             </div>
             <div className={styles.checkboxRow}>
                 <label>
-                    <input
-                        checked={props.warp}
-                        type="checkbox"
-                        onChange={props.onToggleWarp}
-                    />
+                    <input checked={props.warp} type="checkbox" onChange={props.onToggleWarp} />
                     <FormattedMessage
                         defaultMessage="Run without screen refresh"
                         description="Label for checkbox to run without screen refresh"
@@ -148,10 +103,7 @@ const CustomProcedures = props => (
                 </label>
             </div>
             <Box className={styles.buttonRow}>
-                <button
-                    className={styles.cancelButton}
-                    onClick={props.onCancel}
-                >
+                <button className={styles.cancelButton} onClick={props.onCancel}>
                     <FormattedMessage
                         defaultMessage="Cancel"
                         description="Label for button to cancel custom procedure edits"
@@ -180,7 +132,7 @@ CustomProcedures.propTypes = {
     onCancel: PropTypes.func.isRequired,
     onOk: PropTypes.func.isRequired,
     onToggleWarp: PropTypes.func.isRequired,
-    warp: PropTypes.bool.isRequired,
+    warp: PropTypes.bool.isRequired
 };
 
 export default injectIntl(CustomProcedures);

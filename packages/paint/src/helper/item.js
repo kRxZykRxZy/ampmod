@@ -1,7 +1,7 @@
-import paper from "@turbowarp/paper";
+import paper from '@turbowarp/paper';
 
 const getRootItem = function (item) {
-    if (item.parent.className === "Layer") {
+    if (item.parent.className === 'Layer') {
         return item;
     }
     return getRootItem(item.parent);
@@ -9,10 +9,10 @@ const getRootItem = function (item) {
 
 const isBoundsItem = function (item) {
     if (
-        item.className === "PointText" ||
-        item.className === "Shape" ||
-        item.className === "PlacedSymbol" ||
-        item.className === "Raster"
+        item.className === 'PointText' ||
+        item.className === 'Shape' ||
+        item.className === 'PlacedSymbol' ||
+        item.className === 'Raster'
     ) {
         return true;
     }
@@ -20,19 +20,19 @@ const isBoundsItem = function (item) {
 };
 
 const isPathItem = function (item) {
-    return item.className === "Path";
+    return item.className === 'Path';
 };
 
 const isCompoundPathItem = function (item) {
-    return item.className === "CompoundPath";
+    return item.className === 'CompoundPath';
 };
 
 const isGroupItem = function (item) {
-    return item && item.className && item.className === "Group";
+    return item && item.className && item.className === 'Group';
 };
 
 const isPointTextItem = function (item) {
-    return item.className === "PointText";
+    return item.className === 'PointText';
 };
 
 const isPGTextItem = function (item) {
@@ -69,5 +69,5 @@ export {
     setPivot,
     getPositionInView,
     setPositionInView,
-    getRootItem,
+    getRootItem
 };

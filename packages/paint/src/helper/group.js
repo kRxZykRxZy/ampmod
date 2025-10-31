@@ -1,10 +1,6 @@
-import paper from "@turbowarp/paper";
-import { getRootItem, isGroupItem } from "./item";
-import {
-    clearSelection,
-    getSelectedRootItems,
-    setItemSelection,
-} from "./selection";
+import paper from '@turbowarp/paper';
+import {getRootItem, isGroupItem} from './item';
+import {clearSelection, getSelectedRootItems, setItemSelection} from './selection';
 
 const isGroup = function (item) {
     return isGroupItem(item);
@@ -18,12 +14,7 @@ const isGroup = function (item) {
  * @param {!function} onUpdateImage Function to let listeners know that SVG has changed.
  * @return {paper.Group} the group if one is created, otherwise false.
  */
-const groupItems = function (
-    items,
-    clearSelectedItems,
-    setSelectedItems,
-    onUpdateImage
-) {
+const groupItems = function (items, clearSelectedItems, setSelectedItems, onUpdateImage) {
     if (items.length > 0) {
         const group = new paper.Group(items);
         clearSelection(clearSelectedItems);
@@ -45,18 +36,9 @@ const groupItems = function (
  * @param {!function} onUpdateImage Function to let listeners know that SVG has changed.
  * @return {paper.Group} the group if one is created, otherwise false.
  */
-const groupSelection = function (
-    clearSelectedItems,
-    setSelectedItems,
-    onUpdateImage
-) {
+const groupSelection = function (clearSelectedItems, setSelectedItems, onUpdateImage) {
     const items = getSelectedRootItems();
-    return groupItems(
-        items,
-        clearSelectedItems,
-        setSelectedItems,
-        onUpdateImage
-    );
+    return groupItems(items, clearSelectedItems, setSelectedItems, onUpdateImage);
 };
 
 const _ungroupLoop = function (group, recursive, setSelectedItems) {
@@ -134,11 +116,7 @@ const ungroupItems = function (items, setSelectedItems, onUpdateImage) {
  * @param {!function} setSelectedItems Function to set Redux state with new list of selected items
  * @param {!function} onUpdateImage Function to let listeners know that SVG has changed.
  */
-const ungroupSelection = function (
-    clearSelectedItems,
-    setSelectedItems,
-    onUpdateImage
-) {
+const ungroupSelection = function (clearSelectedItems, setSelectedItems, onUpdateImage) {
     const items = getSelectedRootItems();
     clearSelection(clearSelectedItems);
     ungroupItems(items, setSelectedItems, onUpdateImage);
@@ -167,12 +145,7 @@ const shouldShowUngroup = function () {
     const items = getSelectedRootItems();
     for (let i = 0; i < items.length; i++) {
         const item = items[i];
-        if (
-            isGroup(item) &&
-            !item.data.isPGTextItem &&
-            item.children &&
-            item.children.length > 0
-        ) {
+        if (isGroup(item) && !item.data.isPGTextItem && item.children && item.children.length > 0) {
             return true;
         }
     }
@@ -188,5 +161,5 @@ export {
     isGroup,
     isGroupChild,
     shouldShowGroup,
-    shouldShowUngroup,
+    shouldShowUngroup
 };

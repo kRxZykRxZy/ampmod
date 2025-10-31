@@ -1,24 +1,19 @@
-import {
-    defineMessages,
-    FormattedMessage,
-    intlShape,
-    injectIntl,
-} from "react-intl";
-import PropTypes from "prop-types";
-import React from "react";
-import Box from "../box/box.jsx";
-import Modal from "../../containers/modal.jsx";
-import classNames from "classnames";
+import {defineMessages, FormattedMessage, intlShape, injectIntl} from 'react-intl';
+import PropTypes from 'prop-types';
+import React from 'react';
+import Box from '../box/box.jsx';
+import Modal from '../../containers/modal.jsx';
+import classNames from 'classnames';
 
-import styles from "./username-modal.css";
-import isScratchDesktop from "../../lib/isScratchDesktop.js";
+import styles from './username-modal.css';
+import isScratchDesktop from '../../lib/isScratchDesktop.js';
 
 const messages = defineMessages({
     title: {
-        defaultMessage: "Change Username",
-        description: "Title change username modal",
-        id: "tw.usernameModal.title",
-    },
+        defaultMessage: 'Change Username',
+        description: 'Title change username modal',
+        id: 'tw.usernameModal.title'
+    }
 });
 
 const UsernameModalComponent = props => (
@@ -31,12 +26,7 @@ const UsernameModalComponent = props => (
         <Box className={styles.body}>
             {props.mustChangeUsername && (
                 <React.Fragment>
-                    <p
-                        className={classNames(
-                            styles.helpText,
-                            styles.mustChange
-                        )}
-                    >
+                    <p className={classNames(styles.helpText, styles.mustChange)}>
                         <FormattedMessage
                             // eslint-disable-next-line max-len
                             defaultMessage="Sorry, the cloud variable server thinks your username may be unsafe. Please change it to something else or {resetIt}."
@@ -44,17 +34,14 @@ const UsernameModalComponent = props => (
                             id="tw.usernameModal.mustChange"
                             values={{
                                 resetIt: (
-                                    <a
-                                        className={styles.resetLink}
-                                        onClick={props.onReset}
-                                    >
+                                    <a className={styles.resetLink} onClick={props.onReset}>
                                         <FormattedMessage
                                             defaultMessage="reset it (recommended)"
                                             description="link to reset username"
                                             id="tw.usernameModal.mustChange.resetIt"
                                         />
                                     </a>
-                                ),
+                                )
                             }}
                         />
                     </p>
@@ -110,21 +97,14 @@ const UsernameModalComponent = props => (
                         id="tw.usernameModal.reset"
                     />
                 </button>
-                <button
-                    className={styles.cancelButton}
-                    onClick={props.onCancel}
-                >
+                <button className={styles.cancelButton} onClick={props.onCancel}>
                     <FormattedMessage
                         defaultMessage="Cancel"
                         description="Button in prompt for cancelling the dialog"
                         id="gui.prompt.cancel"
                     />
                 </button>
-                <button
-                    className={styles.okButton}
-                    onClick={props.onOk}
-                    disabled={!props.valueValid}
-                >
+                <button className={styles.okButton} onClick={props.onOk} disabled={!props.valueValid}>
                     <FormattedMessage
                         defaultMessage="OK"
                         description="Button in prompt for confirming the dialog"
@@ -146,7 +126,7 @@ UsernameModalComponent.propTypes = {
     onFocus: PropTypes.func.isRequired,
     onKeyPress: PropTypes.func.isRequired,
     onOk: PropTypes.func.isRequired,
-    onReset: PropTypes.func.isRequired,
+    onReset: PropTypes.func.isRequired
 };
 
 export default injectIntl(UsernameModalComponent);

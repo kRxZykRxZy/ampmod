@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
-import React from "react";
-import classNames from "classnames";
+import PropTypes from 'prop-types';
+import React from 'react';
+import classNames from 'classnames';
 
-import styles from "./delete-button.css";
-import deleteIcon from "./icon--delete.svg";
+import styles from './delete-button.css';
+import deleteIcon from './icon--delete.svg';
 
 const DeleteButton = props => (
     <div
@@ -14,11 +14,7 @@ const DeleteButton = props => (
         onClick={props.onClick}
     >
         <div className={styles.deleteButtonVisible}>
-            <img
-                className={styles.deleteIcon}
-                src={deleteIcon}
-                draggable={false}
-            />
+            <img className={styles.deleteIcon} src={deleteIcon} draggable={false} />
         </div>
     </div>
 );
@@ -26,11 +22,11 @@ const DeleteButton = props => (
 DeleteButton.propTypes = {
     className: PropTypes.string,
     onClick: PropTypes.func.isRequired,
-    tabIndex: PropTypes.number,
+    tabIndex: PropTypes.number
 };
 
 DeleteButton.defaultProps = {
-    tabIndex: 0,
+    tabIndex: 0
 };
 
 export default DeleteButton;

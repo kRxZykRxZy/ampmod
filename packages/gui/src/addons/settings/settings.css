@@ -14,14 +14,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-@import "../../css/colors.css";
-@import "../../css/filters.css";
+@import '../../css/colors.css';
+@import '../../css/filters.css';
 
 body {
     background-color: $page-background;
     color: $page-foreground;
-    font-family:
-        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     margin: 0;
 }
 
@@ -122,13 +121,13 @@ a:focus {
     outline: none;
     cursor: pointer;
     background-color: transparent;
-    background-image: url("./icons/search.svg");
+    background-image: url('./icons/search.svg');
     background-repeat: no-repeat;
     background-position: center;
     filter: $filter-icon-black;
 }
-.search-input:not([value=""]) ~ .search-button {
-    background-image: url("./icons/clear.svg") !important;
+.search-input:not([value='']) ~ .search-button {
+    background-image: url('./icons/clear.svg') !important;
 }
 
 .feedback-button-outer {
@@ -181,7 +180,7 @@ a:focus {
 }
 .addon-group-name::after {
     margin-left: 16px;
-    content: "";
+    content: '';
     border-top: 1px solid $ui-black-transparent;
     width: 100px;
     flex: 1;
@@ -200,7 +199,7 @@ a:focus {
     height: 100%;
     filter: $filter-icon-black;
 }
-.addon-group-expand-icon[data-open="true"] {
+.addon-group-expand-icon[data-open='true'] {
     transform: scaleY(-1);
 }
 
@@ -293,11 +292,11 @@ a:focus {
     transition: 0.25s ease;
     transition-property: background;
 }
-.switch[state="on"] {
+.switch[state='on'] {
     background: $looks-secondary;
 }
 .switch::before {
-    content: "";
+    content: '';
     position: absolute;
     display: block;
     width: 12px;
@@ -309,7 +308,7 @@ a:focus {
     transition: 0.25s ease;
     transition-property: background, left;
 }
-.switch[state="on"]::before {
+.switch[state='on']::before {
     background: #fff;
     left: auto;
     right: 3px;
@@ -441,20 +440,20 @@ a:focus {
     border-color: $looks-secondary;
     box-shadow: 0 0 0 3px $looks-transparent;
 }
-.setting input[type="checkbox"] {
+.setting input[type='checkbox'] {
     height: 20px;
     width: 20px;
     background-position: center center;
 }
-.setting input[type="number"],
-.setting input[type="text"] {
+.setting input[type='number'],
+.setting input[type='text'] {
     border-radius: 20px 0 0 20px;
     font-size: 14px;
     width: 75px;
     height: 35px;
     box-sizing: border-box;
 }
-.setting input[type="color"] {
+.setting input[type='color'] {
     height: 30px;
     width: 100px;
     box-sizing: border-box;
@@ -477,7 +476,7 @@ a:focus {
     height: 20px;
     filter: $filter-icon-black;
 }
-.reset-setting-button[data-for-text-input="true"] {
+.reset-setting-button[data-for-text-input='true'] {
     height: 35px;
     border-radius: 0 20px 20px 0;
 }

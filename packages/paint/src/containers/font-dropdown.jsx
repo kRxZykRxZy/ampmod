@@ -1,37 +1,37 @@
-import paper from "@turbowarp/paper";
-import { connect } from "react-redux";
-import bindAll from "lodash.bindall";
-import PropTypes from "prop-types";
-import React from "react";
+import paper from '@turbowarp/paper';
+import {connect} from 'react-redux';
+import bindAll from 'lodash.bindall';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import FontDropdownComponent from "../components/font-dropdown/font-dropdown.jsx";
-import Fonts from "../lib/fonts";
-import { changeFont } from "../reducers/font";
-import { getSelectedLeafItems } from "../helper/selection";
+import FontDropdownComponent from '../components/font-dropdown/font-dropdown.jsx';
+import Fonts from '../lib/fonts';
+import {changeFont} from '../reducers/font';
+import {getSelectedLeafItems} from '../helper/selection';
 
 class FontDropdown extends React.Component {
     constructor(props) {
         super(props);
         bindAll(this, [
-            "getFontName",
-            "handleHoverCustom",
-            "handleManageFonts",
-            "handleChangeFontSerif",
-            "handleChangeFontSansSerif",
-            "handleChangeFontHandwriting",
-            "handleChangeFontMarker",
-            "handleChangeFontCurly",
-            "handleChangeFontComic",
-            "handleChangeFontPixel",
-            "handleChangeFontMopedLike",
-            "handleChangeFontPixelify",
-            "handleChangeFontChinese",
-            "handleChangeFontJapanese",
-            "handleChangeFontKorean",
-            "handleOpenDropdown",
-            "handleClickOutsideDropdown",
-            "setDropdown",
-            "handleChoose",
+            'getFontName',
+            'handleHoverCustom',
+            'handleManageFonts',
+            'handleChangeFontSerif',
+            'handleChangeFontSansSerif',
+            'handleChangeFontHandwriting',
+            'handleChangeFontMarker',
+            'handleChangeFontCurly',
+            'handleChangeFontComic',
+            'handleChangeFontPixel',
+            'handleChangeFontMopedLike',
+            'handleChangeFontPixelify',
+            'handleChangeFontChinese',
+            'handleChangeFontJapanese',
+            'handleChangeFontKorean',
+            'handleOpenDropdown',
+            'handleClickOutsideDropdown',
+            'setDropdown',
+            'handleChoose'
         ]);
     }
     getFontName(font) {
@@ -39,15 +39,15 @@ class FontDropdown extends React.Component {
         if (NATIVE_FONTS.includes(font)) {
             switch (font) {
                 case Fonts.CHINESE:
-                    return "中文";
+                    return '中文';
                 case Fonts.KOREAN:
-                    return "한국어";
+                    return '한국어';
                 case Fonts.JAPANESE:
-                    return "日本語";
+                    return '日本語';
                 case Fonts.MOPED_LIKE:
-                    return "Mopeds";
+                    return 'Mopeds';
                 case Fonts.PIXELIFY:
-                    return "Amplification";
+                    return 'Amplification';
                 default:
                     return font;
             }
@@ -167,9 +167,7 @@ class FontDropdown extends React.Component {
                 getFontName={this.getFontName}
                 customFonts={this.props.customFonts}
                 onHoverCustom={this.handleHoverCustom}
-                onManageFonts={
-                    this.props.onManageFonts && this.handleManageFonts
-                }
+                onManageFonts={this.props.onManageFonts && this.handleManageFonts}
                 onChoose={this.handleChoose}
                 onClickOutsideDropdown={this.handleClickOutsideDropdown}
                 onHoverChinese={this.handleChangeFontChinese}
@@ -195,22 +193,22 @@ FontDropdown.propTypes = {
     customFonts: PropTypes.arrayOf(
         PropTypes.shape({
             name: PropTypes.string.isRequired,
-            family: PropTypes.string.isRequired,
+            family: PropTypes.string.isRequired
         })
     ).isRequired,
     onManageFonts: PropTypes.func,
     font: PropTypes.string,
-    onUpdateImage: PropTypes.func.isRequired,
+    onUpdateImage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
     font: state.scratchPaint.font,
-    customFonts: state.scratchPaint.customFonts,
+    customFonts: state.scratchPaint.customFonts
 });
 const mapDispatchToProps = dispatch => ({
     changeFont: font => {
         dispatch(changeFont(font));
-    },
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FontDropdown);

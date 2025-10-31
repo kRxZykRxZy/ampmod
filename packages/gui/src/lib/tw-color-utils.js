@@ -39,7 +39,7 @@ const hex2rgb = hex => {
  */
 const rgb2hex = rgb => {
     const number = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
-    return `#${number.toString(16).padStart(6, "0")}`;
+    return `#${number.toString(16).padStart(6, '0')}`;
 };
 
 /**
@@ -123,4 +123,4 @@ const hex2hsv = hex => rgb2hsv(hex2rgb(hex));
 
 const hsv2hex = hsv => rgb2hex(hsv2rgb(hsv));
 
-export { hex2hsv, hsv2hex };
+export {hex2hsv, hsv2hex};

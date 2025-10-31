@@ -1,11 +1,11 @@
-import classNames from "classnames";
-import React from "react";
-import Logo from "../../../components/menu-bar/tw-advanced.svg";
-import FakeLogo from "./lampmod.svg";
-import CanaryLogo from "../../../components/menu-bar/ampmod-canary.svg";
-import styles from "./header.css";
-import TWNews from "../../../components/menu-bar/tw-news";
-import Localise from "../localise/localise";
+import classNames from 'classnames';
+import React from 'react';
+import Logo from '../../../components/menu-bar/tw-advanced.svg';
+import FakeLogo from './lampmod.svg';
+import CanaryLogo from '../../../components/menu-bar/ampmod-canary.svg';
+import styles from './header.css';
+import TWNews from '../../../components/menu-bar/tw-news';
+import Localise from '../localise/localise';
 
 // Determine if today is April Fools’ Day
 function isAprilFools() {
@@ -16,59 +16,29 @@ function isAprilFools() {
 const Header = () => {
     const showFakeLogo = isAprilFools();
 
-    const logoSrc =
-        process.env.ampmod_mode === "canary"
-            ? CanaryLogo
-            : showFakeLogo
-              ? FakeLogo
-              : Logo;
+    const logoSrc = process.env.ampmod_mode === 'canary' ? CanaryLogo : showFakeLogo ? FakeLogo : Logo;
 
-    const logoAlt =
-        showFakeLogo && process.env.ampmod_mode !== "canary"
-            ? "LampMod Logo"
-            : "AmpMod Logo";
+    const logoAlt = showFakeLogo && process.env.ampmod_mode !== 'canary' ? 'LampMod Logo' : 'AmpMod Logo';
 
     return (
         <React.Fragment>
             <div className={styles.header}>
                 <div className={styles.mainGroup}>
-                    <a
-                        href="/"
-                        className={classNames(
-                            styles.headerItem,
-                            styles.ampmodLogo
-                        )}
-                        aria-label={logoAlt}
-                    >
+                    <a href="/" className={classNames(styles.headerItem, styles.ampmodLogo)} aria-label={logoAlt}>
                         <img height={26} src={logoSrc} alt={logoAlt} />
                     </a>
 
-                    <a
-                        href="editor.html"
-                        className={classNames(
-                            styles.headerItem,
-                            styles.hoverable
-                        )}
-                    >
+                    <a href="editor.html" className={classNames(styles.headerItem, styles.hoverable)}>
                         <Localise id="header.create" />
                     </a>
 
-                    <a
-                        href="examples.html"
-                        className={classNames(
-                            styles.headerItem,
-                            styles.hoverable
-                        )}
-                    >
+                    <a href="examples.html" className={classNames(styles.headerItem, styles.hoverable)}>
                         <Localise id="examples.title" />
                     </a>
 
                     <a
                         href="https://ampmod.codeberg.page/manual"
-                        className={classNames(
-                            styles.headerItem,
-                            styles.hoverable
-                        )}
+                        className={classNames(styles.headerItem, styles.hoverable)}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
@@ -77,10 +47,7 @@ const Header = () => {
 
                     <a
                         href="https://ampmod.codeberg.page/extensions"
-                        className={classNames(
-                            styles.headerItem,
-                            styles.hoverable
-                        )}
+                        className={classNames(styles.headerItem, styles.hoverable)}
                         target="_blank"
                         rel="noopener noreferrer"
                     >

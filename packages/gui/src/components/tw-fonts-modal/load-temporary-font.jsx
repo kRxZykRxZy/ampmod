@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 let fontId = 0;
 
@@ -10,8 +10,8 @@ class LoadFont extends React.Component {
     }
 
     componentDidMount() {
-        this.style = document.createElement("style");
-        this.style.className = "gui-temp-font";
+        this.style = document.createElement('style');
+        this.style.className = 'gui-temp-font';
         document.head.appendChild(this.style);
         this.updateStyle();
     }
@@ -41,7 +41,7 @@ class LoadFont extends React.Component {
 
 LoadFont.propTypes = {
     url: PropTypes.string.isRequired,
-    children: PropTypes.func.isRequired,
+    children: PropTypes.func.isRequired
 };
 
 export default LoadFont;

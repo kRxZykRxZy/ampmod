@@ -1,12 +1,12 @@
 /* eslint-env worker */
 
-const ScratchCommon = require("./tw-extension-api-common");
-const createScratchX = require("./tw-scratchx-compatibility-layer");
-const dispatch = require("../dispatch/worker-dispatch");
-const log = require("../util/log");
-const { isWorker } = require("./tw-extension-worker-context");
-const createTranslate = require("./tw-l10n");
-const AmpModApi = require("./ampmod-api");
+const ScratchCommon = require('./tw-extension-api-common');
+const createScratchX = require('./tw-scratchx-compatibility-layer');
+const dispatch = require('../dispatch/worker-dispatch');
+const log = require('../util/log');
+const {isWorker} = require('./tw-extension-worker-context');
+const createTranslate = require('./tw-l10n');
+const AmpModApi = require('./ampmod-api');
 
 const translate = createTranslate(null);
 
@@ -15,14 +15,10 @@ const loadScripts = url => {
         importScripts(url);
     } else {
         return new Promise((resolve, reject) => {
-            const script = document.createElement("script");
+            const script = document.createElement('script');
             script.onload = () => resolve();
             script.onerror = () => {
-                reject(
-                    new Error(
-                        `Error in sandboxed script: ${url}. Check the console for more information.`
-                    )
-                );
+                reject(new Error(`Error in sandboxed script: ${url}. Check the console for more information.`));
             };
             script.src = url;
             document.body.appendChild(script);
@@ -31,7 +27,7 @@ const loadScripts = url => {
 };
 
 class ExtensionWorker {
-    constructor() {
+    constructor () {
         this.nextExtensionId = 0;
 
         this.initialRegistrations = [];
@@ -41,7 +37,7 @@ class ExtensionWorker {
         });
 
         dispatch.waitForConnection.then(() => {
-            dispatch.call("extensions", "allocateWorker").then(async x => {
+            dispatch.call('extensions', 'allocateWorker').then(async x => {
                 const [id, extension] = x;
                 this.workerId = id;
 
@@ -52,12 +48,10 @@ class ExtensionWorker {
                     const initialRegistrations = this.initialRegistrations;
                     this.initialRegistrations = null;
 
-                    Promise.all(initialRegistrations).then(() =>
-                        dispatch.call("extensions", "onWorkerInit", id)
-                    );
+                    Promise.all(initialRegistrations).then(() => dispatch.call('extensions', 'onWorkerInit', id));
                 } catch (e) {
                     log.error(e);
-                    dispatch.call("extensions", "onWorkerInit", id, `${e}`);
+                    dispatch.call('extensions', 'onWorkerInit', id, `${e}`);
                 }
             });
         });
@@ -65,19 +59,13 @@ class ExtensionWorker {
         this.extensions = [];
     }
 
-    register(extensionObject) {
+    register (extensionObject) {
         const extensionId = this.nextExtensionId++;
         this.extensions.push(extensionObject);
         const serviceName = `extension.${this.workerId}.${extensionId}`;
         const promise = dispatch
             .setService(serviceName, extensionObject)
-            .then(() =>
-                dispatch.call(
-                    "extensions",
-                    "registerExtensionService",
-                    serviceName
-                )
-            );
+            .then(() => dispatch.call('extensions', 'registerExtensionService', serviceName));
         if (this.initialRegistrations) {
             this.firstRegistrationCallback();
             this.initialRegistrations.push(promise);
@@ -91,17 +79,9 @@ Object.assign(global.Scratch, ScratchCommon, {
     canFetch: () => Promise.resolve(true),
     fetch: (url, options) => fetch(url, options),
     canOpenWindow: () => Promise.resolve(false),
-    openWindow: () =>
-        Promise.reject(
-            new Error(
-                "Scratch.openWindow not supported in sandboxed extensions"
-            )
-        ),
+    openWindow: () => Promise.reject(new Error('Scratch.openWindow not supported in sandboxed extensions')),
     canRedirect: () => Promise.resolve(false),
-    redirect: () =>
-        Promise.reject(
-            new Error("Scratch.redirect not supported in sandboxed extensions")
-        ),
+    redirect: () => Promise.reject(new Error('Scratch.redirect not supported in sandboxed extensions')),
     canRecordAudio: () => Promise.resolve(false),
     canRecordVideo: () => Promise.resolve(false),
     canReadClipboard: () => Promise.resolve(false),
@@ -109,11 +89,8 @@ Object.assign(global.Scratch, ScratchCommon, {
     canGeolocate: () => Promise.resolve(false),
     canEmbed: () => Promise.resolve(false),
     canDownload: () => Promise.resolve(false),
-    download: () =>
-        Promise.reject(
-            new Error("Scratch.download not supported in sandboxed extensions")
-        ),
-    translate,
+    download: () => Promise.reject(new Error('Scratch.download not supported in sandboxed extensions')),
+    translate
 });
 global.amp = AmpModApi || {};
 
@@ -122,7 +99,7 @@ global.amp = AmpModApi || {};
  */
 const extensionWorker = new ExtensionWorker();
 global.Scratch.extensions = {
-    register: extensionWorker.register.bind(extensionWorker),
+    register: extensionWorker.register.bind(extensionWorker)
 };
 
 global.ScratchExtensions = createScratchX(global.Scratch);

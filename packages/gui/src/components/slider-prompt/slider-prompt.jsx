@@ -1,33 +1,28 @@
-import {
-    defineMessages,
-    FormattedMessage,
-    intlShape,
-    injectIntl,
-} from "react-intl";
-import PropTypes from "prop-types";
-import React from "react";
+import {defineMessages, FormattedMessage, intlShape, injectIntl} from 'react-intl';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import Box from "../box/box.jsx";
-import Modal from "../../containers/modal.jsx";
+import Box from '../box/box.jsx';
+import Modal from '../../containers/modal.jsx';
 
-import styles from "./slider-prompt.css";
+import styles from './slider-prompt.css';
 
 const messages = defineMessages({
     minValue: {
-        defaultMessage: "Minimum value",
-        description: "Label of slider modal",
-        id: "gui.sliderModal.min",
+        defaultMessage: 'Minimum value',
+        description: 'Label of slider modal',
+        id: 'gui.sliderModal.min'
     },
     maxValue: {
-        defaultMessage: "Maximum value",
-        description: "Label of slider modal",
-        id: "gui.sliderModal.max",
+        defaultMessage: 'Maximum value',
+        description: 'Label of slider modal',
+        id: 'gui.sliderModal.max'
     },
     title: {
-        defaultMessage: "Change slider range",
-        description: "Title of slider modal",
-        id: "gui.sliderModal.title",
-    },
+        defaultMessage: 'Change slider range',
+        description: 'Title of slider modal',
+        id: 'gui.sliderModal.title'
+    }
 });
 
 const SliderPromptComponent = props => (
@@ -38,9 +33,7 @@ const SliderPromptComponent = props => (
         onRequestClose={props.onCancel}
     >
         <Box className={styles.body}>
-            <Box className={styles.label}>
-                {props.intl.formatMessage(messages.minValue)}
-            </Box>
+            <Box className={styles.label}>{props.intl.formatMessage(messages.minValue)}</Box>
             <Box>
                 <input
                     className={styles.minInput}
@@ -52,9 +45,7 @@ const SliderPromptComponent = props => (
                     onKeyPress={props.onKeyPress}
                 />
             </Box>
-            <Box className={styles.label}>
-                {props.intl.formatMessage(messages.maxValue)}
-            </Box>
+            <Box className={styles.label}>{props.intl.formatMessage(messages.maxValue)}</Box>
             <Box>
                 <input
                     className={styles.maxInput}
@@ -67,10 +58,7 @@ const SliderPromptComponent = props => (
                 />
             </Box>
             <Box className={styles.buttonRow}>
-                <button
-                    className={styles.cancelButton}
-                    onClick={props.onCancel}
-                >
+                <button className={styles.cancelButton} onClick={props.onCancel}>
                     <FormattedMessage
                         defaultMessage="Cancel"
                         description="Button in prompt for cancelling the dialog"
@@ -97,7 +85,7 @@ SliderPromptComponent.propTypes = {
     onChangeMax: PropTypes.func.isRequired,
     onChangeMin: PropTypes.func.isRequired,
     onKeyPress: PropTypes.func.isRequired,
-    onOk: PropTypes.func.isRequired,
+    onOk: PropTypes.func.isRequired
 };
 
 export default injectIntl(SliderPromptComponent);

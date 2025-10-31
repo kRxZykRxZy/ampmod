@@ -1,27 +1,23 @@
-import { connect } from "react-redux";
-import { defineMessages } from "react-intl";
+import {connect} from 'react-redux';
+import {defineMessages} from 'react-intl';
 
-import { changeColorIndex } from "../reducers/color-index";
-import {
-    changeStrokeColor,
-    changeStrokeColor2,
-    changeStrokeGradientType,
-} from "../reducers/stroke-style";
-import { changeStrokeWidth } from "../reducers/stroke-width";
-import { openStrokeColor, closeStrokeColor } from "../reducers/modals";
-import { getSelectedLeafItems } from "../helper/selection";
-import { setSelectedItems } from "../reducers/selected-items";
-import Modes, { GradientToolsModes } from "../lib/modes";
-import { isBitmap } from "../lib/format";
+import {changeColorIndex} from '../reducers/color-index';
+import {changeStrokeColor, changeStrokeColor2, changeStrokeGradientType} from '../reducers/stroke-style';
+import {changeStrokeWidth} from '../reducers/stroke-width';
+import {openStrokeColor, closeStrokeColor} from '../reducers/modals';
+import {getSelectedLeafItems} from '../helper/selection';
+import {setSelectedItems} from '../reducers/selected-items';
+import Modes, {GradientToolsModes} from '../lib/modes';
+import {isBitmap} from '../lib/format';
 
-import makeColorIndicator from "./color-indicator.jsx";
+import makeColorIndicator from './color-indicator.jsx';
 
 const messages = defineMessages({
     label: {
-        id: "paint.paintEditor.stroke",
-        description: "Label for the color picker for the outline color",
-        defaultMessage: "Outline",
-    },
+        id: 'paint.paintEditor.stroke',
+        description: 'Label for the color picker for the outline color',
+        defaultMessage: 'Outline'
+    }
 });
 
 const StrokeColorIndicator = makeColorIndicator(messages.label, true);
@@ -41,7 +37,7 @@ const mapStateToProps = state => ({
     isEyeDropping: state.scratchPaint.color.eyeDropper.active,
     mode: state.scratchPaint.mode,
     shouldShowGradientTools: state.scratchPaint.mode in GradientToolsModes,
-    textEditTarget: state.scratchPaint.textEditTarget,
+    textEditTarget: state.scratchPaint.textEditTarget
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -69,10 +65,7 @@ const mapDispatchToProps = dispatch => ({
     },
     setSelectedItems: format => {
         dispatch(setSelectedItems(getSelectedLeafItems(), isBitmap(format)));
-    },
+    }
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(StrokeColorIndicator);
+export default connect(mapStateToProps, mapDispatchToProps)(StrokeColorIndicator);

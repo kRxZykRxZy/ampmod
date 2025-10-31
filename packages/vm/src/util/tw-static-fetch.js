@@ -7,7 +7,7 @@
  * unreliable browser APIs.
  */
 
-const Base64Util = require("./base64-util");
+const Base64Util = require('./base64-util');
 
 /**
  * @param {string} url
@@ -22,9 +22,9 @@ const staticFetch = url => {
             const decoded = Base64Util.base64ToUint8Array(base64);
             return new Response(decoded, {
                 headers: {
-                    "content-type": contentType,
-                    "content-length": decoded.byteLength,
-                },
+                    'content-type': contentType,
+                    'content-length': decoded.byteLength
+                }
             });
         }
     } catch (e) {

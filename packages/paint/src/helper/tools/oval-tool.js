@@ -1,10 +1,10 @@
-import paper from "@turbowarp/paper";
-import Modes from "../../lib/modes";
-import { styleShape } from "../style-path";
-import { clearSelection } from "../selection";
-import { getSquareDimensions } from "../math";
-import BoundingBoxTool from "../selection-tools/bounding-box-tool";
-import NudgeTool from "../selection-tools/nudge-tool";
+import paper from '@turbowarp/paper';
+import Modes from '../../lib/modes';
+import {styleShape} from '../style-path';
+import {clearSelection} from '../selection';
+import {getSquareDimensions} from '../math';
+import BoundingBoxTool from '../selection-tools/bounding-box-tool';
+import NudgeTool from '../selection-tools/nudge-tool';
 
 /**
  * Tool for drawing ovals.
@@ -19,12 +19,7 @@ class OvalTool extends paper.Tool {
      * @param {function} setCursor Callback to set the visible mouse cursor
      * @param {!function} onUpdateImage A callback to call when the image visibly changes
      */
-    constructor(
-        setSelectedItems,
-        clearSelectedItems,
-        setCursor,
-        onUpdateImage
-    ) {
+    constructor(setSelectedItems, clearSelectedItems, setCursor, onUpdateImage) {
         super();
         this.setSelectedItems = setSelectedItems;
         this.clearSelectedItems = clearSelectedItems;
@@ -36,11 +31,7 @@ class OvalTool extends paper.Tool {
             setCursor,
             onUpdateImage
         );
-        const nudgeTool = new NudgeTool(
-            Modes.OVAL,
-            this.boundingBoxTool,
-            onUpdateImage
-        );
+        const nudgeTool = new NudgeTool(Modes.OVAL, this.boundingBoxTool, onUpdateImage);
 
         // We have to set these functions instead of just declaring them because
         // paper.js tools hook up the listeners in the setter functions.
@@ -64,11 +55,9 @@ class OvalTool extends paper.Tool {
             fill: true,
             guide: false,
             match: hitResult =>
-                (hitResult.item.data &&
-                    (hitResult.item.data.isScaleHandle ||
-                        hitResult.item.data.isRotHandle)) ||
+                (hitResult.item.data && (hitResult.item.data.isScaleHandle || hitResult.item.data.isRotHandle)) ||
                 hitResult.item.selected, // Allow hits on bounding box and selected only
-            tolerance: OvalTool.TOLERANCE / paper.view.zoom,
+            tolerance: OvalTool.TOLERANCE / paper.view.zoom
         };
     }
     /**
@@ -100,7 +89,7 @@ class OvalTool extends paper.Tool {
             clearSelection(this.clearSelectedItems);
             this.oval = new paper.Shape.Ellipse({
                 point: event.downPoint,
-                size: 0,
+                size: 0
             });
             styleShape(this.oval, this.colorState);
         }
@@ -115,10 +104,7 @@ class OvalTool extends paper.Tool {
 
         const downPoint = new paper.Point(event.downPoint.x, event.downPoint.y);
         const point = new paper.Point(event.point.x, event.point.y);
-        const squareDimensions = getSquareDimensions(
-            event.downPoint,
-            event.point
-        );
+        const squareDimensions = getSquareDimensions(event.downPoint, event.point);
         if (event.modifiers.shift) {
             this.oval.size = squareDimensions.size.abs();
         } else {
@@ -130,9 +116,7 @@ class OvalTool extends paper.Tool {
         } else if (event.modifiers.shift) {
             this.oval.position = squareDimensions.position;
         } else {
-            this.oval.position = downPoint.subtract(
-                this.oval.size.multiply(0.5)
-            );
+            this.oval.position = downPoint.subtract(this.oval.size.multiply(0.5));
         }
 
         styleShape(this.oval, this.colorState);
@@ -150,10 +134,7 @@ class OvalTool extends paper.Tool {
         }
 
         if (this.oval) {
-            if (
-                Math.abs(this.oval.size.width * this.oval.size.height) <
-                OvalTool.TOLERANCE / paper.view.zoom
-            ) {
+            if (Math.abs(this.oval.size.width * this.oval.size.height) < OvalTool.TOLERANCE / paper.view.zoom) {
                 // Tiny oval created unintentionally?
                 this.oval.remove();
                 this.oval = null;

@@ -1,8 +1,8 @@
-import { GifReader } from "omggif";
+import {GifReader} from 'omggif';
 
 export default (arrayBuffer, onFrame) => {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
     const gifReader = new GifReader(new Uint8Array(arrayBuffer));
     const numFrames = gifReader.numFrames();
     canvas.width = gifReader.width;
@@ -14,7 +14,7 @@ export default (arrayBuffer, onFrame) => {
     const loadFrame = i => {
         const framePixels = [];
         gifReader.decodeAndBlitFrameRGBA(i, framePixels);
-        const { x, y, width, height, disposal } = gifReader.frameInfo(i);
+        const {x, y, width, height, disposal} = gifReader.frameInfo(i);
         for (let row = 0; row < height; row++) {
             for (let column = 0; column < width; column++) {
                 const indexOffset = 4 * (x + y * canvas.width);
@@ -43,12 +43,7 @@ export default (arrayBuffer, onFrame) => {
                 imageData.data.set(previousData.data);
                 break;
             default: // 0 and 1, as well as 4+ modes = do-not-dispose, so cache frame
-                previousData = ctx.getImageData(
-                    0,
-                    0,
-                    canvas.width,
-                    canvas.height
-                );
+                previousData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 break;
         }
         onFrame(i, dataUrl, numFrames);

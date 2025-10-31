@@ -1,9 +1,9 @@
-import bindAll from "lodash.bindall";
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
+import bindAll from 'lodash.bindall';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
 
-import { getIsShowingWithId } from "../reducers/project-state";
+import {getIsShowingWithId} from '../reducers/project-state';
 
 /**
  * Watches for project to finish updating before taking some action.
@@ -16,18 +16,14 @@ import { getIsShowingWithId } from "../reducers/project-state";
 class ProjectWatcher extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["waitForUpdate"]);
+        bindAll(this, ['waitForUpdate']);
 
         this.state = {
-            waiting: false,
+            waiting: false
         };
     }
     componentDidUpdate(prevProps) {
-        if (
-            this.state.waiting &&
-            this.props.isShowingWithId &&
-            !prevProps.isShowingWithId
-        ) {
+        if (this.state.waiting && this.props.isShowingWithId && !prevProps.isShowingWithId) {
             this.fulfill();
         }
     }
@@ -35,13 +31,13 @@ class ProjectWatcher extends React.Component {
         this.props.onDoneUpdating();
         this.setState({
             // eslint-disable-line react/no-did-update-set-state
-            waiting: false,
+            waiting: false
         });
     }
     waitForUpdate(isUpdating) {
         if (isUpdating) {
             this.setState({
-                waiting: true,
+                waiting: true
             });
         } else {
             // fulfill immediately
@@ -56,17 +52,17 @@ class ProjectWatcher extends React.Component {
 ProjectWatcher.propTypes = {
     children: PropTypes.func,
     isShowingWithId: PropTypes.bool,
-    onDoneUpdating: PropTypes.func,
+    onDoneUpdating: PropTypes.func
 };
 
 ProjectWatcher.defaultProps = {
-    onDoneUpdating: () => {},
+    onDoneUpdating: () => {}
 };
 
 const mapStateToProps = state => {
     const loadingState = state.scratchGui.projectState.loadingState;
     return {
-        isShowingWithId: getIsShowingWithId(loadingState),
+        isShowingWithId: getIsShowingWithId(loadingState)
     };
 };
 

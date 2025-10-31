@@ -2,14 +2,14 @@
     const BENCHMARK_THROTTLE = 250;
     const INTERVAL = 33;
 
-    const video = document.createElement("video");
+    const video = document.createElement('video');
     navigator.getUserMedia(
         {
             audio: false,
             video: {
-                width: { min: 480, ideal: 640 },
-                height: { min: 360, ideal: 480 },
-            },
+                width: {min: 480, ideal: 640},
+                height: {min: 360, ideal: 480}
+            }
         },
         stream => {
             video.autoplay = true;
@@ -17,7 +17,7 @@
             // Get the track to hint to the browser the stream needs to be running
             // even though we don't add the video tag to the DOM.
             stream.getTracks();
-            video.addEventListener("play", () => {
+            video.addEventListener('play', () => {
                 video.width = video.videoWidth;
                 video.height = video.videoHeight;
             });
@@ -39,36 +39,29 @@
     const OUTPUT = VideoMotionView.OUTPUT;
     const outputKeys = Object.keys(OUTPUT);
     const outputValues = Object.values(OUTPUT);
-    const views = outputValues.map(
-        output => new VideoMotionView(motion, output)
-    );
+    const views = outputValues.map(output => new VideoMotionView(motion, output));
     const view = views[0];
 
-    const defaultViews = [
-        OUTPUT.INPUT,
-        OUTPUT.XY_CELL,
-        OUTPUT.T_CELL,
-        OUTPUT.UV_CELL,
-    ];
+    const defaultViews = [OUTPUT.INPUT, OUTPUT.XY_CELL, OUTPUT.T_CELL, OUTPUT.UV_CELL];
 
     // Add activation toggles for each debug view.
-    const activators = document.createElement("div");
-    activators.style.userSelect = "none";
+    const activators = document.createElement('div');
+    activators.style.userSelect = 'none';
     outputValues.forEach((output, index) => {
-        const checkboxLabel = document.createElement("label");
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
+        const checkboxLabel = document.createElement('label');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
         checkbox.checked = defaultViews.indexOf(output) !== -1;
-        const checkboxSpan = document.createElement("span");
+        const checkboxSpan = document.createElement('span');
         checkboxSpan.innerText = outputKeys[index];
         checkboxLabel.appendChild(checkbox);
         checkboxLabel.appendChild(checkboxSpan);
 
         const _view = views[index];
-        _view.canvas.style.display = checkbox.checked ? "" : "none";
+        _view.canvas.style.display = checkbox.checked ? '' : 'none';
         _view.active = checkbox.checked;
         checkbox.onchange = event => {
-            _view.canvas.style.display = checkbox.checked ? "" : "none";
+            _view.canvas.style.display = checkbox.checked ? '' : 'none';
             _view.active = checkbox.checked;
             event.preventDefault();
             return false;
@@ -80,11 +73,11 @@
 
     // Add a text line to display milliseconds per frame, motion value, and
     // motion direction
-    const textContainer = document.createElement("div");
-    const textHeader = document.createElement("div");
-    textHeader.innerText = "duration (us) :: motion amount :: motion direction";
+    const textContainer = document.createElement('div');
+    const textHeader = document.createElement('div');
+    textHeader.innerText = 'duration (us) :: motion amount :: motion direction';
     textContainer.appendChild(textHeader);
-    const textEl = document.createElement("div");
+    const textEl = document.createElement('div');
     textEl.innerText = `0 :: 0 :: 0`;
     textContainer.appendChild(textEl);
     document.body.appendChild(textContainer);
@@ -96,10 +89,10 @@
 
     // Create a temporary canvas the video will be drawn to so the video's
     // bitmap data can be transformed into a TypeArray.
-    const tempCanvas = document.createElement("canvas");
+    const tempCanvas = document.createElement('canvas');
     tempCanvas.width = view.canvas.width;
     tempCanvas.height = view.canvas.height;
-    const ctx = tempCanvas.getContext("2d");
+    const ctx = tempCanvas.getContext('2d');
 
     const loop = function () {
         const timeoutId = setTimeout(loop, INTERVAL);
@@ -119,12 +112,7 @@
                 tempCanvas.height
             );
             ctx.resetTransform();
-            const data = ctx.getImageData(
-                0,
-                0,
-                tempCanvas.width,
-                tempCanvas.height
-            );
+            const data = ctx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
 
             // Analyze the latest frame.
             const b = performance.now();
@@ -151,4 +139,4 @@
     };
 
     loop();
-})();
+}());

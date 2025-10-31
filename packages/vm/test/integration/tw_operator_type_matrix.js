@@ -1,71 +1,53 @@
-const { test } = require("tap");
-const VM = require("../../src/virtual-machine");
-const {
-    BlockType,
-    ArgumentType,
-} = require("../../src/extension-support/tw-extension-api-common");
-const { IRGenerator } = require("../../src/compiler/irgen");
-const { IROptimizer } = require("../../src/compiler/iroptimizer");
-const { IntermediateInput } = require("../../src/compiler/intermediate");
-const nanolog = require("@turbowarp/nanolog");
+const {test} = require('tap');
+const VM = require('../../src/virtual-machine');
+const {BlockType, ArgumentType} = require('../../src/extension-support/tw-extension-api-common');
+const {IRGenerator} = require('../../src/compiler/irgen');
+const {IROptimizer} = require('../../src/compiler/iroptimizer');
+const {IntermediateInput} = require('../../src/compiler/intermediate');
+const nanolog = require('@turbowarp/nanolog');
 
-const VALUES = [
-    NaN,
-
-    -Infinity,
-    -1e308,
-    -1,
-    -0.5,
-    -1e-324,
-    -0,
-    0,
-    1e-324,
-    0.5,
-    1,
-    1e308,
-    Infinity,
-];
+const VALUES = [NaN, -Infinity, -1e308, -1, -0.5, -1e-324, -0, 0, 1e-324, 0.5, 1, 1e308, Infinity];
 
 const createBinaryOperator = opcode => ({
     opcode,
-    inputNames: ["NUM1", "NUM2"],
-    fields: {},
+    inputNames: ['NUM1', 'NUM2'],
+    fields: {}
 });
 
 const createMathopOperator = name => ({
-    opcode: "operator_mathop",
-    inputNames: ["NUM"],
+    opcode: 'operator_mathop',
+    inputNames: ['NUM'],
     fields: {
-        OPERATOR: [name, null],
-    },
+        OPERATOR: [name, null]
+    }
 });
 
 const OPERATORS = [
-    createBinaryOperator("operator_add"),
-    createBinaryOperator("operator_subtract"),
-    createBinaryOperator("operator_divide"),
-    createBinaryOperator("operator_multiply"),
-    createBinaryOperator("operator_mod"),
+    createBinaryOperator('operator_add'),
+    createBinaryOperator('operator_subtract'),
+    createBinaryOperator('operator_divide'),
+    createBinaryOperator('operator_multiply'),
+    createBinaryOperator('operator_mod'),
 
-    createMathopOperator("abs"),
-    createMathopOperator("floor"),
-    createMathopOperator("ceiling"),
-    createMathopOperator("sqrt"),
-    createMathopOperator("sin"),
-    createMathopOperator("cos"),
-    createMathopOperator("tan"),
-    createMathopOperator("asin"),
-    createMathopOperator("acos"),
-    createMathopOperator("atan"),
-    createMathopOperator("ln"),
-    createMathopOperator("log"),
-    createMathopOperator("e ^"),
-    createMathopOperator("10 ^"),
+    createMathopOperator('abs'),
+    createMathopOperator('floor'),
+    createMathopOperator('ceiling'),
+    createMathopOperator('sqrt'),
+    createMathopOperator('sin'),
+    createMathopOperator('cos'),
+    createMathopOperator('tan'),
+    createMathopOperator('asin'),
+    createMathopOperator('acos'),
+    createMathopOperator('atan'),
+    createMathopOperator('ln'),
+    createMathopOperator('log'),
+    createMathopOperator('e ^'),
+    createMathopOperator('10 ^')
 ];
 
-const str = number => (Object.is(number, -0) ? "-0" : number.toString());
+const str = number => (Object.is(number, -0) ? '-0' : number.toString());
 
-test("operator type matrix", async t => {
+test('operator type matrix', async t => {
     const vm = new VM();
     nanolog.disable();
 
@@ -74,22 +56,22 @@ test("operator type matrix", async t => {
     class TestExtension {
         getInfo() {
             return {
-                id: "test",
-                name: "Test",
+                id: 'test',
+                name: 'Test',
                 blocks: [
                     {
-                        opcode: "report",
+                        opcode: 'report',
                         blockType: BlockType.COMMAND,
-                        text: "report [INPUT]",
+                        text: 'report [INPUT]',
                         isEdgeActivated: false,
                         arguments: {
                             INPUT: {
                                 type: ArgumentType.NUMBER,
-                                defaultValue: 0,
-                            },
-                        },
-                    },
-                ],
+                                defaultValue: 0
+                            }
+                        }
+                    }
+                ]
             };
         }
         report(args) {
@@ -97,11 +79,11 @@ test("operator type matrix", async t => {
         }
     }
 
-    vm.extensionManager.addBuiltinExtension("test", TestExtension);
-    vm.setCompilerOptions({ enabled: true });
+    vm.extensionManager.addBuiltinExtension('test', TestExtension);
+    vm.setCompilerOptions({enabled: true});
 
-    vm.on("COMPILE_ERROR", () => {
-        t.fail("Compile error");
+    vm.on('COMPILE_ERROR', () => {
+        t.fail('Compile error');
     });
 
     const testOperator = async (operator, inputs) => {
@@ -114,42 +96,42 @@ test("operator type matrix", async t => {
             targets: [
                 {
                     isStage: true,
-                    name: "Stage",
+                    name: 'Stage',
                     variables: {},
                     lists: {},
                     costumes: [
                         {
-                            name: "dummy",
-                            dataFormat: "svg",
-                            assetId: "cd21514d0531fdffb22204e0ec5ed84a",
-                            md5ext: "cd21514d0531fdffb22204e0ec5ed84a.svg",
-                        },
+                            name: 'dummy',
+                            dataFormat: 'svg',
+                            assetId: 'cd21514d0531fdffb22204e0ec5ed84a',
+                            md5ext: 'cd21514d0531fdffb22204e0ec5ed84a.svg'
+                        }
                     ],
                     sounds: [],
 
                     blocks: {
                         report: {
-                            opcode: "test_report",
+                            opcode: 'test_report',
                             inputs: {
-                                INPUT: [3, "operator"],
-                            },
+                                INPUT: [3, 'operator']
+                            }
                         },
                         operator: {
                             opcode: operator.opcode,
                             inputs: inputsSB3,
-                            fields: operator.fields,
-                        },
-                    },
-                },
+                            fields: operator.fields
+                        }
+                    }
+                }
             ],
             meta: {
-                semver: "3.0.0",
-                vm: "0.2.0",
-                agent: "",
-            },
+                semver: '3.0.0',
+                vm: '0.2.0',
+                agent: ''
+            }
         });
 
-        const thread = vm.runtime._pushThread("report", vm.runtime.targets[0]);
+        const thread = vm.runtime._pushThread('report', vm.runtime.targets[0]);
 
         const irGenerator = new IRGenerator(thread);
         const ir = irGenerator.generate();
@@ -163,8 +145,7 @@ test("operator type matrix", async t => {
         // The ir input representing our operator
         const irOperator = ir.entry.stack.blocks[0].inputs.inputs.INPUT;
 
-        const expectedType =
-            IntermediateInput.getNumberInputType(reportedValue);
+        const expectedType = IntermediateInput.getNumberInputType(reportedValue);
 
         t.ok(
             irOperator.isSometimesType(expectedType),

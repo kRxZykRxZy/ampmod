@@ -1,22 +1,20 @@
-import PropTypes from "prop-types";
-import React from "react";
-import bindAll from "lodash.bindall";
-import ScanningStepComponent, {
-    PHASES,
-} from "../components/connection-modal/auto-scanning-step.jsx";
-import VM from "scratch-vm";
+import PropTypes from 'prop-types';
+import React from 'react';
+import bindAll from 'lodash.bindall';
+import ScanningStepComponent, {PHASES} from '../components/connection-modal/auto-scanning-step.jsx';
+import VM from 'scratch-vm';
 
 class AutoScanningStep extends React.Component {
     constructor(props) {
         super(props);
         bindAll(this, [
-            "handlePeripheralListUpdate",
-            "handlePeripheralScanTimeout",
-            "handleStartScan",
-            "handleRefresh",
+            'handlePeripheralListUpdate',
+            'handlePeripheralScanTimeout',
+            'handleStartScan',
+            'handleRefresh'
         ]);
         this.state = {
-            phase: PHASES.prescan,
+            phase: PHASES.prescan
         };
     }
     componentWillUnmount() {
@@ -25,7 +23,7 @@ class AutoScanningStep extends React.Component {
     }
     handlePeripheralScanTimeout() {
         this.setState({
-            phase: PHASES.notfound,
+            phase: PHASES.notfound
         });
         this.unbindPeripheralUpdates();
     }
@@ -37,30 +35,18 @@ class AutoScanningStep extends React.Component {
         }
     }
     bindPeripheralUpdates() {
-        this.props.vm.on(
-            "PERIPHERAL_LIST_UPDATE",
-            this.handlePeripheralListUpdate
-        );
-        this.props.vm.on(
-            "PERIPHERAL_SCAN_TIMEOUT",
-            this.handlePeripheralScanTimeout
-        );
+        this.props.vm.on('PERIPHERAL_LIST_UPDATE', this.handlePeripheralListUpdate);
+        this.props.vm.on('PERIPHERAL_SCAN_TIMEOUT', this.handlePeripheralScanTimeout);
     }
     unbindPeripheralUpdates() {
-        this.props.vm.removeListener(
-            "PERIPHERAL_LIST_UPDATE",
-            this.handlePeripheralListUpdate
-        );
-        this.props.vm.removeListener(
-            "PERIPHERAL_SCAN_TIMEOUT",
-            this.handlePeripheralScanTimeout
-        );
+        this.props.vm.removeListener('PERIPHERAL_LIST_UPDATE', this.handlePeripheralListUpdate);
+        this.props.vm.removeListener('PERIPHERAL_SCAN_TIMEOUT', this.handlePeripheralScanTimeout);
     }
     handleRefresh() {
         // @todo: stop the peripheral scan here, it is more important for auto scan
         // due to timeout and cancellation
         this.setState({
-            phase: PHASES.prescan,
+            phase: PHASES.prescan
         });
         this.unbindPeripheralUpdates();
     }
@@ -68,7 +54,7 @@ class AutoScanningStep extends React.Component {
         this.bindPeripheralUpdates();
         this.props.vm.scanForPeripheral(this.props.extensionId);
         this.setState({
-            phase: PHASES.pressbutton,
+            phase: PHASES.pressbutton
         });
     }
     render() {
@@ -90,7 +76,7 @@ AutoScanningStep.propTypes = {
     extensionId: PropTypes.string.isRequired,
     onConnecting: PropTypes.func.isRequired,
     onUpdatePeripheral: PropTypes.func,
-    vm: PropTypes.instanceOf(VM).isRequired,
+    vm: PropTypes.instanceOf(VM).isRequired
 };
 
 export default AutoScanningStep;

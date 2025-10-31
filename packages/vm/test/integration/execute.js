@@ -1,12 +1,11 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
-const test = require("tap").test;
+const test = require('tap').test;
 
-const makeTestStorage = require("../fixtures/make-test-storage");
-const readFileToBuffer =
-    require("../fixtures/readProjectFile").readFileToBuffer;
-const VirtualMachine = require("../../src/index");
+const makeTestStorage = require('../fixtures/make-test-storage');
+const readFileToBuffer = require('../fixtures/readProjectFile').readFileToBuffer;
+const VirtualMachine = require('../../src/index');
 
 /**
  * @fileoverview Transform each sb2 in fixtures/execute into a test.
@@ -45,7 +44,7 @@ const whenThreadsComplete = (t, vm, uri, timeLimit = 5000) =>
 
         const timeoutId = setTimeout(() => {
             t.fail(`Timeout waiting for threads to complete: ${uri}`);
-            reject(new Error("time limit reached"));
+            reject(new Error('time limit reached'));
 
             // Attempt to stop the lingering VM from interfering with other tests.
             vm.quit();
@@ -59,13 +58,16 @@ const whenThreadsComplete = (t, vm, uri, timeLimit = 5000) =>
         });
     });
 
-const executeDir = path.resolve(__dirname, "../fixtures/execute");
+const executeDir = path.resolve(__dirname, '../fixtures/execute');
 
-// Find files which end in ".sb", ".sb2", or ".sb3"
-const fileFilter = /\.sb[23]?$/i;
+// Find files which end in ".apz", ".sb", ".sb2", or ".sb3"
+const fileFilter = /\.(apz|sb[23])?$/i;
+
+const targetArg = process.argv[2];
 
 fs.readdirSync(executeDir)
     .filter(uri => fileFilter.test(uri))
+    .filter(uri => !targetArg || uri === targetArg)
     .forEach(uri => {
         const run = (t, enableCompiler) => {
             const vm = new VirtualMachine();
@@ -92,14 +94,12 @@ fs.readdirSync(executeDir)
                     didEnd = true;
                     vm.quit();
                     t.end();
-                },
+                }
             };
             const reportVmResult = text => {
                 const command = text.split(/\s+/, 1)[0].toLowerCase();
                 if (reporters[command]) {
-                    return reporters[command](
-                        text.substring(command.length).trim()
-                    );
+                    return reporters[command](text.substring(command.length).trim());
                 }
 
                 // Default to a comment with the full text if we didn't match
@@ -115,19 +115,17 @@ fs.readdirSync(executeDir)
             vm.clear();
             vm.setCompatibilityMode(false);
             vm.setTurboMode(false);
-            vm.setCompilerOptions({ enabled: enableCompiler });
+            vm.setCompilerOptions({enabled: enableCompiler});
 
             // TW: Script compilation errors should fail.
             if (enableCompiler) {
-                vm.on("COMPILE_ERROR", (target, error) => {
-                    throw new Error(
-                        `Could not compile script in ${target.getName()}: ${error}`
-                    );
+                vm.on('COMPILE_ERROR', (target, error) => {
+                    throw new Error(`Could not compile script in ${target.getName()}: ${error}`);
                 });
             }
 
             // Report the text of SAY events as testing instructions.
-            vm.runtime.on("SAY", (target, type, text) => reportVmResult(text));
+            vm.runtime.on('SAY', (target, type, text) => reportVmResult(text));
 
             const project = readFileToBuffer(path.resolve(executeDir, uri));
 

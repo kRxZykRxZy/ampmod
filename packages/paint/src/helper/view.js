@@ -1,13 +1,8 @@
-import paper from "@turbowarp/paper";
-import {
-    CROSSHAIR_SIZE,
-    getBackgroundGuideLayer,
-    getDragCrosshairLayer,
-    getRaster,
-} from "./layer";
-import { getAllRootItems, getSelectedRootItems } from "./selection";
-import { getHitBounds } from "./bitmap";
-import log from "../log/log";
+import paper from '@turbowarp/paper';
+import {CROSSHAIR_SIZE, getBackgroundGuideLayer, getDragCrosshairLayer, getRaster} from './layer';
+import {getAllRootItems, getSelectedRootItems} from './selection';
+import {getHitBounds} from './bitmap';
+import log from '../log/log';
 
 // Vectors are imported and exported at SVG_ART_BOARD size.
 // Once they are imported however, both SVGs and bitmaps are on
@@ -34,12 +29,7 @@ const resizeView = (width, height) => {
     ART_BOARD_WIDTH = SVG_ART_BOARD_WIDTH * 2;
     ART_BOARD_HEIGHT = SVG_ART_BOARD_HEIGHT * 2;
     CENTER = new paper.Point(ART_BOARD_WIDTH / 2, ART_BOARD_HEIGHT / 2);
-    ART_BOARD_BOUNDS = new paper.Rectangle(
-        0,
-        0,
-        ART_BOARD_WIDTH,
-        ART_BOARD_HEIGHT
-    );
+    ART_BOARD_BOUNDS = new paper.Rectangle(0, 0, ART_BOARD_WIDTH, ART_BOARD_HEIGHT);
     MAX_WORKSPACE_BOUNDS = new paper.Rectangle(
         -ART_BOARD_WIDTH / 4,
         -ART_BOARD_HEIGHT / 4,
@@ -96,35 +86,22 @@ const setWorkspaceBounds = clipEmpty => {
         bottom += vDiff;
     }
 
-    _workspaceBounds = new paper.Rectangle(
-        left,
-        top,
-        right - left,
-        bottom - top
-    );
+    _workspaceBounds = new paper.Rectangle(left, top, right - left, bottom - top);
 };
 
 const clampViewBounds = () => {
-    const { left, right, top, bottom } = paper.project.view.bounds;
+    const {left, right, top, bottom} = paper.project.view.bounds;
     if (left < _workspaceBounds.left) {
-        paper.project.view.scrollBy(
-            new paper.Point(_workspaceBounds.left - left, 0)
-        );
+        paper.project.view.scrollBy(new paper.Point(_workspaceBounds.left - left, 0));
     }
     if (top < _workspaceBounds.top) {
-        paper.project.view.scrollBy(
-            new paper.Point(0, _workspaceBounds.top - top)
-        );
+        paper.project.view.scrollBy(new paper.Point(0, _workspaceBounds.top - top));
     }
     if (bottom > _workspaceBounds.bottom) {
-        paper.project.view.scrollBy(
-            new paper.Point(0, _workspaceBounds.bottom - bottom)
-        );
+        paper.project.view.scrollBy(new paper.Point(0, _workspaceBounds.bottom - bottom));
     }
     if (right > _workspaceBounds.right) {
-        paper.project.view.scrollBy(
-            new paper.Point(_workspaceBounds.right - right, 0)
-        );
+        paper.project.view.scrollBy(new paper.Point(_workspaceBounds.right - right, 0));
     }
     setWorkspaceBounds();
 };
@@ -132,16 +109,12 @@ const clampViewBounds = () => {
 const resizeCrosshair = () => {
     if (getDragCrosshairLayer() && getDragCrosshairLayer().dragCrosshair) {
         getDragCrosshairLayer().dragCrosshair.scale(
-            CROSSHAIR_SIZE /
-                getDragCrosshairLayer().dragCrosshair.bounds.width /
-                paper.view.zoom
+            CROSSHAIR_SIZE / getDragCrosshairLayer().dragCrosshair.bounds.width / paper.view.zoom
         );
     }
     if (getBackgroundGuideLayer() && getBackgroundGuideLayer().dragCrosshair) {
         getBackgroundGuideLayer().dragCrosshair.scale(
-            CROSSHAIR_SIZE /
-                getBackgroundGuideLayer().dragCrosshair.bounds.width /
-                paper.view.zoom
+            CROSSHAIR_SIZE / getBackgroundGuideLayer().dragCrosshair.bounds.width / paper.view.zoom
         );
     }
 };
@@ -154,9 +127,7 @@ const zoomOnFixedPoint = (deltaZoom, fixedPoint) => {
     const newZoom = Math.max(OUTERMOST_ZOOM_LEVEL, view.zoom + deltaZoom);
     const scaling = view.zoom / newZoom;
     const preZoomOffset = fixedPoint.subtract(preZoomCenter);
-    const postZoomOffset = fixedPoint
-        .subtract(preZoomOffset.multiply(scaling))
-        .subtract(preZoomCenter);
+    const postZoomOffset = fixedPoint.subtract(preZoomOffset.multiply(scaling)).subtract(preZoomCenter);
     view.zoom = newZoom;
     view.translate(postZoomOffset.multiply(-1));
 
@@ -206,9 +177,7 @@ const getActionBounds = isBitmap => {
     if (isBitmap) {
         return ART_BOARD_BOUNDS;
     }
-    return paper.view.bounds
-        .unite(ART_BOARD_BOUNDS)
-        .intersect(MAX_WORKSPACE_BOUNDS);
+    return paper.view.bounds.unite(ART_BOARD_BOUNDS).intersect(MAX_WORKSPACE_BOUNDS);
 };
 
 const zoomToFit = isBitmap => {
@@ -232,10 +201,8 @@ const zoomToFit = isBitmap => {
         let ratio =
             paper.view.zoom *
             Math.max(
-                (bounds.width * (1 + (2 * PADDING_PERCENT) / 100)) /
-                    canvas.clientWidth,
-                (bounds.height * (1 + (2 * PADDING_PERCENT) / 100)) /
-                    canvas.clientHeight
+                (bounds.width * (1 + (2 * PADDING_PERCENT) / 100)) / canvas.clientWidth,
+                (bounds.height * (1 + (2 * PADDING_PERCENT) / 100)) / canvas.clientHeight
             );
         // Clamp ratio
         ratio = Math.max(Math.min(1, ratio), MIN_RATIO);
@@ -246,7 +213,7 @@ const zoomToFit = isBitmap => {
             clampViewBounds();
         }
     } else {
-        log.warn("No bounds!");
+        log.warn('No bounds!');
     }
 };
 
@@ -269,5 +236,5 @@ export {
     resizeCrosshair,
     zoomOnSelection,
     zoomOnFixedPoint,
-    zoomToFit,
+    zoomToFit
 };

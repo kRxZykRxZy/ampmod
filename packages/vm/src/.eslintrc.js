@@ -1,10 +1,10 @@
 module.exports = {
     root: true,
-    extends: ["scratch", "scratch/es6"],
+    extends: ['scratch', 'scratch/es6'],
     env: {
-        browser: true,
+        browser: true
     },
     rules: {
-        "valid-jsdoc": "off",
-    },
+        'valid-jsdoc': 'off'
+    }
 };

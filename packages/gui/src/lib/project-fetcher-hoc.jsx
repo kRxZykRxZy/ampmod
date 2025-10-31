@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { intlShape, injectIntl } from "react-intl";
-import bindAll from "lodash.bindall";
-import { connect } from "react-redux";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {intlShape, injectIntl} from 'react-intl';
+import bindAll from 'lodash.bindall';
+import {connect} from 'react-redux';
 
-import { setProjectUnchanged } from "../reducers/project-changed";
+import {setProjectUnchanged} from '../reducers/project-changed';
 import {
     LoadingStates,
     getIsCreatingNew,
@@ -13,32 +13,32 @@ import {
     getIsShowingProject,
     onFetchedProjectData,
     projectError,
-    setProjectId,
-} from "../reducers/project-state";
-import { activateTab, BLOCKS_TAB_INDEX } from "../reducers/editor-tab";
+    setProjectId
+} from '../reducers/project-state';
+import {activateTab, BLOCKS_TAB_INDEX} from '../reducers/editor-tab';
 
-import log from "./log";
-import storage from "./storage";
+import log from './log';
+import storage from './storage';
 
-import examples from "./examples";
+import examples from './examples';
 
-import VM from "scratch-vm";
-import { fetchProjectMeta } from "./tw-project-meta-fetcher-hoc.jsx";
+import VM from 'scratch-vm';
+import {fetchProjectMeta} from './tw-project-meta-fetcher-hoc.jsx';
 
 // TW: Temporary hack for project tokens
 const fetchProjectToken = async projectId => {
-    if (projectId === "0") {
+    if (projectId === '0') {
         return null;
     }
     // Parse ?token=abcdef
     const searchParams = new URLSearchParams(location.search);
-    if (searchParams.has("token")) {
-        return searchParams.get("token");
+    if (searchParams.has('token')) {
+        return searchParams.get('token');
     }
     // Parse #1?token=abcdef
-    const hashParams = new URLSearchParams(location.hash.split("?")[1]);
-    if (hashParams.has("token")) {
-        return hashParams.get("token");
+    const hashParams = new URLSearchParams(location.hash.split('?')[1]);
+    if (hashParams.has('token')) {
+        return hashParams.get('token');
     }
     try {
         const metadata = await fetchProjectMeta(projectId);
@@ -46,7 +46,7 @@ const fetchProjectToken = async projectId => {
     } catch (e) {
         log.error(e);
         throw new Error(
-            "Cannot access project token. Project is probably unshared. See https://docs.turbowarp.org/unshared-projects"
+            'Cannot access project token. Project is probably unshared. See https://docs.turbowarp.org/unshared-projects'
         );
     }
 };
@@ -60,7 +60,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
     class ProjectFetcherComponent extends React.Component {
         constructor(props) {
             super(props);
-            bindAll(this, ["fetchProject"]);
+            bindAll(this, ['fetchProject']);
             storage.setProjectHost(props.projectHost);
             storage.setProjectToken(props.projectToken);
             storage.setAssetHost(props.assetHost);
@@ -69,11 +69,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             // or it may be set by an even higher HOC, and passed to us.
             // Either way, we now know what the initial projectId should be, so
             // set it in the redux store.
-            if (
-                props.projectId !== "" &&
-                props.projectId !== null &&
-                typeof props.projectId !== "undefined"
-            ) {
+            if (props.projectId !== '' && props.projectId !== null && typeof props.projectId !== 'undefined') {
                 this.props.setProjectId(props.projectId.toString());
             }
         }
@@ -88,18 +84,12 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 storage.setAssetHost(this.props.assetHost);
             }
             if (this.props.isFetchingWithId && !prevProps.isFetchingWithId) {
-                this.fetchProject(
-                    this.props.reduxProjectId,
-                    this.props.loadingState
-                );
+                this.fetchProject(this.props.reduxProjectId, this.props.loadingState);
             }
             if (this.props.isShowingProject && !prevProps.isShowingProject) {
                 this.props.onProjectUnchanged();
             }
-            if (
-                this.props.isShowingProject &&
-                (prevProps.isLoadingProject || prevProps.isCreatingNew)
-            ) {
+            if (this.props.isShowingProject && (prevProps.isLoadingProject || prevProps.isCreatingNew)) {
                 this.props.onActivateTab(BLOCKS_TAB_INDEX);
             }
         }
@@ -111,18 +101,13 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             this.props.vm.quit();
 
             let exampleId =
-                typeof URLSearchParams === "undefined"
-                    ? null
-                    : new URLSearchParams(location.search).get("example");
+                typeof URLSearchParams === 'undefined' ? null : new URLSearchParams(location.search).get('example');
 
             if (exampleId && examples.hasOwnProperty(exampleId)) {
                 return examples[exampleId]()
                     .then(module => {
                         const exampleData = module.default; // ArrayBuffer from loader
-                        this.props.onFetchedProjectData(
-                            exampleData,
-                            loadingState
-                        );
+                        this.props.onFetchedProjectData(exampleData, loadingState);
                     })
                     .catch(err => {
                         log.error(err);
@@ -133,50 +118,39 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             let assetPromise;
             // In case running in node...
             let projectUrl =
-                typeof URLSearchParams === "undefined"
-                    ? null
-                    : new URLSearchParams(location.search).get("project_url");
+                typeof URLSearchParams === 'undefined' ? null : new URLSearchParams(location.search).get('project_url');
             if (projectUrl) {
                 if (
-                    !projectUrl.startsWith("http:") &&
-                    !projectUrl.startsWith("https:") &&
-                    !projectUrl.startsWith("data:")
+                    !projectUrl.startsWith('http:') &&
+                    !projectUrl.startsWith('https:') &&
+                    !projectUrl.startsWith('data:')
                 ) {
                     projectUrl = `https://${projectUrl}`;
                 }
                 assetPromise = fetch(projectUrl)
                     .then(r => {
                         if (!r.ok) {
-                            throw new Error(
-                                `Request returned status ${r.status}`
-                            );
+                            throw new Error(`Request returned status ${r.status}`);
                         }
                         return r.arrayBuffer();
                     })
-                    .then(buffer => ({ data: buffer }));
+                    .then(buffer => ({data: buffer}));
             } else {
                 // TW: Temporary hack for project tokens
                 assetPromise = fetchProjectToken(projectId).then(token => {
                     storage.setProjectToken(token);
-                    return storage.load(
-                        storage.AssetType.Project,
-                        projectId,
-                        storage.DataFormat.JSON
-                    );
+                    return storage.load(storage.AssetType.Project, projectId, storage.DataFormat.JSON);
                 });
             }
 
             return assetPromise
                 .then(projectAsset => {
                     if (projectAsset) {
-                        this.props.onFetchedProjectData(
-                            projectAsset.data,
-                            loadingState
-                        );
+                        this.props.onFetchedProjectData(projectAsset.data, loadingState);
                     } else {
                         // Treat failure to load as an error
                         // Throw to be caught by catch later on
-                        throw new Error("Could not find project");
+                        throw new Error('Could not find project');
                     }
                 })
                 .catch(err => {
@@ -203,12 +177,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 isFetchingWithId: isFetchingWithIdProp,
                 ...componentProps
             } = this.props;
-            return (
-                <WrappedComponent
-                    fetchingProject={isFetchingWithIdProp}
-                    {...componentProps}
-                />
-            );
+            return <WrappedComponent fetchingProject={isFetchingWithIdProp} {...componentProps} />;
         }
     }
     ProjectFetcherComponent.propTypes = {
@@ -227,53 +196,34 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         projectHost: PropTypes.string,
         projectToken: PropTypes.string,
         projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        reduxProjectId: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.number,
-        ]),
+        reduxProjectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         setProjectId: PropTypes.func,
-        vm: PropTypes.instanceOf(VM),
+        vm: PropTypes.instanceOf(VM)
     };
     ProjectFetcherComponent.defaultProps = {
-        assetHost: "https://assets.scratch.mit.edu",
-        projectHost: "https://projects.scratch.mit.edu",
+        assetHost: 'https://assets.scratch.mit.edu',
+        projectHost: 'https://projects.scratch.mit.edu'
     };
 
     const mapStateToProps = state => ({
-        isCreatingNew: getIsCreatingNew(
-            state.scratchGui.projectState.loadingState
-        ),
-        isFetchingWithId: getIsFetchingWithId(
-            state.scratchGui.projectState.loadingState
-        ),
-        isLoadingProject: getIsLoading(
-            state.scratchGui.projectState.loadingState
-        ),
-        isShowingProject: getIsShowingProject(
-            state.scratchGui.projectState.loadingState
-        ),
+        isCreatingNew: getIsCreatingNew(state.scratchGui.projectState.loadingState),
+        isFetchingWithId: getIsFetchingWithId(state.scratchGui.projectState.loadingState),
+        isLoadingProject: getIsLoading(state.scratchGui.projectState.loadingState),
+        isShowingProject: getIsShowingProject(state.scratchGui.projectState.loadingState),
         loadingState: state.scratchGui.projectState.loadingState,
         reduxProjectId: state.scratchGui.projectState.projectId,
-        vm: state.scratchGui.vm,
+        vm: state.scratchGui.vm
     });
     const mapDispatchToProps = dispatch => ({
         onActivateTab: tab => dispatch(activateTab(tab)),
         onError: error => dispatch(projectError(error)),
-        onFetchedProjectData: (projectData, loadingState) =>
-            dispatch(onFetchedProjectData(projectData, loadingState)),
+        onFetchedProjectData: (projectData, loadingState) => dispatch(onFetchedProjectData(projectData, loadingState)),
         setProjectId: projectId => dispatch(setProjectId(projectId)),
-        onProjectUnchanged: () => dispatch(setProjectUnchanged()),
+        onProjectUnchanged: () => dispatch(setProjectUnchanged())
     });
     // Allow incoming props to override redux-provided props. Used to mock in tests.
-    const mergeProps = (stateProps, dispatchProps, ownProps) =>
-        Object.assign({}, stateProps, dispatchProps, ownProps);
-    return injectIntl(
-        connect(
-            mapStateToProps,
-            mapDispatchToProps,
-            mergeProps
-        )(ProjectFetcherComponent)
-    );
+    const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign({}, stateProps, dispatchProps, ownProps);
+    return injectIntl(connect(mapStateToProps, mapDispatchToProps, mergeProps)(ProjectFetcherComponent));
 };
 
-export { ProjectFetcherHOC as default };
+export {ProjectFetcherHOC as default};

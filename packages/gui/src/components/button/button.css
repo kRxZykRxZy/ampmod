@@ -1,4 +1,4 @@
-@import "../../css/units.css";
+@import '../../css/units.css';
 
 .outlined-button {
     cursor: pointer;
@@ -15,11 +15,11 @@
     height: 1.5rem;
 }
 
-[dir="ltr"] .icon {
+[dir='ltr'] .icon {
     margin-right: 0.5rem;
 }
 
-[dir="rtl"] .icon {
+[dir='rtl'] .icon {
     margin-left: 0.5rem;
 }
 

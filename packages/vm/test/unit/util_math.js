@@ -1,7 +1,7 @@
-const test = require("tap").test;
-const math = require("../../src/util/math-util");
+const test = require('tap').test;
+const math = require('../../src/util/math-util');
 
-test("degToRad", t => {
+test('degToRad', t => {
     t.strictEqual(math.degToRad(0), 0);
     t.strictEqual(math.degToRad(1), 0.017453292519943295);
     t.strictEqual(math.degToRad(180), Math.PI);
@@ -10,7 +10,7 @@ test("degToRad", t => {
     t.end();
 });
 
-test("radToDeg", t => {
+test('radToDeg', t => {
     t.strictEqual(math.radToDeg(0), 0);
     t.strictEqual(math.radToDeg(1), 57.29577951308232);
     t.strictEqual(math.radToDeg(180), 10313.240312354817);
@@ -19,7 +19,7 @@ test("radToDeg", t => {
     t.end();
 });
 
-test("clamp", t => {
+test('clamp', t => {
     t.strictEqual(math.clamp(0, 0, 10), 0);
     t.strictEqual(math.clamp(1, 0, 10), 1);
     t.strictEqual(math.clamp(-10, 0, 10), 0);
@@ -27,7 +27,7 @@ test("clamp", t => {
     t.end();
 });
 
-test("wrapClamp", t => {
+test('wrapClamp', t => {
     t.strictEqual(math.wrapClamp(0, 0, 10), 0);
     t.strictEqual(math.wrapClamp(1, 0, 10), 1);
     t.strictEqual(math.wrapClamp(-10, 0, 10), 1);
@@ -35,7 +35,7 @@ test("wrapClamp", t => {
     t.end();
 });
 
-test("tan", t => {
+test('tan', t => {
     t.strictEqual(math.tan(90), Infinity);
     t.strictEqual(math.tan(180), 0);
     t.strictEqual(math.tan(-90), -Infinity);
@@ -43,18 +43,18 @@ test("tan", t => {
     t.end();
 });
 
-test("reducedSortOrdering", t => {
+test('reducedSortOrdering', t => {
     t.deepEqual(math.reducedSortOrdering([5, 18, 6, 3]), [1, 3, 2, 0]);
     t.deepEqual(math.reducedSortOrdering([5, 1, 56, 19]), [1, 0, 3, 2]);
     t.end();
 });
 
-test("inclusiveRandIntWithout", t => {
+test('inclusiveRandIntWithout', t => {
     const withRandomValue = function (randValue, ...args) {
         const oldMathRandom = Math.random;
-        Object.assign(global.Math, { random: () => randValue });
+        Object.assign(global.Math, {random: () => randValue});
         const result = math.inclusiveRandIntWithout(...args);
-        Object.assign(global.Math, { random: oldMathRandom });
+        Object.assign(global.Math, {random: oldMathRandom});
         return result;
     };
 

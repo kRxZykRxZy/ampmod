@@ -1,9 +1,7 @@
-const SharedDispatch = require("./shared-dispatch");
+const SharedDispatch = require('./shared-dispatch');
 
-const log = require("../util/log");
-const {
-    centralDispatchService,
-} = require("../extension-support/tw-extension-worker-context");
+const log = require('../util/log');
+const {centralDispatchService} = require('../extension-support/tw-extension-worker-context');
 
 /**
  * This class provides a Worker with the means to participate in the message dispatch system managed by CentralDispatch.
@@ -13,7 +11,7 @@ const {
  * @see {CentralDispatch}
  */
 class WorkerDispatch extends SharedDispatch {
-    constructor() {
+    constructor () {
         super();
 
         /**
@@ -36,7 +34,7 @@ class WorkerDispatch extends SharedDispatch {
         this.services = {};
 
         this._onMessage = this._onMessage.bind(this, centralDispatchService);
-        if (typeof self !== "undefined") {
+        if (typeof self !== 'undefined') {
             self.onmessage = this._onMessage;
         }
     }
@@ -49,7 +47,7 @@ class WorkerDispatch extends SharedDispatch {
      *          dispatch.call('myService', 'hello');
      *      })
      */
-    get waitForConnection() {
+    get waitForConnection () {
         return this._connectionPromise;
     }
 
@@ -60,20 +58,13 @@ class WorkerDispatch extends SharedDispatch {
      * @param {object} provider - a local object which provides this service.
      * @returns {Promise} - a promise which will resolve once the service is registered.
      */
-    setService(service, provider) {
+    setService (service, provider) {
         if (Object.prototype.hasOwnProperty.call(this.services, service)) {
-            log.warn(
-                `Worker dispatch replacing existing service provider for ${service}`
-            );
+            log.warn(`Worker dispatch replacing existing service provider for ${service}`);
         }
         this.services[service] = provider;
         return this.waitForConnection.then(() =>
-            this._remoteCall(
-                centralDispatchService,
-                "dispatch",
-                "setService",
-                service
-            )
+            this._remoteCall(centralDispatchService, 'dispatch', 'setService', service)
         );
     }
 
@@ -84,12 +75,12 @@ class WorkerDispatch extends SharedDispatch {
      * @returns {{provider:(object|Worker), isRemote:boolean}} - the means to contact the service, if found
      * @protected
      */
-    _getServiceProvider(service) {
+    _getServiceProvider (service) {
         // if we don't have a local service by this name, contact central dispatch by calling `postMessage` on self
         const provider = this.services[service];
         return {
             provider: provider || centralDispatchService,
-            isRemote: !provider,
+            isRemote: !provider
         };
     }
 
@@ -101,21 +92,19 @@ class WorkerDispatch extends SharedDispatch {
      * @returns {Promise|undefined} - a promise for the results of this operation, if appropriate
      * @protected
      */
-    _onDispatchMessage(worker, message) {
+    _onDispatchMessage (worker, message) {
         let promise;
         switch (message.method) {
-            case "handshake":
-                promise = this._onConnect();
-                break;
-            case "terminate":
-                // Don't close until next tick, after sending confirmation back
-                setTimeout(() => self.close(), 0);
-                promise = Promise.resolve();
-                break;
-            default:
-                log.error(
-                    `Worker dispatch received message for unknown method: ${message.method}`
-                );
+        case 'handshake':
+            promise = this._onConnect();
+            break;
+        case 'terminate':
+            // Don't close until next tick, after sending confirmation back
+            setTimeout(() => self.close(), 0);
+            promise = Promise.resolve();
+            break;
+        default:
+            log.error(`Worker dispatch received message for unknown method: ${message.method}`);
         }
         return promise;
     }

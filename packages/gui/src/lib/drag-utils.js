@@ -15,7 +15,7 @@
  * @param {bool} isRtl are the boxes in RTL order.
  * @return {?number} index of the corresponding box, or null if one could not be found.
  */
-const indexForPositionOnList = ({ x, y }, boxes, isRtl) => {
+const indexForPositionOnList = ({x, y}, boxes, isRtl) => {
     if (boxes.length === 0) return null;
     let index = null;
     const leftEdge = Math.min.apply(
@@ -62,4 +62,4 @@ const indexForPositionOnList = ({ x, y }, boxes, isRtl) => {
     return index;
 };
 
-export { indexForPositionOnList };
+export {indexForPositionOnList};

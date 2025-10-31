@@ -11,7 +11,7 @@ const requestVideoStream = videoDesc => {
     if (requestStack.length === 0) {
         streamPromise = navigator.mediaDevices.getUserMedia({
             audio: false,
-            video: videoDesc,
+            video: videoDesc
         });
         requestStack.push(streamPromise);
     } else if (requestStack.length > 0) {
@@ -27,4 +27,4 @@ const requestDisableVideo = () => {
     return true;
 };
 
-export { requestVideoStream, requestDisableVideo };
+export {requestVideoStream, requestDisableVideo};

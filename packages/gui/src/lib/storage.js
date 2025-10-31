@@ -1,6 +1,6 @@
-import ScratchStorage from "@turbowarp/scratch-storage";
+import ScratchStorage from '@turbowarp/scratch-storage';
 
-import defaultProject from "./default-project";
+import defaultProject from './default-project';
 
 /**
  * Wrapper for ScratchStorage which adds default web sources.
@@ -19,11 +19,7 @@ class Storage extends ScratchStorage {
             this.getProjectUpdateConfig.bind(this)
         );
         this.addWebStore(
-            [
-                this.AssetType.ImageVector,
-                this.AssetType.ImageBitmap,
-                this.AssetType.Sound,
-            ],
+            [this.AssetType.ImageVector, this.AssetType.ImageBitmap, this.AssetType.Sound],
             this.getAssetGetConfig.bind(this),
             // We set both the create and update configs to the same method because
             // storage assumes it should update if there is an assetId, but the
@@ -40,19 +36,19 @@ class Storage extends ScratchStorage {
     }
     getProjectGetConfig(projectAsset) {
         const path = `${this.projectHost}/${projectAsset.assetId}`;
-        const qs = this.projectToken ? `?token=${this.projectToken}` : "";
+        const qs = this.projectToken ? `?token=${this.projectToken}` : '';
         return path + qs;
     }
     getProjectCreateConfig() {
         return {
             url: `${this.projectHost}/`,
-            withCredentials: true,
+            withCredentials: true
         };
     }
     getProjectUpdateConfig(projectAsset) {
         return {
             url: `${this.projectHost}/${projectAsset.assetId}`,
-            withCredentials: true,
+            withCredentials: true
         };
     }
     setAssetHost(assetHost) {
@@ -67,9 +63,9 @@ class Storage extends ScratchStorage {
             // should update if there is an assetId, and the asset store uses the
             // assetId as part of the create URI. So, force the method to POST.
             // Then when storage finds this config to use for the "update", still POSTs
-            method: "post",
+            method: 'post',
             url: `${this.assetHost}/${asset.assetId}.${asset.dataFormat}`,
-            withCredentials: true,
+            withCredentials: true
         };
     }
     setTranslatorFunction(translator) {

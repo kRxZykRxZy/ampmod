@@ -1,43 +1,43 @@
-import PropTypes from "prop-types";
-import React from "react";
-import Box from "../box/box.jsx";
-import Waveform from "../waveform/waveform.jsx";
-import Meter from "../meter/meter.jsx";
-import AudioTrimmer from "../../containers/audio-trimmer.jsx";
-import TWRenderRecoloredImage from "../../lib/tw-recolor/render.jsx";
-import { defineMessages, injectIntl, intlShape } from "react-intl";
+import PropTypes from 'prop-types';
+import React from 'react';
+import Box from '../box/box.jsx';
+import Waveform from '../waveform/waveform.jsx';
+import Meter from '../meter/meter.jsx';
+import AudioTrimmer from '../../containers/audio-trimmer.jsx';
+import TWRenderRecoloredImage from '../../lib/tw-recolor/render.jsx';
+import {defineMessages, injectIntl, intlShape} from 'react-intl';
 
-import styles from "./record-modal.css";
-import backIcon from "!../../lib/tw-recolor/build!./icon--back.svg";
-import stopIcon from "!../../lib/tw-recolor/build!./icon--stop-playback.svg";
-import playIcon from "!../../lib/tw-recolor/build!./icon--play.svg";
+import styles from './record-modal.css';
+import backIcon from '!../../lib/tw-recolor/build!./icon--back.svg';
+import stopIcon from '!../../lib/tw-recolor/build!./icon--stop-playback.svg';
+import playIcon from '!../../lib/tw-recolor/build!./icon--play.svg';
 
 const messages = defineMessages({
     stopMsg: {
-        defaultMessage: "Stop",
-        description: "Stop/Play button in recording playback",
-        id: "gui.playbackStep.stopMsg",
+        defaultMessage: 'Stop',
+        description: 'Stop/Play button in recording playback',
+        id: 'gui.playbackStep.stopMsg'
     },
     playMsg: {
-        defaultMessage: "Play",
-        description: "Stop/Play button in recording playback",
-        id: "gui.playbackStep.playMsg",
+        defaultMessage: 'Play',
+        description: 'Stop/Play button in recording playback',
+        id: 'gui.playbackStep.playMsg'
     },
     loadingMsg: {
-        defaultMessage: "Loading...",
-        description: "Loading/Save button in recording playback",
-        id: "gui.playbackStep.loadingMsg",
+        defaultMessage: 'Loading...',
+        description: 'Loading/Save button in recording playback',
+        id: 'gui.playbackStep.loadingMsg'
     },
     saveMsg: {
-        defaultMessage: "Save",
-        description: "Loading/Save button in recording playback",
-        id: "gui.playbackStep.saveMsg",
+        defaultMessage: 'Save',
+        description: 'Loading/Save button in recording playback',
+        id: 'gui.playbackStep.saveMsg'
     },
     reRecordMsg: {
-        defaultMessage: "Re-record",
-        description: "Button to re-record sound in recording playback",
-        id: "gui.playbackStep.reRecordMsg",
-    },
+        defaultMessage: 'Re-record',
+        description: 'Button to re-record sound in recording playback',
+        id: 'gui.playbackStep.reRecordMsg'
+    }
 });
 
 const PlaybackStep = props => (
@@ -47,12 +47,7 @@ const PlaybackStep = props => (
                 <Meter height={172} level={0} width={20} />
             </Box>
             <Box className={styles.waveformContainer}>
-                <Waveform
-                    data={props.levels}
-                    height={150}
-                    level={0}
-                    width={480}
-                />
+                <Waveform data={props.levels} height={150} level={0} width={480} />
                 <AudioTrimmer
                     playhead={props.playhead}
                     trimEnd={props.trimEnd}
@@ -63,14 +58,8 @@ const PlaybackStep = props => (
             </Box>
         </Box>
         <Box className={styles.mainButtonRow}>
-            <button
-                className={styles.mainButton}
-                onClick={props.playing ? props.onStopPlaying : props.onPlay}
-            >
-                <TWRenderRecoloredImage
-                    draggable={false}
-                    src={props.playing ? stopIcon : playIcon}
-                />
+            <button className={styles.mainButton} onClick={props.playing ? props.onStopPlaying : props.onPlay}>
+                <TWRenderRecoloredImage draggable={false} src={props.playing ? stopIcon : playIcon} />
                 <div className={styles.helpText}>
                     <span className={styles.playingText}>
                         {props.playing
@@ -85,11 +74,7 @@ const PlaybackStep = props => (
                 <TWRenderRecoloredImage draggable={false} src={backIcon} />
                 {props.intl.formatMessage(messages.reRecordMsg)}
             </button>
-            <button
-                className={styles.okButton}
-                disabled={props.encoding}
-                onClick={props.onSubmit}
-            >
+            <button className={styles.okButton} disabled={props.encoding} onClick={props.onSubmit}>
                 {props.encoding
                     ? props.intl.formatMessage(messages.loadingMsg)
                     : props.intl.formatMessage(messages.saveMsg)}
@@ -111,7 +96,7 @@ PlaybackStep.propTypes = {
     playhead: PropTypes.number,
     playing: PropTypes.bool.isRequired,
     trimEnd: PropTypes.number.isRequired,
-    trimStart: PropTypes.number.isRequired,
+    trimStart: PropTypes.number.isRequired
 };
 
 export default injectIntl(PlaybackStep);

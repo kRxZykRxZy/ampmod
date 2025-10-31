@@ -1,58 +1,58 @@
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import React from 'react';
+import {FormattedMessage} from 'react-intl';
 
-import musicIconURL from "./music/music.png";
-import musicInsetIconURL from "./music/music-small.svg";
+import musicIconURL from './music/music.png';
+import musicInsetIconURL from './music/music-small.svg';
 
-import penIconURL from "./pen/pen.png";
-import penInsetIconURL from "./pen/pen-small.svg";
+import penIconURL from './pen/pen.png';
+import penInsetIconURL from './pen/pen-small.svg';
 
-import videoSensingIconURL from "./videoSensing/video-sensing.png";
-import videoSensingInsetIconURL from "./videoSensing/video-sensing-small.svg";
+import videoSensingIconURL from './videoSensing/video-sensing.png';
+import videoSensingInsetIconURL from './videoSensing/video-sensing-small.svg';
 
-import text2speechIconURL from "./text2speech/text2speech.png";
-import text2speechInsetIconURL from "./text2speech/text2speech-small.svg";
+import text2speechIconURL from './text2speech/text2speech.png';
+import text2speechInsetIconURL from './text2speech/text2speech-small.svg';
 
-import translateIconURL from "./translate/translate.png";
-import translateInsetIconURL from "./translate/translate-small.png";
+import translateIconURL from './translate/translate.png';
+import translateInsetIconURL from './translate/translate-small.png';
 
-import makeymakeyIconURL from "./makeymakey/makeymakey.png";
-import makeymakeyInsetIconURL from "./makeymakey/makeymakey-small.svg";
+import makeymakeyIconURL from './makeymakey/makeymakey.png';
+import makeymakeyInsetIconURL from './makeymakey/makeymakey-small.svg';
 
-import microbitIconURL from "./microbit/microbit.png";
-import microbitInsetIconURL from "./microbit/microbit-small.svg";
-import microbitConnectionIconURL from "./microbit/microbit-illustration.svg";
-import microbitConnectionSmallIconURL from "./microbit/microbit-small.svg";
+import microbitIconURL from './microbit/microbit.png';
+import microbitInsetIconURL from './microbit/microbit-small.svg';
+import microbitConnectionIconURL from './microbit/microbit-illustration.svg';
+import microbitConnectionSmallIconURL from './microbit/microbit-small.svg';
 
-import ev3IconURL from "./ev3/ev3.png";
-import ev3InsetIconURL from "./ev3/ev3-small.svg";
-import ev3ConnectionIconURL from "./ev3/ev3-hub-illustration.svg";
-import ev3ConnectionSmallIconURL from "./ev3/ev3-small.svg";
+import ev3IconURL from './ev3/ev3.png';
+import ev3InsetIconURL from './ev3/ev3-small.svg';
+import ev3ConnectionIconURL from './ev3/ev3-hub-illustration.svg';
+import ev3ConnectionSmallIconURL from './ev3/ev3-small.svg';
 
-import wedo2IconURL from "./wedo2/wedo.png"; // TODO: Rename file names to match variable/prop names?
-import wedo2InsetIconURL from "./wedo2/wedo-small.svg";
-import wedo2ConnectionIconURL from "./wedo2/wedo-illustration.svg";
-import wedo2ConnectionSmallIconURL from "./wedo2/wedo-small.svg";
-import wedo2ConnectionTipIconURL from "./wedo2/wedo-button-illustration.svg";
+import wedo2IconURL from './wedo2/wedo.png'; // TODO: Rename file names to match variable/prop names?
+import wedo2InsetIconURL from './wedo2/wedo-small.svg';
+import wedo2ConnectionIconURL from './wedo2/wedo-illustration.svg';
+import wedo2ConnectionSmallIconURL from './wedo2/wedo-small.svg';
+import wedo2ConnectionTipIconURL from './wedo2/wedo-button-illustration.svg';
 
-import boostIconURL from "./boost/boost.png";
-import boostInsetIconURL from "./boost/boost-small.svg";
-import boostConnectionIconURL from "./boost/boost-illustration.svg";
-import boostConnectionSmallIconURL from "./boost/boost-small.svg";
-import boostConnectionTipIconURL from "./boost/boost-button-illustration.svg";
+import boostIconURL from './boost/boost.png';
+import boostInsetIconURL from './boost/boost-small.svg';
+import boostConnectionIconURL from './boost/boost-illustration.svg';
+import boostConnectionSmallIconURL from './boost/boost-small.svg';
+import boostConnectionTipIconURL from './boost/boost-button-illustration.svg';
 
-import gdxforIconURL from "./gdxfor/gdxfor.png";
-import gdxforInsetIconURL from "./gdxfor/gdxfor-small.svg";
-import gdxforConnectionIconURL from "./gdxfor/gdxfor-illustration.svg";
-import gdxforConnectionSmallIconURL from "./gdxfor/gdxfor-small.svg";
+import gdxforIconURL from './gdxfor/gdxfor.png';
+import gdxforInsetIconURL from './gdxfor/gdxfor-small.svg';
+import gdxforConnectionIconURL from './gdxfor/gdxfor-illustration.svg';
+import gdxforConnectionSmallIconURL from './gdxfor/gdxfor-small.svg';
 
-import futureIcon from "./future/future.svg";
-import futureInsetIcon from "./future/future-small.svg";
-import customExtensionIcon from "./custom/custom.svg";
-import legacyListsIcon from "./legacyLists/legacylists.svg";
-import legacyListsInsetIcon from "./legacyLists/list_icon.svg";
-import galleryIcon from "./gallery/gallery.svg";
-import { APP_NAME } from "@ampmod/branding";
+import futureIcon from './future/future.svg';
+import futureInsetIcon from './future/future-small.svg';
+import customExtensionIcon from './custom/custom.svg';
+import legacyListsIcon from './legacyLists/legacylists.svg';
+import legacyListsInsetIcon from './legacyLists/list_icon.svg';
+import galleryIcon from './gallery/gallery.svg';
+import {APP_NAME} from '@ampmod/branding';
 
 //import listIconURL from './list/list.png';
 //import listInsetIconURL from './list/list-small.svg';
@@ -66,10 +66,10 @@ export default [
                 id="gui.extension.music.name"
             />
         ),
-        extensionId: "music",
+        extensionId: 'music',
         iconURL: musicIconURL,
         insetIconURL: musicInsetIconURL,
-        insetIconBgColor: "#cf63cf",
+        insetIconBgColor: '#cf63cf',
         description: (
             <FormattedMessage
                 defaultMessage="Play instruments and drums."
@@ -77,8 +77,8 @@ export default [
                 id="gui.extension.music.description"
             />
         ),
-        tags: ["scratch", "sound"],
-        featured: true,
+        tags: ['scratch', 'sound'],
+        featured: true
     },
     {
         name: (
@@ -88,10 +88,10 @@ export default [
                 id="gui.extension.videosensing.name"
             />
         ),
-        extensionId: "videoSensing",
+        extensionId: 'videoSensing',
         iconURL: videoSensingIconURL,
         insetIconURL: videoSensingInsetIconURL,
-        insetIconBgColor: "#5cb1d6",
+        insetIconBgColor: '#5cb1d6',
         description: (
             <FormattedMessage
                 defaultMessage="Sense motion with the camera."
@@ -99,8 +99,8 @@ export default [
                 id="gui.extension.videosensing.description"
             />
         ),
-        tags: ["scratch", "hardware"],
-        featured: true,
+        tags: ['scratch', 'hardware'],
+        featured: true
     },
     {
         name: (
@@ -110,11 +110,11 @@ export default [
                 id="gui.extension.text2speech.name"
             />
         ),
-        extensionId: "text2speech",
-        collaborator: "Amazon Web Services",
+        extensionId: 'text2speech',
+        collaborator: 'Amazon Web Services',
         iconURL: text2speechIconURL,
         insetIconURL: text2speechInsetIconURL,
-        insetIconBgColor: "#9966ff",
+        insetIconBgColor: '#9966ff',
         description: (
             <FormattedMessage
                 defaultMessage="Make your projects talk."
@@ -122,9 +122,9 @@ export default [
                 id="gui.extension.text2speech.description"
             />
         ),
-        tags: ["scratch", "sound", "internet"],
+        tags: ['scratch', 'sound', 'internet'],
         featured: true,
-        internetConnectionRequired: true,
+        internetConnectionRequired: true
     },
     {
         name: (
@@ -134,11 +134,11 @@ export default [
                 id="gui.extension.translate.name"
             />
         ),
-        extensionId: "translate",
-        collaborator: "Google",
+        extensionId: 'translate',
+        collaborator: 'Google',
         iconURL: translateIconURL,
         insetIconURL: translateInsetIconURL,
-        insetIconBgColor: "#5cb1d6",
+        insetIconBgColor: '#5cb1d6',
         description: (
             <FormattedMessage
                 defaultMessage="Translate text into many languages."
@@ -146,17 +146,17 @@ export default [
                 id="gui.extension.translate.description"
             />
         ),
-        tags: ["scratch", "internet"],
+        tags: ['scratch', 'internet'],
         featured: true,
-        internetConnectionRequired: true,
+        internetConnectionRequired: true
     },
     {
-        name: "Makey Makey",
-        extensionId: "makeymakey",
-        collaborator: "JoyLabz",
+        name: 'Makey Makey',
+        extensionId: 'makeymakey',
+        collaborator: 'JoyLabz',
         iconURL: makeymakeyIconURL,
         insetIconURL: makeymakeyInsetIconURL,
-        insetIconBgColor: "#ff661a",
+        insetIconBgColor: '#ff661a',
         description: (
             <FormattedMessage
                 defaultMessage="Make anything into a key."
@@ -164,8 +164,8 @@ export default [
                 id="gui.extension.makeymakey.description"
             />
         ),
-        tags: ["scratch", "hardware"],
-        featured: true,
+        tags: ['scratch', 'hardware'],
+        featured: true
     },
     // Custom Reporters is commented out because it was moved to the base editor
     /* {
@@ -198,28 +198,28 @@ export default [
                 id="amp.futureExtension.name"
             />
         ),
-        extensionId: "future",
+        extensionId: 'future',
         iconURL: futureIcon,
         insetIconURL: futureInsetIcon,
-        insetIconBgColor: "#59c059",
+        insetIconBgColor: '#59c059',
         description: (
             <FormattedMessage
                 defaultMessage="Use beta-quality blocks that the {APP_NAME} developers are experimenting with."
                 description="Description of the 'Future' extension"
                 id="amp.futureExtension.description"
                 values={{
-                    APP_NAME,
+                    APP_NAME
                 }}
             />
         ),
         incompatibleWithScratch: true,
-        tags: ["ampmod", "catexp"],
-        featured: true,
+        tags: ['ampmod', 'catexp'],
+        featured: true
     },
     {
-        name: "micro:bit",
-        extensionId: "microbit",
-        collaborator: "micro:bit",
+        name: 'micro:bit',
+        extensionId: 'microbit',
+        collaborator: 'micro:bit',
         iconURL: microbitIconURL,
         insetIconURL: microbitInsetIconURL,
         description: (
@@ -229,7 +229,7 @@ export default [
                 id="gui.extension.microbit.description"
             />
         ),
-        tags: ["scratch", "hardware"],
+        tags: ['scratch', 'hardware'],
         featured: true,
         disabled: false,
         bluetoothRequired: true,
@@ -245,12 +245,12 @@ export default [
                 id="gui.extension.microbit.connectingMessage"
             />
         ),
-        helpLink: "https://scratch.mit.edu/microbit",
+        helpLink: 'https://scratch.mit.edu/microbit'
     },
     {
-        name: "LEGO MINDSTORMS EV3",
-        extensionId: "ev3",
-        collaborator: "LEGO",
+        name: 'LEGO MINDSTORMS EV3',
+        extensionId: 'ev3',
+        collaborator: 'LEGO',
         iconURL: ev3IconURL,
         insetIconURL: ev3InsetIconURL,
         description: (
@@ -260,7 +260,7 @@ export default [
                 id="gui.extension.ev3.description"
             />
         ),
-        tags: ["scratch", "hardware"],
+        tags: ['scratch', 'hardware'],
         featured: true,
         disabled: false,
         bluetoothRequired: true,
@@ -276,12 +276,12 @@ export default [
                 id="gui.extension.ev3.connectingMessage"
             />
         ),
-        helpLink: "https://scratch.mit.edu/ev3",
+        helpLink: 'https://scratch.mit.edu/ev3'
     },
     {
-        name: "LEGO BOOST",
-        extensionId: "boost",
-        collaborator: "LEGO",
+        name: 'LEGO BOOST',
+        extensionId: 'boost',
+        collaborator: 'LEGO',
         iconURL: boostIconURL,
         insetIconURL: boostInsetIconURL,
         description: (
@@ -291,7 +291,7 @@ export default [
                 id="gui.extension.boost.description"
             />
         ),
-        tags: ["scratch", "hardware"],
+        tags: ['scratch', 'hardware'],
         featured: true,
         disabled: false,
         bluetoothRequired: true,
@@ -308,12 +308,12 @@ export default [
                 id="gui.extension.boost.connectingMessage"
             />
         ),
-        helpLink: "https://scratch.mit.edu/boost",
+        helpLink: 'https://scratch.mit.edu/boost'
     },
     {
-        name: "LEGO Education WeDo 2.0",
-        extensionId: "wedo2",
-        collaborator: "LEGO",
+        name: 'LEGO Education WeDo 2.0',
+        extensionId: 'wedo2',
+        collaborator: 'LEGO',
         iconURL: wedo2IconURL,
         insetIconURL: wedo2InsetIconURL,
         description: (
@@ -323,7 +323,7 @@ export default [
                 id="gui.extension.wedo2.description"
             />
         ),
-        tags: ["scratch", "hardware"],
+        tags: ['scratch', 'hardware'],
         featured: true,
         disabled: false,
         bluetoothRequired: true,
@@ -340,12 +340,12 @@ export default [
                 id="gui.extension.wedo2.connectingMessage"
             />
         ),
-        helpLink: "https://scratch.mit.edu/wedo",
+        helpLink: 'https://scratch.mit.edu/wedo'
     },
     {
-        name: "Go Direct Force & Acceleration",
-        extensionId: "gdxfor",
-        collaborator: "Vernier",
+        name: 'Go Direct Force & Acceleration',
+        extensionId: 'gdxfor',
+        collaborator: 'Vernier',
         iconURL: gdxforIconURL,
         insetIconURL: gdxforInsetIconURL,
         description: (
@@ -355,7 +355,7 @@ export default [
                 id="gui.extension.gdxfor.description"
             />
         ),
-        tags: ["scratch", "hardware"],
+        tags: ['scratch', 'hardware'],
         featured: true,
         disabled: false,
         bluetoothRequired: true,
@@ -371,7 +371,7 @@ export default [
                 id="gui.extension.gdxfor.connectingMessage"
             />
         ),
-        helpLink: "https://scratch.mit.edu/vernier",
+        helpLink: 'https://scratch.mit.edu/vernier'
     },
     {
         name: (
@@ -381,10 +381,10 @@ export default [
                 id="gui.extension.legacyLists.name"
             />
         ),
-        extensionId: "data_enable_lists",
+        extensionId: 'data_enable_lists',
         iconURL: legacyListsIcon,
         insetIconURL: legacyListsInsetIcon,
-        insetIconBgColor: "#ff661a",
+        insetIconBgColor: '#ff661a',
         description: (
             <FormattedMessage
                 defaultMessage="Use Scratch's vanilla list system. For compatibility."
@@ -392,8 +392,8 @@ export default [
                 id="gui.extension.legacyLists.description"
             />
         ),
-        tags: ["scratch", "data"],
-        featured: true,
+        tags: ['scratch', 'data'],
+        featured: true
     },
     {
         name: (
@@ -403,7 +403,7 @@ export default [
                 id="tw.customExtension.name"
             />
         ),
-        extensionId: "custom_extension",
+        extensionId: 'custom_extension',
         iconURL: customExtensionIcon,
         description: (
             <FormattedMessage
@@ -412,10 +412,10 @@ export default [
                 id="tw.customExtension.description"
             />
         ),
-        tags: ["tw", "ampmod"],
-        featured: true,
+        tags: ['tw', 'ampmod'],
+        featured: true
         // Not marked as incompatible with Scratch so that clicking on it doesn't show a prompt
-    },
+    }
 ];
 
 export const galleryLoading = {
@@ -425,12 +425,12 @@ export const galleryLoading = {
             description="Name of ampmod.codeberg.page/extensions in extension library"
             id="tw.extensionGallery.name"
             values={{
-                APP_NAME,
+                APP_NAME
             }}
         />
     ),
-    href: "https://ampmod.codeberg.page/extensions/",
-    extensionId: "gallery",
+    href: 'https://ampmod.codeberg.page/extensions/',
+    extensionId: 'gallery',
     iconURL: galleryIcon,
     description: (
         <FormattedMessage
@@ -440,8 +440,8 @@ export const galleryLoading = {
             id="tw.extensionGallery.loading"
         />
     ),
-    tags: ["tw", "ampmod"],
-    featured: true,
+    tags: ['tw', 'ampmod'],
+    featured: true
 };
 
 export const galleryMore = {
@@ -451,12 +451,12 @@ export const galleryMore = {
             description="Name of ampmod.codeberg.page/extensions in extension library"
             id="tw.extensionGalleryAmp.name"
             values={{
-                APP_NAME,
+                APP_NAME
             }}
         />
     ),
-    href: "https://ampmod.codeberg.page/extensions/",
-    extensionId: "gallery",
+    href: 'https://ampmod.codeberg.page/extensions/',
+    extensionId: 'gallery',
     iconURL: galleryIcon,
     description: (
         <FormattedMessage
@@ -466,8 +466,8 @@ export const galleryMore = {
             id="amp.extensionGallery.more"
         />
     ),
-    tags: ["tw", "ampmod"],
-    featured: true,
+    tags: ['tw', 'ampmod'],
+    featured: true
 };
 
 export const galleryError = {
@@ -477,12 +477,12 @@ export const galleryError = {
             description="Name of ampmod.codeberg.page/extensions in extension library"
             id="amp.extensionGallery.name"
             values={{
-                APP_NAME,
+                APP_NAME
             }}
         />
     ),
-    href: "https://ampmod.codeberg.page/extensions/",
-    extensionId: "gallery",
+    href: 'https://ampmod.codeberg.page/extensions/',
+    extensionId: 'gallery',
     iconURL: galleryIcon,
     description: (
         <FormattedMessage
@@ -492,6 +492,6 @@ export const galleryError = {
             id="amp.extensionGallery.error"
         />
     ),
-    tags: ["tw", "ampmod"],
-    featured: true,
+    tags: ['tw', 'ampmod'],
+    featured: true
 };

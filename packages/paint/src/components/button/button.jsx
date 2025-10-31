@@ -5,19 +5,13 @@ See #13 */
 /* ACTUALLY, THIS IS EDITED ;)
 THIS WAS CHANGED ON 10/25/2017 BY @mewtaylor TO ADD HANDLING FOR DISABLED STATES.*/
 
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import React from "react";
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import styles from "./button.css";
+import styles from './button.css';
 
-const ButtonComponent = ({
-    className,
-    highlighted,
-    onClick,
-    children,
-    ...props
-}) => {
+const ButtonComponent = ({className, highlighted, onClick, children, ...props}) => {
     const disabled = props.disabled || false;
     if (disabled === false) {
         // if not disabled, add `onClick()` to be applied
@@ -28,7 +22,7 @@ const ButtonComponent = ({
         <span
             className={classNames(styles.button, className, {
                 [styles.modDisabled]: disabled,
-                [styles.highlighted]: highlighted,
+                [styles.highlighted]: highlighted
             })}
             role="button"
             {...props}
@@ -43,6 +37,6 @@ ButtonComponent.propTypes = {
     className: PropTypes.string,
     disabled: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     highlighted: PropTypes.bool,
-    onClick: PropTypes.func.isRequired,
+    onClick: PropTypes.func.isRequired
 };
 export default ButtonComponent;

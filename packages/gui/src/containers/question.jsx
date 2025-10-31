@@ -1,34 +1,28 @@
-import PropTypes from "prop-types";
-import React from "react";
-import bindAll from "lodash.bindall";
-import QuestionComponent from "../components/question/question.jsx";
+import PropTypes from 'prop-types';
+import React from 'react';
+import bindAll from 'lodash.bindall';
+import QuestionComponent from '../components/question/question.jsx';
 
 class Question extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, [
-            "handleChange",
-            "handleKeyPress",
-            "handleSubmit",
-            "handleYes",
-            "handleNo",
-        ]);
+        bindAll(this, ['handleChange', 'handleKeyPress', 'handleSubmit', 'handleYes', 'handleNo']);
         this.state = {
-            answer: "",
+            answer: ''
         };
     }
     handleChange(e) {
-        this.setState({ answer: e.target.value });
+        this.setState({answer: e.target.value});
     }
     handleKeyPress(event) {
-        if (event.key === "Enter") this.handleSubmit();
+        if (event.key === 'Enter') this.handleSubmit();
     }
     handleYes(e) {
-        this.setState({ answer: "Yes" });
+        this.setState({answer: 'Yes'});
         this.handleSubmit();
     }
     handleNo(e) {
-        this.setState({ answer: "No" });
+        this.setState({answer: 'No'});
         this.handleSubmit();
     }
     handleSubmit() {
@@ -51,7 +45,7 @@ class Question extends React.Component {
 
 Question.propTypes = {
     onQuestionAnswered: PropTypes.func.isRequired,
-    question: PropTypes.string,
+    question: PropTypes.string
 };
 
 export default Question;

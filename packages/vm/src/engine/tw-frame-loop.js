@@ -3,13 +3,8 @@
 
 // Use setTimeout to polyfill requestAnimationFrame in Node.js environments
 const _requestAnimationFrame =
-    typeof requestAnimationFrame === "function"
-        ? requestAnimationFrame
-        : f => setTimeout(f, 1000 / 60);
-const _cancelAnimationFrame =
-    typeof requestAnimationFrame === "function"
-        ? cancelAnimationFrame
-        : clearTimeout;
+    typeof requestAnimationFrame === 'function' ? requestAnimationFrame : f => setTimeout(f, 1000 / 60);
+const _cancelAnimationFrame = typeof requestAnimationFrame === 'function' ? cancelAnimationFrame : clearTimeout;
 
 const animationFrameWrapper = callback => {
     let id;
@@ -20,12 +15,12 @@ const animationFrameWrapper = callback => {
     const cancel = () => _cancelAnimationFrame(id);
     id = _requestAnimationFrame(handle);
     return {
-        cancel,
+        cancel
     };
 };
 
 class FrameLoop {
-    constructor(runtime) {
+    constructor (runtime) {
         this.runtime = runtime;
         this.running = false;
         this.setFramerate(30);
@@ -39,32 +34,32 @@ class FrameLoop {
         this._stepAnimation = null;
     }
 
-    setFramerate(fps) {
+    setFramerate (fps) {
         this.framerate = fps;
         this._restart();
     }
 
-    setInterpolation(interpolation) {
+    setInterpolation (interpolation) {
         this.interpolation = interpolation;
         this._restart();
     }
 
-    stepCallback() {
+    stepCallback () {
         this.runtime._step();
     }
 
-    interpolationCallback() {
+    interpolationCallback () {
         this.runtime._renderInterpolatedPositions();
     }
 
-    _restart() {
+    _restart () {
         if (this.running) {
             this.stop();
             this.start();
         }
     }
 
-    start() {
+    start () {
         this.running = true;
         if (this.framerate === 0) {
             this._stepAnimation = animationFrameWrapper(this.stepCallback);
@@ -72,19 +67,14 @@ class FrameLoop {
         } else {
             // Interpolation should never be enabled when framerate === 0 as that's just redundant
             if (this.interpolation) {
-                this._interpolationAnimation = animationFrameWrapper(
-                    this.interpolationCallback
-                );
+                this._interpolationAnimation = animationFrameWrapper(this.interpolationCallback);
             }
-            this._stepInterval = setInterval(
-                this.stepCallback,
-                1000 / this.framerate
-            );
+            this._stepInterval = setInterval(this.stepCallback, 1000 / this.framerate);
             this.runtime.currentStepTime = 1000 / this.framerate;
         }
     }
 
-    stop() {
+    stop () {
         this.running = false;
         clearInterval(this._stepInterval);
         if (this._interpolationAnimation) {

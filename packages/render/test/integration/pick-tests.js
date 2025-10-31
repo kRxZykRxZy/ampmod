@@ -27,7 +27,6 @@ const runFile = async (file, action, page, script) => {
 
     const testOperation = async function (name, action, expect) {
         await test(name, async t => {
-
             const results = await runFile('test-mouse-touch.sb2', action, page, boundAction => {
                 vm.greenFlag();
                 const sendResults = [];

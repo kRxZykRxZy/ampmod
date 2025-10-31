@@ -1,5 +1,5 @@
-import { requestVideoStream, requestDisableVideo } from "./camera.js";
-import log from "../log.js";
+import {requestVideoStream, requestDisableVideo} from './camera.js';
+import log from '../log.js';
 
 /**
  * Video Manager for video extensions.
@@ -37,11 +37,11 @@ class VideoProvider {
     }
 
     static get FORMAT_IMAGE_DATA() {
-        return "image-data";
+        return 'image-data';
     }
 
     static get FORMAT_CANVAS() {
-        return "canvas";
+        return 'canvas';
     }
 
     /**
@@ -85,9 +85,7 @@ class VideoProvider {
         this.enabled = false;
         // If we have begun a setup process, call _teardown after it completes
         if (this._singleSetup) {
-            this._singleSetup
-                .then(this._teardown.bind(this))
-                .catch(err => this.onError(err));
+            this._singleSetup.then(this._teardown.bind(this)).catch(err => this.onError(err));
         }
     }
 
@@ -125,7 +123,7 @@ class VideoProvider {
         dimensions = VideoProvider.DIMENSIONS,
         mirror = this.mirror,
         format = VideoProvider.FORMAT_IMAGE_DATA,
-        cacheTimeout = this._frameCacheTimeout,
+        cacheTimeout = this._frameCacheTimeout
     }) {
         if (!this.videoReady) {
             return null;
@@ -133,10 +131,10 @@ class VideoProvider {
         const [width, height] = dimensions;
         const workspace = this._getWorkspace({
             dimensions,
-            mirror: Boolean(mirror),
+            mirror: Boolean(mirror)
         });
-        const { videoWidth, videoHeight } = this._video;
-        const { canvas, context, lastUpdate, cacheData } = workspace;
+        const {videoWidth, videoHeight} = this._video;
+        const {canvas, context, lastUpdate, cacheData} = workspace;
         const now = Date.now();
 
         // if the canvas hasn't been updated...
@@ -167,18 +165,13 @@ class VideoProvider {
 
         // each data type has it's own data cache, but the canvas is the same
         if (!cacheData[format]) {
-            cacheData[format] = { lastUpdate: 0 };
+            cacheData[format] = {lastUpdate: 0};
         }
         const formatCache = cacheData[format];
 
         if (formatCache.lastUpdate + cacheTimeout < now) {
             if (format === VideoProvider.FORMAT_IMAGE_DATA) {
-                formatCache.lastData = context.getImageData(
-                    0,
-                    0,
-                    width,
-                    height
-                );
+                formatCache.lastData = context.getImageData(0, 0, width, height);
             } else if (format === VideoProvider.FORMAT_CANVAS) {
                 // this will never change
                 formatCache.lastUpdate = Infinity;
@@ -191,10 +184,7 @@ class VideoProvider {
             }
 
             // rather than set to now, this data is as stale as it's canvas is
-            formatCache.lastUpdate = Math.max(
-                workspace.lastUpdate,
-                formatCache.lastUpdate
-            );
+            formatCache.lastUpdate = Math.max(workspace.lastUpdate, formatCache.lastUpdate);
         }
 
         return formatCache.lastData;
@@ -207,7 +197,7 @@ class VideoProvider {
      * @param {Error} error An error object from getUserMedia or other source of error.
      */
     onError(error) {
-        log.error("Unhandled video io device error", error);
+        log.error('Unhandled video io device error', error);
     }
 
     /**
@@ -223,11 +213,11 @@ class VideoProvider {
         }
 
         this._singleSetup = requestVideoStream({
-            width: { min: 480, ideal: 640 },
-            height: { min: 360, ideal: 480 },
+            width: {min: 480, ideal: 640},
+            height: {min: 360, ideal: 480}
         })
             .then(stream => {
-                this._video = document.createElement("video");
+                this._video = document.createElement('video');
 
                 // Use the new srcObject API, falling back to createObjectURL
                 try {
@@ -262,8 +252,8 @@ class VideoProvider {
         if (!this._track) {
             return false;
         }
-        const { videoWidth, videoHeight } = this._video;
-        if (typeof videoWidth !== "number" || typeof videoHeight !== "number") {
+        const {videoWidth, videoHeight} = this._video;
+        if (typeof videoWidth !== 'number' || typeof videoHeight !== 'number') {
             return false;
         }
         if (videoWidth === 0 || videoHeight === 0) {
@@ -279,23 +269,21 @@ class VideoProvider {
      * @private
      * @return {object} A workspace for canvas/data storage.  Internal format not documented intentionally
      */
-    _getWorkspace({ dimensions, mirror }) {
+    _getWorkspace({dimensions, mirror}) {
         let workspace = this._workspace.find(
-            space =>
-                space.dimensions.join("-") === dimensions.join("-") &&
-                space.mirror === mirror
+            space => space.dimensions.join('-') === dimensions.join('-') && space.mirror === mirror
         );
         if (!workspace) {
             workspace = {
                 dimensions,
                 mirror,
-                canvas: document.createElement("canvas"),
+                canvas: document.createElement('canvas'),
                 lastUpdate: 0,
-                cacheData: {},
+                cacheData: {}
             };
             workspace.canvas.width = dimensions[0];
             workspace.canvas.height = dimensions[1];
-            workspace.context = workspace.canvas.getContext("2d");
+            workspace.context = workspace.canvas.getContext('2d');
             this._workspace.push(workspace);
         }
         return workspace;

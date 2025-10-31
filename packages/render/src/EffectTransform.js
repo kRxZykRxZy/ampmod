@@ -28,7 +28,6 @@ const CENTER_Y = 0.5;
 const __hsv = [0, 0, 0];
 
 class EffectTransform {
-
     /**
      * Transform a color in-place given the drawable's effect uniforms.  Will apply
      * Ghost and Color and Brightness effects.
@@ -37,7 +36,7 @@ class EffectTransform {
      * @param {number} [effectMask] A bitmask for which effects to use. Optional.
      * @returns {Uint8ClampedArray} dst filled with the transformed color
      */
-    static transformColor (drawable, inOutColor, effectMask) {
+    static transformColor(drawable, inOutColor, effectMask) {
         // If the color is fully transparent, don't bother attempting any transformations.
         if (inOutColor[3] === 0) {
             return inOutColor;
@@ -77,7 +76,7 @@ class EffectTransform {
                     hsv[0] = 0;
                     hsv[1] = 1;
                     hsv[2] = minV;
-                // else if (hsv.y < minSaturation) hsv = vec3(0.0, minSaturation, hsv.z);
+                    // else if (hsv.y < minSaturation) hsv = vec3(0.0, minSaturation, hsv.z);
                 } else if (hsv[1] < minS) {
                     hsv[0] = 0;
                     hsv[1] = minS;
@@ -85,7 +84,7 @@ class EffectTransform {
 
                 // hsv.x = mod(hsv.x + u_color, 1.0);
                 // if (hsv.x < 0.0) hsv.x += 1.0;
-                hsv[0] = (uniforms.u_color + hsv[0] + 1);
+                hsv[0] = uniforms.u_color + hsv[0] + 1;
 
                 // gl_FragColor.rgb = convertHSV2RGB(hsl);
                 hsvToRgb(hsv, inOutColor);
@@ -125,15 +124,15 @@ class EffectTransform {
      * @param {twgl.v3} dst A place to store the output coordinate.
      * @return {twgl.v3} dst - The coordinate after being transform by effects.
      */
-    static transformPoint (drawable, vec, dst) {
+    static transformPoint(drawable, vec, dst) {
         twgl.v3.copy(vec, dst);
 
         const effects = drawable.enabledEffects;
         const uniforms = drawable.getUniforms();
         if ((effects & ShaderManager.EFFECT_INFO.mosaic.mask) !== 0) {
             // texcoord0 = fract(u_mosaic * texcoord0);
-            dst[0] = uniforms.u_mosaic * dst[0] % 1;
-            dst[1] = uniforms.u_mosaic * dst[1] % 1;
+            dst[0] = (uniforms.u_mosaic * dst[0]) % 1;
+            dst[1] = (uniforms.u_mosaic * dst[1]) % 1;
         }
         if ((effects & ShaderManager.EFFECT_INFO.pixelate.mask) !== 0) {
             const skinUniforms = drawable.skin.getUniforms();
@@ -154,7 +153,7 @@ class EffectTransform {
             // float offsetMagnitude = length(offset);
             const offsetMagnitude = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2));
             // float whirlFactor = max(1.0 - (offsetMagnitude / kRadius), 0.0);
-            const whirlFactor = Math.max(1.0 - (offsetMagnitude / RADIUS), 0.0);
+            const whirlFactor = Math.max(1.0 - offsetMagnitude / RADIUS, 0.0);
             // float whirlActual = u_whirl * whirlFactor * whirlFactor;
             const whirlActual = uniforms.u_whirl * whirlFactor * whirlFactor;
             // float sinWhirl = sin(whirlActual);
@@ -171,23 +170,23 @@ class EffectTransform {
             const rot4 = cosWhirl;
 
             // texcoord0 = rotationMatrix * offset + kCenter;
-            dst[0] = (rot1 * offsetX) + (rot3 * offsetY) + CENTER_X;
-            dst[1] = (rot2 * offsetX) + (rot4 * offsetY) + CENTER_Y;
+            dst[0] = rot1 * offsetX + rot3 * offsetY + CENTER_X;
+            dst[1] = rot2 * offsetX + rot4 * offsetY + CENTER_Y;
         }
         if ((effects & ShaderManager.EFFECT_INFO.fisheye.mask) !== 0) {
             // vec2 vec = (texcoord0 - kCenter) / kCenter;
             const vX = (dst[0] - CENTER_X) / CENTER_X;
             const vY = (dst[1] - CENTER_Y) / CENTER_Y;
             // float vecLength = length(vec);
-            const vLength = Math.sqrt((vX * vX) + (vY * vY));
+            const vLength = Math.sqrt(vX * vX + vY * vY);
             // float r = pow(min(vecLength, 1.0), u_fisheye) * max(1.0, vecLength);
             const r = Math.pow(Math.min(vLength, 1), uniforms.u_fisheye) * Math.max(1, vLength);
             // vec2 unit = vec / vecLength;
             const unitX = vX / vLength;
             const unitY = vY / vLength;
             // texcoord0 = kCenter + r * unit * kCenter;
-            dst[0] = CENTER_X + (r * unitX * CENTER_X);
-            dst[1] = CENTER_Y + (r * unitY * CENTER_Y);
+            dst[0] = CENTER_X + r * unitX * CENTER_X;
+            dst[1] = CENTER_Y + r * unitY * CENTER_Y;
         }
 
         return dst;

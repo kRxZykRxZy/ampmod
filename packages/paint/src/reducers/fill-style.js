@@ -1,11 +1,10 @@
-import makeColorStyleReducer from "../lib/make-color-style-reducer";
+import makeColorStyleReducer from '../lib/make-color-style-reducer';
 
-const CHANGE_FILL_COLOR = "scratch-paint/fill-style/CHANGE_FILL_COLOR";
-const CHANGE_FILL_COLOR_2 = "scratch-paint/fill-style/CHANGE_FILL_COLOR_2";
-const CHANGE_FILL_GRADIENT_TYPE =
-    "scratch-paint/fill-style/CHANGE_FILL_GRADIENT_TYPE";
-const CLEAR_FILL_GRADIENT = "scratch-paint/fill-style/CLEAR_FILL_GRADIENT";
-const DEFAULT_COLOR = "#9966FF";
+const CHANGE_FILL_COLOR = 'scratch-paint/fill-style/CHANGE_FILL_COLOR';
+const CHANGE_FILL_COLOR_2 = 'scratch-paint/fill-style/CHANGE_FILL_COLOR_2';
+const CHANGE_FILL_GRADIENT_TYPE = 'scratch-paint/fill-style/CHANGE_FILL_GRADIENT_TYPE';
+const CLEAR_FILL_GRADIENT = 'scratch-paint/fill-style/CLEAR_FILL_GRADIENT';
+const DEFAULT_COLOR = '#9966FF';
 
 const reducer = makeColorStyleReducer({
     changePrimaryColorAction: CHANGE_FILL_COLOR,
@@ -13,36 +12,36 @@ const reducer = makeColorStyleReducer({
     changeGradientTypeAction: CHANGE_FILL_GRADIENT_TYPE,
     clearGradientAction: CLEAR_FILL_GRADIENT,
     defaultColor: DEFAULT_COLOR,
-    selectionPrimaryColorKey: "fillColor",
-    selectionSecondaryColorKey: "fillColor2",
-    selectionGradientTypeKey: "fillGradientType",
+    selectionPrimaryColorKey: 'fillColor',
+    selectionSecondaryColorKey: 'fillColor2',
+    selectionGradientTypeKey: 'fillGradientType'
 });
 
 // Action creators ==================================
 const changeFillColor = function (fillColor) {
     return {
         type: CHANGE_FILL_COLOR,
-        color: fillColor,
+        color: fillColor
     };
 };
 
 const changeFillColor2 = function (fillColor) {
     return {
         type: CHANGE_FILL_COLOR_2,
-        color: fillColor,
+        color: fillColor
     };
 };
 
 const changeFillGradientType = function (gradientType) {
     return {
         type: CHANGE_FILL_GRADIENT_TYPE,
-        gradientType,
+        gradientType
     };
 };
 
 const clearFillGradient = function () {
     return {
-        type: CLEAR_FILL_GRADIENT,
+        type: CLEAR_FILL_GRADIENT
     };
 };
 
@@ -53,5 +52,5 @@ export {
     changeFillGradientType,
     clearFillGradient,
     DEFAULT_COLOR,
-    CHANGE_FILL_GRADIENT_TYPE,
+    CHANGE_FILL_GRADIENT_TYPE
 };

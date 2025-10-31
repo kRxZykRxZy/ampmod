@@ -1,37 +1,37 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { defineMessages, injectIntl, intlShape } from "react-intl";
-import bindAll from "lodash.bindall";
-import { connect } from "react-redux";
-import { closeSettingsModal } from "../reducers/modals";
-import SettingsModalComponent from "../components/tw-settings-modal/settings-modal.jsx";
-import { defaultStageSize } from "../reducers/custom-stage-size";
+import PropTypes from 'prop-types';
+import React from 'react';
+import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import bindAll from 'lodash.bindall';
+import {connect} from 'react-redux';
+import {closeSettingsModal} from '../reducers/modals';
+import SettingsModalComponent from '../components/tw-settings-modal/settings-modal.jsx';
+import {defaultStageSize} from '../reducers/custom-stage-size';
 
 const messages = defineMessages({
     newFramerate: {
-        defaultMessage: "New framerate:",
-        description: "Prompt shown to choose a new framerate",
-        id: "tw.menuBar.newFramerate",
-    },
+        defaultMessage: 'New framerate:',
+        description: 'Prompt shown to choose a new framerate',
+        id: 'tw.menuBar.newFramerate'
+    }
 });
 
 class UsernameModal extends React.Component {
     constructor(props) {
         super(props);
         bindAll(this, [
-            "handleFramerateChange",
-            "handleCustomizeFramerate",
-            "handleHighQualityPenChange",
-            "handleInterpolationChange",
-            "handleInfiniteClonesChange",
-            "handleRemoveFencingChange",
-            "handleRemoveLimitsChange",
-            "handleWarpTimerChange",
-            "handleStageWidthChange",
-            "handleStageHeightChange",
-            "handleDisableCompilerChange",
-            "handleCaseSensitivityChange",
-            "handleStoreProjectOptions",
+            'handleFramerateChange',
+            'handleCustomizeFramerate',
+            'handleHighQualityPenChange',
+            'handleInterpolationChange',
+            'handleInfiniteClonesChange',
+            'handleRemoveFencingChange',
+            'handleRemoveLimitsChange',
+            'handleWarpTimerChange',
+            'handleStageWidthChange',
+            'handleStageHeightChange',
+            'handleDisableCompilerChange',
+            'handleCaseSensitivityChange',
+            'handleStoreProjectOptions'
         ]);
     }
 
@@ -43,10 +43,7 @@ class UsernameModal extends React.Component {
     async handleCustomizeFramerate() {
         // prompt() returns Promise in desktop app
         // eslint-disable-next-line no-alert
-        const newFramerate = await prompt(
-            this.props.intl.formatMessage(messages.newFramerate),
-            this.props.framerate
-        );
+        const newFramerate = await prompt(this.props.intl.formatMessage(messages.newFramerate), this.props.framerate);
         const parsed = parseFloat(newFramerate);
         if (isFinite(parsed)) {
             this.props.vm.setFramerate(parsed);
@@ -66,42 +63,42 @@ class UsernameModal extends React.Component {
 
     handleInfiniteClonesChange(e) {
         this.props.vm.setRuntimeOptions({
-            maxClones: e.target.checked ? Infinity : 300,
+            maxClones: e.target.checked ? Infinity : 300
         });
         if (!this.props.isEmbedded) this.handleStoreProjectOptions();
     }
 
     handleRemoveFencingChange(e) {
         this.props.vm.setRuntimeOptions({
-            fencing: !e.target.checked,
+            fencing: !e.target.checked
         });
         if (!this.props.isEmbedded) this.handleStoreProjectOptions();
     }
 
     handleRemoveLimitsChange(e) {
         this.props.vm.setRuntimeOptions({
-            miscLimits: !e.target.checked,
+            miscLimits: !e.target.checked
         });
         if (!this.props.isEmbedded) this.handleStoreProjectOptions();
     }
 
     handleCaseSensitivityChange(e) {
         this.props.vm.setRuntimeOptions({
-            caseSensitivity: e.target.checked,
+            caseSensitivity: e.target.checked
         });
         if (!this.props.isEmbedded) this.handleStoreProjectOptions();
     }
 
     handleWarpTimerChange(e) {
         this.props.vm.setCompilerOptions({
-            warpTimer: e.target.checked,
+            warpTimer: e.target.checked
         });
         // Do not store automatically
     }
 
     handleDisableCompilerChange(e) {
         this.props.vm.setCompilerOptions({
-            enabled: !e.target.checked,
+            enabled: !e.target.checked
         });
         // Do not store automatically
     }
@@ -115,7 +112,7 @@ class UsernameModal extends React.Component {
             )
         ) {
             this.props.vm.setRuntimeOptions({
-                secman: !e.target.checked,
+                secman: !e.target.checked
             });
         }
         // Do not store automatically
@@ -161,10 +158,8 @@ class UsernameModal extends React.Component {
                 stageWidth={this.props.customStageSize.width}
                 stageHeight={this.props.customStageSize.height}
                 customStageSizeEnabled={
-                    this.props.customStageSize.width !==
-                        defaultStageSize.width ||
-                    this.props.customStageSize.height !==
-                        defaultStageSize.height
+                    this.props.customStageSize.width !== defaultStageSize.width ||
+                    this.props.customStageSize.height !== defaultStageSize.height
                 }
                 onStoreProjectOptions={this.handleStoreProjectOptions}
                 {...props}
@@ -178,14 +173,14 @@ UsernameModal.propTypes = {
     onClose: PropTypes.func,
     vm: PropTypes.shape({
         renderer: PropTypes.shape({
-            setUseHighQualityRender: PropTypes.func,
+            setUseHighQualityRender: PropTypes.func
         }),
         setFramerate: PropTypes.func,
         setCompilerOptions: PropTypes.func,
         setInterpolation: PropTypes.func,
         setRuntimeOptions: PropTypes.func,
         setStageSize: PropTypes.func,
-        storeProjectOptions: PropTypes.func,
+        storeProjectOptions: PropTypes.func
     }),
     isEmbedded: PropTypes.bool,
     framerate: PropTypes.number,
@@ -198,9 +193,9 @@ UsernameModal.propTypes = {
     warpTimer: PropTypes.bool,
     customStageSize: PropTypes.shape({
         width: PropTypes.number,
-        height: PropTypes.number,
+        height: PropTypes.number
     }),
-    disableCompiler: PropTypes.bool,
+    disableCompiler: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
@@ -215,13 +210,11 @@ const mapStateToProps = state => ({
     caseSensitivity: state.scratchGui.tw.runtimeOptions.caseSensitivity,
     warpTimer: state.scratchGui.tw.compilerOptions.warpTimer,
     customStageSize: state.scratchGui.customStageSize,
-    disableCompiler: !state.scratchGui.tw.compilerOptions.enabled,
+    disableCompiler: !state.scratchGui.tw.compilerOptions.enabled
 });
 
 const mapDispatchToProps = dispatch => ({
-    onClose: () => dispatch(closeSettingsModal()),
+    onClose: () => dispatch(closeSettingsModal())
 });
 
-export default injectIntl(
-    connect(mapStateToProps, mapDispatchToProps)(UsernameModal)
-);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(UsernameModal));

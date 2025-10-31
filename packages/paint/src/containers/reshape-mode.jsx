@@ -1,24 +1,21 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
-import bindAll from "lodash.bindall";
-import Modes from "../lib/modes";
+import PropTypes from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
+import bindAll from 'lodash.bindall';
+import Modes from '../lib/modes';
 
-import { changeMode } from "../reducers/modes";
-import { clearHoveredItem, setHoveredItem } from "../reducers/hover";
-import {
-    clearSelectedItems,
-    setSelectedItems,
-} from "../reducers/selected-items";
-import { getSelectedLeafItems } from "../helper/selection";
+import {changeMode} from '../reducers/modes';
+import {clearHoveredItem, setHoveredItem} from '../reducers/hover';
+import {clearSelectedItems, setSelectedItems} from '../reducers/selected-items';
+import {getSelectedLeafItems} from '../helper/selection';
 
-import ReshapeTool from "../helper/selection-tools/reshape-tool";
-import ReshapeModeComponent from "../components/reshape-mode/reshape-mode.jsx";
+import ReshapeTool from '../helper/selection-tools/reshape-tool';
+import ReshapeModeComponent from '../components/reshape-mode/reshape-mode.jsx';
 
 class ReshapeMode extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["activateTool", "deactivateTool"]);
+        bindAll(this, ['activateTool', 'deactivateTool']);
     }
     componentDidMount() {
         if (this.props.isReshapeModeActive) {
@@ -32,10 +29,7 @@ class ReshapeMode extends React.Component {
 
         if (nextProps.isReshapeModeActive && !this.props.isReshapeModeActive) {
             this.activateTool();
-        } else if (
-            !nextProps.isReshapeModeActive &&
-            this.props.isReshapeModeActive
-        ) {
+        } else if (!nextProps.isReshapeModeActive && this.props.isReshapeModeActive) {
             this.deactivateTool();
         }
     }
@@ -84,12 +78,12 @@ ReshapeMode.propTypes = {
     onUpdateImage: PropTypes.func.isRequired,
     setHoveredItem: PropTypes.func.isRequired,
     setSelectedItems: PropTypes.func.isRequired,
-    switchToTextTool: PropTypes.func.isRequired,
+    switchToTextTool: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
     isReshapeModeActive: state.scratchPaint.mode === Modes.RESHAPE,
-    hoveredItemId: state.scratchPaint.hoveredItemId,
+    hoveredItemId: state.scratchPaint.hoveredItemId
 });
 const mapDispatchToProps = dispatch => ({
     setHoveredItem: hoveredItemId => {
@@ -102,16 +96,14 @@ const mapDispatchToProps = dispatch => ({
         dispatch(clearSelectedItems());
     },
     setSelectedItems: () => {
-        dispatch(
-            setSelectedItems(getSelectedLeafItems(), false /* bitmapMode */)
-        );
+        dispatch(setSelectedItems(getSelectedLeafItems(), false /* bitmapMode */));
     },
     handleMouseDown: () => {
         dispatch(changeMode(Modes.RESHAPE));
     },
     switchToTextTool: () => {
         dispatch(changeMode(Modes.TEXT));
-    },
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReshapeMode);

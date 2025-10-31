@@ -1,9 +1,9 @@
 module.exports = {
-    extends: ["scratch"], // no ES6
+    extends: ['scratch'], // no ES6
     env: {
-        worker: true,
+        worker: true
     },
     globals: {
-        Scratch: true,
-    },
+        Scratch: true
+    }
 };

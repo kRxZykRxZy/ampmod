@@ -1,25 +1,25 @@
-import classNames from "classnames";
-import bindAll from "lodash.bindall";
-import PropTypes from "prop-types";
-import React from "react";
-import { FormattedMessage } from "react-intl";
-import { connect } from "react-redux";
-import locales from "@turbowarp/scratch-l10n";
+import classNames from 'classnames';
+import bindAll from 'lodash.bindall';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {FormattedMessage} from 'react-intl';
+import {connect} from 'react-redux';
+import locales from '@turbowarp/scratch-l10n';
 
-import check from "./check.svg";
-import { MenuItem, Submenu } from "../menu/menu.jsx";
-import languageIcon from "../language-selector/language-icon.svg";
-import { languageMenuOpen, openLanguageMenu } from "../../reducers/menus.js";
-import { selectLocale } from "../../reducers/locales.js";
+import check from './check.svg';
+import {MenuItem, Submenu} from '../menu/menu.jsx';
+import languageIcon from '../language-selector/language-icon.svg';
+import {languageMenuOpen, openLanguageMenu} from '../../reducers/menus.js';
+import {selectLocale} from '../../reducers/locales.js';
 
-import styles from "./settings-menu.css";
+import styles from './settings-menu.css';
 
-import dropdownCaret from "./dropdown-caret.svg";
+import dropdownCaret from './dropdown-caret.svg';
 
 class LanguageMenu extends React.PureComponent {
     constructor(props) {
         super(props);
-        bindAll(this, ["setRef", "handleMouseOver"]);
+        bindAll(this, ['setRef', 'handleMouseOver']);
     }
 
     componentDidUpdate(prevProps) {
@@ -52,23 +52,14 @@ class LanguageMenu extends React.PureComponent {
         const selectedItemPosition = menuItem.offsetTop;
         const visibleHeight = scrollContainer.offsetHeight;
 
-        scrollContainer.scrollTop =
-            selectedItemPosition - visibleHeight / 2 + itemHeight / 2;
+        scrollContainer.scrollTop = selectedItemPosition - visibleHeight / 2 + itemHeight / 2;
     }
 
     render() {
         return (
             <MenuItem expanded={this.props.menuOpen}>
-                <div
-                    className={styles.option}
-                    onClick={this.props.onRequestOpen}
-                    onMouseOver={this.handleMouseOver}
-                >
-                    <img
-                        className={styles.icon}
-                        src={languageIcon}
-                        draggable={false}
-                    />
+                <div className={styles.option} onClick={this.props.onRequestOpen} onMouseOver={this.handleMouseOver}>
+                    <img className={styles.icon} src={languageIcon} draggable={false} />
                     <span className={styles.submenuLabel}>
                         <FormattedMessage
                             defaultMessage="Language"
@@ -76,16 +67,9 @@ class LanguageMenu extends React.PureComponent {
                             id="gui.menuBar.language"
                         />
                     </span>
-                    <img
-                        className={styles.expandCaret}
-                        src={dropdownCaret}
-                        draggable={false}
-                    />
+                    <img className={styles.expandCaret} src={dropdownCaret} draggable={false} />
                 </div>
-                <Submenu
-                    className={styles.languageSubmenu}
-                    place={this.props.isRtl ? "left" : "right"}
-                >
+                <Submenu className={styles.languageSubmenu} place={this.props.isRtl ? 'left' : 'right'}>
                     {Object.keys(locales).map(locale => (
                         <MenuItem
                             key={locale}
@@ -95,13 +79,12 @@ class LanguageMenu extends React.PureComponent {
                         >
                             <img
                                 className={classNames(styles.check, {
-                                    [styles.selected]:
-                                        this.props.currentLocale === locale,
+                                    [styles.selected]: this.props.currentLocale === locale
                                 })}
                                 src={check}
                                 draggable={false}
                                 {...(this.props.currentLocale === locale && {
-                                    ref: this.setRef,
+                                    ref: this.setRef
                                 })}
                             />
                             {locales[locale].name}
@@ -120,14 +103,14 @@ LanguageMenu.propTypes = {
     menuOpen: PropTypes.bool,
     onChangeLanguage: PropTypes.func,
     onRequestCloseSettings: PropTypes.func,
-    onRequestOpen: PropTypes.func,
+    onRequestOpen: PropTypes.func
 };
 
 const mapStateToProps = state => ({
     currentLocale: state.locales.locale,
     isRtl: state.locales.isRtl,
     menuOpen: languageMenuOpen(state),
-    messagesByLocale: state.locales.messagesByLocale,
+    messagesByLocale: state.locales.messagesByLocale
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -135,7 +118,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(selectLocale(locale));
         ownProps.onRequestCloseSettings();
     },
-    onRequestOpen: () => dispatch(openLanguageMenu()),
+    onRequestOpen: () => dispatch(openLanguageMenu())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LanguageMenu);

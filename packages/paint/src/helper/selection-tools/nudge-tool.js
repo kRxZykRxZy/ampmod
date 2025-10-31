@@ -1,7 +1,7 @@
-import paper from "@turbowarp/paper";
-import { getSelectedRootItems } from "../selection";
-import { getActionBounds } from "../view";
-import { BitmapModes } from "../../lib/modes";
+import paper from '@turbowarp/paper';
+import {getSelectedRootItems} from '../selection';
+import {getActionBounds} from '../view';
+import {BitmapModes} from '../../lib/modes';
 
 const NUDGE_MORE_MULTIPLIER = 15;
 
@@ -21,10 +21,7 @@ class NudgeTool {
         this.boundingBoxTool.isBitmap = mode in BitmapModes;
     }
     onKeyDown(event) {
-        if (
-            event.event.target instanceof HTMLInputElement ||
-            event.event.target instanceof HTMLTextAreaElement
-        ) {
+        if (event.event.target instanceof HTMLInputElement || event.event.target instanceof HTMLTextAreaElement) {
             // Ignore nudge if a text input field is focused
             return;
         }
@@ -51,26 +48,14 @@ class NudgeTool {
         const right = bounds.right - rect.left - 1;
 
         let translation;
-        if (event.key === "up") {
-            translation = new paper.Point(
-                0,
-                Math.min(bottom, Math.max(-nudgeAmount, top))
-            );
-        } else if (event.key === "down") {
-            translation = new paper.Point(
-                0,
-                Math.max(top, Math.min(nudgeAmount, bottom))
-            );
-        } else if (event.key === "left") {
-            translation = new paper.Point(
-                Math.min(right, Math.max(-nudgeAmount, left)),
-                0
-            );
-        } else if (event.key === "right") {
-            translation = new paper.Point(
-                Math.max(left, Math.min(nudgeAmount, right)),
-                0
-            );
+        if (event.key === 'up') {
+            translation = new paper.Point(0, Math.min(bottom, Math.max(-nudgeAmount, top)));
+        } else if (event.key === 'down') {
+            translation = new paper.Point(0, Math.max(top, Math.min(nudgeAmount, bottom)));
+        } else if (event.key === 'left') {
+            translation = new paper.Point(Math.min(right, Math.max(-nudgeAmount, left)), 0);
+        } else if (event.key === 'right') {
+            translation = new paper.Point(Math.max(left, Math.min(nudgeAmount, right)), 0);
         }
 
         if (translation) {
@@ -85,12 +70,7 @@ class NudgeTool {
         const selected = getSelectedRootItems();
         if (selected.length === 0) return;
 
-        if (
-            event.key === "up" ||
-            event.key === "down" ||
-            event.key === "left" ||
-            event.key === "right"
-        ) {
+        if (event.key === 'up' || event.key === 'down' || event.key === 'left' || event.key === 'right') {
             this.onUpdateImage();
         }
     }

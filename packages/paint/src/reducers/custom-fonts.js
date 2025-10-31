@@ -1,8 +1,8 @@
-const SET_CUSTOM_FONTS = "scratch-paint/tw/custom-fonts/SET_CUSTOM_FONTS";
+const SET_CUSTOM_FONTS = 'scratch-paint/tw/custom-fonts/SET_CUSTOM_FONTS';
 const initialState = [];
 
 const reducer = function (state, action) {
-    if (typeof state === "undefined") state = initialState;
+    if (typeof state === 'undefined') state = initialState;
     switch (action.type) {
         case SET_CUSTOM_FONTS:
             return action.fonts;
@@ -13,7 +13,7 @@ const reducer = function (state, action) {
 
 const setCustomFonts = fonts => ({
     type: SET_CUSTOM_FONTS,
-    fonts,
+    fonts
 });
 
-export { reducer as default, setCustomFonts };
+export {reducer as default, setCustomFonts};

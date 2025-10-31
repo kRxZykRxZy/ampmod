@@ -1,19 +1,18 @@
-import Modes from "../lib/modes";
+import Modes from '../lib/modes';
 
-const CHANGE_ROUNDED_RECT_RADIUS =
-    "scratch-paint/rounded-rect-mode/CHANGE_ROUNDED_RECT_RADIUS";
+const CHANGE_ROUNDED_RECT_RADIUS = 'scratch-paint/rounded-rect-mode/CHANGE_ROUNDED_RECT_RADIUS';
 
 const initialState = {
     roundedRectRadius: 10,
-    name: Modes.ROUNDED_RECT,
+    name: Modes.ROUNDED_RECT
 };
 
 const reducer = function (state, action) {
-    if (typeof state === "undefined") state = initialState;
+    if (typeof state === 'undefined') state = initialState;
     switch (action.type) {
         case CHANGE_ROUNDED_RECT_RADIUS:
             return Object.assign({}, state, {
-                roundedRectRadius: action.roundedRectRadius,
+                roundedRectRadius: action.roundedRectRadius
             });
         default:
             return state;
@@ -22,7 +21,7 @@ const reducer = function (state, action) {
 
 const changeRoundedRectRadius = roundedRectRadius => ({
     type: CHANGE_ROUNDED_RECT_RADIUS,
-    roundedRectRadius: roundedRectRadius,
+    roundedRectRadius: roundedRectRadius
 });
 
-export { reducer as default, changeRoundedRectRadius };
+export {reducer as default, changeRoundedRectRadius};

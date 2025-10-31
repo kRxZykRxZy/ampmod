@@ -1,51 +1,46 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { compose } from "redux";
-import { connect } from "react-redux";
-import ReactModal from "react-modal";
-import VM from "scratch-vm";
-import { injectIntl, intlShape } from "react-intl";
+import PropTypes from 'prop-types';
+import React from 'react';
+import {compose} from 'redux';
+import {connect} from 'react-redux';
+import ReactModal from 'react-modal';
+import VM from 'scratch-vm';
+import {injectIntl, intlShape} from 'react-intl';
 
-import ErrorBoundaryHOC from "../lib/error-boundary-hoc.jsx";
-import { getIsError, getIsShowingProject } from "../reducers/project-state";
-import {
-    activateTab,
-    BLOCKS_TAB_INDEX,
-    COSTUMES_TAB_INDEX,
-    SOUNDS_TAB_INDEX,
-} from "../reducers/editor-tab";
+import ErrorBoundaryHOC from '../lib/error-boundary-hoc.jsx';
+import {getIsError, getIsShowingProject} from '../reducers/project-state';
+import {activateTab, BLOCKS_TAB_INDEX, COSTUMES_TAB_INDEX, SOUNDS_TAB_INDEX} from '../reducers/editor-tab';
 
 import {
     closeCostumeLibrary,
     closeBackdropLibrary,
     closeTelemetryModal,
     closeWelcomeModal,
-    openExtensionLibrary,
-} from "../reducers/modals";
+    openExtensionLibrary
+} from '../reducers/modals';
 
-import FontLoaderHOC from "../lib/font-loader-hoc.jsx";
-import LocalizationHOC from "../lib/localization-hoc.jsx";
-import SBFileUploaderHOC from "../lib/sb-file-uploader-hoc.jsx";
-import ProjectFetcherHOC from "../lib/project-fetcher-hoc.jsx";
-import TitledHOC from "../lib/titled-hoc.jsx";
-import ProjectSaverHOC from "../lib/project-saver-hoc.jsx";
-import storage from "../lib/storage";
-import vmListenerHOC from "../lib/vm-listener-hoc.jsx";
-import vmManagerHOC from "../lib/vm-manager-hoc.jsx";
-import cloudManagerHOC from "../lib/cloud-manager-hoc.jsx";
+import FontLoaderHOC from '../lib/font-loader-hoc.jsx';
+import LocalizationHOC from '../lib/localization-hoc.jsx';
+import SBFileUploaderHOC from '../lib/sb-file-uploader-hoc.jsx';
+import ProjectFetcherHOC from '../lib/project-fetcher-hoc.jsx';
+import TitledHOC from '../lib/titled-hoc.jsx';
+import ProjectSaverHOC from '../lib/project-saver-hoc.jsx';
+import storage from '../lib/storage';
+import vmListenerHOC from '../lib/vm-listener-hoc.jsx';
+import vmManagerHOC from '../lib/vm-manager-hoc.jsx';
+import cloudManagerHOC from '../lib/cloud-manager-hoc.jsx';
 
-import GUIComponent from "../components/gui/gui.jsx";
-import { setIsScratchDesktop } from "../lib/isScratchDesktop.js";
-import TWFullScreenResizerHOC from "../lib/tw-fullscreen-resizer-hoc.jsx";
-import TWThemeManagerHOC from "./tw-theme-manager-hoc.jsx";
-import { lsNamespace } from "../lib/amp-localstorage-namespace.js";
+import GUIComponent from '../components/gui/gui.jsx';
+import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
+import TWFullScreenResizerHOC from '../lib/tw-fullscreen-resizer-hoc.jsx';
+import TWThemeManagerHOC from './tw-theme-manager-hoc.jsx';
+import {lsNamespace} from '../lib/amp-localstorage-namespace.js';
 
-const { RequestMetadata, setMetadata, unsetMetadata } = storage.scratchFetch;
+const {RequestMetadata, setMetadata, unsetMetadata} = storage.scratchFetch;
 
 const setProjectIdMetadata = projectId => {
     // If project ID is '0' or zero, it's not a real project ID. In that case, remove the project ID metadata.
     // Same if it's null undefined.
-    if (projectId && projectId !== "0") {
+    if (projectId && projectId !== '0') {
         setMetadata(RequestMetadata.ProjectId, projectId);
     } else {
         unsetMetadata(RequestMetadata.ProjectId);
@@ -60,10 +55,7 @@ class GUI extends React.Component {
         setProjectIdMetadata(this.props.projectId);
         // Show welcome modal on first launch if not closed
         if (!localStorage.getItem(`${lsNamespace}welcome-closed`)) {
-            if (
-                !this.props.welcomeModalVisible &&
-                this.props.onOpenWelcomeModal
-            ) {
+            if (!this.props.welcomeModalVisible && this.props.onOpenWelcomeModal) {
                 this.props.onOpenWelcomeModal();
             }
         }
@@ -82,8 +74,8 @@ class GUI extends React.Component {
         }
     }
     render() {
-        if (new URLSearchParams(location.search).has("crash")) {
-            throw new Error("Test error");
+        if (new URLSearchParams(location.search).has('crash')) {
+            throw new Error('Test error');
         }
         if (this.props.isError) {
             throw this.props.error;
@@ -110,10 +102,7 @@ class GUI extends React.Component {
             ...componentProps
         } = this.props;
         return (
-            <GUIComponent
-                loading={fetchingProject || isLoading || loadingStateVisible}
-                {...componentProps}
-            >
+            <GUIComponent loading={fetchingProject || isLoading || loadingStateVisible} {...componentProps}>
                 {children}
             </GUIComponent>
         );
@@ -144,17 +133,16 @@ GUI.propTypes = {
     projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     telemetryModalVisible: PropTypes.bool,
     welcomeModalVisible: PropTypes.bool,
-    vm: PropTypes.instanceOf(VM).isRequired,
+    vm: PropTypes.instanceOf(VM).isRequired
 };
 
 GUI.defaultProps = {
     isScratchDesktop: false,
     isTotallyNormal: false,
-    onStorageInit: storageInstance =>
-        storageInstance.addOfficialScratchWebStores(),
+    onStorageInit: storageInstance => storageInstance.addOfficialScratchWebStores(),
     onProjectLoaded: () => {},
     onUpdateProjectId: () => {},
-    onVmInit: (/* vm */) => {},
+    onVmInit: (/* vm */) => {}
 };
 
 const mapStateToProps = state => {
@@ -163,41 +151,33 @@ const mapStateToProps = state => {
         activeTabIndex: state.scratchGui.editorTab.activeTabIndex,
         alertsVisible: state.scratchGui.alerts.visible,
         backdropLibraryVisible: state.scratchGui.modals.backdropLibrary,
-        blocksTabVisible:
-            state.scratchGui.editorTab.activeTabIndex === BLOCKS_TAB_INDEX,
+        blocksTabVisible: state.scratchGui.editorTab.activeTabIndex === BLOCKS_TAB_INDEX,
         connectionModalVisible: state.scratchGui.modals.connectionModal,
         costumeLibraryVisible: state.scratchGui.modals.costumeLibrary,
-        costumesTabVisible:
-            state.scratchGui.editorTab.activeTabIndex === COSTUMES_TAB_INDEX,
+        costumesTabVisible: state.scratchGui.editorTab.activeTabIndex === COSTUMES_TAB_INDEX,
         error: state.scratchGui.projectState.error,
         isError: getIsError(loadingState),
         isEmbedded: state.scratchGui.mode.isEmbedded,
-        isFullScreen:
-            state.scratchGui.mode.isFullScreen ||
-            state.scratchGui.mode.isEmbedded,
+        isFullScreen: state.scratchGui.mode.isFullScreen || state.scratchGui.mode.isEmbedded,
         isPlayerOnly: state.scratchGui.mode.isPlayerOnly,
         isRtl: state.locales.isRtl,
         isShowingProject: getIsShowingProject(loadingState),
         loadingStateVisible: state.scratchGui.modals.loadingProject,
         projectId: state.scratchGui.projectState.projectId,
-        soundsTabVisible:
-            state.scratchGui.editorTab.activeTabIndex === SOUNDS_TAB_INDEX,
+        soundsTabVisible: state.scratchGui.editorTab.activeTabIndex === SOUNDS_TAB_INDEX,
         targetIsStage:
             state.scratchGui.targets.stage &&
-            state.scratchGui.targets.stage.id ===
-                state.scratchGui.targets.editingTarget,
+            state.scratchGui.targets.stage.id === state.scratchGui.targets.editingTarget,
         telemetryModalVisible: state.scratchGui.modals.telemetryModal,
         welcomeModalVisible: state.scratchGui.modals.welcomeModal,
         tipsLibraryVisible: state.scratchGui.modals.tipsLibrary,
         usernameModalVisible: state.scratchGui.modals.usernameModal,
         settingsModalVisible: state.scratchGui.modals.settingsModal,
-        customExtensionModalVisible:
-            state.scratchGui.modals.customExtensionModal,
+        customExtensionModalVisible: state.scratchGui.modals.customExtensionModal,
         fontsModalVisible: state.scratchGui.modals.fontsModal,
-        unknownPlatformModalVisible:
-            state.scratchGui.modals.unknownPlatformModal,
+        unknownPlatformModalVisible: state.scratchGui.modals.unknownPlatformModal,
         invalidProjectModalVisible: state.scratchGui.modals.invalidProjectModal,
-        vm: state.scratchGui.vm,
+        vm: state.scratchGui.vm
     };
 };
 
@@ -210,23 +190,20 @@ const mapDispatchToProps = dispatch => ({
     onRequestCloseCostumeLibrary: () => dispatch(closeCostumeLibrary()),
     onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal()),
     onRequestCloseWelcomeModal: () => {
-        localStorage.setItem(`${lsNamespace}welcome-closed`, "true");
+        localStorage.setItem(`${lsNamespace}welcome-closed`, 'true');
         dispatch(closeWelcomeModal());
     },
-    onOpenWelcomeModal: () =>
-        dispatch(require("../reducers/modals").openWelcomeModal()),
+    onOpenWelcomeModal: () => dispatch(require('../reducers/modals').openWelcomeModal())
 });
 
-const ConnectedGUI = injectIntl(
-    connect(mapStateToProps, mapDispatchToProps)(GUI)
-);
+const ConnectedGUI = injectIntl(connect(mapStateToProps, mapDispatchToProps)(GUI));
 
 // note that redux's 'compose' function is just being used as a general utility to make
 // the hierarchy of HOC constructor calls clearer here; it has nothing to do with redux's
 // ability to compose reducers.
 const WrappedGui = compose(
     LocalizationHOC,
-    ErrorBoundaryHOC("Top Level App"),
+    ErrorBoundaryHOC('Top Level App'),
     TWThemeManagerHOC, // componentDidUpdate() needs to run very early for icons to update immediately
     TWFullScreenResizerHOC,
     FontLoaderHOC,

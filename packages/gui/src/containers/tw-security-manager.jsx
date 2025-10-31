@@ -1,14 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import log from "../lib/log";
-import bindAll from "lodash.bindall";
-import SecurityManagerModal from "../components/tw-security-manager-modal/security-manager-modal.jsx";
-import SecurityModals from "../lib/tw-security-manager-constants";
-import {
-    getPersistedUnsandboxed,
-    setPersistedUnsandboxed,
-} from "../lib/tw-persisted-unsandboxed.js";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import log from '../lib/log';
+import bindAll from 'lodash.bindall';
+import SecurityManagerModal from '../components/tw-security-manager-modal/security-manager-modal.jsx';
+import SecurityModals from '../lib/tw-security-manager-constants';
+import {getPersistedUnsandboxed, setPersistedUnsandboxed} from '../lib/tw-persisted-unsandboxed.js';
 
 /* eslint-disable require-atomic-updates */
 
@@ -28,11 +25,11 @@ const manuallyTrustExtension = url => {
  */
 const isTrustedExtension = url =>
     // Always trust AmpMod website.
-    url.startsWith("https://ampmod.codeberg.page/") ||
+    url.startsWith('https://ampmod.codeberg.page/') ||
     // Always trust TurboWarp's official extension repository.
-    url.startsWith("https://extensions.turbowarp.org/") ||
+    url.startsWith('https://extensions.turbowarp.org/') ||
     // For development.
-    url.startsWith("http://localhost:8000/") ||
+    url.startsWith('http://localhost:8000/') ||
     extensionsTrustedByUser.has(url);
 
 /**
@@ -55,49 +52,42 @@ const isAlwaysTrustedForFetching = parsed =>
     // If we would trust loading an extension from here, we can trust loading resources too.
     isTrustedExtension(parsed.href) ||
     // Any TurboWarp service such as trampoline
-    parsed.origin === "https://turbowarp.org" ||
-    parsed.origin.endsWith(".turbowarp.org") ||
-    parsed.origin.endsWith(".turbowarp.xyz") ||
+    parsed.origin === 'https://turbowarp.org' ||
+    parsed.origin.endsWith('.turbowarp.org') ||
+    parsed.origin.endsWith('.turbowarp.xyz') ||
     // GitHub API
     // GitHub Pages allows redirects, so not included here.
-    parsed.origin === "https://raw.githubusercontent.com" ||
-    parsed.origin === "https://gist.githubusercontent.com" ||
-    parsed.origin === "https://api.github.com" ||
+    parsed.origin === 'https://raw.githubusercontent.com' ||
+    parsed.origin === 'https://gist.githubusercontent.com' ||
+    parsed.origin === 'https://api.github.com' ||
     // GitLab API
     // GitLab Pages allows redirects, so not included here.
-    parsed.origin === "https://gitlab.com" ||
+    parsed.origin === 'https://gitlab.com' ||
     // Codeberg
     // Codeberg Pages allows redirects, so not included here.
-    parsed.origin === "https://codeberg.org" ||
+    parsed.origin === 'https://codeberg.org' ||
     // Sourcehut Pages
-    parsed.origin.endsWith(".srht.site") ||
+    parsed.origin.endsWith('.srht.site') ||
     // Itch
-    parsed.origin.endsWith(".itch.io") ||
+    parsed.origin.endsWith('.itch.io') ||
     // GameJolt
-    parsed.origin === "https://api.gamejolt.com" ||
+    parsed.origin === 'https://api.gamejolt.com' ||
     // httpbin
-    parsed.origin === "https://httpbin.org" ||
+    parsed.origin === 'https://httpbin.org' ||
     // ScratchDB
-    parsed.origin === "https://scratchdb.lefty.one";
+    parsed.origin === 'https://scratchdb.lefty.one';
 
-const FETCHABLE_PROTOCOLS = [
-    "http:",
-    "https:",
-    "data:",
-    "blob:",
-    "ws:",
-    "wss:",
-];
+const FETCHABLE_PROTOCOLS = ['http:', 'https:', 'data:', 'blob:', 'ws:', 'wss:'];
 
 const VISITABLE_PROTOCOLS = [
     // The important one we want to exclude is javascript:
-    "http:",
-    "https:",
-    "data:",
-    "blob:",
-    "mailto:",
-    "steam:",
-    "calculator:",
+    'http:',
+    'https:',
+    'data:',
+    'blob:',
+    'mailto:',
+    'steam:',
+    'calculator:'
 ];
 
 /**
@@ -125,24 +115,24 @@ let allowedNotify = false;
 let allowedGeolocation = false;
 
 const SECURITY_MANAGER_METHODS = [
-    "getSandboxMode",
-    "canLoadExtensionFromProject",
-    "canFetch",
-    "canOpenWindow",
-    "canRedirect",
-    "canRecordAudio",
-    "canRecordVideo",
-    "canReadClipboard",
-    "canNotify",
-    "canGeolocate",
-    "canEmbed",
-    "canDownload",
+    'getSandboxMode',
+    'canLoadExtensionFromProject',
+    'canFetch',
+    'canOpenWindow',
+    'canRedirect',
+    'canRecordAudio',
+    'canRecordVideo',
+    'canReadClipboard',
+    'canNotify',
+    'canGeolocate',
+    'canEmbed',
+    'canDownload'
 ];
 
 class TWSecurityManagerComponent extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["handleAllowed", "handleDenied"]);
+        bindAll(this, ['handleAllowed', 'handleDenied']);
         bindAll(this, SECURITY_MANAGER_METHODS);
         this.nextModalCallbacks = [];
         this.modalLocked = false;
@@ -150,17 +140,15 @@ class TWSecurityManagerComponent extends React.Component {
             type: null,
             data: null,
             callback: null,
-            modalCount: 0,
+            modalCount: 0
         };
     }
 
     componentDidMount() {
-        const vmSecurityManager =
-            this.props.vm.extensionManager.securityManager;
+        const vmSecurityManager = this.props.vm.extensionManager.securityManager;
         const propsSecurityManager = this.props.securityManager;
         for (const method of SECURITY_MANAGER_METHODS) {
-            vmSecurityManager[method] =
-                propsSecurityManager[method] || this[method];
+            vmSecurityManager[method] = propsSecurityManager[method] || this[method];
         }
     }
 
@@ -191,7 +179,7 @@ class TWSecurityManagerComponent extends React.Component {
                 this.modalLocked = false;
                 this.setState({
                     // only clear type in case other data needs to be accessed
-                    type: null,
+                    type: null
                 });
             }
         };
@@ -202,7 +190,7 @@ class TWSecurityManagerComponent extends React.Component {
                     type,
                     data,
                     callback: resolve,
-                    modalCount: oldState.modalCount + 1,
+                    modalCount: oldState.modalCount + 1
                 }));
             });
             releaseLock();
@@ -211,7 +199,7 @@ class TWSecurityManagerComponent extends React.Component {
 
         return {
             showModal,
-            releaseLock,
+            releaseLock
         };
     }
 
@@ -230,9 +218,9 @@ class TWSecurityManagerComponent extends React.Component {
     getSandboxMode(url) {
         if (isTrustedExtension(url)) {
             log.info(`Loading extension ${url} unsandboxed`);
-            return "unsandboxed";
+            return 'unsandboxed';
         }
-        return "iframe";
+        return 'iframe';
     }
 
     handleChangeUnsandboxed(e) {
@@ -240,8 +228,8 @@ class TWSecurityManagerComponent extends React.Component {
         this.setState(oldState => ({
             data: {
                 ...oldState.data,
-                unsandboxed: checked,
-            },
+                unsandboxed: checked
+            }
         }));
     }
 
@@ -254,12 +242,12 @@ class TWSecurityManagerComponent extends React.Component {
             log.info(`Loading extension ${url} automatically`);
             return true;
         }
-        const { showModal } = await this.acquireModalLock();
-        if (url.startsWith("data:")) {
+        const {showModal} = await this.acquireModalLock();
+        if (url.startsWith('data:')) {
             const allowed = await showModal(SecurityModals.LoadExtension, {
                 url,
                 unsandboxed: getPersistedUnsandboxed(),
-                onChangeUnsandboxed: this.handleChangeUnsandboxed.bind(this),
+                onChangeUnsandboxed: this.handleChangeUnsandboxed.bind(this)
             });
             if (allowed) {
                 setPersistedUnsandboxed(this.state.data.unsandboxed);
@@ -271,7 +259,7 @@ class TWSecurityManagerComponent extends React.Component {
         }
         return showModal(SecurityModals.LoadExtension, {
             url,
-            unsandboxed: false,
+            unsandboxed: false
         });
     }
 
@@ -287,12 +275,12 @@ class TWSecurityManagerComponent extends React.Component {
         if (isAlwaysTrustedForFetching(parsed)) {
             return true;
         }
-        const { showModal, releaseLock } = await this.acquireModalLock();
+        const {showModal, releaseLock} = await this.acquireModalLock();
         const host =
-            parsed.protocol === "http:" ||
-            parsed.protocol === "https:" ||
-            parsed.protocol === "ws:" ||
-            parsed.protocol === "wss:"
+            parsed.protocol === 'http:' ||
+            parsed.protocol === 'https:' ||
+            parsed.protocol === 'ws:' ||
+            parsed.protocol === 'wss:'
                 ? parsed.host
                 : null;
         if (host && fetchHostsTrustedByUser.has(host)) {
@@ -300,7 +288,7 @@ class TWSecurityManagerComponent extends React.Component {
             return true;
         }
         const allowed = await showModal(SecurityModals.Fetch, {
-            url,
+            url
         });
         if (host && allowed) {
             fetchHostsTrustedByUser.add(host);
@@ -317,9 +305,9 @@ class TWSecurityManagerComponent extends React.Component {
         if (!parsed) {
             return false;
         }
-        const { showModal } = await this.acquireModalLock();
+        const {showModal} = await this.acquireModalLock();
         return showModal(SecurityModals.OpenWindow, {
-            url,
+            url
         });
     }
 
@@ -332,9 +320,9 @@ class TWSecurityManagerComponent extends React.Component {
         if (!parsed) {
             return false;
         }
-        const { showModal } = await this.acquireModalLock();
+        const {showModal} = await this.acquireModalLock();
         return showModal(SecurityModals.Redirect, {
-            url,
+            url
         });
     }
 
@@ -343,7 +331,7 @@ class TWSecurityManagerComponent extends React.Component {
      */
     async canRecordAudio() {
         if (!allowedAudio) {
-            const { showModal } = await this.acquireModalLock();
+            const {showModal} = await this.acquireModalLock();
             allowedAudio = await showModal(SecurityModals.RecordAudio);
         }
         return allowedAudio;
@@ -354,7 +342,7 @@ class TWSecurityManagerComponent extends React.Component {
      */
     async canRecordVideo() {
         if (!allowedVideo) {
-            const { showModal } = await this.acquireModalLock();
+            const {showModal} = await this.acquireModalLock();
             allowedVideo = await showModal(SecurityModals.RecordVideo);
         }
         return allowedVideo;
@@ -365,10 +353,8 @@ class TWSecurityManagerComponent extends React.Component {
      */
     async canReadClipboard() {
         if (!allowedReadClipboard) {
-            const { showModal } = await this.acquireModalLock();
-            allowedReadClipboard = await showModal(
-                SecurityModals.ReadClipboard
-            );
+            const {showModal} = await this.acquireModalLock();
+            allowedReadClipboard = await showModal(SecurityModals.ReadClipboard);
         }
         return allowedReadClipboard;
     }
@@ -378,7 +364,7 @@ class TWSecurityManagerComponent extends React.Component {
      */
     async canNotify() {
         if (!allowedNotify) {
-            const { showModal } = await this.acquireModalLock();
+            const {showModal} = await this.acquireModalLock();
             allowedNotify = await showModal(SecurityModals.Notify);
         }
         return allowedNotify;
@@ -389,7 +375,7 @@ class TWSecurityManagerComponent extends React.Component {
      */
     async canGeolocate() {
         if (!allowedGeolocation) {
-            const { showModal } = await this.acquireModalLock();
+            const {showModal} = await this.acquireModalLock();
             allowedGeolocation = await showModal(SecurityModals.Geolocate);
         }
         return allowedGeolocation;
@@ -404,16 +390,13 @@ class TWSecurityManagerComponent extends React.Component {
         if (!parsed) {
             return false;
         }
-        const host =
-            parsed.protocol === "http:" || parsed.protocol === "https:"
-                ? parsed.host
-                : null;
-        const { showModal, releaseLock } = await this.acquireModalLock();
+        const host = parsed.protocol === 'http:' || parsed.protocol === 'https:' ? parsed.host : null;
+        const {showModal, releaseLock} = await this.acquireModalLock();
         if (host && embedHostsTrustedByUser.has(host)) {
             releaseLock();
             return true;
         }
-        const allowed = await showModal(SecurityModals.Embed, { url });
+        const allowed = await showModal(SecurityModals.Embed, {url});
         if (host && allowed) {
             embedHostsTrustedByUser.add(host);
         }
@@ -430,10 +413,10 @@ class TWSecurityManagerComponent extends React.Component {
         if (!parsed) {
             return false;
         }
-        const { showModal } = await this.acquireModalLock();
+        const {showModal} = await this.acquireModalLock();
         return showModal(SecurityModals.Download, {
             url,
-            name,
+            name
         });
     }
 
@@ -461,33 +444,22 @@ TWSecurityManagerComponent.propTypes = {
                     obj[method] = PropTypes.func.isRequired;
                     return obj;
                 }, {})
-            ).isRequired,
-        }).isRequired,
+            ).isRequired
+        }).isRequired
     }).isRequired,
-    securityManager: PropTypes.shape(
-        Object.fromEntries(
-            SECURITY_MANAGER_METHODS.map(i => [i, PropTypes.func])
-        )
-    ),
+    securityManager: PropTypes.shape(Object.fromEntries(SECURITY_MANAGER_METHODS.map(i => [i, PropTypes.func])))
 };
 
 TWSecurityManagerComponent.defaultProps = {
-    securityManager: {},
+    securityManager: {}
 };
 
 const mapStateToProps = state => ({
-    vm: state.scratchGui.vm,
+    vm: state.scratchGui.vm
 });
 
 const mapDispatchToProps = () => ({});
 
-const ConnectedSecurityManagerComponent = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(TWSecurityManagerComponent);
+const ConnectedSecurityManagerComponent = connect(mapStateToProps, mapDispatchToProps)(TWSecurityManagerComponent);
 
-export {
-    ConnectedSecurityManagerComponent as default,
-    manuallyTrustExtension,
-    isTrustedExtension,
-};
+export {ConnectedSecurityManagerComponent as default, manuallyTrustExtension, isTrustedExtension};

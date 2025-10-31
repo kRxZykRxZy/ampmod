@@ -1,60 +1,44 @@
-import PropTypes from "prop-types";
-import React from "react";
-import bindAll from "lodash.bindall";
-import ScanningStepComponent from "../components/connection-modal/scanning-step.jsx";
-import VM from "scratch-vm";
+import PropTypes from 'prop-types';
+import React from 'react';
+import bindAll from 'lodash.bindall';
+import ScanningStepComponent from '../components/connection-modal/scanning-step.jsx';
+import VM from 'scratch-vm';
 
 class ScanningStep extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, [
-            "handlePeripheralListUpdate",
-            "handlePeripheralScanTimeout",
-            "handleRefresh",
-        ]);
+        bindAll(this, ['handlePeripheralListUpdate', 'handlePeripheralScanTimeout', 'handleRefresh']);
         this.state = {
             scanning: true,
-            peripheralList: [],
+            peripheralList: []
         };
     }
     componentDidMount() {
         this.props.vm.scanForPeripheral(this.props.extensionId);
-        this.props.vm.on(
-            "PERIPHERAL_LIST_UPDATE",
-            this.handlePeripheralListUpdate
-        );
-        this.props.vm.on(
-            "PERIPHERAL_SCAN_TIMEOUT",
-            this.handlePeripheralScanTimeout
-        );
+        this.props.vm.on('PERIPHERAL_LIST_UPDATE', this.handlePeripheralListUpdate);
+        this.props.vm.on('PERIPHERAL_SCAN_TIMEOUT', this.handlePeripheralScanTimeout);
     }
     componentWillUnmount() {
         // @todo: stop the peripheral scan here
-        this.props.vm.removeListener(
-            "PERIPHERAL_LIST_UPDATE",
-            this.handlePeripheralListUpdate
-        );
-        this.props.vm.removeListener(
-            "PERIPHERAL_SCAN_TIMEOUT",
-            this.handlePeripheralScanTimeout
-        );
+        this.props.vm.removeListener('PERIPHERAL_LIST_UPDATE', this.handlePeripheralListUpdate);
+        this.props.vm.removeListener('PERIPHERAL_SCAN_TIMEOUT', this.handlePeripheralScanTimeout);
     }
     handlePeripheralScanTimeout() {
         this.setState({
             scanning: false,
-            peripheralList: [],
+            peripheralList: []
         });
     }
     handlePeripheralListUpdate(newList) {
         // TODO: sort peripherals by signal strength? so they don't jump around
         const peripheralArray = Object.keys(newList).map(id => newList[id]);
-        this.setState({ peripheralList: peripheralArray });
+        this.setState({peripheralList: peripheralArray});
     }
     handleRefresh() {
         this.props.vm.scanForPeripheral(this.props.extensionId);
         this.setState({
             scanning: true,
-            peripheralList: [],
+            peripheralList: []
         });
     }
     render() {
@@ -80,7 +64,7 @@ ScanningStep.propTypes = {
     onConnected: PropTypes.func.isRequired,
     onConnecting: PropTypes.func.isRequired,
     onUpdatePeripheral: PropTypes.func,
-    vm: PropTypes.instanceOf(VM).isRequired,
+    vm: PropTypes.instanceOf(VM).isRequired
 };
 
 export default ScanningStep;

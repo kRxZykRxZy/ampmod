@@ -9,7 +9,7 @@ const TO_DEGREE = 180 / Math.PI;
  * motionVector.
  * @type {UV}
  */
-const _motionVectorOut = { u: 0, v: 0 };
+const _motionVectorOut = {u: 0, v: 0};
 
 /**
  * Determine a motion vector combinations of the color component difference on
@@ -72,5 +72,5 @@ const scratchAtan2 = function (y, x) {
 module.exports = {
     motionVector,
     scratchDegrees,
-    scratchAtan2,
+    scratchAtan2
 };

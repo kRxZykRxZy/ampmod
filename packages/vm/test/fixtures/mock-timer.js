@@ -11,7 +11,7 @@ class MockTimer {
      */
     constructor(nowObj = null) {
         if (nowObj) {
-            throw new Error("nowObj is not implemented in MockTimer");
+            throw new Error('nowObj is not implemented in MockTimer');
         }
 
         /**
@@ -50,7 +50,7 @@ class MockTimer {
      */
     advanceMockTime(milliseconds) {
         if (milliseconds < 0) {
-            throw new Error("Time may not move backward");
+            throw new Error('Time may not move backward');
         }
         this._mockTime += milliseconds;
         this._runTimeouts();
@@ -106,7 +106,7 @@ class MockTimer {
         const timeoutId = this._nextTimeoutId++;
         this._timeouts.set(timeoutId, {
             time: this._mockTime + timeout,
-            handler,
+            handler
         });
         this._runTimeouts();
         return timeoutId;

@@ -43,11 +43,11 @@ Repeat the three previous sets of commands every time you pull changes from GitH
 
 Due to the security requirements mandated by custom extensions existing, our desktop app is significantly more complicated than Scratch's.
 
- - **src-main** is what runs in Electron's main process. There is no build step; this code is included as-is. `src-main/entrypoint.js` is the entry point to the entire app.
- - **src-renderer-webpack** runs in an Electron renderer process to make the editor work. This is built by webpack as **dist-renderer-webpack**.
- - **src-renderer** also runs in an Electron renderer process, but without webpack. This is used for things like the privacy policy window.
- - **src-preload** runs as preload scripts in an Electron renderer process. They export glue functions to allow renderer and main to talk to each other in a somewhat controlled manner.
- - **dist-library-files** and **dist-extensions** contain additional static resources managed by `npm run fetch`
+- **src-main** is what runs in Electron's main process. There is no build step; this code is included as-is. `src-main/entrypoint.js` is the entry point to the entire app.
+- **src-renderer-webpack** runs in an Electron renderer process to make the editor work. This is built by webpack as **dist-renderer-webpack**.
+- **src-renderer** also runs in an Electron renderer process, but without webpack. This is used for things like the privacy policy window.
+- **src-preload** runs as preload scripts in an Electron renderer process. They export glue functions to allow renderer and main to talk to each other in a somewhat controlled manner.
+- **dist-library-files** and **dist-extensions** contain additional static resources managed by `npm run fetch`
 
 To build the webpack portions in src-renderer-webpack for development builds, run this:
 
@@ -116,9 +116,9 @@ You can typically only package for a certain operating system while on that oper
 
 TurboWarp Desktop uses a free code signing provided by [SignPath.io](https://about.signpath.io/), certificate by [SignPath Foundation](https://signpath.org/).
 
- * Approvers:
-   * [GarboMuffin](https://github.com/GarboMuffin)
- * Privacy policy: https://desktop.turbowarp.org/privacy.html
+- Approvers:
+    - [GarboMuffin](https://github.com/GarboMuffin)
+- Privacy policy: https://desktop.turbowarp.org/privacy.html
 
 ## Advanced customizations
 
@@ -126,13 +126,13 @@ TurboWarp Desktop lets you configure custom JS and CSS without rebuilding the ap
 
 Find TurboWarp Desktop's data path by using the list below or by clicking "?" in the top right corner, then "Desktop Settings", then "Open User Data", then opening the highlighted folder, or refer to this list:
 
- - Windows (except Microsoft Store): `%APPDATA%/turbowarp-desktop`
- - Microsoft Store: Open `%LOCALAPPDATA%/Packages`, find the folder with the word `TurboWarpDesktop` in it, then open `LocalCache/Roaming/turbowarp-desktop`
- - macOS (except Mac App Store): `~/Library/Application Support/turbowarp-desktop`
- - Mac App Store: `~/Library/Containers/org.turbowarp.desktop/Data/Library/Application Support/turbowarp-desktop` (note that the `org.turbowarp.desktop` part may appear as `TurboWarp` in Finder)
- - Linux (except Flatpak and Snap): `~/.config/turbowarp-desktop`
- - Linux (Flatpak): `~/.var/app/org.turbowarp.TurboWarp/config/turbowarp-desktop`
- - Linux (Snap): `~/snap/turbowarp-desktop/current/.config/turbowarp-desktop`
+- Windows (except Microsoft Store): `%APPDATA%/turbowarp-desktop`
+- Microsoft Store: Open `%LOCALAPPDATA%/Packages`, find the folder with the word `TurboWarpDesktop` in it, then open `LocalCache/Roaming/turbowarp-desktop`
+- macOS (except Mac App Store): `~/Library/Application Support/turbowarp-desktop`
+- Mac App Store: `~/Library/Containers/org.turbowarp.desktop/Data/Library/Application Support/turbowarp-desktop` (note that the `org.turbowarp.desktop` part may appear as `TurboWarp` in Finder)
+- Linux (except Flatpak and Snap): `~/.config/turbowarp-desktop`
+- Linux (Flatpak): `~/.var/app/org.turbowarp.TurboWarp/config/turbowarp-desktop`
+- Linux (Snap): `~/snap/turbowarp-desktop/current/.config/turbowarp-desktop`
 
 Create the file `userscript.js` in this folder to configure custom JS. Create the file `userstyle.css` in this folder to configure custom CSS. Completely restart TurboWarp Desktop (including all windows) to apply.
 

@@ -78,8 +78,8 @@ let trackingMouse = true;
 const handleMouseMove = event => {
     if (trackingMouse) {
         const mousePosition = getMousePosition(event, renderCanvas);
-        inputCursorX.value = mousePosition.x - (renderCanvas.clientWidth / 2);
-        inputCursorY.value = (renderCanvas.clientHeight / 2) - mousePosition.y;
+        inputCursorX.value = mousePosition.x - renderCanvas.clientWidth / 2;
+        inputCursorY.value = renderCanvas.clientHeight / 2 - mousePosition.y;
         handleCursorPositionChanged();
     }
 };
@@ -92,9 +92,7 @@ renderCanvas.addEventListener('click', event => {
     }
 });
 
-const rgb2fillStyle = rgb => (
-    `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-);
+const rgb2fillStyle = rgb => `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
 
 const makeCursorImage = () => {
     const canvas = document.createElement('canvas');

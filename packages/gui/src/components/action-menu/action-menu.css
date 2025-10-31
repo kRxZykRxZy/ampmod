@@ -1,6 +1,6 @@
-@import "../../css/colors.css";
-@import "../../css/units.css";
-@import "../../css/z-index.css";
+@import '../../css/colors.css';
+@import '../../css/units.css';
+@import '../../css/z-index.css';
 
 $main-button-size: 2.75rem;
 $more-button-size: 2.25rem;
@@ -61,7 +61,7 @@ button::-moz-focus-inner {
     height: calc($main-button-size - 1rem);
 }
 
-[dir="rtl"] .main-icon {
+[dir='rtl'] .main-icon {
     transform: scaleX(-1);
 }
 
@@ -139,8 +139,7 @@ button::-moz-focus-inner {
     opacity: 1 !important;
     border: 1px solid hsla(0, 0%, 0%, 0.1) !important;
     box-shadow: 0 0 0.5rem hsla(0, 0%, 0%, 0.25) !important;
-    font-family:
-        Inter, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-family: Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
 }
 
 .tooltip:after {
@@ -159,8 +158,7 @@ button::-moz-focus-inner {
     border: 1px solid hsla(0, 0%, 0%, 0.1) !important;
     border-radius: $form-radius !important;
     box-shadow: 0 0 0.5rem hsla(0, 0%, 0%, 0.25) !important;
-    font-family:
-        Inter, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-family: Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
     z-index: $z-index-tooltip !important;
 }
 
@@ -169,7 +167,7 @@ $arrow-inset: -0.25rem;
 $arrow-rounding: 0.125rem;
 
 .tooltip:after {
-    content: "";
+    content: '';
     border-top: 1px solid hsla(0, 0%, 0%, 0.1) !important;
     border-left: 0 !important;
     border-bottom: 0 !important;

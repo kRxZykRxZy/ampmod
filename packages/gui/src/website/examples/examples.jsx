@@ -1,25 +1,22 @@
-import "../import-first.js";
-import React from "react";
-import render from "../../playground/app-target.js";
-import styles from "../design.css";
-import myStyles from "./examples.css";
+import '../import-first.js';
+import React from 'react';
+import render from '../../playground/app-target.js';
+import styles from '../design.css';
+import myStyles from './examples.css';
 
-import { APP_NAME } from "@ampmod/branding";
-import { applyGuiColors } from "../../lib/themes/guiHelpers.js";
-import { detectTheme } from "../../lib/themes/themePersistance.js";
+import {APP_NAME} from '@ampmod/branding';
+import {applyGuiColors} from '../../lib/themes/guiHelpers.js';
+import {detectTheme} from '../../lib/themes/themePersistance.js';
 
-import Header from "../components/header/header";
-import Footer from "../components/footer/footer";
-import Example from "./example";
-import projects from "./projects.js";
-import Localise, {
-    localise,
-    setHtmlLang,
-} from "../components/localise/localise";
+import Header from '../components/header/header';
+import Footer from '../components/footer/footer';
+import Example from './example';
+import projects from './projects.js';
+import Localise, {localise, setHtmlLang} from '../components/localise/localise';
 
 applyGuiColors(detectTheme());
 setHtmlLang();
-document.title = `${localise("examples.title")} - ${APP_NAME}`;
+document.title = `${localise('examples.title')} - ${APP_NAME}`;
 
 // Exported so it works with desktop
 export const ExamplesPage = () => (
@@ -30,7 +27,7 @@ export const ExamplesPage = () => (
                 <Localise id="examples.title" />
             </h1>
             <p className={styles.headerText}>
-                <Localise id="examples.introduction" values={{ APP_NAME }} />
+                <Localise id="examples.introduction" values={{APP_NAME}} />
             </p>
         </header>
         <main className={styles.main}>
@@ -64,7 +61,7 @@ export const ExamplesPage = () => (
                                     <a href="https://codeberg.org/ampmod/ampmod/src/branch/develop/packages/gui/src/website/examples/images/README.md">
                                         <Localise id="examples.licence.images" />
                                     </a>
-                                ),
+                                )
                             }}
                         />
                     </small>

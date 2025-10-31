@@ -1,31 +1,21 @@
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import React from "react";
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import TWRenderRecoloredImage from "../../lib/tw-recolor/render.jsx";
-import filterIcon from "!../../lib/tw-recolor/build!./icon--filter.svg";
-import xIcon from "!../../lib/tw-recolor/build!./icon--x.svg";
-import styles from "./filter.css";
+import TWRenderRecoloredImage from '../../lib/tw-recolor/render.jsx';
+import filterIcon from '!../../lib/tw-recolor/build!./icon--filter.svg';
+import xIcon from '!../../lib/tw-recolor/build!./icon--x.svg';
+import styles from './filter.css';
 
 const FilterComponent = props => {
-    const {
-        className,
-        onChange,
-        onClear,
-        placeholderText,
-        filterQuery,
-        inputClassName,
-    } = props;
+    const {className, onChange, onClear, placeholderText, filterQuery, inputClassName} = props;
     return (
         <div
             className={classNames(className, styles.filter, {
-                [styles.isActive]: filterQuery.length > 0,
+                [styles.isActive]: filterQuery.length > 0
             })}
         >
-            <TWRenderRecoloredImage
-                className={styles.filterIcon}
-                src={filterIcon}
-            />
+            <TWRenderRecoloredImage className={styles.filterIcon} src={filterIcon} />
             <input
                 className={classNames(styles.filterInput, inputClassName)}
                 placeholder={placeholderText}
@@ -46,9 +36,9 @@ FilterComponent.propTypes = {
     inputClassName: PropTypes.string,
     onChange: PropTypes.func,
     onClear: PropTypes.func,
-    placeholderText: PropTypes.string,
+    placeholderText: PropTypes.string
 };
 FilterComponent.defaultProps = {
-    placeholderText: "Search",
+    placeholderText: 'Search'
 };
 export default FilterComponent;

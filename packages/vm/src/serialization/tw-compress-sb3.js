@@ -1,10 +1,9 @@
 // We don't generate new IDs using numbers at this time because their enumeration
 // order can affect script execution order as they always come first.
 // https://tc39.es/ecma262/#sec-ordinaryownpropertykeys
-const SOUP =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#%()*+,-./:;=?@[]^_`{|}~";
+const SOUP = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#%()*+,-./:;=?@[]^_`{|}~';
 const generateId = i => {
-    let str = "";
+    let str = '';
     while (i >= 0) {
         str = SOUP[i % SOUP.length] + str;
         i = Math.floor(i / SOUP.length) - 1;
@@ -13,22 +12,22 @@ const generateId = i => {
 };
 
 class Pool {
-    constructor() {
+    constructor () {
         this.generatedIds = new Map();
         this.references = new Map();
         this.skippedIds = new Set();
         // IDs in Object.keys(vm.runtime.monitorBlocks._blocks) already have meaning, so make sure to skip those
         // We don't bother listing many here because most would take more than ten million items to be used
-        this.skippedIds.add("of");
+        this.skippedIds.add('of');
     }
-    skip(id) {
+    skip (id) {
         this.skippedIds.add(id);
     }
-    addReference(id) {
+    addReference (id) {
         const currentCount = this.references.get(id) || 0;
         this.references.set(id, currentCount + 1);
     }
-    generateNewIds() {
+    generateNewIds () {
         const entries = Array.from(this.references.entries());
         // The most used original IDs should get the shortest new IDs.
         entries.sort((a, b) => b[1] - a[1]);
@@ -47,7 +46,7 @@ class Pool {
             i++;
         }
     }
-    getNewId(originalId) {
+    getNewId (originalId) {
         if (this.generatedIds.has(originalId)) {
             return this.generatedIds.get(originalId);
         }
@@ -99,7 +98,7 @@ const compress = projectData => {
             for (const input of Object.values(block.inputs)) {
                 for (let i = 1; i < input.length; i++) {
                     const inputValue = input[i];
-                    if (typeof inputValue === "string") {
+                    if (typeof inputValue === 'string') {
                         pool.addReference(inputValue);
                     }
                 }
@@ -138,7 +137,7 @@ const compress = projectData => {
             for (const input of Object.values(block.inputs)) {
                 for (let i = 1; i < input.length; i++) {
                     const inputValue = input[i];
-                    if (typeof inputValue === "string") {
+                    if (typeof inputValue === 'string') {
                         input[i] = pool.getNewId(inputValue);
                     }
                 }

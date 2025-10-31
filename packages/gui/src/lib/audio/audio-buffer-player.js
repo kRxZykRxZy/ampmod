@@ -1,13 +1,9 @@
-import SharedAudioContext from "./shared-audio-context.js";
+import SharedAudioContext from './shared-audio-context.js';
 
 class AudioBufferPlayer {
     constructor(samples, sampleRate) {
         this.audioContext = new SharedAudioContext();
-        this.buffer = this.audioContext.createBuffer(
-            1,
-            samples.length,
-            sampleRate
-        );
+        this.buffer = this.audioContext.createBuffer(1, samples.length, sampleRate);
         this.buffer.getChannelData(0).set(samples);
         this.source = null;
 
@@ -54,7 +50,7 @@ class AudioBufferPlayer {
             } catch (e) {
                 // This is probably Safari, which dies when you call stop more than once
                 // which the spec says is allowed: https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode
-                console.log("Caught error while stopping buffer source node."); // eslint-disable-line no-console
+                console.log('Caught error while stopping buffer source node.'); // eslint-disable-line no-console
             }
         }
     }

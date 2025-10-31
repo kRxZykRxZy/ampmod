@@ -1,35 +1,34 @@
-import "regenerator-runtime/runtime";
-import { FormattedMessage } from "react-intl";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import React from "react";
-import bindAll from "lodash.bindall";
-import keyMirror from "keymirror";
+import 'regenerator-runtime/runtime';
+import {FormattedMessage} from 'react-intl';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import React from 'react';
+import bindAll from 'lodash.bindall';
+import keyMirror from 'keymirror';
 
-import BalancedFormattedMessage from "../../containers/balanced-formatted-message.jsx";
-import Box from "../box/box.jsx";
-import ProgressRingComponent from "../progress-ring/progress-ring.jsx";
+import BalancedFormattedMessage from '../../containers/balanced-formatted-message.jsx';
+import Box from '../box/box.jsx';
+import ProgressRingComponent from '../progress-ring/progress-ring.jsx';
 
-import backIcon from "./icons/back.svg";
-import sendUpdateIcon from "./icons/send-update.svg";
-import sendUpdateGlyph from "./icons/send-update-white.svg";
+import backIcon from './icons/back.svg';
+import sendUpdateIcon from './icons/send-update.svg';
+import sendUpdateGlyph from './icons/send-update-white.svg';
 
-import styles from "./connection-modal.css";
+import styles from './connection-modal.css';
 
 /** @enum{string} UPDATE_ACTIVITY */
 const UPDATE_ACTIVITY = keyMirror({
     getReady: null,
     sendUpdate: null,
-    results: null,
+    results: null
 });
 
-const microBitFirmwareUrl =
-    "https://microbit.org/get-started/user-guide/firmware/";
+const microBitFirmwareUrl = 'https://microbit.org/get-started/user-guide/firmware/';
 
 class UpdatePeripheralStep extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["handleSendUpdate"]);
+        bindAll(this, ['handleSendUpdate']);
         this.state = {
             /** @type {UPDATE_ACTIVITY} */
             activity: UPDATE_ACTIVITY.getReady,
@@ -41,7 +40,7 @@ class UpdatePeripheralStep extends React.Component {
             err: null,
 
             /** @type {any} */
-            res: null,
+            res: null
         };
     }
 
@@ -50,7 +49,7 @@ class UpdatePeripheralStep extends React.Component {
             activity: UPDATE_ACTIVITY.sendUpdate,
             progress: 0,
             err: null,
-            res: null,
+            res: null
         });
         try {
             const res = await this.props.onSendPeripheralUpdate(progress => {
@@ -58,17 +57,17 @@ class UpdatePeripheralStep extends React.Component {
                 // Rendering the progress ring is a little expensive, so filtering updates here reduces the CPU load.
                 // Updating every 1% doesn't look very smooth, but 0.5% (1/200) looks good to me.
                 this.setState({
-                    progressPercentage: Math.floor(progress * 200) / 2,
+                    progressPercentage: Math.floor(progress * 200) / 2
                 });
             });
             this.setState({
                 activity: UPDATE_ACTIVITY.results,
-                res,
+                res
             });
         } catch (err) {
             this.setState({
                 activity: UPDATE_ACTIVITY.results,
-                err,
+                err
             });
         }
     }
@@ -78,7 +77,7 @@ class UpdatePeripheralStep extends React.Component {
             <Box className={styles.activityArea}>
                 <Box className={styles.scratchLinkHelp}>
                     <Box className={styles.scratchLinkHelpStep}>
-                        <Box className={styles.helpStepNumber}>{"1"}</Box>
+                        <Box className={styles.helpStepNumber}>{'1'}</Box>
                         <img
                             className={styles.helpStepImage}
                             src={this.props.connectionSmallIconURL}
@@ -94,17 +93,13 @@ class UpdatePeripheralStep extends React.Component {
                             description="Instructions to connect the micro:bit to the computer for the update process"
                             id="gui.connection.updatePeripheral.microBitConnect"
                             values={{
-                                extensionName: this.props.name,
+                                extensionName: this.props.name
                             }}
                         />
                     </Box>
                     <Box className={styles.scratchLinkHelpStep}>
-                        <Box className={styles.helpStepNumber}>{"2"}</Box>
-                        <img
-                            className={styles.helpStepImage}
-                            src={sendUpdateIcon}
-                            draggable={false}
-                        />
+                        <Box className={styles.helpStepNumber}>{'2'}</Box>
+                        <img className={styles.helpStepImage} src={sendUpdateIcon} draggable={false} />
                         <FormattedMessage
                             defaultMessage='Press "Do Update" and allow the update to complete.'
                             description="Instructions to press the button to begin the update process"
@@ -119,19 +114,13 @@ class UpdatePeripheralStep extends React.Component {
     renderSendUpdate() {
         return (
             <Box className={styles.activityArea}>
-                <ProgressRingComponent
-                    sizePx={36}
-                    value={this.state.progressPercentage}
-                    max={100}
-                />
+                <ProgressRingComponent sizePx={36} value={this.state.progressPercentage} max={100} />
                 <FormattedMessage
                     defaultMessage="Updating {progressPercentage}%"
                     description="Progress message while updating the peripheral"
                     id="gui.connection.updatePeripheral.progress"
                     values={{
-                        progressPercentage: Math.floor(
-                            this.state.progressPercentage
-                        ),
+                        progressPercentage: Math.floor(this.state.progressPercentage)
                     }}
                 />
             </Box>
@@ -148,7 +137,7 @@ class UpdatePeripheralStep extends React.Component {
                     id="gui.connection.updatePeripheral.updateSuccessful"
                 />
             );
-        } else if (this.state.err.message === "No valid interfaces found.") {
+        } else if (this.state.err.message === 'No valid interfaces found.') {
             // this is a special case where the micro:bit's communication firmware is too old to support WebUSB
             resultsContent = (
                 <BalancedFormattedMessage
@@ -157,14 +146,10 @@ class UpdatePeripheralStep extends React.Component {
                     id="gui.connection.updatePeripheral.updateMicroBitFirmware"
                     values={{
                         microBitFirmwareLink: (
-                            <a
-                                rel="noopener noreferrer"
-                                target="_blank"
-                                href={microBitFirmwareUrl}
-                            >
+                            <a rel="noopener noreferrer" target="_blank" href={microBitFirmwareUrl}>
                                 {microBitFirmwareUrl}
                             </a>
-                        ),
+                        )
                     }}
                 />
             );
@@ -177,10 +162,7 @@ class UpdatePeripheralStep extends React.Component {
                         description="Message to indicate that the peripheral update failed"
                         id="gui.connection.updatePeripheral.updateFailed"
                     />
-                    <textarea
-                        className={styles.scratchLinkErrorDetails}
-                        readOnly
-                    >
+                    <textarea className={styles.scratchLinkErrorDetails} readOnly>
                         {this.state.err.message}
                     </textarea>
                 </Box>
@@ -191,8 +173,7 @@ class UpdatePeripheralStep extends React.Component {
 
     render() {
         const showGetReady = this.state.activity === UPDATE_ACTIVITY.getReady;
-        const showSendUpdate =
-            this.state.activity === UPDATE_ACTIVITY.sendUpdate;
+        const showSendUpdate = this.state.activity === UPDATE_ACTIVITY.sendUpdate;
         const showResults = this.state.activity === UPDATE_ACTIVITY.results;
         const showBadResults = showResults && !!this.state.err;
         return (
@@ -205,32 +186,21 @@ class UpdatePeripheralStep extends React.Component {
                         <BalancedFormattedMessage
                             className={styles.bottomAreaItem}
                             defaultMessage={
-                                "Do not leave or reload Scratch or disconnect your {extensionName} " +
-                                "until the update is complete."
+                                'Do not leave or reload Scratch or disconnect your {extensionName} ' +
+                                'until the update is complete.'
                             }
                             description="Notice to not disrupt the peripheral update process"
                             id="gui.connection.updatePeripheral.doNotDisconnect"
                             values={{
-                                extensionName: this.props.name,
+                                extensionName: this.props.name
                             }}
                         />
                     )}
                     {!showSendUpdate && (
-                        <Box
-                            className={classNames(
-                                styles.bottomAreaItem,
-                                styles.buttonRow
-                            )}
-                        >
-                            <button
-                                className={styles.connectionButton}
-                                onClick={this.props.onScanning}
-                            >
+                        <Box className={classNames(styles.bottomAreaItem, styles.buttonRow)}>
+                            <button className={styles.connectionButton} onClick={this.props.onScanning}>
                                 <img
-                                    className={classNames(
-                                        styles.buttonIconLeft,
-                                        styles.buttonIconBack
-                                    )}
+                                    className={classNames(styles.buttonIconLeft, styles.buttonIconBack)}
                                     src={backIcon}
                                     draggable={false}
                                 />
@@ -241,10 +211,7 @@ class UpdatePeripheralStep extends React.Component {
                                 />
                             </button>
                             {(showGetReady || showBadResults) && (
-                                <button
-                                    className={styles.connectionButton}
-                                    onClick={this.handleSendUpdate}
-                                >
+                                <button className={styles.connectionButton} onClick={this.handleSendUpdate}>
                                     {showGetReady && (
                                         <FormattedMessage
                                             defaultMessage="Do Update"
@@ -259,11 +226,7 @@ class UpdatePeripheralStep extends React.Component {
                                             id="gui.connection.updatePeripheral.updateAgainButton"
                                         />
                                     )}
-                                    <img
-                                        className={styles.buttonIconRight}
-                                        src={sendUpdateGlyph}
-                                        draggable={false}
-                                    />
+                                    <img className={styles.buttonIconRight} src={sendUpdateGlyph} draggable={false} />
                                 </button>
                             )}
                         </Box>
@@ -278,7 +241,7 @@ UpdatePeripheralStep.propTypes = {
     connectionSmallIconURL: PropTypes.string,
     name: PropTypes.string.isRequired,
     onScanning: PropTypes.func.isRequired,
-    onSendPeripheralUpdate: PropTypes.func.isRequired,
+    onSendPeripheralUpdate: PropTypes.func.isRequired
 };
 
 export default UpdatePeripheralStep;

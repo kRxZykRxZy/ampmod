@@ -1,4 +1,4 @@
-@import "../../css/colors.css";
+@import '../../css/colors.css';
 
 .modal-content {
     max-width: 550px;
@@ -33,7 +33,7 @@
     align-items: center;
     justify-content: center;
 }
-.type-selector-button[data-active="true"] {
+.type-selector-button[data-active='true'] {
     border-color: $looks-secondary;
 }
 .type-selector-button:active {

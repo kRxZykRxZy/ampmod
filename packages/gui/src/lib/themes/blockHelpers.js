@@ -1,4 +1,4 @@
-import { BLOCKS_THREE } from ".";
+import {BLOCKS_THREE} from '.';
 
 const getBlockIconURI = extensionIcons => {
     if (!extensionIcons) return null;
@@ -15,7 +15,7 @@ const getCategoryIconURI = extensionIcons => {
 // scratch-blocks colours has a pen property that scratch-gui uses for all extensions
 const getExtensionColors = theme => theme.getBlockColors().pen;
 
-const DEFAULT_EXTENSION_PRIMARY = "#0fbd8c";
+const DEFAULT_EXTENSION_PRIMARY = '#0fbd8c';
 
 /**
  * Applies extension color theme to categories.
@@ -36,59 +36,40 @@ const injectExtensionCategoryTheme = (dynamicBlockXML, theme) => {
     const serializer = new XMLSerializer();
 
     return dynamicBlockXML.map(extension => {
-        const dom = parser.parseFromString(extension.xml, "text/xml");
+        const dom = parser.parseFromString(extension.xml, 'text/xml');
 
-        const primaryColor = dom.documentElement.getAttribute("colour");
-        const usesCustomColors =
-            primaryColor.toLowerCase() !== DEFAULT_EXTENSION_PRIMARY;
+        const primaryColor = dom.documentElement.getAttribute('colour');
+        const usesCustomColors = primaryColor.toLowerCase() !== DEFAULT_EXTENSION_PRIMARY;
         if (usesCustomColors) {
             const converters = theme.getCustomExtensionColors();
-            dom.documentElement.setAttribute(
-                "colour",
-                converters.categoryIconBackground(primaryColor)
-            );
-            dom.documentElement.setAttribute(
-                "secondaryColour",
-                converters.categoryIconBorder(primaryColor)
-            );
+            dom.documentElement.setAttribute('colour', converters.categoryIconBackground(primaryColor));
+            dom.documentElement.setAttribute('secondaryColour', converters.categoryIconBorder(primaryColor));
         } else {
-            dom.documentElement.setAttribute("colour", extensionColors.primary);
+            dom.documentElement.setAttribute('colour', extensionColors.primary);
             // Note: the category's secondaryColour matches up with the blocks' tertiary color,
             // both used for border color.
-            dom.documentElement.setAttribute(
-                "secondaryColour",
-                extensionColors.tertiary
-            );
+            dom.documentElement.setAttribute('secondaryColour', extensionColors.tertiary);
         }
 
-        const categoryIconURI = getCategoryIconURI(
-            extensionIcons[extension.id]
-        );
+        const categoryIconURI = getCategoryIconURI(extensionIcons[extension.id]);
         if (categoryIconURI) {
-            dom.documentElement.setAttribute("iconURI", categoryIconURI);
+            dom.documentElement.setAttribute('iconURI', categoryIconURI);
         }
 
         return {
             ...extension,
-            xml: serializer.serializeToString(dom),
+            xml: serializer.serializeToString(dom)
         };
     });
 };
 
 const injectBlockIcons = (blockInfoJson, theme) => {
     // Block icons are the first element of `args0`
-    if (
-        !blockInfoJson.args0 ||
-        blockInfoJson.args0.length < 1 ||
-        blockInfoJson.args0[0].type !== "field_image"
-    )
+    if (!blockInfoJson.args0 || blockInfoJson.args0.length < 1 || blockInfoJson.args0[0].type !== 'field_image')
         return blockInfoJson;
 
     const extensionIcons = theme.getExtensions();
-    const extensionId = blockInfoJson.type.substring(
-        0,
-        blockInfoJson.type.indexOf("_")
-    );
+    const extensionId = blockInfoJson.type.substring(0, blockInfoJson.type.indexOf('_'));
     const blockIconURI = getBlockIconURI(extensionIcons[extensionId]);
 
     if (!blockIconURI) return blockInfoJson;
@@ -100,9 +81,9 @@ const injectBlockIcons = (blockInfoJson, theme) => {
 
             return {
                 ...value,
-                src: blockIconURI,
+                src: blockIconURI
             };
-        }),
+        })
     };
 };
 
@@ -118,8 +99,8 @@ const injectExtensionBlockTheme = (blockInfoJson, theme) => {
     if (theme.blocks === BLOCKS_THREE) return blockInfoJson;
 
     if (
-        !blockInfoJson.extensions?.includes("default_extension_colors") &&
-        !blockInfoJson.extensions?.includes("colours_textfield")
+        !blockInfoJson.extensions?.includes('default_extension_colors') &&
+        !blockInfoJson.extensions?.includes('colours_textfield')
     ) {
         const converters = theme.getCustomExtensionColors();
         return {
@@ -127,7 +108,7 @@ const injectExtensionBlockTheme = (blockInfoJson, theme) => {
             colour: converters.primary(blockInfoJson.colour),
             colourSecondary: converters.secondary(blockInfoJson.colour),
             colourTertiary: converters.tertiary(blockInfoJson.colour),
-            colourQuaternary: converters.quaternary(blockInfoJson.colour),
+            colourQuaternary: converters.quaternary(blockInfoJson.colour)
         };
     }
 
@@ -138,8 +119,8 @@ const injectExtensionBlockTheme = (blockInfoJson, theme) => {
         colour: extensionColors.primary,
         colourSecondary: extensionColors.secondary,
         colourTertiary: extensionColors.tertiary,
-        colourQuaternary: extensionColors.quaternary,
+        colourQuaternary: extensionColors.quaternary
     };
 };
 
-export { injectExtensionBlockTheme, injectExtensionCategoryTheme };
+export {injectExtensionBlockTheme, injectExtensionCategoryTheme};

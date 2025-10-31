@@ -14,15 +14,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import React from "react";
-import downloadBlob from "../lib/download-blob.js";
-import Settings from "../addons/settings/settings.jsx";
-import render from "./app-target";
-import Clippy from "../containers/amp-clippy.jsx";
+import React from 'react';
+import downloadBlob from '../lib/download-blob.js';
+import Settings from '../addons/settings/settings.jsx';
+import render from './app-target';
+import Clippy from '../containers/amp-clippy.jsx';
 
 const onExportSettings = settings => {
     const blob = new Blob([JSON.stringify(settings)]);
-    downloadBlob("turbowarp-addon-settings.json", blob);
+    downloadBlob('turbowarp-addon-settings.json', blob);
 };
 
 render(

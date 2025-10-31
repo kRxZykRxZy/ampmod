@@ -1,4 +1,4 @@
-const StringUtil = require("./string-util");
+const StringUtil = require('./string-util');
 
 class AssetUtil {
     /**
@@ -8,8 +8,8 @@ class AssetUtil {
      * @param {string} md5ext full md5 with file extension
      * @returns {Promise<Storage.Asset>} scratch-storage asset object
      */
-    static getByMd5ext(runtime, zip, assetType, md5ext) {
-        const idParts = StringUtil.splitFirst(md5ext, ".");
+    static getByMd5ext (runtime, zip, assetType, md5ext) {
+        const idParts = StringUtil.splitFirst(md5ext, '.');
         const md5 = idParts[0];
         const ext = idParts[1].toLowerCase();
 
@@ -26,24 +26,12 @@ class AssetUtil {
 
             if (file) {
                 return runtime.wrapAssetRequest(() =>
-                    file
-                        .async("uint8array")
-                        .then(data =>
-                            runtime.storage.createAsset(
-                                assetType,
-                                ext,
-                                data,
-                                md5,
-                                false
-                            )
-                        )
+                    file.async('uint8array').then(data => runtime.storage.createAsset(assetType, ext, data, md5, false))
                 );
             }
         }
 
-        return runtime.wrapAssetRequest(() =>
-            runtime.storage.load(assetType, md5, ext)
-        );
+        return runtime.wrapAssetRequest(() => runtime.storage.load(assetType, md5, ext));
     }
 }
 

@@ -1,4 +1,4 @@
-import { getSelectedRootItems } from "./selection";
+import {getSelectedRootItems} from './selection';
 
 const bringToFront = function (onUpdateImage) {
     const items = getSelectedRootItems();
@@ -60,11 +60,4 @@ const shouldShowBringForward = function () {
     return true;
 };
 
-export {
-    bringToFront,
-    sendToBack,
-    bringForward,
-    sendBackward,
-    shouldShowBringForward,
-    shouldShowSendBackward,
-};
+export {bringToFront, sendToBack, bringForward, sendBackward, shouldShowBringForward, shouldShowSendBackward};

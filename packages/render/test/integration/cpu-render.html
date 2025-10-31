@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <body>
     <script src="../../node_modules/scratch-vm/dist/web/scratch-vm.js"></script>
     <script src="../../node_modules/scratch-storage/dist/web/scratch-storage.js"></script>
@@ -22,9 +22,9 @@
         }
     </style>
 
-    <input type="file" id="file" name="file" accept=".sb3,.sb2,.sb">
+    <input type="file" id="file" name="file" accept=".sb3,.sb2,.sb" />
     <button id="manual-cpu-render">Update CPU render</button>
-    <br>
+    <br />
     <table>
         <tr>
             <td>GPU</td>
@@ -43,9 +43,12 @@
             <td><canvas id="alpha-merge" width="480" height="360"></canvas></td>
         </tr>
     </table>
-    <br>
+    <br />
 
-    <p>For difference canvases: Hover to locate transparent parts (perfect match). Close to white means small deviation.</p>
+    <p>
+        For difference canvases: Hover to locate transparent parts (perfect match). Close to white means small
+        deviation.
+    </p>
 
     <script>
         // These variables are going to be available in the "window global" intentionally.
@@ -60,13 +63,12 @@
         const fileInput = document.getElementById('file');
         const loadFile = loadFileInputIntoVM.bind(null, fileInput, vm, render);
         function loadAndRender() {
-            loadFile()
-                .then(() => {
-                    vm.greenFlag();
-                    setTimeout(() => {
-                        renderCpu();
-                    }, 250);
-                });
+            loadFile().then(() => {
+                vm.greenFlag();
+                setTimeout(() => {
+                    renderCpu();
+                }, 250);
+            });
         }
         fileInput.addEventListener('change', loadAndRender);
         if (fileInput.files.length) {
@@ -104,7 +106,7 @@
                         return;
                     }
                     drawable.updateCPURenderAttributes();
-                    return { id, drawable };
+                    return {id, drawable};
                 })
                 .reverse()
                 .filter(Boolean);
@@ -114,7 +116,7 @@
             for (let x = -239; x <= 240; x++) {
                 for (let y = -180; y < 180; y++) {
                     render.sampleColor4b([x, y], drawBits, color);
-                    const offset = (((179 - y) * 480) + 239 + x) * 4;
+                    const offset = ((179 - y) * 480 + 239 + x) * 4;
                     // putImageData wants non-premultiplied alpha, for some reason.
                     const alpha = color[3] / 255;
                     color[0] /= alpha;

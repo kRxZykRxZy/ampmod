@@ -12,7 +12,7 @@
  * - isOpen()
  */
 class ScratchLinkWebSocket {
-    constructor(type) {
+    constructor (type) {
         this._type = type;
         this._onOpen = null;
         this._onClose = null;
@@ -22,32 +22,21 @@ class ScratchLinkWebSocket {
         this._ws = null;
     }
 
-    open() {
-        if (
-            !(
-                this._onOpen &&
-                this._onClose &&
-                this._onError &&
-                this._handleMessage
-            )
-        ) {
-            throw new Error(
-                "Must set open, close, message and error handlers before calling open on the socket"
-            );
+    open () {
+        if (!(this._onOpen && this._onClose && this._onError && this._handleMessage)) {
+            throw new Error('Must set open, close, message and error handlers before calling open on the socket');
         }
 
         let pathname;
         switch (this._type) {
-            case "BLE":
-                pathname = "scratch/ble";
-                break;
-            case "BT":
-                pathname = "scratch/bt";
-                break;
-            default:
-                throw new Error(
-                    `Unknown ScratchLink socket Type: ${this._type}`
-                );
+        case 'BLE':
+            pathname = 'scratch/ble';
+            break;
+        case 'BT':
+            pathname = 'scratch/bt';
+            break;
+        default:
+            throw new Error(`Unknown ScratchLink socket Type: ${this._type}`);
         }
 
         // Try ws:// (the new way) and wss:// (the old way) simultaneously. If either connects, close the other. If we
@@ -67,14 +56,12 @@ class ScratchLinkWebSocket {
         };
 
         const ws = new WebSocket(`ws://127.0.0.1:20111/${pathname}`);
-        const wss = new WebSocket(
-            `wss://device-manager.scratch.mit.edu:20110/${pathname}`
-        );
+        const wss = new WebSocket(`wss://device-manager.scratch.mit.edu:20110/${pathname}`);
 
         const connectTimeout = setTimeout(() => {
             // neither socket succeeded before the timeout
             setSocket(ws, wss);
-            this._ws.onerror(new Event("timeout"));
+            this._ws.onerror(new Event('timeout'));
         }, 15 * 1000);
         ws.onopen = openEvent => {
             clearTimeout(connectTimeout);
@@ -107,37 +94,37 @@ class ScratchLinkWebSocket {
         };
     }
 
-    close() {
+    close () {
         this._ws.close();
         this._ws = null;
     }
 
-    sendMessage(message) {
+    sendMessage (message) {
         const messageText = JSON.stringify(message);
         this._ws.send(messageText);
     }
 
-    setOnOpen(fn) {
+    setOnOpen (fn) {
         this._onOpen = fn;
     }
 
-    setOnClose(fn) {
+    setOnClose (fn) {
         this._onClose = fn;
     }
 
-    setOnError(fn) {
+    setOnError (fn) {
         this._onError = fn;
     }
 
-    setHandleMessage(fn) {
+    setHandleMessage (fn) {
         this._handleMessage = fn;
     }
 
-    isOpen() {
+    isOpen () {
         return this._ws && this._ws.readyState === this._ws.OPEN;
     }
 
-    _onMessage(e) {
+    _onMessage (e) {
         const json = JSON.parse(e.data);
         this._handleMessage(json);
     }

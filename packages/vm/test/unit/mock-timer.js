@@ -1,29 +1,29 @@
-const test = require("tap").test;
-const MockTimer = require("../fixtures/mock-timer");
+const test = require('tap').test;
+const MockTimer = require('../fixtures/mock-timer');
 
-test("spec", t => {
+test('spec', t => {
     const timer = new MockTimer();
 
-    t.type(MockTimer, "function");
-    t.type(timer, "object");
+    t.type(MockTimer, 'function');
+    t.type(timer, 'object');
 
     // Most members of MockTimer mimic members of Timer.
-    t.type(timer.startTime, "number");
-    t.type(timer.time, "function");
-    t.type(timer.start, "function");
-    t.type(timer.timeElapsed, "function");
-    t.type(timer.setTimeout, "function");
-    t.type(timer.clearTimeout, "function");
+    t.type(timer.startTime, 'number');
+    t.type(timer.time, 'function');
+    t.type(timer.start, 'function');
+    t.type(timer.timeElapsed, 'function');
+    t.type(timer.setTimeout, 'function');
+    t.type(timer.clearTimeout, 'function');
 
     // A few members of MockTimer have no Timer equivalent and should only be used in tests.
-    t.type(timer.advanceMockTime, "function");
-    t.type(timer.advanceMockTimeAsync, "function");
-    t.type(timer.hasTimeouts, "function");
+    t.type(timer.advanceMockTime, 'function');
+    t.type(timer.advanceMockTimeAsync, 'function');
+    t.type(timer.hasTimeouts, 'function');
 
     t.end();
 });
 
-test("time", t => {
+test('time', t => {
     const timer = new MockTimer();
     const delta = 1;
 
@@ -37,7 +37,7 @@ test("time", t => {
     t.end();
 });
 
-test("start / timeElapsed", t =>
+test('start / timeElapsed', t =>
     new Promise(resolve => {
         const timer = new MockTimer();
         const halfDelay = 1;
@@ -72,16 +72,16 @@ test("start / timeElapsed", t =>
         }, 0);
     }));
 
-test("clearTimeout / hasTimeouts", t =>
+test('clearTimeout / hasTimeouts', t =>
     new Promise((resolve, reject) => {
         const timer = new MockTimer();
 
         const timeoutId = timer.setTimeout(() => {
-            reject(new Error("Canceled task ran"));
+            reject(new Error('Canceled task ran'));
         }, 1);
 
         timer.setTimeout(() => {
-            resolve("Non-canceled task ran");
+            resolve('Non-canceled task ran');
             t.end();
         }, 2);
 

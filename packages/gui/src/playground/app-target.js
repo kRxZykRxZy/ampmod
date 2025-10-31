@@ -1,9 +1,9 @@
-import ReactDOM from "react-dom";
-import { setAppElement } from "react-modal";
-import * as bowser from "bowser";
-import { APP_NAME, APP_SOURCE } from "@ampmod/branding";
+import ReactDOM from 'react-dom';
+import {setAppElement} from 'react-modal';
+import * as bowser from 'bowser';
+import {APP_NAME, APP_SOURCE} from '@ampmod/branding';
 
-const appTarget = document.getElementById("app");
+const appTarget = document.getElementById('app');
 let migrationOccurred = false;
 /**
  * amp: Migrates all localStorage keys that start with a given prefix to a new prefix.
@@ -48,21 +48,17 @@ function migrateLocalStorageKeys(oldPrefix, newPrefix) {
 async function migrateIndexedDB(oldDbName, newDbName) {
     return new Promise((resolve, reject) => {
         const openOldReq = indexedDB.open(oldDbName);
-        openOldReq.onerror = () =>
-            reject(`Error opening old database: ${openOldReq.error}`);
+        openOldReq.onerror = () => reject(`Error opening old database: ${openOldReq.error}`);
         openOldReq.onsuccess = event => {
             const dbOld = event.target.result;
             const objectStoreNames = dbOld.objectStoreNames;
 
             // Check for empty objectStoreNames to avoid "Empty scope" error
             if (objectStoreNames.length === 0) {
-                console.info(
-                    `INFO: Old database "${oldDbName}" has no object stores. Skipping migration.`
-                );
+                console.info(`INFO: Old database "${oldDbName}" has no object stores. Skipping migration.`);
                 dbOld.close();
                 const deleteReq = indexedDB.deleteDatabase(oldDbName);
-                deleteReq.onerror = () =>
-                    reject(`Error deleting empty database: ${deleteReq.error}`);
+                deleteReq.onerror = () => reject(`Error deleting empty database: ${deleteReq.error}`);
                 deleteReq.onsuccess = () => resolve();
                 return;
             }
@@ -72,13 +68,13 @@ async function migrateIndexedDB(oldDbName, newDbName) {
                 const dbNew = e.target.result;
                 for (let i = 0; i < objectStoreNames.length; i++) {
                     dbNew.createObjectStore(objectStoreNames[i], {
-                        keyPath: "id",
+                        keyPath: 'id'
                     });
                 }
             };
 
             openNewReq.onerror = e => {
-                if (e.target.error.name === "VersionError") {
+                if (e.target.error.name === 'VersionError') {
                     console.log(
                         `INFO: Database ${newDbName} is already at a higher version. Assuming migration is complete.`
                     );
@@ -90,30 +86,17 @@ async function migrateIndexedDB(oldDbName, newDbName) {
 
             openNewReq.onsuccess = e => {
                 const dbNew = e.target.result;
-                const transactionOld = dbOld.transaction(
-                    Array.from(objectStoreNames),
-                    "readonly"
-                );
-                const transactionNew = dbNew.transaction(
-                    Array.from(objectStoreNames),
-                    "readwrite"
-                );
-                transactionOld.onerror = () =>
-                    reject(`Old transaction error: ${transactionOld.error}`);
-                transactionNew.onerror = () =>
-                    reject(`New transaction error: ${transactionNew.error}`);
+                const transactionOld = dbOld.transaction(Array.from(objectStoreNames), 'readonly');
+                const transactionNew = dbNew.transaction(Array.from(objectStoreNames), 'readwrite');
+                transactionOld.onerror = () => reject(`Old transaction error: ${transactionOld.error}`);
+                transactionNew.onerror = () => reject(`New transaction error: ${transactionNew.error}`);
 
                 transactionNew.oncomplete = () => {
                     dbOld.close();
                     const deleteReq = indexedDB.deleteDatabase(oldDbName);
-                    deleteReq.onerror = () =>
-                        reject(
-                            `Error deleting old database: ${deleteReq.error}`
-                        );
+                    deleteReq.onerror = () => reject(`Error deleting old database: ${deleteReq.error}`);
                     deleteReq.onsuccess = () => {
-                        console.log(
-                            `SUCCESS: Migrated database ${oldDbName} to ${newDbName}.`
-                        );
+                        console.log(`SUCCESS: Migrated database ${oldDbName} to ${newDbName}.`);
                         resolve();
                     };
                 };
@@ -138,12 +121,12 @@ async function migrateIndexedDB(oldDbName, newDbName) {
  * Main function to perform all migration operations.
  */
 async function runAllMigrations() {
-    const oldPrefix = "tw_";
-    const newPrefix = "Amp_";
-    const oldDbNames = ["TW_RestorePoints", "TW_Backpack"];
+    const oldPrefix = 'tw_';
+    const newPrefix = 'Amp_';
+    const oldDbNames = ['TW_RestorePoints', 'TW_Backpack'];
 
     // Part 1: Migrate localStorage keys.
-    if (migrateLocalStorageKeys("tw:", "amp:")) {
+    if (migrateLocalStorageKeys('tw:', 'amp:')) {
         migrationOccurred = true;
     }
 
@@ -201,23 +184,23 @@ async function runAllMigrations() {
 
     // Part 3: Reload if any migrations occurred.
     if (migrationOccurred) {
-        window.SetCustomSplashInfo("Done! Reloading...");
+        window.SetCustomSplashInfo('Done! Reloading...');
         window.location.reload();
     }
 }
 
-if (new URLSearchParams(window.location.search).has("crash-accidentally")) {
+if (new URLSearchParams(window.location.search).has('crash-accidentally')) {
     throw new TypeError(
-        "Simulated a TypeError to test the pre-React error screen. " +
+        'Simulated a TypeError to test the pre-React error screen. ' +
             `If someone sent you a link to this, just open ${APP_NAME} in ` +
-            "a new tab and carry on with your day. This is not a bug."
+            'a new tab and carry on with your day. This is not a bug.'
     );
 }
 
 setAppElement(appTarget);
 
 const render = children => {
-    if (!process.env.ampmod_mode === "canary") {
+    if (!process.env.ampmod_mode === 'canary') {
         runAllMigrations();
     }
     if (!migrationOccurred) {
@@ -230,7 +213,7 @@ const render = children => {
 
 export const renderToBottom = children => {
     if (!migrationOccurred) {
-        ReactDOM.render(children, document.getElementById("app-footer"));
+        ReactDOM.render(children, document.getElementById('app-footer'));
     }
 };
 

@@ -1,4 +1,4 @@
-@import "../../css/colors.css";
+@import '../../css/colors.css';
 
 .clippy-container {
     position: absolute;
@@ -24,8 +24,7 @@
     border-radius: 15px;
     max-width: 200px;
     font-size: 1em;
-    font-family:
-        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: $text-primary;
     display: inline-block;
     position: relative; /* Ensure relative positioning for the pseudo-elements */
@@ -40,14 +39,14 @@
     pointer-events: all;
 }
 
-[dir="rtl"] .clippy-container {
+[dir='rtl'] .clippy-container {
     left: 20px;
 }
 
-[dir="rtl"] .clippy-image {
+[dir='rtl'] .clippy-image {
     right: 10px;
 }
 
-[dir="rtl"] #react-tabs-1 .clippy-container {
+[dir='rtl'] #react-tabs-1 .clippy-container {
     margin-right: 320px;
 }

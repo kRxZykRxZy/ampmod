@@ -1,5 +1,5 @@
 class Scratch3ProcedureBlocks {
-    constructor(runtime) {
+    constructor (runtime) {
         /**
          * The runtime instantiating this block package.
          * @type {Runtime}
@@ -11,21 +11,21 @@ class Scratch3ProcedureBlocks {
      * Retrieve the block primitives implemented by this package.
      * @return {object.<string, Function>} Mapping of opcode to Function.
      */
-    getPrimitives() {
+    getPrimitives () {
         return {
             procedures_definition: this.definition,
             procedures_call: this.call,
             procedures_return: this.return,
             argument_reporter_string_number: this.argumentReporterStringNumber,
-            argument_reporter_boolean: this.argumentReporterBoolean,
+            argument_reporter_boolean: this.argumentReporterBoolean
         };
     }
 
-    definition() {
+    definition () {
         // No-op: execute the blocks.
     }
 
-    call(args, util) {
+    call (args, util) {
         const stackFrame = util.stackFrame;
         const isReporter = !!args.mutation.return;
 
@@ -44,15 +44,14 @@ class Scratch3ProcedureBlocks {
         }
 
         const procedureCode = args.mutation.proccode;
-        const paramNamesIdsAndDefaults =
-            util.getProcedureParamNamesIdsAndDefaults(procedureCode);
+        const paramNamesIdsAndDefaults = util.getProcedureParamNamesIdsAndDefaults(procedureCode);
 
         // If null, procedure could not be found, which can happen if custom
         // block is dragged between sprites without the definition.
         // Match Scratch 2.0 behavior and noop.
         if (paramNamesIdsAndDefaults === null) {
             if (isReporter) {
-                return "";
+                return '';
             }
             return;
         }
@@ -73,10 +72,7 @@ class Scratch3ProcedureBlocks {
 
         const addonBlock = util.runtime.getAddonBlock(procedureCode);
         if (addonBlock) {
-            const result = addonBlock.callback(
-                util.thread.getAllparams(),
-                util
-            );
+            const result = addonBlock.callback(util.thread.getAllparams(), util);
             if (util.thread.status === 1 /* STATUS_PROMISE_WAIT */) {
                 // If the addon block is using STATUS_PROMISE_WAIT to force us to sleep,
                 // make sure to not re-run this block when we resume.
@@ -90,13 +86,13 @@ class Scratch3ProcedureBlocks {
         if (isReporter) {
             util.thread.peekStackFrame().waitingReporter = true;
             // Default return value
-            stackFrame.returnValue = "";
+            stackFrame.returnValue = '';
         }
 
         util.startProcedure(procedureCode);
     }
 
-    return(args, util) {
+    return (args, util) {
         util.stopThisScript();
         // If used outside of a custom block, there may be no stackframe.
         if (util.thread.peekStackFrame()) {
@@ -104,12 +100,12 @@ class Scratch3ProcedureBlocks {
         }
     }
 
-    argumentReporterStringNumber(args, util) {
+    argumentReporterStringNumber (args, util) {
         const value = util.getParam(args.VALUE);
         if (value === null) {
             // tw: support legacy block
-            if (String(args.VALUE).toLowerCase() === "last key pressed") {
-                return util.ioQuery("keyboard", "getLastKeyPressed");
+            if (String(args.VALUE).toLowerCase() === 'last key pressed') {
+                return util.ioQuery('keyboard', 'getLastKeyPressed');
             }
             // When the parameter is not found in the most recent procedure
             // call, the default is always 0.
@@ -118,15 +114,12 @@ class Scratch3ProcedureBlocks {
         return value;
     }
 
-    argumentReporterBoolean(args, util) {
+    argumentReporterBoolean (args, util) {
         const value = util.getParam(args.VALUE);
         if (value === null) {
             // tw: implement is compiled? and is turbowarp?
             const lowercaseValue = String(args.VALUE).toLowerCase();
-            if (
-                util.target.runtime.compilerOptions.enabled &&
-                lowercaseValue === "is compiled?"
-            ) {
+            if (util.target.runtime.compilerOptions.enabled && lowercaseValue === 'is compiled?') {
                 return true;
             }
             if (/is (ampmod|ultiblocks|turbowarp)\?/.test(lowercaseValue)) {

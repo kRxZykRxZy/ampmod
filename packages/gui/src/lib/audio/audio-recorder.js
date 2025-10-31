@@ -1,5 +1,5 @@
-import SharedAudioContext from "./shared-audio-context.js";
-import { computeRMS, computeChunkedRMS } from "./audio-util.js";
+import SharedAudioContext from './shared-audio-context.js';
+import {computeRMS, computeChunkedRMS} from './audio-util.js';
 
 class AudioRecorder {
     constructor() {
@@ -22,7 +22,7 @@ class AudioRecorder {
     startListening(onStarted, onUpdate, onError) {
         try {
             navigator.mediaDevices
-                .getUserMedia({ audio: true })
+                .getUserMedia({audio: true})
                 .then(userMediaStream => {
                     if (!this.disposed) {
                         this.started = true;
@@ -48,20 +48,13 @@ class AudioRecorder {
 
     attachUserMediaStream(userMediaStream, onUpdate) {
         this.userMediaStream = userMediaStream;
-        this.mediaStreamSource =
-            this.audioContext.createMediaStreamSource(userMediaStream);
+        this.mediaStreamSource = this.audioContext.createMediaStreamSource(userMediaStream);
         this.sourceNode = this.audioContext.createGain();
-        this.scriptProcessorNode = this.audioContext.createScriptProcessor(
-            this.bufferLength,
-            1,
-            1
-        );
+        this.scriptProcessorNode = this.audioContext.createScriptProcessor(this.bufferLength, 1, 1);
 
         this.scriptProcessorNode.onaudioprocess = processEvent => {
             if (this.recording && !this.disposed) {
-                this.buffers.push(
-                    new Float32Array(processEvent.inputBuffer.getChannelData(0))
-                );
+                this.buffers.push(new Float32Array(processEvent.inputBuffer.getChannelData(0)));
             }
         };
 
@@ -89,9 +82,7 @@ class AudioRecorder {
     }
 
     stop() {
-        const buffer = new Float32Array(
-            this.buffers.length * this.bufferLength
-        );
+        const buffer = new Float32Array(this.buffers.length * this.bufferLength);
 
         let offset = 0;
         for (let i = 0; i < this.buffers.length; i++) {
@@ -108,17 +99,13 @@ class AudioRecorder {
         let lastChunkAboveThreshold = null;
         for (let i = 0; i < chunkLevels.length; i++) {
             if (chunkLevels[i] > threshold) {
-                if (firstChunkAboveThreshold === null)
-                    firstChunkAboveThreshold = i + 1;
+                if (firstChunkAboveThreshold === null) firstChunkAboveThreshold = i + 1;
                 lastChunkAboveThreshold = i + 1;
             }
         }
 
-        let trimStart =
-            Math.max(2, firstChunkAboveThreshold - 2) / this.buffers.length;
-        let trimEnd =
-            Math.min(this.buffers.length - 2, lastChunkAboveThreshold + 2) /
-            this.buffers.length;
+        let trimStart = Math.max(2, firstChunkAboveThreshold - 2) / this.buffers.length;
+        let trimEnd = Math.min(this.buffers.length - 2, lastChunkAboveThreshold + 2) / this.buffers.length;
 
         // With very few samples, the automatic trimming can produce invalid values
         if (trimStart >= trimEnd) {
@@ -131,7 +118,7 @@ class AudioRecorder {
             samples: buffer,
             sampleRate: this.audioContext.sampleRate,
             trimStart: trimStart,
-            trimEnd: trimEnd,
+            trimEnd: trimEnd
         };
     }
 

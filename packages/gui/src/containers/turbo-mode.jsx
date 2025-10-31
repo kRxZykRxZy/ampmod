@@ -1,7 +1,7 @@
-import bindAll from "lodash.bindall";
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
+import bindAll from 'lodash.bindall';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
 
 /**
  * Turbo Mode component passes toggleTurboMode function to its child.
@@ -22,7 +22,7 @@ import { connect } from "react-redux";
 class TurboMode extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["toggleTurboMode"]);
+        bindAll(this, ['toggleTurboMode']);
     }
     toggleTurboMode() {
         this.props.vm.setTurboMode(!this.props.turboMode);
@@ -43,13 +43,13 @@ TurboMode.propTypes = {
     children: PropTypes.func,
     turboMode: PropTypes.bool,
     vm: PropTypes.shape({
-        setTurboMode: PropTypes.func,
-    }),
+        setTurboMode: PropTypes.func
+    })
 };
 
 const mapStateToProps = state => ({
     vm: state.scratchGui.vm,
-    turboMode: state.scratchGui.vmStatus.turbo,
+    turboMode: state.scratchGui.vmStatus.turbo
 });
 
 export default connect(

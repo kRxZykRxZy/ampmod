@@ -1,21 +1,15 @@
-import {
-    defineMessages,
-    FormattedMessage,
-    intlShape,
-    injectIntl,
-} from "react-intl";
-import PropTypes from "prop-types";
-import React from "react";
-import Modal from "../../containers/modal.jsx";
-import styles from "./invalid-project-modal.css";
+import {defineMessages, FormattedMessage, intlShape, injectIntl} from 'react-intl';
+import PropTypes from 'prop-types';
+import React from 'react';
+import Modal from '../../containers/modal.jsx';
+import styles from './invalid-project-modal.css';
 
 const messages = defineMessages({
     title: {
-        defaultMessage: "Error",
-        description:
-            "Title of modal that appears when a project could not be loaded",
-        id: "tw.invalidProject.title",
-    },
+        defaultMessage: 'Error',
+        description: 'Title of modal that appears when a project could not be loaded',
+        id: 'tw.invalidProject.title'
+    }
 });
 
 const formatError = error => {
@@ -53,7 +47,7 @@ const InvalidProjectModal = props => (
                 value={formatError(props.error)}
             />
 
-            {formatError(props.error).includes("validationError") && (
+            {formatError(props.error).includes('validationError') && (
                 <p>
                     <FormattedMessage
                         // eslint-disable-next-line max-len
@@ -63,11 +57,7 @@ const InvalidProjectModal = props => (
                         id="tw.invalidProject.validationError"
                         values={{
                             reportIt: (
-                                <a
-                                    href="https://github.com/TurboWarp/sb3fix/issues"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >
+                                <a href="https://github.com/TurboWarp/sb3fix/issues" target="_blank" rel="noreferrer">
                                     <FormattedMessage
                                         defaultMessage="report it"
                                         // eslint-disable-next-line max-len
@@ -75,7 +65,7 @@ const InvalidProjectModal = props => (
                                         id="tw.invalidProject.reportIt"
                                     />
                                 </a>
-                            ),
+                            )
                         }}
                     />
                 </p>
@@ -90,10 +80,7 @@ const InvalidProjectModal = props => (
                 />
             </p>
 
-            <button
-                className={styles.button}
-                onClick={props.onClickRestorePoints}
-            >
+            <button className={styles.button} onClick={props.onClickRestorePoints}>
                 <FormattedMessage
                     defaultMessage="View Restore Points"
                     // eslint-disable-next-line max-len
@@ -109,7 +96,7 @@ InvalidProjectModal.propTypes = {
     intl: intlShape,
     onClose: PropTypes.func,
     onClickRestorePoints: PropTypes.func,
-    error: PropTypes.any,
+    error: PropTypes.any
 };
 
 export default injectIntl(InvalidProjectModal);

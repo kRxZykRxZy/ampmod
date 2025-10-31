@@ -1,40 +1,30 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import PropTypes from 'prop-types';
+import React from 'react';
+import {FormattedMessage} from 'react-intl';
 
-import LanguageMenu from "./language-menu.jsx";
-import MenuBarMenu from "./menu-bar-menu.jsx";
-import { MenuSection } from "../menu/menu.jsx";
-import MenuLabel from "./tw-menu-label.jsx";
-import TWAccentThemeMenu from "./tw-theme-accent.jsx";
-import TWGuiThemeMenu from "./tw-theme-gui.jsx";
-import TWBlocksThemeMenu from "./tw-theme-blocks.jsx";
-import TWDesktopSettings from "./tw-desktop-settings.jsx";
-import AmpAddonSettings from "./amp-addon-settings.jsx";
-import AmpInstallPWA from "./amp-install-pwa.jsx";
-import AmpErase from "./amp-erase.jsx";
-import AmpShowWelcome from "./amp-show-welcome.jsx";
-import { MenuItem } from "../menu/menu.jsx";
-import { APP_NAME } from "@ampmod/branding";
+import LanguageMenu from './language-menu.jsx';
+import MenuBarMenu from './menu-bar-menu.jsx';
+import {MenuSection} from '../menu/menu.jsx';
+import MenuLabel from './tw-menu-label.jsx';
+import TWAccentThemeMenu from './tw-theme-accent.jsx';
+import TWGuiThemeMenu from './tw-theme-gui.jsx';
+import TWBlocksThemeMenu from './tw-theme-blocks.jsx';
+import TWDesktopSettings from './tw-desktop-settings.jsx';
+import AmpAddonSettings from './amp-addon-settings.jsx';
+import AmpInstallPWA from './amp-install-pwa.jsx';
+import AmpErase from './amp-erase.jsx';
+import AmpShowWelcome from './amp-show-welcome.jsx';
+import {MenuItem} from '../menu/menu.jsx';
+import {APP_NAME} from '@ampmod/branding';
 
-import menuBarStyles from "./menu-bar.css";
-import styles from "./settings-menu.css";
+import menuBarStyles from './menu-bar.css';
+import styles from './settings-menu.css';
 
-import dropdownCaret from "./dropdown-caret.svg";
-import settingsIcon from "./icon--settings.svg";
+import dropdownCaret from './dropdown-caret.svg';
+import settingsIcon from './icon--settings.svg';
 
 // Sequence to type "ark" 3 times
-const ERASE_LOCK_KEYCOMB = [
-    "KeyA",
-    "KeyR",
-    "KeyK",
-    "KeyA",
-    "KeyR",
-    "KeyK",
-    "KeyA",
-    "KeyR",
-    "KeyK",
-];
+const ERASE_LOCK_KEYCOMB = ['KeyA', 'KeyR', 'KeyK', 'KeyA', 'KeyR', 'KeyK', 'KeyA', 'KeyR', 'KeyK'];
 
 class SettingsMenu extends React.Component {
     constructor(props) {
@@ -42,7 +32,7 @@ class SettingsMenu extends React.Component {
 
         this.state = {
             showAmpErase: false,
-            konamiIndex: 0,
+            konamiIndex: 0
         };
 
         this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -50,19 +40,19 @@ class SettingsMenu extends React.Component {
 
     // Use componentDidUpdate to manage the keydown listener based on menu state
     componentDidUpdate(prevProps) {
-        const { settingsMenuOpen } = this.props;
+        const {settingsMenuOpen} = this.props;
 
         if (settingsMenuOpen !== prevProps.settingsMenuOpen) {
             if (settingsMenuOpen) {
                 // Menu is opened: Start listening and reset index
-                window.addEventListener("keydown", this.handleKeyDown);
-                this.setState({ konamiIndex: 0 });
+                window.addEventListener('keydown', this.handleKeyDown);
+                this.setState({konamiIndex: 0});
             } else {
                 // Menu is closed: Stop listening and reset the AmpErase state
-                window.removeEventListener("keydown", this.handleKeyDown);
+                window.removeEventListener('keydown', this.handleKeyDown);
                 this.setState({
                     showAmpErase: false, // Reset AmpErase condition
-                    konamiIndex: 0,
+                    konamiIndex: 0
                 });
             }
         }
@@ -70,11 +60,11 @@ class SettingsMenu extends React.Component {
 
     // Remove the listener when the component is fully unmounted (not just closed)
     componentWillUnmount() {
-        window.removeEventListener("keydown", this.handleKeyDown);
+        window.removeEventListener('keydown', this.handleKeyDown);
     }
 
     handleKeyDown(event) {
-        const { konamiIndex } = this.state;
+        const {konamiIndex} = this.state;
         const expectedKey = ERASE_LOCK_KEYCOMB[konamiIndex];
         const pressedKey = event.code;
 
@@ -83,15 +73,15 @@ class SettingsMenu extends React.Component {
 
             if (nextIndex === ERASE_LOCK_KEYCOMB.length) {
                 // Konami code completed
-                this.setState({ showAmpErase: true, konamiIndex: 0 });
+                this.setState({showAmpErase: true, konamiIndex: 0});
             } else {
                 // Next key in sequence
-                this.setState({ konamiIndex: nextIndex });
+                this.setState({konamiIndex: nextIndex});
             }
         } else {
             // Sequence broken, check if the key was the first one to restart the attempt
             this.setState({
-                konamiIndex: pressedKey === ERASE_LOCK_KEYCOMB[0] ? 1 : 0,
+                konamiIndex: pressedKey === ERASE_LOCK_KEYCOMB[0] ? 1 : 0
             });
         }
     }
@@ -106,18 +96,14 @@ class SettingsMenu extends React.Component {
             onOpenAltCustomSettings,
             onRequestClose,
             onRequestOpen,
-            settingsMenuOpen,
+            settingsMenuOpen
         } = this.props;
 
-        const { showAmpErase } = this.state;
+        const {showAmpErase} = this.state;
 
         return (
             <div className={menuBarStyles.settingsButton}>
-                <MenuLabel
-                    open={settingsMenuOpen}
-                    onOpen={onRequestOpen}
-                    onClose={onRequestClose}
-                >
+                <MenuLabel open={settingsMenuOpen} onOpen={onRequestOpen} onClose={onRequestClose}>
                     <img
                         src={settingsIcon}
                         draggable={false}
@@ -142,44 +128,26 @@ class SettingsMenu extends React.Component {
                     <MenuBarMenu
                         className={menuBarStyles.menuBarMenu}
                         open={settingsMenuOpen}
-                        place={isRtl ? "left" : "right"}
+                        place={isRtl ? 'left' : 'right'}
                     >
                         <MenuSection>
-                            {canChangeLanguage && (
-                                <LanguageMenu
-                                    onRequestCloseSettings={onRequestClose}
-                                />
-                            )}
+                            {canChangeLanguage && <LanguageMenu onRequestCloseSettings={onRequestClose} />}
                             {canChangeTheme && (
                                 <>
-                                    <TWGuiThemeMenu
-                                        onOpenCustomSettings={
-                                            onOpenAltCustomSettings
-                                        }
-                                    />
-                                    <TWBlocksThemeMenu
-                                        onOpenCustomSettings={
-                                            onOpenCustomSettings
-                                        }
-                                    />
+                                    <TWGuiThemeMenu onOpenCustomSettings={onOpenAltCustomSettings} />
+                                    <TWBlocksThemeMenu onOpenCustomSettings={onOpenCustomSettings} />
                                     <TWAccentThemeMenu />
                                     <AmpAddonSettings />
                                 </>
                             )}
-                            {onClickDesktopSettings && (
-                                <TWDesktopSettings
-                                    onClick={onClickDesktopSettings}
-                                />
-                            )}
+                            {onClickDesktopSettings && <TWDesktopSettings onClick={onClickDesktopSettings} />}
                             <AmpInstallPWA />
                             {/* <AmpShowWelcome /> */}
 
                             {showAmpErase && <AmpErase />}
 
                             <MenuItem>
-                                <div
-                                    className={`${styles.option} ${styles.disabled}`}
-                                >
+                                <div className={`${styles.option} ${styles.disabled}`}>
                                     <span className={styles.submenuLabel}>
                                         {APP_NAME} v{process.env.ampmod_version}
                                     </span>
@@ -201,7 +169,7 @@ SettingsMenu.propTypes = {
     onOpenCustomSettings: PropTypes.func,
     onRequestClose: PropTypes.func,
     onRequestOpen: PropTypes.func,
-    settingsMenuOpen: PropTypes.bool,
+    settingsMenuOpen: PropTypes.bool
 };
 
 export default SettingsMenu;

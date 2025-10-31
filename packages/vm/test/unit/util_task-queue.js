@@ -1,9 +1,9 @@
-const test = require("tap").test;
+const test = require('tap').test;
 
-const TaskQueue = require("../../src/util/task-queue");
+const TaskQueue = require('../../src/util/task-queue');
 
-const MockTimer = require("../fixtures/mock-timer");
-const testCompare = require("../fixtures/test-compare");
+const MockTimer = require('../fixtures/mock-timer');
+const testCompare = require('../fixtures/test-compare');
 
 // Max tokens = 1000
 // Refill 1000 tokens per second (1 per millisecond)
@@ -12,7 +12,7 @@ const testCompare = require("../fixtures/test-compare");
 const makeTestQueue = () => {
     const bukkit = new TaskQueue(1000, 1000, {
         startingTokens: 0,
-        maxTotalCost: 10000,
+        maxTotalCost: 10000
     });
 
     const mockTimer = new MockTimer();
@@ -22,65 +22,47 @@ const makeTestQueue = () => {
     return bukkit;
 };
 
-test("spec", t => {
-    t.type(TaskQueue, "function");
+test('spec', t => {
+    t.type(TaskQueue, 'function');
     const bukkit = makeTestQueue();
 
-    t.type(bukkit, "object");
+    t.type(bukkit, 'object');
 
-    t.type(bukkit.length, "number");
-    t.type(bukkit.do, "function");
-    t.type(bukkit.cancel, "function");
-    t.type(bukkit.cancelAll, "function");
+    t.type(bukkit.length, 'number');
+    t.type(bukkit.do, 'function');
+    t.type(bukkit.cancel, 'function');
+    t.type(bukkit.cancelAll, 'function');
 
     t.end();
 });
 
-test("constructor", t => {
+test('constructor', t => {
     t.ok(new TaskQueue(1, 1));
     t.ok(new TaskQueue(1, 1, {}));
-    t.ok(new TaskQueue(1, 1, { startingTokens: 0 }));
-    t.ok(new TaskQueue(1, 1, { maxTotalCost: 999 }));
-    t.ok(new TaskQueue(1, 1, { startingTokens: 0, maxTotalCost: 999 }));
+    t.ok(new TaskQueue(1, 1, {startingTokens: 0}));
+    t.ok(new TaskQueue(1, 1, {maxTotalCost: 999}));
+    t.ok(new TaskQueue(1, 1, {startingTokens: 0, maxTotalCost: 999}));
     t.end();
 });
 
-test("run tasks", async t => {
+test('run tasks', async t => {
     const bukkit = makeTestQueue();
 
     const taskResults = [];
 
     const promises = [
         bukkit.do(() => {
-            taskResults.push("a");
-            testCompare(
-                t,
-                bukkit._timer.timeElapsed(),
-                ">=",
-                50,
-                "Costly task must wait"
-            );
+            taskResults.push('a');
+            testCompare(t, bukkit._timer.timeElapsed(), '>=', 50, 'Costly task must wait');
         }, 50),
         bukkit.do(() => {
-            taskResults.push("b");
-            testCompare(
-                t,
-                bukkit._timer.timeElapsed(),
-                ">=",
-                60,
-                "Tasks must run in serial"
-            );
+            taskResults.push('b');
+            testCompare(t, bukkit._timer.timeElapsed(), '>=', 60, 'Tasks must run in serial');
         }, 10),
         bukkit.do(() => {
-            taskResults.push("c");
-            testCompare(
-                t,
-                bukkit._timer.timeElapsed(),
-                "<=",
-                70,
-                "Cheap task should run soon"
-            );
-        }, 1),
+            taskResults.push('c');
+            testCompare(t, bukkit._timer.timeElapsed(), '<=', 70, 'Cheap task should run soon');
+        }, 1)
     ];
 
     // advance 10 simulated milliseconds per JS tick
@@ -89,27 +71,23 @@ test("run tasks", async t => {
     }
 
     return Promise.all(promises).then(() => {
-        t.deepEqual(
-            taskResults,
-            ["a", "b", "c"],
-            "All tasks must run in correct order"
-        );
+        t.deepEqual(taskResults, ['a', 'b', 'c'], 'All tasks must run in correct order');
         t.end();
     });
 });
 
-test("cancel", async t => {
+test('cancel', async t => {
     const bukkit = makeTestQueue();
 
     const taskResults = [];
-    const goodCancelMessage = "Task was canceled correctly";
-    const afterCancelMessage = "Task was run correctly";
+    const goodCancelMessage = 'Task was canceled correctly';
+    const afterCancelMessage = 'Task was run correctly';
     const cancelTaskPromise = bukkit.do(() => {
-        taskResults.push("nope");
+        taskResults.push('nope');
     }, 999);
     const cancelCheckPromise = cancelTaskPromise.then(
         () => {
-            t.fail("Task should have been canceled");
+            t.fail('Task should have been canceled');
         },
         () => {
             taskResults.push(goodCancelMessage);
@@ -117,13 +95,7 @@ test("cancel", async t => {
     );
     const keepTaskPromise = bukkit.do(() => {
         taskResults.push(afterCancelMessage);
-        testCompare(
-            t,
-            bukkit._timer.timeElapsed(),
-            "<",
-            10,
-            "Canceled task must not delay other tasks"
-        );
+        testCompare(t, bukkit._timer.timeElapsed(), '<', 10, 'Canceled task must not delay other tasks');
     }, 5);
 
     // give the bucket a chance to make a mistake
@@ -144,34 +116,34 @@ test("cancel", async t => {
     });
 });
 
-test("cancelAll", async t => {
+test('cancelAll', async t => {
     const bukkit = makeTestQueue();
 
     const taskResults = [];
-    const goodCancelMessage1 = "Task1 was canceled correctly";
-    const goodCancelMessage2 = "Task2 was canceled correctly";
+    const goodCancelMessage1 = 'Task1 was canceled correctly';
+    const goodCancelMessage2 = 'Task2 was canceled correctly';
 
     const promises = [
         bukkit
-            .do(() => taskResults.push("nope"), 999)
+            .do(() => taskResults.push('nope'), 999)
             .then(
                 () => {
-                    t.fail("Task1 should have been canceled");
+                    t.fail('Task1 should have been canceled');
                 },
                 () => {
                     taskResults.push(goodCancelMessage1);
                 }
             ),
         bukkit
-            .do(() => taskResults.push("nah"), 999)
+            .do(() => taskResults.push('nah'), 999)
             .then(
                 () => {
-                    t.fail("Task2 should have been canceled");
+                    t.fail('Task2 should have been canceled');
                 },
                 () => {
                     taskResults.push(goodCancelMessage2);
                 }
-            ),
+            )
     ];
 
     // advance time, but not enough that any task should run
@@ -183,16 +155,12 @@ test("cancelAll", async t => {
     await bukkit._timer.advanceMockTimeAsync(10000);
 
     return Promise.all(promises).then(() => {
-        t.deepEqual(
-            taskResults,
-            [goodCancelMessage1, goodCancelMessage2],
-            "Tasks should cancel in order"
-        );
+        t.deepEqual(taskResults, [goodCancelMessage1, goodCancelMessage2], 'Tasks should cancel in order');
         t.end();
     });
 });
 
-test("max total cost", async t => {
+test('max total cost', async t => {
     const bukkit = makeTestQueue();
 
     let numTasks = 0;
@@ -207,7 +175,7 @@ test("max total cost", async t => {
     // This one should be rejected because the queue is full
     bukkit.do(task, 1000).then(
         () => {
-            t.fail("Full queue did not reject task");
+            t.fail('Full queue did not reject task');
         },
         () => {
             t.pass();

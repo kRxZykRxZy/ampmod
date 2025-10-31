@@ -1,4 +1,4 @@
-import keyMirror from "keymirror";
+import keyMirror from 'keymirror';
 
 /**
  * Names for each state of the stage size toggle
@@ -18,7 +18,7 @@ const STAGE_SIZE_MODES = keyMirror({
     /**
      * Display the stage at its full size.
      */
-    full: null,
+    full: null
 });
 
 /**
@@ -32,7 +32,7 @@ const STAGE_DISPLAY_SIZES = keyMirror({
 
     constrained: null,
 
-    full: null,
+    full: null
 });
 
 // zoom level to start with
@@ -47,17 +47,17 @@ const UNCONSTRAINED_NON_STAGE_WIDTH = 1096 - FIXED_WIDTH;
 
 const STAGE_DISPLAY_SCALE_METADATA = {
     [STAGE_DISPLAY_SIZES.large]: {
-        width: FIXED_WIDTH,
+        width: FIXED_WIDTH
     },
     [STAGE_DISPLAY_SIZES.small]: {
-        width: FIXED_WIDTH * 0.5,
+        width: FIXED_WIDTH * 0.5
     },
     [STAGE_DISPLAY_SIZES.constrained]: {
-        scale: 0.85,
+        scale: 0.85
     },
     [STAGE_DISPLAY_SIZES.full]: {
-        scale: 1,
-    },
+        scale: 1
+    }
 };
 
 export {
@@ -66,5 +66,5 @@ export {
     STAGE_DISPLAY_SIZES,
     STAGE_SIZE_MODES,
     FIXED_WIDTH,
-    UNCONSTRAINED_NON_STAGE_WIDTH,
+    UNCONSTRAINED_NON_STAGE_WIDTH
 };

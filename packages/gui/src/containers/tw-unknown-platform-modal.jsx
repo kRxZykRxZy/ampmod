@@ -1,16 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import bindAll from "lodash.bindall";
-import { closeUnknownPlatformModal } from "../reducers/modals";
-import UnknownPlatformModalComponent from "../components/tw-unknown-platform-modal/unknown-platform-modal.jsx";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import bindAll from 'lodash.bindall';
+import {closeUnknownPlatformModal} from '../reducers/modals';
+import UnknownPlatformModalComponent from '../components/tw-unknown-platform-modal/unknown-platform-modal.jsx';
 
 class TWUnknownPlatformModal extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["handleClose"]);
+        bindAll(this, ['handleClose']);
         this.state = {
-            canClose: false,
+            canClose: false
         };
     }
 
@@ -18,7 +18,7 @@ class TWUnknownPlatformModal extends React.Component {
         // Make it harder to accidentally dismiss without reading
         setTimeout(() => {
             this.setState({
-                canClose: true,
+                canClose: true
             });
         }, 1000);
     }
@@ -45,22 +45,19 @@ TWUnknownPlatformModal.propTypes = {
     onClose: PropTypes.func.isRequired,
     platform: PropTypes.shape({
         name: PropTypes.string,
-        url: PropTypes.string,
+        url: PropTypes.string
     }),
-    callback: PropTypes.func,
+    callback: PropTypes.func
 };
 
 const mapStateToProps = state => ({
     vm: state.scratchGui.vm,
     callback: state.scratchGui.tw.platformMismatchDetails.callback,
-    platform: state.scratchGui.tw.platformMismatchDetails.platform,
+    platform: state.scratchGui.tw.platformMismatchDetails.platform
 });
 
 const mapDispatchToProps = dispatch => ({
-    onClose: () => dispatch(closeUnknownPlatformModal()),
+    onClose: () => dispatch(closeUnknownPlatformModal())
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(TWUnknownPlatformModal);
+export default connect(mapStateToProps, mapDispatchToProps)(TWUnknownPlatformModal);

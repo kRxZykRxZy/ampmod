@@ -1,12 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FormattedMessage } from "react-intl";
-import URL from "./url.jsx";
-import DataURL from "./data-url.jsx";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {FormattedMessage} from 'react-intl';
+import URL from './url.jsx';
+import DataURL from './data-url.jsx';
 
 const EmbedModal = props => (
     <div>
-        {props.url.startsWith("data:") ? (
+        {props.url.startsWith('data:') ? (
             <React.Fragment>
                 <p>
                     <FormattedMessage
@@ -37,7 +37,7 @@ const EmbedModal = props => (
                 id="tw.embed.risks"
             />
         </p>
-        {!props.url.startsWith("data:") && (
+        {!props.url.startsWith('data:') && (
             <p>
                 <FormattedMessage
                     defaultMessage="If allowed, further embeds to the same site will be automatically allowed."
@@ -50,7 +50,7 @@ const EmbedModal = props => (
 );
 
 EmbedModal.propTypes = {
-    url: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired
 };
 
 export default EmbedModal;

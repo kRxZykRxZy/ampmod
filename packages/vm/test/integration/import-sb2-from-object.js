@@ -1,19 +1,18 @@
-const path = require("path");
-const test = require("tap").test;
-const makeTestStorage = require("../fixtures/make-test-storage");
-const extractProjectJson =
-    require("../fixtures/readProjectFile").extractProjectJson;
-const VirtualMachine = require("../../src/index");
+const path = require('path');
+const test = require('tap').test;
+const makeTestStorage = require('../fixtures/make-test-storage');
+const extractProjectJson = require('../fixtures/readProjectFile').extractProjectJson;
+const VirtualMachine = require('../../src/index');
 
-const uri = path.resolve(__dirname, "../fixtures/default.sb2");
+const uri = path.resolve(__dirname, '../fixtures/default.sb2');
 const project = extractProjectJson(uri);
 
-test("default", t => {
+test('default', t => {
     const vm = new VirtualMachine();
     vm.attachStorage(makeTestStorage());
 
     // Evaluate playground data and exit
-    vm.on("playgroundData", e => {
+    vm.on('playgroundData', e => {
         const threads = JSON.parse(e.threads);
         t.ok(threads.length === 0);
         vm.quit();

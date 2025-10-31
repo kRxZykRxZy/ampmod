@@ -1,4 +1,4 @@
-import twTranslations from "./generated-translations.json";
+import twTranslations from './generated-translations.json';
 
 const addAdditionalTranslations = editorMessages => {
     for (const locale of Object.keys(editorMessages)) {
@@ -9,7 +9,7 @@ const addAdditionalTranslations = editorMessages => {
     }
 
     // We reuse our `es` translations for `es-419` instead of maintaining separate translations.
-    Object.assign(editorMessages["es-419"], twTranslations.es);
+    Object.assign(editorMessages['es-419'], twTranslations.es);
 };
 
 export default addAdditionalTranslations;

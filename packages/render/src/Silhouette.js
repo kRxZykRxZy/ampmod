@@ -29,7 +29,7 @@ const getPoint = ({_width: width, _height: height, _colorData: data}, x, y) => {
     if (x >= width || y >= height || x < 0 || y < 0) {
         return 0;
     }
-    return data[(((y * width) + x) * 4) + 3];
+    return data[(y * width + x) * 4 + 3];
 };
 
 /**
@@ -61,7 +61,7 @@ const getColor4b = ({_width: width, _height: height, _colorData: data}, x, y, ds
     if (x >= width || y >= height || x < 0 || y < 0) {
         return dst.fill(0);
     }
-    const offset = ((y * width) + x) * 4;
+    const offset = (y * width + x) * 4;
     // premultiply alpha
     const alpha = data[offset + 3] / 255;
     dst[0] = data[offset] * alpha;
@@ -85,7 +85,7 @@ const getPremultipliedColor4b = ({_width: width, _height: height, _colorData: da
     x = intMax(0, intMin(x, width - 1));
     y = intMax(0, intMin(y, height - 1));
 
-    const offset = ((y * width) + x) * 4;
+    const offset = (y * width + x) * 4;
     dst[0] = data[offset];
     dst[1] = data[offset + 1];
     dst[2] = data[offset + 2];
@@ -94,7 +94,7 @@ const getPremultipliedColor4b = ({_width: width, _height: height, _colorData: da
 };
 
 class Silhouette {
-    constructor () {
+    constructor() {
         /**
          * The width of the data representing the current skin data.
          * @type {number}
@@ -129,7 +129,7 @@ class Silhouette {
      * @param {boolean} isPremultiplied True if the source bitmap data comes premultiplied (e.g. from readPixels).
      * rendering can be queried from.
      */
-    update (bitmapData, isPremultiplied = false) {
+    update(bitmapData, isPremultiplied = false) {
         let imageData;
         if (bitmapData instanceof ImageData) {
             // If handed ImageData directly, use it directly.
@@ -164,7 +164,7 @@ class Silhouette {
         delete this.colorAtLinear;
     }
 
-    unlazy () {
+    unlazy() {
         if (!this._lazyData) {
             return;
         }
@@ -193,7 +193,7 @@ class Silhouette {
      * @param {Uint8ClampedArray} dst The memory buffer to store the value in. (4 bytes)
      * @returns {Uint8ClampedArray} dst
      */
-    colorAtNearest (vec, dst) {
+    colorAtNearest(vec, dst) {
         return this._getColor(
             this,
             Math.floor(vec[0] * (this._width - 1)),
@@ -209,7 +209,7 @@ class Silhouette {
      * @param {Uint8ClampedArray} dst The memory buffer to store the value in. (4 bytes)
      * @returns {Uint8ClampedArray} dst
      */
-    colorAtLinear (vec, dst) {
+    colorAtLinear(vec, dst) {
         const x = vec[0] * (this._width - 1);
         const y = vec[1] * (this._height - 1);
 
@@ -226,10 +226,10 @@ class Silhouette {
         const x0y1 = this._getColor(this, xFloor, yFloor + 1, __cornerWork[2]);
         const x1y1 = this._getColor(this, xFloor + 1, yFloor + 1, __cornerWork[3]);
 
-        dst[0] = (x0y0[0] * x0D * y0D) + (x0y1[0] * x0D * y1D) + (x1y0[0] * x1D * y0D) + (x1y1[0] * x1D * y1D);
-        dst[1] = (x0y0[1] * x0D * y0D) + (x0y1[1] * x0D * y1D) + (x1y0[1] * x1D * y0D) + (x1y1[1] * x1D * y1D);
-        dst[2] = (x0y0[2] * x0D * y0D) + (x0y1[2] * x0D * y1D) + (x1y0[2] * x1D * y0D) + (x1y1[2] * x1D * y1D);
-        dst[3] = (x0y0[3] * x0D * y0D) + (x0y1[3] * x0D * y1D) + (x1y0[3] * x1D * y0D) + (x1y1[3] * x1D * y1D);
+        dst[0] = x0y0[0] * x0D * y0D + x0y1[0] * x0D * y1D + x1y0[0] * x1D * y0D + x1y1[0] * x1D * y1D;
+        dst[1] = x0y0[1] * x0D * y0D + x0y1[1] * x0D * y1D + x1y0[1] * x1D * y0D + x1y1[1] * x1D * y1D;
+        dst[2] = x0y0[2] * x0D * y0D + x0y1[2] * x0D * y1D + x1y0[2] * x1D * y0D + x1y1[2] * x1D * y1D;
+        dst[3] = x0y0[3] * x0D * y0D + x0y1[3] * x0D * y1D + x1y0[3] * x1D * y0D + x1y1[3] * x1D * y1D;
 
         return dst;
     }
@@ -239,13 +239,9 @@ class Silhouette {
      * @param {twgl.v3} vec A texture coordinate.
      * @return {boolean} If the nearest pixel has an alpha value.
      */
-    isTouchingNearest (vec) {
+    isTouchingNearest(vec) {
         if (!this._colorData) return;
-        return getPoint(
-            this,
-            Math.floor(vec[0] * (this._width - 1)),
-            Math.floor(vec[1] * (this._height - 1))
-        ) > 0;
+        return getPoint(this, Math.floor(vec[0] * (this._width - 1)), Math.floor(vec[1] * (this._height - 1))) > 0;
     }
 
     /**
@@ -254,14 +250,16 @@ class Silhouette {
      * @param {twgl.v3} vec A texture coordinate.
      * @return {boolean} Any of the pixels have some alpha.
      */
-    isTouchingLinear (vec) {
+    isTouchingLinear(vec) {
         if (!this._colorData) return;
         const x = Math.floor(vec[0] * (this._width - 1));
         const y = Math.floor(vec[1] * (this._height - 1));
-        return getPoint(this, x, y) > 0 ||
+        return (
+            getPoint(this, x, y) > 0 ||
             getPoint(this, x + 1, y) > 0 ||
             getPoint(this, x, y + 1) > 0 ||
-            getPoint(this, x + 1, y + 1) > 0;
+            getPoint(this, x + 1, y + 1) > 0
+        );
     }
 
     /**
@@ -269,7 +267,7 @@ class Silhouette {
      * @private
      * @return {CanvasElement} A canvas to draw bitmap data to.
      */
-    static _updateCanvas () {
+    static _updateCanvas() {
         if (typeof __SilhouetteUpdateCanvas === 'undefined') {
             __SilhouetteUpdateCanvas = document.createElement('canvas');
         }

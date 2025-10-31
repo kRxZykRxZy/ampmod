@@ -1,32 +1,30 @@
-import { FormattedMessage, intlShape, defineMessages } from "react-intl";
-import PropTypes from "prop-types";
-import React from "react";
+import {FormattedMessage, intlShape, defineMessages} from 'react-intl';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import Box from "../box/box.jsx";
-import PlayButton from "../../containers/play-button.jsx";
-import styles from "./library-item.css";
-import classNames from "classnames";
+import Box from '../box/box.jsx';
+import PlayButton from '../../containers/play-button.jsx';
+import styles from './library-item.css';
+import classNames from 'classnames';
 
-import bluetoothIconURL from "./bluetooth.svg";
-import internetConnectionIconURL from "./internet-connection.svg";
-import nfcIconURL from "./nfc.svg";
-import packagedIconURL from "./packaged.svg";
-import favoriteInactiveIcon from "./favorite-inactive.svg";
-import favoriteActiveIcon from "./favorite-active.svg";
+import bluetoothIconURL from './bluetooth.svg';
+import internetConnectionIconURL from './internet-connection.svg';
+import nfcIconURL from './nfc.svg';
+import packagedIconURL from './packaged.svg';
+import favoriteInactiveIcon from './favorite-inactive.svg';
+import favoriteActiveIcon from './favorite-active.svg';
 
 const messages = defineMessages({
     favorite: {
-        defaultMessage: "Favorite",
-        description:
-            "Alt text of icon in costume, sound, and extension libraries to mark an item as favorite.",
-        id: "tw.favorite",
+        defaultMessage: 'Favorite',
+        description: 'Alt text of icon in costume, sound, and extension libraries to mark an item as favorite.',
+        id: 'tw.favorite'
     },
     unfavorite: {
-        defaultMessage: "Unfavorite",
-        description:
-            "Alt text of icon in costume, sound, and extension libraries to unmark an item as favorite.",
-        id: "tw.unfavorite",
-    },
+        defaultMessage: 'Unfavorite',
+        description: 'Alt text of icon in costume, sound, and extension libraries to unmark an item as favorite.',
+        id: 'tw.unfavorite'
+    }
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -38,16 +36,12 @@ class LibraryItemComponent extends React.PureComponent {
         const favorite = (
             <button
                 className={classNames(styles.favoriteContainer, {
-                    [styles.active]: this.props.favorite,
+                    [styles.active]: this.props.favorite
                 })}
                 onClick={this.props.onFavorite}
             >
                 <img
-                    src={
-                        this.props.favorite
-                            ? favoriteActiveIcon
-                            : favoriteInactiveIcon
-                    }
+                    src={this.props.favorite ? favoriteActiveIcon : favoriteInactiveIcon}
                     className={styles.favoriteIcon}
                     draggable={false}
                     alt={favoriteMessage}
@@ -67,11 +61,9 @@ class LibraryItemComponent extends React.PureComponent {
                     styles.featuredItem,
                     {
                         [styles.disabled]: this.props.disabled,
-                        [styles.new]: this.props.tags.includes("new"),
+                        [styles.new]: this.props.tags.includes('new')
                     },
-                    typeof this.props.extensionId === "string"
-                        ? styles.libraryItemExtension
-                        : null
+                    typeof this.props.extensionId === 'string' ? styles.libraryItemExtension : null
                 )}
                 onClick={this.props.onClick}
             >
@@ -85,7 +77,7 @@ class LibraryItemComponent extends React.PureComponent {
                             />
                         </div>
                     ) : null}
-                    {this.props.tags && this.props.tags.includes("new") ? (
+                    {this.props.tags && this.props.tags.includes('new') ? (
                         <div className={styles.newText}>
                             <FormattedMessage
                                 defaultMessage="New!"
@@ -94,59 +86,37 @@ class LibraryItemComponent extends React.PureComponent {
                             />
                         </div>
                     ) : null}
-                    <img
-                        className={styles.featuredImage}
-                        loading="lazy"
-                        draggable={false}
-                        src={this.props.iconURL}
-                    />
+                    <img className={styles.featuredImage} loading="lazy" draggable={false} src={this.props.iconURL} />
                 </div>
                 {this.props.insetIconURL ? (
                     <div
                         className={styles.libraryItemInsetImageContainer}
                         style={{
-                            backgroundColor:
-                                this.props.insetIconBgColor || "#0fbd8c",
+                            backgroundColor: this.props.insetIconBgColor || '#0fbd8c'
                         }}
                     >
-                        <img
-                            className={styles.libraryItemInsetImage}
-                            src={this.props.insetIconURL}
-                            draggable={false}
-                        />
+                        <img className={styles.libraryItemInsetImage} src={this.props.insetIconURL} draggable={false} />
                     </div>
                 ) : null}
                 <div
                     className={
-                        typeof this.props.extensionId === "string"
-                            ? classNames(
-                                  styles.featuredExtensionText,
-                                  styles.featuredText
-                              )
+                        typeof this.props.extensionId === 'string'
+                            ? classNames(styles.featuredExtensionText, styles.featuredText)
                             : styles.featuredText
                     }
                 >
-                    <span className={styles.libraryItemName}>
-                        {this.props.name}
-                    </span>
+                    <span className={styles.libraryItemName}>{this.props.name}</span>
                     <br />
-                    <span className={styles.featuredDescription}>
-                        {this.props.description}
-                    </span>
+                    <span className={styles.featuredDescription}>{this.props.description}</span>
                 </div>
 
                 {this.props.deprecated && (
-                    <div
-                        className={[
-                            styles.deprecatedWarning,
-                            styles.featuredText,
-                        ].join(" ")}
-                    >
+                    <div className={[styles.deprecatedWarning, styles.featuredText].join(' ')}>
                         <FormattedMessage
                             defaultMessage="Deprecated: {reason}"
                             description="Warning message for deprecated extensions"
                             id="amp.deprecatedExtension"
-                            values={{ reason: this.props.deprecated }}
+                            values={{reason: this.props.deprecated}}
                         />
                     </div>
                 )}
@@ -154,11 +124,7 @@ class LibraryItemComponent extends React.PureComponent {
                 {(this.props.docsURI || this.props.samples) && (
                     <div className={styles.extensionLinks}>
                         {this.props.docsURI && (
-                            <a
-                                href={this.props.docsURI}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
+                            <a href={this.props.docsURI} target="_blank" rel="noreferrer">
                                 <FormattedMessage
                                     defaultMessage="Documentation"
                                     // eslint-disable-next-line max-len
@@ -169,11 +135,7 @@ class LibraryItemComponent extends React.PureComponent {
                         )}
 
                         {this.props.samples && (
-                            <a
-                                href={this.props.samples[0].href}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
+                            <a href={this.props.samples[0].href} target="_blank" rel="noreferrer">
                                 <FormattedMessage
                                     defaultMessage="Sample project"
                                     // eslint-disable-next-line max-len
@@ -185,10 +147,8 @@ class LibraryItemComponent extends React.PureComponent {
                     </div>
                 )}
 
-                {this.props.tags.includes("localStorage") && (
-                    <div className={styles.extensionLinks}>
-                        Saved locally. (you will be able to delete soon)
-                    </div>
+                {this.props.tags.includes('localStorage') && (
+                    <div className={styles.extensionLinks}>Saved locally. (you will be able to delete soon)</div>
                 )}
 
                 {this.props.credits && this.props.credits.length > 0 && (
@@ -198,12 +158,11 @@ class LibraryItemComponent extends React.PureComponent {
                                 defaultMessage="Created by:"
                                 description="Appears in the extension list. Followed by a list of names."
                                 id="tw.createdBy"
-                            />{" "}
+                            />{' '}
                             {this.props.credits.map((credit, index) => (
                                 <React.Fragment key={index}>
                                     {credit}
-                                    {index !== this.props.credits.length - 1 &&
-                                        ", "}
+                                    {index !== this.props.credits.length - 1 && ', '}
                                 </React.Fragment>
                             ))}
                         </div>
@@ -227,64 +186,43 @@ class LibraryItemComponent extends React.PureComponent {
                                             id="gui.extensionLibrary.requires"
                                         />
                                     </div>
-                                    <div
-                                        className={
-                                            styles.featuredExtensionMetadataDetail
-                                        }
-                                    >
+                                    <div className={styles.featuredExtensionMetadataDetail}>
                                         {this.props.bluetoothRequired ||
-                                        this.props.requirements?.includes(
-                                            "bluetooth"
-                                        ) ? (
+                                        this.props.requirements?.includes('bluetooth') ? (
                                             <img
                                                 src={bluetoothIconURL}
                                                 draggable={false}
-                                                title={"Bluetooth"}
+                                                title={'Bluetooth'}
                                                 height={16}
-                                                className={
-                                                    styles.requirementsIcon
-                                                }
+                                                className={styles.requirementsIcon}
                                             />
                                         ) : null}
-                                        {this.props
-                                            .internetConnectionRequired ||
-                                        this.props.requirements?.includes(
-                                            "internet"
-                                        ) ? (
+                                        {this.props.internetConnectionRequired ||
+                                        this.props.requirements?.includes('internet') ? (
                                             <img
                                                 src={internetConnectionIconURL}
                                                 draggable={false}
-                                                title={"Internet"}
+                                                title={'Internet'}
                                                 height={16}
-                                                className={
-                                                    styles.requirementsIcon
-                                                }
+                                                className={styles.requirementsIcon}
                                             />
                                         ) : null}
-                                        {this.props.requirements?.includes(
-                                            "nfc"
-                                        ) ? (
+                                        {this.props.requirements?.includes('nfc') ? (
                                             <img
                                                 src={nfcIconURL}
                                                 draggable={false}
-                                                title={"NFC"}
+                                                title={'NFC'}
                                                 height={16}
-                                                className={
-                                                    styles.requirementsIcon
-                                                }
+                                                className={styles.requirementsIcon}
                                             />
                                         ) : null}
-                                        {this.props.requirements?.includes(
-                                            "packaged"
-                                        ) ? (
+                                        {this.props.requirements?.includes('packaged') ? (
                                             <img
                                                 src={packagedIconURL}
                                                 draggable={false}
-                                                title={"Packaged project"}
+                                                title={'Packaged project'}
                                                 height={16}
-                                                className={
-                                                    styles.requirementsIcon
-                                                }
+                                                className={styles.requirementsIcon}
                                             />
                                         ) : null}
                                     </div>
@@ -301,11 +239,7 @@ class LibraryItemComponent extends React.PureComponent {
                                             id="gui.extensionLibrary.collaboration"
                                         />
                                     </div>
-                                    <div
-                                        className={
-                                            styles.featuredExtensionMetadataDetail
-                                        }
-                                    >
+                                    <div className={styles.featuredExtensionMetadataDetail}>
                                         {this.props.collaborator}
                                     </div>
                                 </div>
@@ -319,7 +253,7 @@ class LibraryItemComponent extends React.PureComponent {
         ) : (
             <Box
                 className={classNames(styles.libraryItem, {
-                    [styles.hidden]: this.props.hidden,
+                    [styles.hidden]: this.props.hidden
                 })}
                 role="button"
                 tabIndex="0"
@@ -327,27 +261,15 @@ class LibraryItemComponent extends React.PureComponent {
                 onClick={this.props.onClick}
                 onFocus={this.props.onFocus}
                 onKeyPress={this.props.onKeyPress}
-                onMouseEnter={
-                    this.props.showPlayButton ? null : this.props.onMouseEnter
-                }
-                onMouseLeave={
-                    this.props.showPlayButton ? null : this.props.onMouseLeave
-                }
+                onMouseEnter={this.props.showPlayButton ? null : this.props.onMouseEnter}
+                onMouseLeave={this.props.showPlayButton ? null : this.props.onMouseLeave}
             >
                 {/* Layers of wrapping is to prevent layout thrashing on animation */}
                 <Box className={styles.libraryItemImageContainerWrapper}>
                     <Box
                         className={styles.libraryItemImageContainer}
-                        onMouseEnter={
-                            this.props.showPlayButton
-                                ? this.props.onMouseEnter
-                                : null
-                        }
-                        onMouseLeave={
-                            this.props.showPlayButton
-                                ? this.props.onMouseLeave
-                                : null
-                        }
+                        onMouseEnter={this.props.showPlayButton ? this.props.onMouseEnter : null}
+                        onMouseLeave={this.props.showPlayButton ? this.props.onMouseLeave : null}
                     >
                         <img
                             className={styles.libraryItemImage}
@@ -357,9 +279,7 @@ class LibraryItemComponent extends React.PureComponent {
                         />
                     </Box>
                 </Box>
-                <span className={styles.libraryItemName}>
-                    {this.props.name}
-                </span>
+                <span className={styles.libraryItemName}>{this.props.name}</span>
                 {this.props.showPlayButton ? (
                     <PlayButton
                         isPlaying={this.props.isPlaying}
@@ -391,14 +311,12 @@ LibraryItemComponent.propTypes = {
     requirements: PropTypes.array,
     isPlaying: PropTypes.bool,
     name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    credits: PropTypes.arrayOf(
-        PropTypes.oneOfType([PropTypes.string, PropTypes.node])
-    ),
+    credits: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.node])),
     docsURI: PropTypes.string,
     samples: PropTypes.arrayOf(
         PropTypes.shape({
             href: PropTypes.string,
-            text: PropTypes.string,
+            text: PropTypes.string
         })
     ),
     favorite: PropTypes.bool,
@@ -411,12 +329,12 @@ LibraryItemComponent.propTypes = {
     onMouseLeave: PropTypes.func.isRequired,
     onPlay: PropTypes.func.isRequired,
     onStop: PropTypes.func.isRequired,
-    showPlayButton: PropTypes.bool,
+    showPlayButton: PropTypes.bool
 };
 
 LibraryItemComponent.defaultProps = {
     disabled: false,
-    showPlayButton: false,
+    showPlayButton: false
 };
 
 export default LibraryItemComponent;

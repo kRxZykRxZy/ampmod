@@ -1,32 +1,32 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import bindAll from "lodash.bindall";
-import VM from "scratch-vm";
-import log from "./log";
-import { defineMessages, intlShape, injectIntl } from "react-intl";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import bindAll from 'lodash.bindall';
+import VM from 'scratch-vm';
+import log from './log';
+import {defineMessages, intlShape, injectIntl} from 'react-intl';
 
-import { setUsername } from "../reducers/tw";
-import { defaultProjectId, setProjectId } from "../reducers/project-state";
-import { setPlayer, setFullScreen } from "../reducers/mode";
-import { generateRandomUsername } from "./tw-username";
-import { setSearchParams } from "./tw-navigation-utils";
-import { defaultStageSize } from "../reducers/custom-stage-size";
-import { lsNamespace } from "./amp-localstorage-namespace";
+import {setUsername} from '../reducers/tw';
+import {defaultProjectId, setProjectId} from '../reducers/project-state';
+import {setPlayer, setFullScreen} from '../reducers/mode';
+import {generateRandomUsername} from './tw-username';
+import {setSearchParams} from './tw-navigation-utils';
+import {defaultStageSize} from '../reducers/custom-stage-size';
+import {lsNamespace} from './amp-localstorage-namespace';
 
 /* eslint-disable no-alert */
 
 const messages = defineMessages({
     invalidFPS: {
         defaultMessage: '"fps" URL parameter is invalid',
-        description: "Alert displayed when fps URL parameter is invalid",
-        id: "tw.invalidParameters.fps",
+        description: 'Alert displayed when fps URL parameter is invalid',
+        id: 'tw.invalidParameters.fps'
     },
     invalidClones: {
         defaultMessage: '"clone" URL parameter is invalid',
-        description: "Alert displayed when clones URL parameter is invalid",
-        id: "tw.invalidParameters.clones",
-    },
+        description: 'Alert displayed when clones URL parameter is invalid',
+        id: 'tw.invalidParameters.clones'
+    }
 });
 
 const USERNAME_KEY = `${lsNamespace}username`;
@@ -58,7 +58,7 @@ const readHashProjectId = () => {
 };
 
 class Router {
-    constructor({ onSetProjectId, onSetIsPlayerOnly, onSetIsFullScreen }) {
+    constructor({onSetProjectId, onSetIsPlayerOnly, onSetIsFullScreen}) {
         this.onSetProjectId = onSetProjectId;
         this.onSetIsPlayerOnly = onSetIsPlayerOnly;
         this.onSetIsFullScreen = onSetIsFullScreen;
@@ -69,7 +69,7 @@ class Router {
     onpathchange() {}
 
     generateURL() {
-        return "";
+        return '';
     }
 }
 
@@ -78,37 +78,25 @@ class HashRouter extends Router {
         this.onSetProjectId(readHashProjectId() || defaultProjectId);
     }
 
-    generateURL({ projectId }) {
-        const hashQuery = location.hash.split("?")[1];
-        return `${location.pathname}${location.search}#${projectId}${hashQuery ? `?${hashQuery}` : ""}`;
+    generateURL({projectId}) {
+        const hashQuery = location.hash.split('?')[1];
+        return `${location.pathname}${location.search}#${projectId}${hashQuery ? `?${hashQuery}` : ''}`;
     }
 }
 
 class FileHashRouter extends HashRouter {
     constructor(callbacks) {
         super(callbacks);
-        this.rootPath = location.pathname.substring(
-            0,
-            location.pathname.lastIndexOf("/") + 1
-        );
-        this.compat_playerPath =
-            process.env.ampmod_mode === "lab"
-                ? this.rootPath
-                : `${this.rootPath}editor.html`;
-        this.editorPath =
-            process.env.ampmod_mode === "lab"
-                ? this.rootPath
-                : `${this.rootPath}editor.html`;
+        this.rootPath = location.pathname.substring(0, location.pathname.lastIndexOf('/') + 1);
+        this.compat_playerPath = process.env.ampmod_mode === 'lab' ? this.rootPath : `${this.rootPath}editor.html`;
+        this.editorPath = process.env.ampmod_mode === 'lab' ? this.rootPath : `${this.rootPath}editor.html`;
         this.fullscreenPath = `${this.rootPath}fullscreen.html`;
     }
 
     onpathchange() {
         const pathName = location.pathname;
 
-        if (
-            pathName === this.editorPath ||
-            pathName === this.compat_playerPath
-        ) {
+        if (pathName === this.editorPath || pathName === this.compat_playerPath) {
             this.onSetIsPlayerOnly(false);
             this.onSetIsFullScreen(false);
         } else if (pathName === this.fullscreenPath) {
@@ -116,14 +104,14 @@ class FileHashRouter extends HashRouter {
         }
     }
 
-    generateURL({ projectId, isPlayerOnly, isFullScreen }) {
-        let newPathname = "";
-        let newHash = "";
+    generateURL({projectId, isPlayerOnly, isFullScreen}) {
+        let newPathname = '';
+        let newHash = '';
 
-        if (projectId !== "0") {
+        if (projectId !== '0') {
             newHash = projectId;
         }
-        const hashQuery = location.hash.split("?")[1];
+        const hashQuery = location.hash.split('?')[1];
         if (hashQuery) {
             newHash += `?${hashQuery}`;
         }
@@ -136,15 +124,15 @@ class FileHashRouter extends HashRouter {
             newPathname = this.editorPath;
         }
 
-        return `${newPathname}${location.search}${newHash ? `#${newHash}` : ""}`;
+        return `${newPathname}${location.search}${newHash ? `#${newHash}` : ''}`;
     }
 }
 
 const getCanonicalLinkElement = () => {
-    let el = document.querySelector("link[rel=canonical]");
+    let el = document.querySelector('link[rel=canonical]');
     if (!el) {
-        el = document.createElement("link");
-        el.rel = "canonical";
+        el = document.createElement('link');
+        el.rel = 'canonical';
         document.head.appendChild(el);
     }
     return el;
@@ -162,11 +150,7 @@ class WildcardRouter extends Router {
             const ok = this.onSetProjectId(hashProjectId);
             if (ok) {
                 // Completely remove the hash
-                history.replaceState(
-                    null,
-                    null,
-                    `${location.pathname}${location.search}`
-                );
+                history.replaceState(null, null, `${location.pathname}${location.search}`);
             }
         } else {
             // Do not detect page type here as it is already setup by index.html, editor.html, etc.
@@ -180,7 +164,7 @@ class WildcardRouter extends Router {
 
     parseURL(detectPageType) {
         const path = location.pathname.substr(this.root.length);
-        const parts = path.split("/");
+        const parts = path.split('/');
 
         const parseProjectId = id => {
             if (id) {
@@ -194,9 +178,9 @@ class WildcardRouter extends Router {
             if (!detectPageType) {
                 return;
             }
-            if (type === "fullscreen") {
+            if (type === 'fullscreen') {
                 this.onSetIsFullScreen(true);
-            } else if (type === "editor") {
+            } else if (type === 'editor') {
                 this.onSetIsPlayerOnly(false);
                 this.onSetIsFullScreen(false);
             } else {
@@ -214,20 +198,20 @@ class WildcardRouter extends Router {
         }
     }
 
-    generateURL({ projectId, isPlayerOnly, isFullScreen }) {
+    generateURL({projectId, isPlayerOnly, isFullScreen}) {
         const parts = [];
 
-        if (projectId !== "0") {
+        if (projectId !== '0') {
             parts.push(projectId);
         }
         if (isFullScreen) {
-            parts.push("fullscreen");
+            parts.push('fullscreen');
         } else if (!isPlayerOnly) {
-            parts.push("editor");
+            parts.push('editor');
         }
 
-        const path = `${this.root}${parts.join("/")}`;
-        const canonical = `${location.origin}${this.root}${projectId === "0" ? "" : projectId}`;
+        const path = `${this.root}${parts.join('/')}`;
+        const canonical = `${location.origin}${this.root}${projectId === '0' ? '' : projectId}`;
         getCanonicalLinkElement().href = canonical;
 
         return `${path}${location.search}${location.hash}`;
@@ -238,7 +222,7 @@ const routers = {
     none: Router,
     hash: HashRouter,
     filehash: FileHashRouter,
-    wildcard: WildcardRouter,
+    wildcard: WildcardRouter
 };
 
 /**
@@ -248,25 +232,22 @@ const routers = {
  * @returns {Router} The optimal router for the current environment
  */
 const createRouter = (style, callbacks) => {
-    const supportedStyles = ["none", "hash"];
+    const supportedStyles = ['none', 'hash'];
 
     // FileHashRouter is not supported on non-http(s) protocols.
-    const isHTTP =
-        location.protocol === "http:" || location.protocol === "https:";
+    const isHTTP = location.protocol === 'http:' || location.protocol === 'https:';
     if (isHTTP) {
-        supportedStyles.push("filehash");
+        supportedStyles.push('filehash');
     }
 
     // WildcardRouter is not supported if ROOT is not set.
     if (process.env.ROOT) {
-        supportedStyles.push("wildcard");
+        supportedStyles.push('wildcard');
     }
 
     if (!supportedStyles.includes(style)) {
-        log.warn(
-            `routing style is unknown or not supported: ${style}, falling back to hash`
-        );
-        style = "hash";
+        log.warn(`routing style is unknown or not supported: ${style}, falling back to hash`);
+        style = 'hash';
     }
 
     if (Object.prototype.hasOwnProperty.call(routers, style)) {
@@ -281,49 +262,45 @@ const TWStateManager = function (WrappedComponent) {
         constructor(props) {
             super(props);
             bindAll(this, [
-                "handleHashChange",
-                "handlePopState",
-                "onSetProjectId",
-                "onSetIsPlayerOnly",
-                "onSetIsFullScreen",
+                'handleHashChange',
+                'handlePopState',
+                'onSetProjectId',
+                'onSetIsPlayerOnly',
+                'onSetIsFullScreen'
             ]);
         }
         componentDidMount() {
             const urlParams = new URLSearchParams(location.search);
 
             if (
-                process.env.NODE_ENV !== "production" ||
-                (urlParams.has("nerd_mode") &&
-                    urlParams.get("nerd_mode") ===
-                        "i_will_not_ask_for_help_if_this_breaks")
+                process.env.NODE_ENV !== 'production' ||
+                (urlParams.has('nerd_mode') && urlParams.get('nerd_mode') === 'i_will_not_ask_for_help_if_this_breaks')
             ) {
-                this.props.vm.extensionManager.loadExtensionURL("electroTest");
+                this.props.vm.extensionManager.loadExtensionURL('electroTest');
             }
 
-            if (urlParams.has("fps")) {
-                const fps = +urlParams.get("fps");
+            if (urlParams.has('fps')) {
+                const fps = +urlParams.get('fps');
                 if (Number.isNaN(fps) || fps < 0) {
                     alert(this.props.intl.formatMessage(messages.invalidFPS));
                 } else {
                     this.props.vm.setFramerate(fps);
                 }
-            } else if (urlParams.has("60fps")) {
+            } else if (urlParams.has('60fps')) {
                 this.props.vm.setFramerate(60);
             }
 
-            if (urlParams.has("interpolate")) {
+            if (urlParams.has('interpolate')) {
                 this.props.vm.setInterpolation(true);
             }
 
-            if (urlParams.has("username")) {
-                const username = urlParams.get("username");
+            if (urlParams.has('username')) {
+                const username = urlParams.get('username');
                 // Do not save username when loaded from URL
                 this.doNotPersistUsername = username;
                 this.props.onSetUsername(username);
             } else {
-                const persistentUsername = this.props.isEmbedded
-                    ? null
-                    : getLocalStorage(USERNAME_KEY);
+                const persistentUsername = this.props.isEmbedded ? null : getLocalStorage(USERNAME_KEY);
                 if (persistentUsername === null) {
                     const randomUsername = generateRandomUsername();
                     this.props.onSetUsername(randomUsername);
@@ -335,79 +312,71 @@ const TWStateManager = function (WrappedComponent) {
                 }
             }
 
-            if (urlParams.has("hqpen")) {
+            if (urlParams.has('hqpen')) {
                 this.props.vm.renderer.setUseHighQualityRender(true);
             }
 
-            if (urlParams.has("turbo")) {
+            if (urlParams.has('turbo')) {
                 this.props.vm.setTurboMode(true);
             }
 
-            if (urlParams.has("stuck") || urlParams.has("warp_timer")) {
+            if (urlParams.has('stuck') || urlParams.has('warp_timer')) {
                 this.props.vm.setCompilerOptions({
-                    warpTimer: true,
+                    warpTimer: true
                 });
             }
 
-            if (urlParams.has("nocompile")) {
+            if (urlParams.has('nocompile')) {
                 this.props.vm.setCompilerOptions({
-                    enabled: false,
+                    enabled: false
                 });
             }
 
-            if (urlParams.has("clones")) {
-                const clones = +urlParams.get("clones");
+            if (urlParams.has('clones')) {
+                const clones = +urlParams.get('clones');
                 if (Number.isNaN(clones) || clones < 0) {
-                    alert(
-                        this.props.intl.formatMessage(messages.invalidClones)
-                    );
+                    alert(this.props.intl.formatMessage(messages.invalidClones));
                 } else {
                     this.props.vm.setRuntimeOptions({
-                        maxClones: clones,
+                        maxClones: clones
                     });
                 }
             }
 
-            if (urlParams.has("caseSensitive")) {
+            if (urlParams.has('caseSensitive')) {
                 this.props.vm.setRuntimeOptions({
-                    caseSensitivity: true,
+                    caseSensitivity: true
                 });
             }
 
-            if (urlParams.has("offscreen")) {
+            if (urlParams.has('offscreen')) {
                 this.props.vm.setRuntimeOptions({
-                    fencing: false,
+                    fencing: false
                 });
             }
 
-            if (urlParams.has("limitless")) {
+            if (urlParams.has('limitless')) {
                 this.props.vm.setRuntimeOptions({
-                    miscLimits: false,
+                    miscLimits: false
                 });
             }
 
-            for (const extension of urlParams.getAll("extension")) {
+            for (const extension of urlParams.getAll('extension')) {
                 this.props.vm.extensionManager.loadExtensionURL(extension);
             }
 
             const routerCallbacks = {
                 onSetProjectId: this.onSetProjectId,
                 onSetIsPlayerOnly: this.onSetIsPlayerOnly,
-                onSetIsFullScreen: this.onSetIsFullScreen,
+                onSetIsFullScreen: this.onSetIsFullScreen
             };
-            this.router = createRouter(
-                this.props.routingStyle,
-                routerCallbacks
-            );
+            this.router = createRouter(this.props.routingStyle, routerCallbacks);
             this.router.onhashchange();
-            window.addEventListener("hashchange", this.handleHashChange);
-            window.addEventListener("popstate", this.handlePopState);
+            window.addEventListener('hashchange', this.handleHashChange);
+            window.addEventListener('popstate', this.handlePopState);
         }
         componentDidUpdate(prevProps) {
-            if (
-                this.props.username !== prevProps.username &&
-                this.props.username !== this.doNotPersistUsername
-            ) {
+            if (this.props.username !== prevProps.username && this.props.username !== this.doNotPersistUsername) {
                 // TODO: this always restores the current username once at startup, which is unnecessary
                 setLocalStorage(USERNAME_KEY, this.props.username);
             }
@@ -421,7 +390,7 @@ const TWStateManager = function (WrappedComponent) {
                 const routerState = {
                     projectId: this.props.reduxProjectId,
                     isPlayerOnly: this.props.isPlayerOnly,
-                    isFullScreen: this.props.isFullScreen,
+                    isFullScreen: this.props.isFullScreen
                 };
                 const newPath = this.router.generateURL(routerState);
                 if (newPath && newPath !== oldPath) {
@@ -443,86 +412,83 @@ const TWStateManager = function (WrappedComponent) {
                 const compilerOptions = this.props.compilerOptions;
 
                 // Always remove legacy parameter
-                searchParams.delete("60fps");
+                searchParams.delete('60fps');
 
-                const { width, height } = this.props.customStageSize;
-                if (
-                    width === defaultStageSize.width &&
-                    height === defaultStageSize.height
-                ) {
-                    searchParams.delete("size");
+                const {width, height} = this.props.customStageSize;
+                if (width === defaultStageSize.width && height === defaultStageSize.height) {
+                    searchParams.delete('size');
                 } else {
-                    searchParams.set("size", `${width}x${height}`);
+                    searchParams.set('size', `${width}x${height}`);
                 }
 
                 if (this.props.framerate === 30) {
-                    searchParams.delete("fps");
+                    searchParams.delete('fps');
                 } else {
-                    searchParams.set("fps", this.props.framerate);
+                    searchParams.set('fps', this.props.framerate);
                 }
 
                 if (this.props.interpolation) {
-                    searchParams.set("interpolate", "");
+                    searchParams.set('interpolate', '');
                 } else {
-                    searchParams.delete("interpolate");
+                    searchParams.delete('interpolate');
                 }
 
                 if (this.props.turbo) {
-                    searchParams.set("turbo", "");
+                    searchParams.set('turbo', '');
                 } else {
-                    searchParams.delete("turbo");
+                    searchParams.delete('turbo');
                 }
 
                 if (this.props.highQualityPen) {
-                    searchParams.set("hqpen", "");
+                    searchParams.set('hqpen', '');
                 } else {
-                    searchParams.delete("hqpen");
+                    searchParams.delete('hqpen');
                 }
 
                 if (this.props.runtimeOptions.caseSensitivity) {
-                    searchParams.set("caseSensitive", "");
+                    searchParams.set('caseSensitive', '');
                 } else {
-                    searchParams.delete("caseSensitive");
+                    searchParams.delete('caseSensitive');
                 }
 
                 if (compilerOptions.enabled) {
-                    searchParams.delete("nocompile");
+                    searchParams.delete('nocompile');
                 }
 
                 if (this.props.isPlayerOnly) {
                     if (compilerOptions.warpTimer) {
-                        searchParams.set("stuck", "");
+                        searchParams.set('stuck', '');
                     } else {
-                        searchParams.delete("stuck");
+                        searchParams.delete('stuck');
                     }
                 } else {
                     // Leave ?stuck as-is when in editor
                 }
 
                 if (runtimeOptions.maxClones === 300) {
-                    searchParams.delete("clones");
+                    searchParams.delete('clones');
                 } else {
-                    searchParams.set("clones", runtimeOptions.maxClones);
+                    searchParams.set('clones', runtimeOptions.maxClones);
                 }
 
                 if (runtimeOptions.fencing) {
-                    searchParams.delete("offscreen");
+                    searchParams.delete('offscreen');
                 } else {
-                    searchParams.set("offscreen", "");
+                    searchParams.set('offscreen', '');
                 }
 
                 if (runtimeOptions.miscLimits) {
-                    searchParams.delete("limitless");
+                    searchParams.delete('limitless');
                 } else {
-                    searchParams.set("limitless", "");
+                    searchParams.set('limitless', '');
                 }
 
                 setSearchParams(searchParams);
             }
         }
         componentWillUnmount() {
-            window.removeEventListener("hashchange", this.handleHashChange);
-            window.removeEventListener("popstate", this.handlePopState);
+            window.removeEventListener('hashchange', this.handleHashChange);
+            window.removeEventListener('popstate', this.handlePopState);
         }
         handleHashChange() {
             this.router.onhashchange();
@@ -535,7 +501,7 @@ const TWStateManager = function (WrappedComponent) {
                 return true;
             }
             if (this.props.projectChanged) {
-                if (!confirm("Are you sure you want to switch project?")) {
+                if (!confirm('Are you sure you want to switch project?')) {
                     return false;
                 }
             }
@@ -581,7 +547,7 @@ const TWStateManager = function (WrappedComponent) {
         intl: intlShape,
         customStageSize: PropTypes.shape({
             width: PropTypes.number,
-            height: PropTypes.number,
+            height: PropTypes.number
         }),
         isFullScreen: PropTypes.bool,
         isPlayerOnly: PropTypes.bool,
@@ -590,12 +556,12 @@ const TWStateManager = function (WrappedComponent) {
         projectId: PropTypes.string,
         compilerOptions: PropTypes.shape({
             enabled: PropTypes.bool,
-            warpTimer: PropTypes.bool,
+            warpTimer: PropTypes.bool
         }),
         runtimeOptions: PropTypes.shape({
             miscLimits: PropTypes.bool,
             fencing: PropTypes.bool,
-            maxClones: PropTypes.number,
+            maxClones: PropTypes.number
         }),
         highQualityPen: PropTypes.bool,
         framerate: PropTypes.number,
@@ -605,16 +571,13 @@ const TWStateManager = function (WrappedComponent) {
         onSetIsPlayerOnly: PropTypes.func,
         onSetProjectId: PropTypes.func,
         onSetUsername: PropTypes.func,
-        reduxProjectId: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.number,
-        ]),
+        reduxProjectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         routingStyle: PropTypes.oneOf(Object.keys(routers)),
         username: PropTypes.string,
-        vm: PropTypes.instanceOf(VM),
+        vm: PropTypes.instanceOf(VM)
     };
     StateManagerComponent.defaultProps = {
-        routingStyle: process.env.ROUTING_STYLE,
+        routingStyle: process.env.ROUTING_STYLE
     };
     const mapStateToProps = state => ({
         customStageSize: state.scratchGui.customStageSize,
@@ -630,18 +593,15 @@ const TWStateManager = function (WrappedComponent) {
         interpolation: state.scratchGui.tw.interpolation,
         turbo: state.scratchGui.vmStatus.turbo,
         username: state.scratchGui.tw.username,
-        vm: state.scratchGui.vm,
+        vm: state.scratchGui.vm
     });
     const mapDispatchToProps = dispatch => ({
-        onSetIsFullScreen: isFullScreen =>
-            dispatch(setFullScreen(isFullScreen)),
+        onSetIsFullScreen: isFullScreen => dispatch(setFullScreen(isFullScreen)),
         onSetIsPlayerOnly: isPlayerOnly => dispatch(setPlayer(isPlayerOnly)),
         onSetProjectId: projectId => dispatch(setProjectId(projectId)),
-        onSetUsername: username => dispatch(setUsername(username)),
+        onSetUsername: username => dispatch(setUsername(username))
     });
-    return injectIntl(
-        connect(mapStateToProps, mapDispatchToProps)(StateManagerComponent)
-    );
+    return injectIntl(connect(mapStateToProps, mapDispatchToProps)(StateManagerComponent));
 };
 
-export { TWStateManager as default };
+export {TWStateManager as default};

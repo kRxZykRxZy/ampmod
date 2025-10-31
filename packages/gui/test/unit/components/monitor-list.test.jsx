@@ -1,31 +1,31 @@
-import React from "react";
-import { OrderedMap } from "immutable";
-import configureStore from "redux-mock-store";
-import { Provider } from "react-redux";
-import { mountWithIntl } from "../../helpers/intl-helpers.jsx";
-import MonitorList from "../../../src/components/monitor-list/monitor-list.jsx";
-import { DEFAULT_THEME } from "../../../src/lib/themes";
+import React from 'react';
+import {OrderedMap} from 'immutable';
+import configureStore from 'redux-mock-store';
+import {Provider} from 'react-redux';
+import {mountWithIntl} from '../../helpers/intl-helpers.jsx';
+import MonitorList from '../../../src/components/monitor-list/monitor-list.jsx';
+import {DEFAULT_THEME} from '../../../src/lib/themes';
 
-describe("MonitorListComponent", () => {
+describe('MonitorListComponent', () => {
     const store = configureStore()({
         scratchGui: {
             monitorLayout: {
                 monitors: {},
-                savedMonitorPositions: {},
+                savedMonitorPositions: {}
             },
             theme: {
-                theme: DEFAULT_THEME,
+                theme: DEFAULT_THEME
             },
             toolbox: {
-                toolboxXML: "",
+                toolboxXML: ''
             },
             vm: {
                 runtime: {
                     requestUpdateMonitor: () => {},
-                    getLabelForOpcode: () => "",
-                },
-            },
-        },
+                    getLabelForOpcode: () => ''
+                }
+            }
+        }
     });
     const draggable = false;
     const onMonitorChange = jest.fn();
@@ -33,7 +33,7 @@ describe("MonitorListComponent", () => {
         width: 100,
         height: 100,
         widthDefault: 100,
-        heightDefault: 100,
+        heightDefault: 100
     };
 
     let monitors = OrderedMap({});
@@ -52,29 +52,29 @@ describe("MonitorListComponent", () => {
         );
     };
 
-    test("it renders the correct step size for discrete sliders", () => {
+    test('it renders the correct step size for discrete sliders', () => {
         monitors = OrderedMap({
             id1: {
                 visible: true,
-                mode: "slider",
-                isDiscrete: true,
-            },
+                mode: 'slider',
+                isDiscrete: true
+            }
         });
         const wrapper = mountWithIntl(getComponent());
-        const input = wrapper.find("input");
+        const input = wrapper.find('input');
         expect(input.props().step).toBe(1);
     });
 
-    test("it renders the correct step size for non-discrete sliders", () => {
+    test('it renders the correct step size for non-discrete sliders', () => {
         monitors = OrderedMap({
             id1: {
                 visible: true,
-                mode: "slider",
-                isDiscrete: false,
-            },
+                mode: 'slider',
+                isDiscrete: false
+            }
         });
         const wrapper = mountWithIntl(getComponent());
-        const input = wrapper.find("input");
+        const input = wrapper.find('input');
         expect(input.props().step).toBe(0.01);
     });
 });

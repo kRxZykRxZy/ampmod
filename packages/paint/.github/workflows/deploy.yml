@@ -6,7 +6,7 @@ on:
         branches: [develop]
 
 concurrency:
-    group: "deploy"
+    group: 'deploy'
     cancel-in-progress: true
 
 jobs:

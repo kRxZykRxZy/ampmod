@@ -1,9 +1,9 @@
-import paper from "@turbowarp/paper";
-import { rectSelect } from "../guides";
-import { clearSelection, processRectangularSelection } from "../selection";
-import { getRaster } from "../layer";
-import { ART_BOARD_WIDTH, ART_BOARD_HEIGHT } from "../view";
-import { getHitBounds } from "../../helper/bitmap";
+import paper from '@turbowarp/paper';
+import {rectSelect} from '../guides';
+import {clearSelection, processRectangularSelection} from '../selection';
+import {getRaster} from '../layer';
+import {ART_BOARD_WIDTH, ART_BOARD_HEIGHT} from '../view';
+import {getHitBounds} from '../../helper/bitmap';
 
 /** Tool to handle drag selection. A dotted line box appears and everything enclosed is selected. */
 class SelectionBoxTool {
@@ -48,22 +48,13 @@ class SelectionBoxTool {
         if (this.selectionRect) {
             let rect = new paper.Rectangle({
                 from: new paper.Point(
-                    Math.max(
-                        0,
-                        Math.round(this.selectionRect.bounds.topLeft.x)
-                    ),
+                    Math.max(0, Math.round(this.selectionRect.bounds.topLeft.x)),
                     Math.max(0, Math.round(this.selectionRect.bounds.topLeft.y))
                 ),
                 to: new paper.Point(
-                    Math.min(
-                        ART_BOARD_WIDTH,
-                        Math.round(this.selectionRect.bounds.bottomRight.x)
-                    ),
-                    Math.min(
-                        ART_BOARD_HEIGHT,
-                        Math.round(this.selectionRect.bounds.bottomRight.y)
-                    )
-                ),
+                    Math.min(ART_BOARD_WIDTH, Math.round(this.selectionRect.bounds.bottomRight.x)),
+                    Math.min(ART_BOARD_HEIGHT, Math.round(this.selectionRect.bounds.bottomRight.y))
+                )
             });
 
             // Trim/tighten selection bounds inwards to only the opaque region, excluding transparent pixels
@@ -73,12 +64,12 @@ class SelectionBoxTool {
                 // Pull selected raster to active layer
                 const raster = getRaster().getSubRaster(rect);
                 raster.parent = paper.project.activeLayer;
-                raster.canvas.getContext("2d").imageSmoothingEnabled = false;
+                raster.canvas.getContext('2d').imageSmoothingEnabled = false;
                 raster.selected = true;
                 // Gather a bit of extra data so that we can avoid aliasing at edges
                 const expanded = getRaster().getSubRaster(rect.expand(4));
                 expanded.remove();
-                raster.data = { expanded: expanded };
+                raster.data = {expanded: expanded};
 
                 // Clear area from raster layer
                 const context = getRaster().getContext(true /* modify */);

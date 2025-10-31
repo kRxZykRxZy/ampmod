@@ -33,9 +33,9 @@ class SecurityManager {
      * @param {string} extensionURL The URL of the custom extension.
      * @returns {'worker'|'iframe'|'unsandboxed'|Promise<'worker'|'iframe'|'unsandboxed'>}
      */
-    getSandboxMode(extensionURL) {
+    getSandboxMode (extensionURL) {
         // Default to worker for Scratch compatibility
-        return Promise.resolve("worker");
+        return Promise.resolve('worker');
     }
 
     /**
@@ -45,7 +45,7 @@ class SecurityManager {
      * @param {string} extensionURL The URL of the custom extension.
      * @returns {Promise<boolean>|boolean}
      */
-    canLoadExtensionFromProject(extensionURL) {
+    canLoadExtensionFromProject (extensionURL) {
         // Default to false for security
         return Promise.resolve(false);
     }
@@ -55,7 +55,7 @@ class SecurityManager {
      * @param {*} extensionURL The URL requested to be loaded.
      * @returns {Promise<string>|string} The URL to actually load.
      */
-    rewriteExtensionURL(extensionURL) {
+    rewriteExtensionURL (extensionURL) {
         return Promise.resolve(extensionURL);
     }
 
@@ -67,7 +67,7 @@ class SecurityManager {
      * @param {string} resourceURL
      * @returns {Promise<boolean>|boolean}
      */
-    canFetch(resourceURL) {
+    canFetch (resourceURL) {
         // By default, allow any requests.
         return Promise.resolve(true);
     }
@@ -79,7 +79,7 @@ class SecurityManager {
      * @param {string} websiteURL
      * @returns {Promise<boolean>|boolean}
      */
-    canOpenWindow(websiteURL) {
+    canOpenWindow (websiteURL) {
         // By default, allow all.
         return Promise.resolve(true);
     }
@@ -92,7 +92,7 @@ class SecurityManager {
      * @param {string} websiteURL
      * @returns {Promise<boolean>|boolean}
      */
-    canRedirect(websiteURL) {
+    canRedirect (websiteURL) {
         // By default, allow all.
         return Promise.resolve(true);
     }
@@ -103,7 +103,7 @@ class SecurityManager {
      * Note that, even if this returns true, success is not guaranteed.
      * @returns {Promise<boolean>|boolean}
      */
-    canRecordAudio() {
+    canRecordAudio () {
         return Promise.resolve(true);
     }
 
@@ -112,7 +112,7 @@ class SecurityManager {
      * Note that, even if this returns true, success is not guaranteed.
      * @returns {Promise<boolean>|boolean}
      */
-    canRecordVideo() {
+    canRecordVideo () {
         return Promise.resolve(true);
     }
 
@@ -122,7 +122,7 @@ class SecurityManager {
      * Note that, even if this returns true, success is not guaranteed.
      * @returns {Promise<boolean>|boolean}
      */
-    canReadClipboard() {
+    canReadClipboard () {
         return Promise.resolve(true);
     }
 
@@ -131,7 +131,7 @@ class SecurityManager {
      * Note that, even if this returns true, success is not guaranteed.
      * @returns {Promise<boolean>|boolean}
      */
-    canNotify() {
+    canNotify () {
         return Promise.resolve(true);
     }
 
@@ -140,7 +140,7 @@ class SecurityManager {
      * and other techniques. Note that, even if this returns true, success is not guaranteed.
      * @returns {Promise<boolean>|boolean}
      */
-    canGeolocate() {
+    canGeolocate () {
         return Promise.resolve(true);
     }
 
@@ -149,7 +149,7 @@ class SecurityManager {
      * @param {string} documentURL The URL of the embed.
      * @returns {Promise<boolean>|boolean}
      */
-    canEmbed(documentURL) {
+    canEmbed (documentURL) {
         return Promise.resolve(true);
     }
 
@@ -159,7 +159,7 @@ class SecurityManager {
      * @param {string} name The name of the file
      * @returns {Promise<boolean>|boolean}
      */
-    canDownload(resourceURL, name) {
+    canDownload (resourceURL, name) {
         return Promise.resolve(true);
     }
 }

@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styles from "./meter.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styles from './meter.css';
 
 const Meter = props => {
-    const { level, width, height } = props;
+    const {level, width, height} = props;
 
     const nGreen = 11;
     const nYellow = 5;
@@ -16,22 +16,17 @@ const Meter = props => {
     const barHeight = (height - barSpacing * (nBars + 1)) / nBars;
 
     const nBarsToMask = nBars - Math.floor(level * nBars);
-    const scale =
-        (nBarsToMask * (barHeight + barSpacing) + barSpacing / 2) / height;
+    const scale = (nBarsToMask * (barHeight + barSpacing) + barSpacing / 2) / height;
 
     return (
-        <div className={styles.maskContainer} style={{ height: `${height}px` }}>
+        <div className={styles.maskContainer} style={{height: `${height}px`}}>
             <svg className={styles.container} height={height} width={width}>
                 {Array(nBars)
                     .fill(0)
                     .map((value, index) => (
                         <rect
                             className={
-                                index < nGreen
-                                    ? styles.green
-                                    : index < nGreen + nYellow
-                                      ? styles.yellow
-                                      : styles.red
+                                index < nGreen ? styles.green : index < nGreen + nYellow ? styles.yellow : styles.red
                             }
                             height={barHeight}
                             key={index}
@@ -46,7 +41,7 @@ const Meter = props => {
             <div
                 className={styles.mask}
                 style={{
-                    transform: `scaleY(${scale})`,
+                    transform: `scaleY(${scale})`
                 }}
             />
         </div>
@@ -56,7 +51,7 @@ const Meter = props => {
 Meter.propTypes = {
     height: PropTypes.number,
     level: PropTypes.number,
-    width: PropTypes.number,
+    width: PropTypes.number
 };
 
 export default Meter;

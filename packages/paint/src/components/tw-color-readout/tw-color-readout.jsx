@@ -1,17 +1,17 @@
-import React from "react";
-import PropTypes from "prop-types";
-import bindAll from "lodash.bindall";
-import Input from "../forms/input.jsx";
-import BufferedInputHOC from "../forms/buffered-input-hoc.jsx";
+import React from 'react';
+import PropTypes from 'prop-types';
+import bindAll from 'lodash.bindall';
+import Input from '../forms/input.jsx';
+import BufferedInputHOC from '../forms/buffered-input-hoc.jsx';
 
-import styles from "./tw-color-readout.css";
+import styles from './tw-color-readout.css';
 
 const BufferedInput = BufferedInputHOC(Input);
 
 class TWColorReadout extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["handleSubmit"]);
+        bindAll(this, ['handleSubmit']);
     }
     handleSubmit(value) {
         if (!isNaN(value)) {
@@ -35,7 +35,7 @@ class TWColorReadout extends React.Component {
 
 TWColorReadout.propTypes = {
     value: PropTypes.number,
-    onChange: PropTypes.func,
+    onChange: PropTypes.func
 };
 
 export default TWColorReadout;

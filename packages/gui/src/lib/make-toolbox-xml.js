@@ -1,6 +1,6 @@
-import LazyScratchBlocks from "./tw-lazy-scratch-blocks";
-import { defaultBlockColors } from "./themes";
-import futureIcon from "./libraries/extensions/future/future-iconuri.svg";
+import LazyScratchBlocks from './tw-lazy-scratch-blocks';
+import {defaultBlockColors} from './themes';
+import futureIcon from './libraries/extensions/future/future-iconuri.svg';
 
 const categorySeparator = '<sep gap="36"/>';
 
@@ -15,10 +15,7 @@ const translate = (id, english) => {
 
 /* eslint-disable no-unused-vars */
 const motion = function (isInitialSetup, isStage, targetId, colors) {
-    const stageSelected = translate(
-        "MOTION_STAGE_SELECTED",
-        "Stage selected: no motion blocks"
-    );
+    const stageSelected = translate('MOTION_STAGE_SELECTED', 'Stage selected: no motion blocks');
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
     return `
     <category name="%{BKY_CATEGORY_MOTION}" id="motion" colour="${colors.primary}" secondaryColour="${colors.tertiary}">
@@ -169,36 +166,29 @@ const motion = function (isInitialSetup, isStage, targetId, colors) {
 const xmlEscape = function (unsafe) {
     return unsafe.replace(/[<>&'"]/g, c => {
         switch (c) {
-            case "<":
-                return "&lt;";
-            case ">":
-                return "&gt;";
-            case "&":
-                return "&amp;";
+            case '<':
+                return '&lt;';
+            case '>':
+                return '&gt;';
+            case '&':
+                return '&amp;';
             case "'":
-                return "&apos;";
+                return '&apos;';
             case '"':
-                return "&quot;";
+                return '&quot;';
         }
     });
 };
 
-const looks = function (
-    isInitialSetup,
-    isStage,
-    targetId,
-    costumeName,
-    backdropName,
-    colors
-) {
-    const hello = translate("LOOKS_HELLO", "Hello!");
-    const hmm = translate("LOOKS_HMM", "Hmm...");
+const looks = function (isInitialSetup, isStage, targetId, costumeName, backdropName, colors) {
+    const hello = translate('LOOKS_HELLO', 'Hello!');
+    const hmm = translate('LOOKS_HMM', 'Hmm...');
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
     return `
     <category name="%{BKY_CATEGORY_LOOKS}" id="looks" colour="${colors.primary}" secondaryColour="${colors.tertiary}">
         ${
             isStage
-                ? ""
+                ? ''
                 : `
         <block type="looks_sayforsecs">
             <value name="MESSAGE">
@@ -320,7 +310,7 @@ const looks = function (
         ${blockSeparator}
         ${
             isStage
-                ? ""
+                ? ''
                 : `
             <block type="looks_show"/>
             <block type="looks_hide"/>
@@ -453,7 +443,7 @@ const events = function (isInitialSetup, isStage, targetId, colors) {
 };
 
 const control = function (isInitialSetup, isStage, targetId, colors) {
-    const apple = translate("OPERATORS_JOIN_APPLE", "apple");
+    const apple = translate('OPERATORS_JOIN_APPLE', 'apple');
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
     return `
     <category
@@ -545,7 +535,7 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
 };
 
 const sensing = function (isInitialSetup, isStage, targetId, colors) {
-    const name = translate("SENSING_ASK_TEXT", "What's your name?");
+    const name = translate('SENSING_ASK_TEXT', "What's your name?");
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
     return `
     <category
@@ -555,7 +545,7 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
         secondaryColour="${colors.tertiary}">
         ${
             isStage
-                ? ""
+                ? ''
                 : `
             <block type="sensing_touchingobject">
                 <value name="TOUCHINGOBJECTMENU">
@@ -585,7 +575,7 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
         }
         ${
             isInitialSetup
-                ? ""
+                ? ''
                 : `
             <block id="askandwait" type="sensing_askandwait">
                 <value name="QUESTION">
@@ -615,7 +605,7 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
         <block type="sensing_mousey"/>
         ${
             isStage
-                ? ""
+                ? ''
                 : `
             ${blockSeparator}
             '<block type="sensing_setdragmode" id="sensing_setdragmode"></block>'+
@@ -646,9 +636,9 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
 };
 
 const strings = function (isInitialSetup, isStage, targetId, colors) {
-    const apple = translate("OPERATORS_JOIN_APPLE", "apple");
-    const banana = translate("OPERATORS_JOIN_BANANA", "banana");
-    const letter = translate("OPERATORS_LETTEROF_APPLE", "a");
+    const apple = translate('OPERATORS_JOIN_APPLE', 'apple');
+    const banana = translate('OPERATORS_JOIN_BANANA', 'banana');
+    const letter = translate('OPERATORS_LETTEROF_APPLE', 'a');
     // Note: The ID is ampmodstrings instead of just strings due to conflicts
     // with the Text extension in the gallery
     return `
@@ -994,7 +984,7 @@ const futureToolbox = function (isInitialSetup, isStage, targetId) {
 /* eslint-enable no-unused-vars */
 
 const xmlOpen = '<xml style="display: none">';
-const xmlClose = "</xml>";
+const xmlClose = '</xml>';
 
 /**
  * @param {!boolean} isInitialSetup - Whether the toolbox is for initial setup. If the mode is "initial setup",
@@ -1017,9 +1007,9 @@ const makeToolboxXML = function (
     isStage = true,
     targetId,
     categoriesXML = [],
-    costumeName = "",
-    backdropName = "",
-    soundName = "",
+    costumeName = '',
+    backdropName = '',
+    soundName = '',
     colors = defaultBlockColors,
     futureEnabled = false
 ) {
@@ -1032,9 +1022,7 @@ const makeToolboxXML = function (
 
     categoriesXML = categoriesXML.slice();
     const moveCategory = categoryId => {
-        const index = categoriesXML.findIndex(
-            categoryInfo => categoryInfo.id === categoryId
-        );
+        const index = categoriesXML.findIndex(categoryInfo => categoryInfo.id === categoryId);
         if (index >= 0) {
             // remove the category from categoriesXML and return its XML
             const [categoryInfo] = categoriesXML.splice(index, 1);
@@ -1042,49 +1030,21 @@ const makeToolboxXML = function (
         }
         // return `undefined`
     };
-    const motionXML =
-        moveCategory("motion") ||
-        motion(isInitialSetup, isStage, targetId, colors.motion);
+    const motionXML = moveCategory('motion') || motion(isInitialSetup, isStage, targetId, colors.motion);
     const looksXML =
-        moveCategory("looks") ||
-        looks(
-            isInitialSetup,
-            isStage,
-            targetId,
-            costumeName,
-            backdropName,
-            colors.looks
-        );
-    const soundXML =
-        moveCategory("sound") ||
-        sound(isInitialSetup, isStage, targetId, soundName, colors.sounds);
-    const eventsXML =
-        moveCategory("event") ||
-        events(isInitialSetup, isStage, targetId, colors.event);
-    const controlXML =
-        moveCategory("control") ||
-        control(isInitialSetup, isStage, targetId, colors.control);
-    const sensingXML =
-        moveCategory("sensing") ||
-        sensing(isInitialSetup, isStage, targetId, colors.sensing);
-    const operatorsXML =
-        moveCategory("operators") ||
-        operators(isInitialSetup, isStage, targetId, colors.operators);
-    const stringsXML =
-        moveCategory("ampmodstrings") ||
-        strings(isInitialSetup, isStage, targetId, colors.strings);
-    const variablesXML =
-        moveCategory("data") ||
-        variables(isInitialSetup, isStage, targetId, colors.data);
-    const arraysXML =
-        moveCategory("arrays") ||
-        arrays(isInitialSetup, isStage, targetId, colors.data_lists);
-    const myBlocksXML =
-        moveCategory("procedures") ||
-        myBlocks(isInitialSetup, isStage, targetId, colors.more);
+        moveCategory('looks') || looks(isInitialSetup, isStage, targetId, costumeName, backdropName, colors.looks);
+    const soundXML = moveCategory('sound') || sound(isInitialSetup, isStage, targetId, soundName, colors.sounds);
+    const eventsXML = moveCategory('event') || events(isInitialSetup, isStage, targetId, colors.event);
+    const controlXML = moveCategory('control') || control(isInitialSetup, isStage, targetId, colors.control);
+    const sensingXML = moveCategory('sensing') || sensing(isInitialSetup, isStage, targetId, colors.sensing);
+    const operatorsXML = moveCategory('operators') || operators(isInitialSetup, isStage, targetId, colors.operators);
+    const stringsXML = moveCategory('ampmodstrings') || strings(isInitialSetup, isStage, targetId, colors.strings);
+    const variablesXML = moveCategory('data') || variables(isInitialSetup, isStage, targetId, colors.data);
+    const arraysXML = moveCategory('arrays') || arrays(isInitialSetup, isStage, targetId, colors.data_lists);
+    const myBlocksXML = moveCategory('procedures') || myBlocks(isInitialSetup, isStage, targetId, colors.more);
 
     // Always display pen blocks as a normal category, if it exists.
-    let penXML = moveCategory("pen");
+    let penXML = moveCategory('pen');
 
     const everything = [
         xmlOpen,
@@ -1102,7 +1062,7 @@ const makeToolboxXML = function (
         gap,
         operatorsXML,
         gap,
-        stringsXML,
+        stringsXML
     ];
 
     if (penXML) {
@@ -1112,9 +1072,7 @@ const makeToolboxXML = function (
     everything.push(variablesXML, gap, arraysXML, gap, myBlocksXML);
 
     if (futureEnabled) {
-        const futureXML =
-            moveCategory("future") ||
-            futureToolbox(isInitialSetup, isStage, targetId);
+        const futureXML = moveCategory('future') || futureToolbox(isInitialSetup, isStage, targetId);
 
         everything.push(gap, futureXML);
     }

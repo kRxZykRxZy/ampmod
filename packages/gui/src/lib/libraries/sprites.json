@@ -86,15 +86,7 @@
     },
     {
         "name": "Andie",
-        "tags": [
-            "sports",
-            "basketball",
-            "people",
-            "wheelchair",
-            "handicap",
-            "handicapable",
-            "alex eben meyer"
-        ],
+        "tags": ["sports", "basketball", "people", "wheelchair", "handicap", "handicapable", "alex eben meyer"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -494,18 +486,7 @@
     },
     {
         "name": "Ball",
-        "tags": [
-            "round",
-            "game",
-            "bounce",
-            "circle",
-            "yellow",
-            "blue",
-            "pink",
-            "green",
-            "purple",
-            "things"
-        ],
+        "tags": ["round", "game", "bounce", "circle", "yellow", "blue", "pink", "green", "purple", "things"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -635,16 +616,7 @@
     },
     {
         "name": "Balloon1",
-        "tags": [
-            "party",
-            "pop",
-            "flying",
-            "helium",
-            "blue",
-            "yellow",
-            "purple",
-            "things"
-        ],
+        "tags": ["party", "pop", "flying", "helium", "blue", "yellow", "purple", "things"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -796,14 +768,7 @@
     },
     {
         "name": "Bat",
-        "tags": [
-            "fantasy",
-            "spooky",
-            "halloween",
-            "bat",
-            "animals",
-            "alex eben meyer"
-        ],
+        "tags": ["fantasy", "spooky", "halloween", "bat", "animals", "alex eben meyer"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -1488,15 +1453,7 @@
     },
     {
         "name": "Butterfly 2",
-        "tags": [
-            "animals",
-            "drawing",
-            "happy",
-            "bug",
-            "insect",
-            "antennae",
-            "flappers"
-        ],
+        "tags": ["animals", "drawing", "happy", "bug", "insect", "antennae", "flappers"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -1715,16 +1672,7 @@
     },
     {
         "name": "Cake",
-        "tags": [
-            "food",
-            "bakery",
-            "baking",
-            "frosting",
-            "sprinkles",
-            "sprankles",
-            "dragable",
-            "lie"
-        ],
+        "tags": ["food", "bakery", "baking", "frosting", "sprinkles", "sprankles", "dragable", "lie"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -2145,16 +2093,7 @@
     },
     {
         "name": "Characters 1",
-        "tags": [
-            "people",
-            "person",
-            "boy",
-            "girl",
-            "nonbinary",
-            "non-binary",
-            "kid",
-            "character"
-        ],
+        "tags": ["people", "person", "boy", "girl", "nonbinary", "non-binary", "kid", "character"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -2291,16 +2230,7 @@
     },
     {
         "name": "Characters 2",
-        "tags": [
-            "people",
-            "person",
-            "boy",
-            "girl",
-            "nonbinary",
-            "non-binary",
-            "kid",
-            "character"
-        ],
+        "tags": ["people", "person", "boy", "girl", "nonbinary", "non-binary", "kid", "character"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -3256,13 +3186,7 @@
     },
     {
         "name": "Dinosaur3",
-        "tags": [
-            "animals",
-            "dinosaur",
-            "pteranodon",
-            "flying",
-            "alex eben meyer"
-        ],
+        "tags": ["animals", "dinosaur", "pteranodon", "flying", "alex eben meyer"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -3327,14 +3251,7 @@
     },
     {
         "name": "Dinosaur4",
-        "tags": [
-            "animals",
-            "dinosaur",
-            "tyrannosaurus",
-            "t-rex",
-            "trex",
-            "alex eben meyer"
-        ],
+        "tags": ["animals", "dinosaur", "tyrannosaurus", "t-rex", "trex", "alex eben meyer"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -3634,16 +3551,7 @@
     },
     {
         "name": "Donut",
-        "tags": [
-            "food",
-            "sweets",
-            "bakery",
-            "baking",
-            "homer",
-            "frosting",
-            "sprinkles",
-            "sprankles"
-        ],
+        "tags": ["food", "sweets", "bakery", "baking", "homer", "frosting", "sprinkles", "sprankles"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -5002,15 +4910,7 @@
     },
     {
         "name": "Frank",
-        "tags": [
-            "fantasy",
-            "spooky",
-            "people",
-            "halloween",
-            "frankenstein",
-            "monster",
-            "alex eben meyer"
-        ],
+        "tags": ["fantasy", "spooky", "people", "halloween", "frankenstein", "monster", "alex eben meyer"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -5200,14 +5100,7 @@
     },
     {
         "name": "Ghost",
-        "tags": [
-            "fantasy",
-            "spooky",
-            "halloween",
-            "ghoul",
-            "monster",
-            "alex eben meyer"
-        ],
+        "tags": ["fantasy", "spooky", "halloween", "ghoul", "monster", "alex eben meyer"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -6523,16 +6416,7 @@
     },
     {
         "name": "Hippo1",
-        "tags": [
-            "animals",
-            "mammals",
-            "flying",
-            "fantasy",
-            "insect",
-            "pachydermata",
-            "snortyboys",
-            "flappers"
-        ],
+        "tags": ["animals", "mammals", "flying", "fantasy", "insect", "pachydermata", "snortyboys", "flappers"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -6832,14 +6716,7 @@
     },
     {
         "name": "Jellyfish",
-        "tags": [
-            "animals",
-            "ocean",
-            "sea",
-            "underwater",
-            "emotions",
-            "daria skrybchencko"
-        ],
+        "tags": ["animals", "ocean", "sea", "underwater", "emotions", "daria skrybchencko"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -7274,16 +7151,7 @@
     },
     {
         "name": "Kia",
-        "tags": [
-            "people",
-            "person",
-            "boy",
-            "girl",
-            "nonbinary",
-            "non-binary",
-            "kid",
-            "character"
-        ],
+        "tags": ["people", "person", "boy", "girl", "nonbinary", "non-binary", "kid", "character"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -7827,16 +7695,7 @@
     },
     {
         "name": "Luca",
-        "tags": [
-            "people",
-            "person",
-            "boy",
-            "girl",
-            "nonbinary",
-            "non-binary",
-            "kid",
-            "character"
-        ],
+        "tags": ["people", "person", "boy", "girl", "nonbinary", "non-binary", "kid", "character"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -8555,16 +8414,7 @@
     },
     {
         "name": "Noor",
-        "tags": [
-            "people",
-            "person",
-            "boy",
-            "girl",
-            "nonbinary",
-            "non-binary",
-            "kid",
-            "character"
-        ],
+        "tags": ["people", "person", "boy", "girl", "nonbinary", "non-binary", "kid", "character"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -8969,15 +8819,7 @@
     },
     {
         "name": "Parrot",
-        "tags": [
-            "animals",
-            "bird",
-            "birb",
-            "tropical",
-            "color",
-            "flying",
-            "flappers"
-        ],
+        "tags": ["animals", "bird", "birb", "tropical", "color", "flying", "flappers"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -9609,14 +9451,7 @@
     },
     {
         "name": "Rabbit",
-        "tags": [
-            "animals",
-            "daria skrybchencko",
-            "mammal",
-            "bunny",
-            "bunnies",
-            "fluffy"
-        ],
+        "tags": ["animals", "daria skrybchencko", "mammal", "bunny", "bunnies", "fluffy"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -10328,16 +10163,7 @@
     },
     {
         "name": "Sasha",
-        "tags": [
-            "people",
-            "person",
-            "boy",
-            "girl",
-            "nonbinary",
-            "non-binary",
-            "kid",
-            "character"
-        ],
+        "tags": ["people", "person", "boy", "girl", "nonbinary", "non-binary", "kid", "character"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -10570,15 +10396,7 @@
     },
     {
         "name": "Shark 2",
-        "tags": [
-            "animals",
-            "ocean",
-            "sea",
-            "fish",
-            "teeth",
-            "carnivore",
-            "chomp"
-        ],
+        "tags": ["animals", "ocean", "sea", "fish", "teeth", "carnivore", "chomp"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -10804,14 +10622,7 @@
     },
     {
         "name": "Skeleton",
-        "tags": [
-            "fantasy",
-            "spooky",
-            "halloween",
-            "bones",
-            "monster",
-            "alex eben meyer"
-        ],
+        "tags": ["fantasy", "spooky", "halloween", "bones", "monster", "alex eben meyer"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -11444,16 +11255,7 @@
     },
     {
         "name": "Tatiana",
-        "tags": [
-            "people",
-            "person",
-            "boy",
-            "girl",
-            "nonbinary",
-            "non-binary",
-            "kid",
-            "character"
-        ],
+        "tags": ["people", "person", "boy", "girl", "nonbinary", "non-binary", "kid", "character"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -11509,16 +11311,7 @@
     },
     {
         "name": "Taylor",
-        "tags": [
-            "people",
-            "person",
-            "boy",
-            "girl",
-            "nonbinary",
-            "non-binary",
-            "kid",
-            "character"
-        ],
+        "tags": ["people", "person", "boy", "girl", "nonbinary", "non-binary", "kid", "character"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -11883,16 +11676,7 @@
     },
     {
         "name": "Trisha",
-        "tags": [
-            "people",
-            "person",
-            "boy",
-            "girl",
-            "nonbinary",
-            "non-binary",
-            "kid",
-            "character"
-        ],
+        "tags": ["people", "person", "boy", "girl", "nonbinary", "non-binary", "kid", "character"],
         "isStage": false,
         "variables": {},
         "costumes": [
@@ -12542,15 +12326,7 @@
     },
     {
         "name": "Wizard-toad",
-        "tags": [
-            "fantasy",
-            "animals",
-            "people",
-            "ipzy",
-            "castle",
-            "amphibians",
-            "magic"
-        ],
+        "tags": ["fantasy", "animals", "people", "ipzy", "castle", "amphibians", "magic"],
         "isStage": false,
         "variables": {},
         "costumes": [

@@ -1,16 +1,16 @@
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import React from "react";
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import greenFlagIcon from "./icon--green-flag.svg";
-import styles from "./green-flag.css";
+import greenFlagIcon from './icon--green-flag.svg';
+import styles from './green-flag.css';
 
 const GreenFlagComponent = function (props) {
-    const { active, className, onClick, title, ...componentProps } = props;
+    const {active, className, onClick, title, ...componentProps} = props;
     return (
         <img
             className={classNames(className, styles.greenFlag, {
-                [styles.isActive]: active,
+                [styles.isActive]: active
             })}
             draggable={false}
             src={greenFlagIcon}
@@ -26,10 +26,10 @@ GreenFlagComponent.propTypes = {
     active: PropTypes.bool,
     className: PropTypes.string,
     onClick: PropTypes.func.isRequired,
-    title: PropTypes.string,
+    title: PropTypes.string
 };
 GreenFlagComponent.defaultProps = {
     active: false,
-    title: "Go",
+    title: 'Go'
 };
 export default GreenFlagComponent;

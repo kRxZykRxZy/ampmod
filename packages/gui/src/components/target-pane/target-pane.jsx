@@ -1,14 +1,14 @@
-import PropTypes from "prop-types";
-import React from "react";
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import VM from "scratch-vm";
+import VM from 'scratch-vm';
 
-import SpriteLibrary from "../../containers/sprite-library.jsx";
-import SpriteSelectorComponent from "../sprite-selector/sprite-selector.jsx";
-import StageSelector from "../../containers/stage-selector.jsx";
-import { STAGE_DISPLAY_SIZES } from "../../lib/layout-constants";
+import SpriteLibrary from '../../containers/sprite-library.jsx';
+import SpriteSelectorComponent from '../sprite-selector/sprite-selector.jsx';
+import StageSelector from '../../containers/stage-selector.jsx';
+import {STAGE_DISPLAY_SIZES} from '../../lib/layout-constants';
 
-import styles from "./target-pane.css";
+import styles from './target-pane.css';
 
 /*
  * Pane that contains the sprite selector, sprite info, stage selector,
@@ -107,7 +107,7 @@ const spriteShape = PropTypes.shape({
         // will not have these properties available
         bitmapResolution: PropTypes.number,
         rotationCenterX: PropTypes.number,
-        rotationCenterY: PropTypes.number,
+        rotationCenterY: PropTypes.number
     }),
     costumeCount: PropTypes.number,
     direction: PropTypes.number,
@@ -117,7 +117,7 @@ const spriteShape = PropTypes.shape({
     size: PropTypes.number,
     visibility: PropTypes.bool,
     x: PropTypes.number,
-    y: PropTypes.number,
+    y: PropTypes.number
 });
 
 TargetPane.propTypes = {
@@ -126,7 +126,7 @@ TargetPane.propTypes = {
     fileInputRef: PropTypes.func,
     hoveredTarget: PropTypes.shape({
         hoveredSprite: PropTypes.string,
-        receivedBlocks: PropTypes.bool,
+        receivedBlocks: PropTypes.bool
     }),
     onActivateBlocksTab: PropTypes.func.isRequired,
     onChangeSpriteDirection: PropTypes.func,
@@ -153,7 +153,7 @@ TargetPane.propTypes = {
     sprites: PropTypes.objectOf(spriteShape),
     stage: spriteShape,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
-    vm: PropTypes.instanceOf(VM),
+    vm: PropTypes.instanceOf(VM)
 };
 
 export default TargetPane;

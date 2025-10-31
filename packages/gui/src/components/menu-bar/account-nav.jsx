@@ -4,18 +4,18 @@ Nearly identical code appears in scratch-www, and the two should
 eventually be consolidated.
 */
 
-import classNames from "classnames";
-import { FormattedMessage } from "react-intl";
-import PropTypes from "prop-types";
-import React from "react";
+import classNames from 'classnames';
+import {FormattedMessage} from 'react-intl';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import MenuBarMenu from "./menu-bar-menu.jsx";
-import { MenuSection } from "../menu/menu.jsx";
-import MenuItemContainer from "../../containers/menu-item.jsx";
-import UserAvatar from "./user-avatar.jsx";
-import dropdownCaret from "./dropdown-caret.svg";
+import MenuBarMenu from './menu-bar-menu.jsx';
+import {MenuSection} from '../menu/menu.jsx';
+import MenuItemContainer from '../../containers/menu-item.jsx';
+import UserAvatar from './user-avatar.jsx';
+import dropdownCaret from './dropdown-caret.svg';
 
-import styles from "./account-nav.css";
+import styles from './account-nav.css';
 
 const AccountNavComponent = ({
     className,
@@ -30,23 +30,14 @@ const AccountNavComponent = ({
     onLogOut,
     profileUrl,
     thumbnailUrl,
-    username,
+    username
 }) => (
     <React.Fragment>
-        <div
-            className={classNames(styles.userInfo, className)}
-            onMouseUp={onClick}
-        >
-            {thumbnailUrl ? (
-                <UserAvatar className={styles.avatar} imageUrl={thumbnailUrl} />
-            ) : null}
+        <div className={classNames(styles.userInfo, className)} onMouseUp={onClick}>
+            {thumbnailUrl ? <UserAvatar className={styles.avatar} imageUrl={thumbnailUrl} /> : null}
             <span className={styles.profileName}>{username}</span>
             <div className={styles.dropdownCaretPosition}>
-                <img
-                    className={styles.dropdownCaretIcon}
-                    src={dropdownCaret}
-                    draggable={false}
-                />
+                <img className={styles.dropdownCaretIcon} src={dropdownCaret} draggable={false} />
             </div>
         </div>
         <MenuBarMenu
@@ -54,7 +45,7 @@ const AccountNavComponent = ({
             open={isOpen}
             // note: the Rtl styles are switched here, because this menu is justified
             // opposite all the others
-            place={isRtl ? "right" : "left"}
+            place={isRtl ? 'right' : 'left'}
             onRequestClose={onClose}
         >
             <MenuItemContainer href={profileUrl}>
@@ -122,7 +113,7 @@ AccountNavComponent.propTypes = {
     onLogOut: PropTypes.func,
     profileUrl: PropTypes.string,
     thumbnailUrl: PropTypes.string,
-    username: PropTypes.string,
+    username: PropTypes.string
 };
 
 export default AccountNavComponent;

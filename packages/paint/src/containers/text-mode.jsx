@@ -1,37 +1,30 @@
-import paper from "@turbowarp/paper";
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
-import bindAll from "lodash.bindall";
-import Fonts from "../lib/fonts";
-import Modes from "../lib/modes";
-import ColorStyleProptype from "../lib/color-style-proptype";
-import { MIXED } from "../helper/style-path";
+import paper from '@turbowarp/paper';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
+import bindAll from 'lodash.bindall';
+import Fonts from '../lib/fonts';
+import Modes from '../lib/modes';
+import ColorStyleProptype from '../lib/color-style-proptype';
+import {MIXED} from '../helper/style-path';
 
-import { changeFont } from "../reducers/font";
-import {
-    changeFillColor,
-    clearFillGradient,
-    DEFAULT_COLOR,
-} from "../reducers/fill-style";
-import { changeStrokeColor } from "../reducers/stroke-style";
-import { changeMode } from "../reducers/modes";
-import { setTextEditTarget } from "../reducers/text-edit-target";
-import {
-    clearSelectedItems,
-    setSelectedItems,
-} from "../reducers/selected-items";
-import { setCursor } from "../reducers/cursor";
+import {changeFont} from '../reducers/font';
+import {changeFillColor, clearFillGradient, DEFAULT_COLOR} from '../reducers/fill-style';
+import {changeStrokeColor} from '../reducers/stroke-style';
+import {changeMode} from '../reducers/modes';
+import {setTextEditTarget} from '../reducers/text-edit-target';
+import {clearSelectedItems, setSelectedItems} from '../reducers/selected-items';
+import {setCursor} from '../reducers/cursor';
 
-import { clearSelection, getSelectedLeafItems } from "../helper/selection";
-import TextTool from "../helper/tools/text-tool";
-import TextModeComponent from "../components/text-mode/text-mode.jsx";
-import BitTextModeComponent from "../components/bit-text-mode/bit-text-mode.jsx";
+import {clearSelection, getSelectedLeafItems} from '../helper/selection';
+import TextTool from '../helper/tools/text-tool';
+import TextModeComponent from '../components/text-mode/text-mode.jsx';
+import BitTextModeComponent from '../components/bit-text-mode/bit-text-mode.jsx';
 
 class TextMode extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["activateTool", "deactivateTool"]);
+        bindAll(this, ['activateTool', 'deactivateTool']);
     }
     componentDidMount() {
         if (this.props.isTextModeActive) {
@@ -86,16 +79,13 @@ class TextMode extends React.Component {
         // If fill and stroke color are both mixed/transparent/absent, set fill to default and stroke to transparent.
         // If exactly one of fill or stroke color is set, set the other one to transparent.
         // This way the tool won't draw an invisible state, or be unclear about what will be drawn.
-        const { strokeWidth } = nextProps.colorState;
+        const {strokeWidth} = nextProps.colorState;
         const fillColor = nextProps.colorState.fillColor.primary;
         const strokeColor = nextProps.colorState.strokeColor.primary;
         const fillColorPresent = fillColor !== MIXED && fillColor !== null;
         const strokeColorPresent = nextProps.isBitmap
             ? false
-            : strokeColor !== MIXED &&
-              strokeColor !== null &&
-              strokeWidth !== null &&
-              strokeWidth !== 0;
+            : strokeColor !== MIXED && strokeColor !== null && strokeWidth !== null && strokeWidth !== 0;
         if (!fillColorPresent && !strokeColorPresent) {
             this.props.onChangeFillColor(DEFAULT_COLOR);
             this.props.onChangeStrokeColor(null);
@@ -139,10 +129,7 @@ class TextMode extends React.Component {
                 onMouseDown={this.props.handleChangeModeBitText}
             />
         ) : (
-            <TextModeComponent
-                isSelected={this.props.isTextModeActive}
-                onMouseDown={this.props.handleChangeModeText}
-            />
+            <TextModeComponent isSelected={this.props.isTextModeActive} onMouseDown={this.props.handleChangeModeText} />
         );
     }
 }
@@ -154,7 +141,7 @@ TextMode.propTypes = {
     colorState: PropTypes.shape({
         fillColor: ColorStyleProptype,
         strokeColor: ColorStyleProptype,
-        strokeWidth: PropTypes.number,
+        strokeWidth: PropTypes.number
     }).isRequired,
     font: PropTypes.string,
     handleChangeModeBitText: PropTypes.func.isRequired,
@@ -171,7 +158,7 @@ TextMode.propTypes = {
     setTextEditTarget: PropTypes.func.isRequired,
     textArea: PropTypes.instanceOf(Element),
     textEditTarget: PropTypes.number,
-    viewBounds: PropTypes.instanceOf(paper.Matrix).isRequired,
+    viewBounds: PropTypes.instanceOf(paper.Matrix).isRequired
 };
 
 const mapStateToProps = (state, ownProps) => ({
@@ -183,7 +170,7 @@ const mapStateToProps = (state, ownProps) => ({
     rtl: state.scratchPaint.layout.rtl,
     selectedItems: state.scratchPaint.selectedItems,
     textEditTarget: state.scratchPaint.textEditTarget,
-    viewBounds: state.scratchPaint.viewBounds,
+    viewBounds: state.scratchPaint.viewBounds
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
     changeFont: font => {
@@ -215,7 +202,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     onChangeStrokeColor: strokeColor => {
         dispatch(changeStrokeColor(strokeColor));
-    },
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TextMode);

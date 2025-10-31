@@ -1,15 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FormattedMessage } from "react-intl";
-import styles from "./fonts-modal.css";
-import VanillaFonts from "scratch-paint/src/lib/fonts";
-import bindAll from "lodash.bindall";
-import classNames from "classnames";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {FormattedMessage} from 'react-intl';
+import styles from './fonts-modal.css';
+import VanillaFonts from 'scratch-paint/src/lib/fonts';
+import bindAll from 'lodash.bindall';
+import classNames from 'classnames';
 
 class FontFallbackButton extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["handleClick"]);
+        bindAll(this, ['handleClick']);
     }
 
     handleClick() {
@@ -20,15 +20,15 @@ class FontFallbackButton extends React.Component {
         // keep in sync with scratch-paint/src/containers/font-dropdown.jsx
         switch (this.props.family) {
             case VanillaFonts.CHINESE:
-                return "中文";
+                return '中文';
             case VanillaFonts.KOREAN:
-                return "한국어";
+                return '한국어';
             case VanillaFonts.JAPANESE:
-                return "日本語";
+                return '日本語';
             case VanillaFonts.MOPED_LIKE:
-                return "Mopeds";
+                return 'Mopeds';
             case VanillaFonts.PIXELIFY:
-                return "Amplification";
+                return 'Amplification';
         }
         return this.props.family;
     }
@@ -37,11 +37,11 @@ class FontFallbackButton extends React.Component {
         return (
             <button
                 className={classNames(styles.fallbackButton, {
-                    [styles.fallbackButtonSelected]: this.props.selected,
+                    [styles.fallbackButtonSelected]: this.props.selected
                 })}
                 onClick={this.handleClick}
                 style={{
-                    fontFamily: this.props.family,
+                    fontFamily: this.props.family
                 }}
             >
                 {this.formatName()}
@@ -53,7 +53,7 @@ class FontFallbackButton extends React.Component {
 FontFallbackButton.propTypes = {
     family: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
-    selected: PropTypes.bool.isRequired,
+    selected: PropTypes.bool.isRequired
 };
 
 const FontFallback = props => (
@@ -79,11 +79,11 @@ const FontFallback = props => (
     </div>
 );
 
-FontFallback.DEFAULT = "Sans Serif";
+FontFallback.DEFAULT = 'Sans Serif';
 
 FontFallback.propTypes = {
     fallback: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired
 };
 
 export default FontFallback;

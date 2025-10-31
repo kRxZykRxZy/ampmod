@@ -12,16 +12,8 @@ const setupInitialState = runtime => {
         if (renderer && target.interpolationData) {
             const drawableID = target.drawableID;
             renderer.updateDrawablePosition(drawableID, [target.x, target.y]);
-            renderer.updateDrawableDirectionScale(
-                drawableID,
-                directionAndScale.direction,
-                directionAndScale.scale
-            );
-            renderer.updateDrawableEffect(
-                drawableID,
-                "ghost",
-                target.effects.ghost
-            );
+            renderer.updateDrawableDirectionScale(drawableID, directionAndScale.direction, directionAndScale.scale);
+            renderer.updateDrawableEffect(drawableID, 'ghost', target.effects.ghost);
         }
 
         if (target.visible && !target.isStage) {
@@ -31,7 +23,7 @@ const setupInitialState = runtime => {
                 direction: directionAndScale.direction,
                 scale: directionAndScale.scale,
                 costume: target.currentCostume,
-                ghost: target.effects.ghost,
+                ghost: target.effects.ghost
             };
         } else {
             target.interpolationData = null;
@@ -75,13 +67,8 @@ const interpolate = (runtime, time) => {
             // Large movements are likely intended to be instantaneous.
             // getAABB is less accurate than getBounds, but it's much faster
             const bounds = drawable.getAABB();
-            const tolerance = Math.min(
-                240,
-                Math.max(50, 1.5 * (bounds.width + bounds.height))
-            );
-            const distance = Math.sqrt(
-                absoluteXDistance ** 2 + absoluteYDistance ** 2
-            );
+            const tolerance = Math.min(240, Math.max(50, 1.5 * (bounds.width + bounds.height)));
+            const distance = Math.sqrt(absoluteXDistance ** 2 + absoluteYDistance ** 2);
             if (distance < tolerance) {
                 const newX = interpolationData.x + xDistance * time;
                 const newY = interpolationData.y + yDistance * time;
@@ -95,33 +82,26 @@ const interpolate = (runtime, time) => {
         // Large changes are likely intended to be instantaneous.
         if (absoluteGhostChange > 0 && absoluteGhostChange < 25) {
             const newGhost = target.effects.ghost + ghostChange * time;
-            renderer.updateDrawableEffect(drawableID, "ghost", newGhost);
+            renderer.updateDrawableEffect(drawableID, 'ghost', newGhost);
         }
 
         // Interpolate scale and direction.
-        const costumeUnchanged =
-            interpolationData.costume === target.currentCostume;
+        const costumeUnchanged = interpolationData.costume === target.currentCostume;
         if (costumeUnchanged) {
-            let { direction, scale } = target._getRenderedDirectionAndScale();
+            let {direction, scale} = target._getRenderedDirectionAndScale();
             let updateDrawableDirectionScale = false;
 
             // Interpolate direction.
             if (direction !== interpolationData.direction) {
                 // Perfect 90 degree angles should not be interpolated.
                 // eg. the foreground tile clones in https://scratch.mit.edu/projects/60917032/
-                if (
-                    direction % 90 !== 0 ||
-                    interpolationData.direction % 90 !== 0
-                ) {
+                if (direction % 90 !== 0 || interpolationData.direction % 90 !== 0) {
                     const currentRadians = (direction * Math.PI) / 180;
-                    const startingRadians =
-                        (interpolationData.direction * Math.PI) / 180;
+                    const startingRadians = (interpolationData.direction * Math.PI) / 180;
                     direction =
                         (Math.atan2(
-                            Math.sin(currentRadians) * time +
-                                Math.sin(startingRadians) * (1 - time),
-                            Math.cos(currentRadians) * time +
-                                Math.cos(startingRadians) * (1 - time)
+                            Math.sin(currentRadians) * time + Math.sin(startingRadians) * (1 - time),
+                            Math.cos(currentRadians) * time + Math.cos(startingRadians) * (1 - time)
                         ) *
                             180) /
                         Math.PI;
@@ -131,10 +111,7 @@ const interpolate = (runtime, time) => {
 
             // Interpolate scale.
             const startingScale = interpolationData.scale;
-            if (
-                scale[0] !== startingScale[0] ||
-                scale[1] !== startingScale[1]
-            ) {
+            if (scale[0] !== startingScale[0] || scale[1] !== startingScale[1]) {
                 // Do not interpolate size when the sign of either scale differs.
                 if (
                     Math.sign(scale[0]) === Math.sign(startingScale[0]) &&
@@ -154,11 +131,7 @@ const interpolate = (runtime, time) => {
             }
 
             if (updateDrawableDirectionScale) {
-                renderer.updateDrawableDirectionScale(
-                    drawableID,
-                    direction,
-                    scale
-                );
+                renderer.updateDrawableDirectionScale(drawableID, direction, scale);
             }
         }
     }
@@ -166,5 +139,5 @@ const interpolate = (runtime, time) => {
 
 module.exports = {
     setupInitialState,
-    interpolate,
+    interpolate
 };

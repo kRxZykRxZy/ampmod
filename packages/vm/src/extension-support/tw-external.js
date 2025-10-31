@@ -9,12 +9,7 @@ const checkURL = url => {
     // relative to where the extension is loaded from or where the extension is running.
     // This ensures that the same extension file will always load resources from the same
     // place, regardless of how it is running or packaged or whatever else.
-    if (
-        !url.startsWith("http:") &&
-        !url.startsWith("https:") &&
-        !url.startsWith("data:") &&
-        !url.startsWith("blob:")
-    ) {
+    if (!url.startsWith('http:') && !url.startsWith('https:') && !url.startsWith('data:') && !url.startsWith('blob:')) {
         throw new Error(`Unsupported URL: ${url}`);
     }
 };

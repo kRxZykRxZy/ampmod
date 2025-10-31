@@ -1,9 +1,9 @@
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import { FormattedMessage, defineMessages } from "react-intl";
-import { connect } from "react-redux";
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import {FormattedMessage, defineMessages} from 'react-intl';
+import {connect} from 'react-redux';
 
-import check from "../menu-bar/check.svg";
+import check from '../menu-bar/check.svg';
 import {
     ACCENT_GREEN,
     ACCENT_GREEN_OLD,
@@ -13,32 +13,31 @@ import {
     ACCENT_PURPLE,
     ACCENT_RED,
     ACCENT_RAINBOW,
-    Theme,
-} from "../../lib/themes/index.js";
-import { closeSettingsMenu } from "../../reducers/menus.js";
-import { setTheme } from "../../reducers/theme.js";
-import { persistTheme } from "../../lib/themes/themePersistance.js";
-import styles from "./welcome.css";
-import { options } from "../menu-bar/tw-theme-accent.jsx";
+    Theme
+} from '../../lib/themes/index.js';
+import {closeSettingsMenu} from '../../reducers/menus.js';
+import {setTheme} from '../../reducers/theme.js';
+import {persistTheme} from '../../lib/themes/themePersistance.js';
+import styles from './welcome.css';
+import {options} from '../menu-bar/tw-theme-accent.jsx';
 
-import rainbowIcon from "../menu-bar/tw-accent-rainbow.svg";
+import rainbowIcon from '../menu-bar/tw-accent-rainbow.svg';
 
 const ColorIcon = props => (
     <div
         className={styles.accentSelectorIconOuter}
         style={{
             background:
-                props.id === "green"
-                    ? ACCENT_MAP[props.id].guiColors["looks-secondary"]
-                    : ACCENT_MAP[props.id].guiColors[
-                          "menu-bar-background-image-classic"
-                      ] || ACCENT_MAP[props.id].guiColors["looks-secondary"],
+                props.id === 'green'
+                    ? ACCENT_MAP[props.id].guiColors['looks-secondary']
+                    : ACCENT_MAP[props.id].guiColors['menu-bar-background-image-classic'] ||
+                      ACCENT_MAP[props.id].guiColors['looks-secondary']
         }}
     />
 );
 
 ColorIcon.propTypes = {
-    id: PropTypes.string,
+    id: PropTypes.string
 };
 
 const AccentMenuItem = props => (
@@ -55,12 +54,12 @@ const AccentMenuItem = props => (
 AccentMenuItem.propTypes = {
     id: PropTypes.string,
     isSelected: PropTypes.bool,
-    onClick: PropTypes.func,
+    onClick: PropTypes.func
 };
 
-const AccentSelector = ({ theme, onChangeTheme }) => {
+const AccentSelector = ({theme, onChangeTheme}) => {
     // Hide accent selector if high-contrast theme is active
-    if (theme.gui === "high-contrast") {
+    if (theme.gui === 'high-contrast') {
         return null;
     }
     return (
@@ -70,7 +69,7 @@ const AccentSelector = ({ theme, onChangeTheme }) => {
                     key={id}
                     id={id}
                     isSelected={theme.accent === id}
-                    onClick={() => onChangeTheme(theme.set("accent", id))}
+                    onClick={() => onChangeTheme(theme.set('accent', id))}
                 />
             ))}
         </div>
@@ -79,11 +78,11 @@ const AccentSelector = ({ theme, onChangeTheme }) => {
 
 AccentSelector.propTypes = {
     theme: PropTypes.instanceOf(Theme),
-    onChangeTheme: PropTypes.func,
+    onChangeTheme: PropTypes.func
 };
 
 const mapStateToProps = state => ({
-    theme: state.scratchGui.theme.theme,
+    theme: state.scratchGui.theme.theme
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -91,7 +90,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(setTheme(theme));
         dispatch(closeSettingsMenu());
         persistTheme(theme);
-    },
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccentSelector);

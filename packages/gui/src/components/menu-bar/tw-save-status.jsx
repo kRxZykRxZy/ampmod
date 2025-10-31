@@ -1,40 +1,29 @@
-import { connect } from "react-redux";
-import { FormattedMessage } from "react-intl";
-import PropTypes from "prop-types";
-import React from "react";
-import InlineMessages from "../../containers/inline-messages.jsx";
-import SB3Downloader from "../../containers/sb3-downloader.jsx";
-import { filterInlineAlerts } from "../../reducers/alerts";
-import classNames from "classnames";
+import {connect} from 'react-redux';
+import {FormattedMessage} from 'react-intl';
+import PropTypes from 'prop-types';
+import React from 'react';
+import InlineMessages from '../../containers/inline-messages.jsx';
+import SB3Downloader from '../../containers/sb3-downloader.jsx';
+import {filterInlineAlerts} from '../../reducers/alerts';
+import classNames from 'classnames';
 
-import styles from "./menu-bar.css";
+import styles from './menu-bar.css';
 
-const TWSaveStatus = ({
-    alertsList,
-    fileHandle,
-    projectChanged,
-    showSaveFilePicker,
-}) =>
+const TWSaveStatus = ({alertsList, fileHandle, projectChanged, showSaveFilePicker}) =>
     filterInlineAlerts(alertsList).length > 0 ? (
         <InlineMessages />
     ) : (
         projectChanged && (
             <SB3Downloader showSaveFilePicker={showSaveFilePicker}>
-                {(_className, _downloadProjectCallback, { smartSave }) => (
-                    <div
-                        onClick={smartSave}
-                        className={classNames([
-                            styles.menuBarItem,
-                            styles.hoverable,
-                        ])}
-                    >
+                {(_className, _downloadProjectCallback, {smartSave}) => (
+                    <div onClick={smartSave} className={classNames([styles.menuBarItem, styles.hoverable])}>
                         {fileHandle ? (
                             <FormattedMessage
                                 defaultMessage="Save as {file}"
                                 description="Menu bar item to save project to an existing file on the user's computer"
                                 id="tw.menuBar.saveAs"
                                 values={{
-                                    file: fileHandle.name,
+                                    file: fileHandle.name
                                 }}
                             />
                         ) : (
@@ -53,16 +42,16 @@ const TWSaveStatus = ({
 TWSaveStatus.propTypes = {
     alertsList: PropTypes.arrayOf(PropTypes.object),
     fileHandle: PropTypes.shape({
-        name: PropTypes.string,
+        name: PropTypes.string
     }),
     projectChanged: PropTypes.bool,
-    showSaveFilePicker: PropTypes.func,
+    showSaveFilePicker: PropTypes.func
 };
 
 const mapStateToProps = state => ({
     alertsList: state.scratchGui.alerts.alertsList,
     fileHandle: state.scratchGui.tw.fileHandle,
-    projectChanged: state.scratchGui.projectChanged,
+    projectChanged: state.scratchGui.projectChanged
 });
 
 export default connect(mapStateToProps, () => ({}))(TWSaveStatus);

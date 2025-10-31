@@ -1,37 +1,37 @@
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import React from "react";
-import { defineMessages, injectIntl, intlShape } from "react-intl";
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {defineMessages, injectIntl, intlShape} from 'react-intl';
 
-import GreenFlag from "../green-flag/green-flag.jsx";
-import StopAll from "../stop-all/stop-all.jsx";
-import TurboMode from "../turbo-mode/turbo-mode.jsx";
-import Pause from "../amp-pause/pause.jsx";
-import FramerateIndicator from "../tw-framerate-indicator/framerate-indicator.jsx";
+import GreenFlag from '../green-flag/green-flag.jsx';
+import StopAll from '../stop-all/stop-all.jsx';
+import TurboMode from '../turbo-mode/turbo-mode.jsx';
+import Pause from '../amp-pause/pause.jsx';
+import FramerateIndicator from '../tw-framerate-indicator/framerate-indicator.jsx';
 
-import styles from "./controls.css";
+import styles from './controls.css';
 
 const messages = defineMessages({
     goTitle: {
-        id: "gui.controls.go",
-        defaultMessage: "Go",
-        description: "Green flag button title",
+        id: 'gui.controls.go',
+        defaultMessage: 'Go',
+        description: 'Green flag button title'
     },
     pauseTitle: {
-        id: "amp.controls.pause",
-        defaultMessage: "Pause",
-        description: "Pause button title",
+        id: 'amp.controls.pause',
+        defaultMessage: 'Pause',
+        description: 'Pause button title'
     },
     playTitle: {
-        id: "amp.controls.play",
-        defaultMessage: "Play",
-        description: "Play button title (to unpause)",
+        id: 'amp.controls.play',
+        defaultMessage: 'Play',
+        description: 'Play button title (to unpause)'
     },
     stopTitle: {
-        id: "gui.controls.stop",
-        defaultMessage: "Stop",
-        description: "Stop button title",
-    },
+        id: 'gui.controls.stop',
+        defaultMessage: 'Stop',
+        description: 'Stop button title'
+    }
 });
 
 const Controls = function (props) {
@@ -50,34 +50,16 @@ const Controls = function (props) {
         ...componentProps
     } = props;
     return (
-        <div
-            className={classNames(styles.controlsContainer, className)}
-            {...componentProps}
-        >
-            <GreenFlag
-                active={active}
-                title={intl.formatMessage(messages.goTitle)}
-                onClick={onGreenFlagClick}
-            />
+        <div className={classNames(styles.controlsContainer, className)} {...componentProps}>
+            <GreenFlag active={active} title={intl.formatMessage(messages.goTitle)} onClick={onGreenFlagClick} />
             <Pause
                 paused={paused}
-                title={intl.formatMessage(
-                    paused ? messages.playTitle : messages.pauseTitle
-                )}
+                title={intl.formatMessage(paused ? messages.playTitle : messages.pauseTitle)}
                 onClick={onPauseClick}
             />
-            <StopAll
-                active={active}
-                title={intl.formatMessage(messages.stopTitle)}
-                onClick={onStopAllClick}
-            />
+            <StopAll active={active} title={intl.formatMessage(messages.stopTitle)} onClick={onStopAllClick} />
             {turbo ? <TurboMode isSmall={isSmall} /> : null}
-            {!isSmall && (
-                <FramerateIndicator
-                    framerate={framerate}
-                    interpolation={interpolation}
-                />
-            )}
+            {!isSmall && <FramerateIndicator framerate={framerate} interpolation={interpolation} />}
         </div>
     );
 };
@@ -91,13 +73,13 @@ Controls.propTypes = {
     framerate: PropTypes.number,
     interpolation: PropTypes.bool,
     isSmall: PropTypes.bool,
-    turbo: PropTypes.bool,
+    turbo: PropTypes.bool
 };
 
 Controls.defaultProps = {
     active: false,
     turbo: false,
-    isSmall: false,
+    isSmall: false
 };
 
 export default injectIntl(Controls);

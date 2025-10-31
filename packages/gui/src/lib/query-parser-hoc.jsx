@@ -1,12 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import queryString from "query-string";
-import { connect } from "react-redux";
+import React from 'react';
+import PropTypes from 'prop-types';
+import queryString from 'query-string';
+import {connect} from 'react-redux';
 
-import { detectTutorialId } from "./tutorial-from-url";
+import {detectTutorialId} from './tutorial-from-url';
 
-import { activateDeck } from "../reducers/cards";
-import { openTipsLibrary } from "../reducers/modals";
+import {activateDeck} from '../reducers/cards';
+import {openTipsLibrary} from '../reducers/modals';
 
 /* Higher Order Component to get parameters from the URL query string and initialize redux state
  * @param {React.Component} WrappedComponent: component to render
@@ -19,7 +19,7 @@ const QueryParserHOC = function (WrappedComponent) {
             const queryParams = queryString.parse(location.search);
             const tutorialId = detectTutorialId(queryParams);
             if (tutorialId) {
-                if (tutorialId === "all") {
+                if (tutorialId === 'all') {
                     this.openTutorials();
                 } else {
                     this.setActiveCards(tutorialId);
@@ -43,7 +43,7 @@ const QueryParserHOC = function (WrappedComponent) {
     }
     QueryParserComponent.propTypes = {
         onOpenTipsLibrary: PropTypes.func,
-        onUpdateReduxDeck: PropTypes.func,
+        onUpdateReduxDeck: PropTypes.func
     };
     const mapDispatchToProps = dispatch => ({
         onOpenTipsLibrary: () => {
@@ -51,9 +51,9 @@ const QueryParserHOC = function (WrappedComponent) {
         },
         onUpdateReduxDeck: tutorialId => {
             dispatch(activateDeck(tutorialId));
-        },
+        }
     });
     return connect(null, mapDispatchToProps)(QueryParserComponent);
 };
 
-export { QueryParserHOC as default };
+export {QueryParserHOC as default};

@@ -1,7 +1,7 @@
-@import "../../css/colors.css";
-@import "../../css/units.css";
-@import "../../css/typography.css";
-@import "../../css/z-index.css";
+@import '../../css/colors.css';
+@import '../../css/units.css';
+@import '../../css/typography.css';
+@import '../../css/z-index.css';
 
 /* from scratch-www */
 $active-gray: hsla(0, 0%, 0%, 0.1);
@@ -30,14 +30,14 @@ $ui-gray: hsla(0, 0%, 95%, 1);
 
     color: $text-primary;
     overflow: hidden;
-    font-family: "Inter Variable", "Helvetica Neue", Helvetica, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 .illustration {
     width: 100%;
     height: 123px;
     background-color: $looks-secondary;
-    background-image: url("./telemetry-modal-header.png");
+    background-image: url('./telemetry-modal-header.png');
     background-size: cover;
 }
 
@@ -73,7 +73,7 @@ $ui-gray: hsla(0, 0%, 95%, 1);
     background-color: $ui-blue-25percent;
 }
 
-.radio-buttons input[type="radio"] {
+.radio-buttons input[type='radio'] {
     margin: -1px 0.75rem 1px;
     border: 1px solid $active-gray;
     border-radius: 50%;
@@ -84,26 +84,26 @@ $ui-gray: hsla(0, 0%, 95%, 1);
     vertical-align: middle;
 }
 
-.radio-buttons input[type="radio"]:checked,
-.radio-buttons input[type="radio"]:focus {
+.radio-buttons input[type='radio']:checked,
+.radio-buttons input[type='radio']:focus {
     box-shadow: 0 0 0 2px $ui-blue-25percent;
     outline: none;
 }
 
-.radio-buttons input[type="radio"]:checked {
+.radio-buttons input[type='radio']:checked {
     transition: all 0.25s ease;
     background-color: $ui-white;
     border: 1px solid $looks-secondary;
 }
 
-.radio-buttons input[type="radio"]:checked::after {
+.radio-buttons input[type='radio']:checked::after {
     display: block;
     margin: 0.125rem;
     border-radius: 50%;
     background-color: $looks-secondary;
     width: 0.625rem;
     height: 0.625rem;
-    content: "";
+    content: '';
 }
 
 /* Confirmation buttons at the bottom of the modal */

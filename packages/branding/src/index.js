@@ -21,15 +21,14 @@
  * gui/src/website/site-translations/en.json.
  */
 
-module.exports.APP_NAME = "AmpMod"; // "canary build" will be appended; you shouldn't manually check for it.
-module.exports.APP_SLOGAN = "Block-based programming, amplified";
-module.exports.APP_WEBSITE = "https://codeberg.org/ampmod/ampmod";
-module.exports.APP_SOURCE = "https://codeberg.org/ampmod/ampmod";
+module.exports.APP_NAME = 'AmpMod'; // "canary build" will be appended; you shouldn't manually check for it.
+module.exports.APP_SLOGAN = 'Block-based programming, amplified';
+module.exports.APP_WEBSITE = 'https://codeberg.org/ampmod/ampmod';
+module.exports.APP_SOURCE = 'https://codeberg.org/ampmod/ampmod';
 module.exports.APP_DESCRIPTION = `${module.exports.APP_NAME} is a powerful block-based programming language built on Scratch 3.0 and TurboWarp.`;
 
-module.exports.APP_CONTACT = "https://codeberg.org/ampmod/ampmod/issues";
-module.exports.APP_WIKI = "https://ampmod.miraheze.org";
-module.exports.APP_FORUMS = "https://ampmod.flarum.cloud";
-module.exports.APP_BLOG = "https://ampmod.flarum.cloud/blog";
-module.exports.APP_FORUMS_BUGS =
-    "https://ampmod.flarum.cloud/t/bugs-and-glitches";
+module.exports.APP_CONTACT = 'https://codeberg.org/ampmod/ampmod/issues';
+module.exports.APP_WIKI = 'https://ampmod.miraheze.org';
+module.exports.APP_FORUMS = 'https://ampmod.flarum.cloud';
+module.exports.APP_BLOG = 'https://ampmod.flarum.cloud/blog';
+module.exports.APP_FORUMS_BUGS = 'https://ampmod.flarum.cloud/t/bugs-and-glitches';

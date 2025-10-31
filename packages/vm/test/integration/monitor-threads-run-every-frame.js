@@ -1,13 +1,12 @@
-const path = require("path");
-const test = require("tap").test;
-const makeTestStorage = require("../fixtures/make-test-storage");
-const readFileToBuffer =
-    require("../fixtures/readProjectFile").readFileToBuffer;
-const VirtualMachine = require("../../src/index");
-const Thread = require("../../src/engine/thread");
-const Runtime = require("../../src/engine/runtime");
+const path = require('path');
+const test = require('tap').test;
+const makeTestStorage = require('../fixtures/make-test-storage');
+const readFileToBuffer = require('../fixtures/readProjectFile').readFileToBuffer;
+const VirtualMachine = require('../../src/index');
+const Thread = require('../../src/engine/thread');
+const Runtime = require('../../src/engine/runtime');
 
-const projectUri = path.resolve(__dirname, "../fixtures/timer-monitor.sb3");
+const projectUri = path.resolve(__dirname, '../fixtures/timer-monitor.sb3');
 const project = readFileToBuffer(projectUri);
 
 const checkMonitorThreadPresent = (t, threads) => {
@@ -15,13 +14,13 @@ const checkMonitorThreadPresent = (t, threads) => {
     const monitorThread = threads[0];
     t.equal(monitorThread.stackClick, false);
     t.equal(monitorThread.updateMonitor, true);
-    t.equal(monitorThread.topBlock.toString(), "timer");
+    t.equal(monitorThread.topBlock.toString(), 'timer');
 };
 
 /**
  * Creates a monitor and then checks if it gets run every frame.
  */
-test("monitor thread runs every frame", t => {
+test('monitor thread runs every frame', t => {
     const vm = new VirtualMachine();
     vm.attachStorage(makeTestStorage());
 
@@ -59,7 +58,7 @@ test("monitor thread runs every frame", t => {
  * If the monitor doesn't finish evaluating within one frame, it shouldn't be added again
  * on the next frame. (We skip execution by setting the step time to 0)
  */
-test("monitor thread not added twice", t => {
+test('monitor thread not added twice', t => {
     const vm = new VirtualMachine();
     vm.attachStorage(makeTestStorage());
 

@@ -1,4 +1,4 @@
-import nanolog from "@turbowarp/nanolog";
+import nanolog from '@turbowarp/nanolog';
 nanolog.enable();
 
-export default nanolog("gui");
+export default nanolog('gui');

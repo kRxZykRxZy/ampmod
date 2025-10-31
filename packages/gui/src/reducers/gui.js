@@ -1,55 +1,37 @@
-import { applyMiddleware, compose, combineReducers } from "redux";
-import alertsReducer, { alertsInitialState } from "./alerts";
-import assetDragReducer, { assetDragInitialState } from "./asset-drag";
-import colorPickerReducer, { colorPickerInitialState } from "./color-picker";
-import connectionModalReducer, {
-    connectionModalInitialState,
-} from "./connection-modal";
-import customProceduresReducer, {
-    customProceduresInitialState,
-} from "./custom-procedures";
-import blockDragReducer, { blockDragInitialState } from "./block-drag";
-import editorTabReducer, { editorTabInitialState } from "./editor-tab";
-import hoveredTargetReducer, {
-    hoveredTargetInitialState,
-} from "./hovered-target";
-import menuReducer, { menuInitialState } from "./menus";
-import micIndicatorReducer, { micIndicatorInitialState } from "./mic-indicator";
-import modalReducer, { modalsInitialState } from "./modals";
-import modeReducer, { modeInitialState } from "./mode";
-import monitorReducer, { monitorsInitialState } from "./monitors";
-import monitorLayoutReducer, {
-    monitorLayoutInitialState,
-} from "./monitor-layout";
-import projectChangedReducer, {
-    projectChangedInitialState,
-} from "./project-changed";
-import projectStateReducer, { projectStateInitialState } from "./project-state";
-import projectTitleReducer, { projectTitleInitialState } from "./project-title";
-import fontsLoadedReducer, { fontsLoadedInitialState } from "./fonts-loaded";
-import restoreDeletionReducer, {
-    restoreDeletionInitialState,
-} from "./restore-deletion";
-import stageSizeReducer, { stageSizeInitialState } from "./stage-size";
-import targetReducer, { targetsInitialState } from "./targets";
-import themeReducer, { themeInitialState } from "./theme";
-import timeoutReducer, { timeoutInitialState } from "./timeout";
-import timeTravelReducer, { timeTravelInitialState } from "./time-travel";
-import toolboxReducer, { toolboxInitialState } from "./toolbox";
-import twReducer, { twInitialState } from "./tw";
-import customStageSizeReducer, {
-    customStageSizeInitialState,
-} from "./custom-stage-size";
-import vmReducer, { vmInitialState } from "./vm";
-import vmStatusReducer, { vmStatusInitialState } from "./vm-status";
-import workspaceMetricsReducer, {
-    workspaceMetricsInitialState,
-} from "./workspace-metrics";
-import throttle from "redux-throttle";
+import {applyMiddleware, compose, combineReducers} from 'redux';
+import alertsReducer, {alertsInitialState} from './alerts';
+import assetDragReducer, {assetDragInitialState} from './asset-drag';
+import colorPickerReducer, {colorPickerInitialState} from './color-picker';
+import connectionModalReducer, {connectionModalInitialState} from './connection-modal';
+import customProceduresReducer, {customProceduresInitialState} from './custom-procedures';
+import blockDragReducer, {blockDragInitialState} from './block-drag';
+import editorTabReducer, {editorTabInitialState} from './editor-tab';
+import hoveredTargetReducer, {hoveredTargetInitialState} from './hovered-target';
+import menuReducer, {menuInitialState} from './menus';
+import micIndicatorReducer, {micIndicatorInitialState} from './mic-indicator';
+import modalReducer, {modalsInitialState} from './modals';
+import modeReducer, {modeInitialState} from './mode';
+import monitorReducer, {monitorsInitialState} from './monitors';
+import monitorLayoutReducer, {monitorLayoutInitialState} from './monitor-layout';
+import projectChangedReducer, {projectChangedInitialState} from './project-changed';
+import projectStateReducer, {projectStateInitialState} from './project-state';
+import projectTitleReducer, {projectTitleInitialState} from './project-title';
+import fontsLoadedReducer, {fontsLoadedInitialState} from './fonts-loaded';
+import restoreDeletionReducer, {restoreDeletionInitialState} from './restore-deletion';
+import stageSizeReducer, {stageSizeInitialState} from './stage-size';
+import targetReducer, {targetsInitialState} from './targets';
+import themeReducer, {themeInitialState} from './theme';
+import timeoutReducer, {timeoutInitialState} from './timeout';
+import timeTravelReducer, {timeTravelInitialState} from './time-travel';
+import toolboxReducer, {toolboxInitialState} from './toolbox';
+import twReducer, {twInitialState} from './tw';
+import customStageSizeReducer, {customStageSizeInitialState} from './custom-stage-size';
+import vmReducer, {vmInitialState} from './vm';
+import vmStatusReducer, {vmStatusInitialState} from './vm-status';
+import workspaceMetricsReducer, {workspaceMetricsInitialState} from './workspace-metrics';
+import throttle from 'redux-throttle';
 
-const guiMiddleware = compose(
-    applyMiddleware(throttle(300, { leading: true, trailing: true }))
-);
+const guiMiddleware = compose(applyMiddleware(throttle(300, {leading: true, trailing: true})));
 
 const guiInitialState = {
     alerts: alertsInitialState,
@@ -81,7 +63,7 @@ const guiInitialState = {
     tw: twInitialState,
     vm: vmInitialState,
     vmStatus: vmStatusInitialState,
-    workspaceMetrics: workspaceMetricsInitialState,
+    workspaceMetrics: workspaceMetricsInitialState
 };
 
 const initPlayer = function (currentState) {
@@ -92,8 +74,8 @@ const initPlayer = function (currentState) {
             isPlayerOnly: true,
             // When initializing in player mode, make sure to reset
             // hasEverEnteredEditorMode
-            hasEverEnteredEditor: false,
-        },
+            hasEverEnteredEditor: false
+        }
     });
 };
 const initFullScreen = function (currentState) {
@@ -102,8 +84,8 @@ const initFullScreen = function (currentState) {
             isEmbedded: false,
             isFullScreen: true,
             isPlayerOnly: currentState.mode.isPlayerOnly,
-            hasEverEnteredEditor: currentState.mode.hasEverEnteredEditor,
-        },
+            hasEverEnteredEditor: currentState.mode.hasEverEnteredEditor
+        }
     });
 };
 
@@ -114,16 +96,16 @@ const initEmbedded = function (currentState) {
             // tw: embed does not need isFullScreen anymore
             isFullScreen: false,
             isPlayerOnly: true,
-            hasEverEnteredEditor: false,
-        },
+            hasEverEnteredEditor: false
+        }
     });
 };
 
 const initTelemetryModal = function (currentState) {
     return Object.assign({}, currentState, {
         modals: {
-            telemetryModal: true, // this key must match `MODAL_TELEMETRY` in modals.js
-        },
+            telemetryModal: true // this key must match `MODAL_TELEMETRY` in modals.js
+        }
     });
 };
 
@@ -157,7 +139,7 @@ const guiReducer = combineReducers({
     tw: twReducer,
     vm: vmReducer,
     vmStatus: vmStatusReducer,
-    workspaceMetrics: workspaceMetricsReducer,
+    workspaceMetrics: workspaceMetricsReducer
 });
 
 export {
@@ -167,5 +149,5 @@ export {
     initEmbedded,
     initFullScreen,
     initPlayer,
-    initTelemetryModal,
+    initTelemetryModal
 };

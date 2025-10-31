@@ -3,11 +3,11 @@ import AddonChannels from 'scratch-gui/src/addons/channels';
 import runAddons from 'scratch-gui/src/addons/entry.js';
 
 AddonChannels.reloadChannel.addEventListener('message', () => {
-  location.reload();
+    location.reload();
 });
 
 AddonChannels.changeChannel.addEventListener('message', e => {
-  SettingsStore.setStoreWithVersionCheck(e.data);
+    SettingsStore.setStoreWithVersionCheck(e.data);
 });
 
 runAddons();

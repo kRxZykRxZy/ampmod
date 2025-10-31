@@ -1,10 +1,10 @@
-import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import log from "./log";
-import { getIsShowingProject } from "../reducers/project-state";
+import React from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import log from './log';
+import {getIsShowingProject} from '../reducers/project-state';
 
-const PACKAGER_URL = "https://packager.turbowarp.org";
+const PACKAGER_URL = 'https://packager.turbowarp.org';
 const PACKAGER_ORIGIN = PACKAGER_URL;
 
 const PackagerIntegrationHOC = function (WrappedComponent) {
@@ -15,10 +15,10 @@ const PackagerIntegrationHOC = function (WrappedComponent) {
             this.handleMessage = this.handleMessage.bind(this);
         }
         componentDidMount() {
-            window.addEventListener("message", this.handleMessage);
+            window.addEventListener('message', this.handleMessage);
         }
         componentWillUnmount() {
-            window.removeEventListener("message", this.handleMessage);
+            window.removeEventListener('message', this.handleMessage);
         }
         handleClickPackager() {
             if (this.props.canOpenPackager) {
@@ -35,7 +35,7 @@ const PackagerIntegrationHOC = function (WrappedComponent) {
             }
 
             const packagerData = e.data.p4;
-            if (packagerData.type !== "ready-for-import") {
+            if (packagerData.type !== 'ready-for-import') {
                 return;
             }
 
@@ -43,23 +43,23 @@ const PackagerIntegrationHOC = function (WrappedComponent) {
             e.source.postMessage(
                 {
                     p4: {
-                        type: "start-import",
-                    },
+                        type: 'start-import'
+                    }
                 },
                 e.origin
             );
 
             this.props.vm
-                .saveProjectSb3("arraybuffer")
+                .saveProjectSb3('arraybuffer')
                 .then(buffer => {
                     const name = `${this.props.reduxProjectTitle}.apz`;
                     e.source.postMessage(
                         {
                             p4: {
-                                type: "finish-import",
+                                type: 'finish-import',
                                 data: buffer,
-                                name,
-                            },
+                                name
+                            }
                         },
                         e.origin,
                         [buffer]
@@ -70,8 +70,8 @@ const PackagerIntegrationHOC = function (WrappedComponent) {
                     e.source.postMessage(
                         {
                             p4: {
-                                type: "cancel-import",
-                            },
+                                type: 'cancel-import'
+                            }
                         },
                         e.origin
                     );
@@ -84,33 +84,23 @@ const PackagerIntegrationHOC = function (WrappedComponent) {
                 /* eslint-enable no-unused-vars */
                 ...props
             } = this.props;
-            return (
-                <WrappedComponent
-                    onClickPackager={this.handleClickPackager}
-                    {...props}
-                />
-            );
+            return <WrappedComponent onClickPackager={this.handleClickPackager} {...props} />;
         }
     }
     PackagerIntegrationComponent.propTypes = {
         canOpenPackager: PropTypes.bool,
         reduxProjectTitle: PropTypes.string,
         vm: PropTypes.shape({
-            saveProjectSb3: PropTypes.func,
-        }),
+            saveProjectSb3: PropTypes.func
+        })
     };
     const mapStateToProps = state => ({
-        canOpenPackager: getIsShowingProject(
-            state.scratchGui.projectState.loadingState
-        ),
+        canOpenPackager: getIsShowingProject(state.scratchGui.projectState.loadingState),
         reduxProjectTitle: state.scratchGui.projectTitle,
-        vm: state.scratchGui.vm,
+        vm: state.scratchGui.vm
     });
     const mapDispatchToProps = () => ({});
-    return connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )(PackagerIntegrationComponent);
+    return connect(mapStateToProps, mapDispatchToProps)(PackagerIntegrationComponent);
 };
 
-export { PackagerIntegrationHOC as default };
+export {PackagerIntegrationHOC as default};

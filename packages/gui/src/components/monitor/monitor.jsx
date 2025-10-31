@@ -1,57 +1,53 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
-import Draggable from "react-draggable";
-import { FormattedMessage } from "react-intl";
-import { ContextMenuTrigger } from "react-contextmenu";
-import {
-    BorderedMenuItem,
-    ContextMenu,
-    MenuItem,
-} from "../context-menu/context-menu.jsx";
-import Box from "../box/box.jsx";
-import DefaultMonitor from "./default-monitor.jsx";
-import LargeMonitor from "./large-monitor.jsx";
-import SliderMonitor from "../../containers/slider-monitor.jsx";
-import ListMonitor from "../../containers/list-monitor.jsx";
-import { Theme } from "../../lib/themes/index.js";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+import Draggable from 'react-draggable';
+import {FormattedMessage} from 'react-intl';
+import {ContextMenuTrigger} from 'react-contextmenu';
+import {BorderedMenuItem, ContextMenu, MenuItem} from '../context-menu/context-menu.jsx';
+import Box from '../box/box.jsx';
+import DefaultMonitor from './default-monitor.jsx';
+import LargeMonitor from './large-monitor.jsx';
+import SliderMonitor from '../../containers/slider-monitor.jsx';
+import ListMonitor from '../../containers/list-monitor.jsx';
+import {Theme} from '../../lib/themes/index.js';
 
-import styles from "./monitor.css";
+import styles from './monitor.css';
 
 // Map category name to color name used in scratch-blocks Blockly.Colours
 const categoryColorMap = {
-    data: "data",
-    sensing: "sensing",
-    sound: "sounds",
-    looks: "looks",
-    motion: "motion",
-    list: "data_lists",
-    extension: "pen",
+    data: 'data',
+    sensing: 'sensing',
+    sound: 'sounds',
+    looks: 'looks',
+    motion: 'motion',
+    list: 'data_lists',
+    extension: 'pen'
 };
 
 const modes = {
     default: DefaultMonitor,
     large: LargeMonitor,
     slider: SliderMonitor,
-    list: ListMonitor,
+    list: ListMonitor
 };
 
 const getCategoryColor = (theme, category) => {
     const colors = theme.getStageBlockColors();
     return {
         background: colors[categoryColorMap[category]].primary,
-        text: colors.text,
+        text: colors.text
     };
 };
 
 const MonitorComponent = props => {
-    const mode = Array.isArray(props.value) ? "list" : props.mode;
+    const mode = Array.isArray(props.value) ? 'list' : props.mode;
 
     return (
         <ContextMenuTrigger
             // TW: if export is defined, we always show it, even outside of the editor
             disable={!props.draggable && !props.onExport}
-            holdToDisplay={mode === "slider" ? -1 : 1000}
+            holdToDisplay={mode === 'slider' ? -1 : 1000}
             id={`monitor-${props.label}`}
         >
             <Draggable
@@ -66,20 +62,13 @@ const MonitorComponent = props => {
                 <Box
                     className={styles.monitorContainer}
                     componentRef={props.componentRef}
-                    onDoubleClick={
-                        mode === "list" || !props.draggable
-                            ? null
-                            : props.onNextMode
-                    }
+                    onDoubleClick={mode === 'list' || !props.draggable ? null : props.onNextMode}
                     data-id={props.id}
                     data-opcode={props.opcode}
                 >
                     {React.createElement(modes[mode], {
-                        categoryColor: getCategoryColor(
-                            props.theme,
-                            props.category
-                        ),
-                        ...props,
+                        categoryColor: getCategoryColor(props.theme, props.category),
+                        ...props
                     })}
                 </Box>
             </Draggable>
@@ -116,19 +105,15 @@ const MonitorComponent = props => {
                             />
                         </MenuItem>
                     )}
-                    {props.draggable &&
-                        props.onSliderPromptOpen &&
-                        mode === "slider" && (
-                            <BorderedMenuItem
-                                onClick={props.onSliderPromptOpen}
-                            >
-                                <FormattedMessage
-                                    defaultMessage="change slider range"
-                                    description="Menu item to change the slider range"
-                                    id="gui.monitor.contextMenu.sliderRange"
-                                />
-                            </BorderedMenuItem>
-                        )}
+                    {props.draggable && props.onSliderPromptOpen && mode === 'slider' && (
+                        <BorderedMenuItem onClick={props.onSliderPromptOpen}>
+                            <FormattedMessage
+                                defaultMessage="change slider range"
+                                description="Menu item to change the slider range"
+                                id="gui.monitor.contextMenu.sliderRange"
+                            />
+                        </BorderedMenuItem>
+                    )}
                     {props.onImport && (
                         <MenuItem onClick={props.onImport}>
                             <FormattedMessage
@@ -183,12 +168,12 @@ MonitorComponent.propTypes = {
     onSetModeToSlider: PropTypes.func,
     onSliderPromptOpen: PropTypes.func,
     theme: PropTypes.instanceOf(Theme).isRequired,
-    value: PropTypes.any, // Add this prop to handle the value being monitored
+    value: PropTypes.any // Add this prop to handle the value being monitored
 };
 
 MonitorComponent.defaultProps = {
-    category: "extension",
-    mode: "default",
+    category: 'extension',
+    mode: 'default'
 };
 
-export { MonitorComponent as default, monitorModes };
+export {MonitorComponent as default, monitorModes};

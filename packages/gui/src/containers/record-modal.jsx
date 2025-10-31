@@ -1,28 +1,28 @@
-import bindAll from "lodash.bindall";
-import PropTypes from "prop-types";
-import React from "react";
-import VM from "scratch-vm";
-import { connect } from "react-redux";
-import { encodeAndAddSoundToVM } from "../lib/audio/audio-util.js";
+import bindAll from 'lodash.bindall';
+import PropTypes from 'prop-types';
+import React from 'react';
+import VM from 'scratch-vm';
+import {connect} from 'react-redux';
+import {encodeAndAddSoundToVM} from '../lib/audio/audio-util.js';
 
-import RecordModalComponent from "../components/record-modal/record-modal.jsx";
+import RecordModalComponent from '../components/record-modal/record-modal.jsx';
 
-import { closeSoundRecorder } from "../reducers/modals";
+import {closeSoundRecorder} from '../reducers/modals';
 
 class RecordModal extends React.Component {
     constructor(props) {
         super(props);
         bindAll(this, [
-            "handleRecord",
-            "handleStopRecording",
-            "handlePlay",
-            "handleStopPlaying",
-            "handleBack",
-            "handleSubmit",
-            "handleCancel",
-            "handleSetPlayhead",
-            "handleSetTrimStart",
-            "handleSetTrimEnd",
+            'handleRecord',
+            'handleStopRecording',
+            'handlePlay',
+            'handleStopPlaying',
+            'handleBack',
+            'handleSubmit',
+            'handleCancel',
+            'handleSetPlayhead',
+            'handleSetTrimStart',
+            'handleSetTrimEnd'
         ]);
 
         this.state = {
@@ -34,11 +34,11 @@ class RecordModal extends React.Component {
             recording: false,
             sampleRate: null,
             trimStart: 0,
-            trimEnd: 1,
+            trimEnd: 1
         };
     }
     handleRecord() {
-        this.setState({ recording: true });
+        this.setState({recording: true});
     }
     handleStopRecording(samples, sampleRate, levels, trimStart, trimEnd) {
         if (samples.length > 0) {
@@ -48,48 +48,39 @@ class RecordModal extends React.Component {
                 levels,
                 trimStart,
                 trimEnd,
-                recording: false,
+                recording: false
             });
         }
     }
     handlePlay() {
-        this.setState({ playing: true });
+        this.setState({playing: true});
     }
     handleStopPlaying() {
-        this.setState({ playing: false, playhead: null });
+        this.setState({playing: false, playhead: null});
     }
     handleBack() {
-        this.setState({ playing: false, samples: null });
+        this.setState({playing: false, samples: null});
     }
     handleSetTrimEnd(trimEnd) {
-        this.setState({ trimEnd });
+        this.setState({trimEnd});
     }
     handleSetTrimStart(trimStart) {
-        this.setState({ trimStart });
+        this.setState({trimStart});
     }
     handleSetPlayhead(playhead) {
-        this.setState({ playhead });
+        this.setState({playhead});
     }
     handleSubmit() {
-        this.setState({ encoding: true }, () => {
+        this.setState({encoding: true}, () => {
             const sampleCount = this.state.samples.length;
             const startIndex = Math.floor(this.state.trimStart * sampleCount);
             const endIndex = Math.floor(this.state.trimEnd * sampleCount);
-            const clippedSamples = this.state.samples.slice(
-                startIndex,
-                endIndex
-            );
+            const clippedSamples = this.state.samples.slice(startIndex, endIndex);
 
-            encodeAndAddSoundToVM(
-                this.props.vm,
-                clippedSamples,
-                this.state.sampleRate,
-                "recording1",
-                () => {
-                    this.props.onClose();
-                    this.props.onNewSound();
-                }
-            );
+            encodeAndAddSoundToVM(this.props.vm, clippedSamples, this.state.sampleRate, 'recording1', () => {
+                this.props.onClose();
+                this.props.onNewSound();
+            });
         });
     }
     handleCancel() {
@@ -125,17 +116,17 @@ class RecordModal extends React.Component {
 RecordModal.propTypes = {
     onClose: PropTypes.func,
     onNewSound: PropTypes.func,
-    vm: PropTypes.instanceOf(VM),
+    vm: PropTypes.instanceOf(VM)
 };
 
 const mapStateToProps = state => ({
-    vm: state.scratchGui.vm,
+    vm: state.scratchGui.vm
 });
 
 const mapDispatchToProps = dispatch => ({
     onClose: () => {
         dispatch(closeSoundRecorder());
-    },
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecordModal);

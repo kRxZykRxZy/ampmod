@@ -1,172 +1,160 @@
-import PropTypes from "prop-types";
-import React from "react";
-import classNames from "classnames";
-import {
-    defineMessages,
-    FormattedMessage,
-    injectIntl,
-    intlShape,
-} from "react-intl";
+import PropTypes from 'prop-types';
+import React from 'react';
+import classNames from 'classnames';
+import {defineMessages, FormattedMessage, injectIntl, intlShape} from 'react-intl';
 
-import Waveform from "../waveform/waveform.jsx";
-import Label from "../forms/label.jsx";
-import Input from "../forms/input.jsx";
-import TWRenderRecoloredImage from "../../lib/tw-recolor/render.jsx";
+import Waveform from '../waveform/waveform.jsx';
+import Label from '../forms/label.jsx';
+import Input from '../forms/input.jsx';
+import TWRenderRecoloredImage from '../../lib/tw-recolor/render.jsx';
 
-import BufferedInputHOC from "../forms/buffered-input-hoc.jsx";
-import AudioSelector from "../../containers/audio-selector.jsx";
-import IconButton from "../icon-button/icon-button.jsx";
-import { SOUND_BYTE_LIMIT } from "../../lib/audio/audio-util.js";
+import BufferedInputHOC from '../forms/buffered-input-hoc.jsx';
+import AudioSelector from '../../containers/audio-selector.jsx';
+import IconButton from '../icon-button/icon-button.jsx';
+import {SOUND_BYTE_LIMIT} from '../../lib/audio/audio-util.js';
 
-import styles from "./sound-editor.css";
+import styles from './sound-editor.css';
 
-import playIcon from "./icon--play.svg";
-import stopIcon from "./icon--stop.svg";
-import redoIcon from "!../../lib/tw-recolor/build!./icon--redo.svg";
-import undoIcon from "!../../lib/tw-recolor/build!./icon--undo.svg";
-import fasterIcon from "./icon--faster.svg";
-import slowerIcon from "./icon--slower.svg";
-import louderIcon from "./icon--louder.svg";
-import softerIcon from "./icon--softer.svg";
-import robotIcon from "./icon--robot.svg";
-import echoIcon from "./icon--echo.svg";
-import reverseIcon from "./icon--reverse.svg";
-import fadeOutIcon from "./icon--fade-out.svg";
-import fadeInIcon from "./icon--fade-in.svg";
-import muteIcon from "./icon--mute.svg";
+import playIcon from './icon--play.svg';
+import stopIcon from './icon--stop.svg';
+import redoIcon from '!../../lib/tw-recolor/build!./icon--redo.svg';
+import undoIcon from '!../../lib/tw-recolor/build!./icon--undo.svg';
+import fasterIcon from './icon--faster.svg';
+import slowerIcon from './icon--slower.svg';
+import louderIcon from './icon--louder.svg';
+import softerIcon from './icon--softer.svg';
+import robotIcon from './icon--robot.svg';
+import echoIcon from './icon--echo.svg';
+import reverseIcon from './icon--reverse.svg';
+import fadeOutIcon from './icon--fade-out.svg';
+import fadeInIcon from './icon--fade-in.svg';
+import muteIcon from './icon--mute.svg';
 
-import deleteIcon from "!../../lib/tw-recolor/build!./icon--delete.svg";
-import copyIcon from "!../../lib/tw-recolor/build!./icon--copy.svg";
-import pasteIcon from "!../../lib/tw-recolor/build!./icon--paste.svg";
-import copyToNewIcon from "!../../lib/tw-recolor/build!./icon--copy-to-new.svg";
+import deleteIcon from '!../../lib/tw-recolor/build!./icon--delete.svg';
+import copyIcon from '!../../lib/tw-recolor/build!./icon--copy.svg';
+import pasteIcon from '!../../lib/tw-recolor/build!./icon--paste.svg';
+import copyToNewIcon from '!../../lib/tw-recolor/build!./icon--copy-to-new.svg';
 
 const BufferedInput = BufferedInputHOC(Input);
 
 const messages = defineMessages({
     sound: {
-        id: "gui.soundEditor.sound",
-        description: "Label for the name of the sound",
-        defaultMessage: "Sound",
+        id: 'gui.soundEditor.sound',
+        description: 'Label for the name of the sound',
+        defaultMessage: 'Sound'
     },
     play: {
-        id: "gui.soundEditor.play",
-        description: "Title of the button to start playing the sound",
-        defaultMessage: "Play",
+        id: 'gui.soundEditor.play',
+        description: 'Title of the button to start playing the sound',
+        defaultMessage: 'Play'
     },
     stop: {
-        id: "gui.soundEditor.stop",
-        description: "Title of the button to stop the sound",
-        defaultMessage: "Stop",
+        id: 'gui.soundEditor.stop',
+        description: 'Title of the button to stop the sound',
+        defaultMessage: 'Stop'
     },
     copy: {
-        id: "gui.soundEditor.copy",
-        description: "Title of the button to copy the sound",
-        defaultMessage: "Copy",
+        id: 'gui.soundEditor.copy',
+        description: 'Title of the button to copy the sound',
+        defaultMessage: 'Copy'
     },
     paste: {
-        id: "gui.soundEditor.paste",
-        description: "Title of the button to paste the sound",
-        defaultMessage: "Paste",
+        id: 'gui.soundEditor.paste',
+        description: 'Title of the button to paste the sound',
+        defaultMessage: 'Paste'
     },
     copyToNew: {
-        id: "gui.soundEditor.copyToNew",
-        description:
-            "Title of the button to copy the selection into a new sound",
-        defaultMessage: "Copy to New",
+        id: 'gui.soundEditor.copyToNew',
+        description: 'Title of the button to copy the selection into a new sound',
+        defaultMessage: 'Copy to New'
     },
     delete: {
-        id: "gui.soundEditor.delete",
-        description: "Title of the button to delete the sound",
-        defaultMessage: "Delete",
+        id: 'gui.soundEditor.delete',
+        description: 'Title of the button to delete the sound',
+        defaultMessage: 'Delete'
     },
     save: {
-        id: "gui.soundEditor.save",
-        description: "Title of the button to save trimmed sound",
-        defaultMessage: "Save",
+        id: 'gui.soundEditor.save',
+        description: 'Title of the button to save trimmed sound',
+        defaultMessage: 'Save'
     },
     undo: {
-        id: "gui.soundEditor.undo",
-        description: "Title of the button to undo",
-        defaultMessage: "Undo",
+        id: 'gui.soundEditor.undo',
+        description: 'Title of the button to undo',
+        defaultMessage: 'Undo'
     },
     redo: {
-        id: "gui.soundEditor.redo",
-        description: "Title of the button to redo",
-        defaultMessage: "Redo",
+        id: 'gui.soundEditor.redo',
+        description: 'Title of the button to redo',
+        defaultMessage: 'Redo'
     },
     faster: {
-        id: "gui.soundEditor.faster",
-        description: "Title of the button to apply the faster effect",
-        defaultMessage: "Faster",
+        id: 'gui.soundEditor.faster',
+        description: 'Title of the button to apply the faster effect',
+        defaultMessage: 'Faster'
     },
     slower: {
-        id: "gui.soundEditor.slower",
-        description: "Title of the button to apply the slower effect",
-        defaultMessage: "Slower",
+        id: 'gui.soundEditor.slower',
+        description: 'Title of the button to apply the slower effect',
+        defaultMessage: 'Slower'
     },
     echo: {
-        id: "gui.soundEditor.echo",
-        description: "Title of the button to apply the echo effect",
-        defaultMessage: "Echo",
+        id: 'gui.soundEditor.echo',
+        description: 'Title of the button to apply the echo effect',
+        defaultMessage: 'Echo'
     },
     robot: {
-        id: "gui.soundEditor.robot",
-        description: "Title of the button to apply the robot effect",
-        defaultMessage: "Robot",
+        id: 'gui.soundEditor.robot',
+        description: 'Title of the button to apply the robot effect',
+        defaultMessage: 'Robot'
     },
     louder: {
-        id: "gui.soundEditor.louder",
-        description: "Title of the button to apply the louder effect",
-        defaultMessage: "Louder",
+        id: 'gui.soundEditor.louder',
+        description: 'Title of the button to apply the louder effect',
+        defaultMessage: 'Louder'
     },
     softer: {
-        id: "gui.soundEditor.softer",
-        description: "Title of the button to apply thr.softer effect",
-        defaultMessage: "Softer",
+        id: 'gui.soundEditor.softer',
+        description: 'Title of the button to apply thr.softer effect',
+        defaultMessage: 'Softer'
     },
     reverse: {
-        id: "gui.soundEditor.reverse",
-        description: "Title of the button to apply the reverse effect",
-        defaultMessage: "Reverse",
+        id: 'gui.soundEditor.reverse',
+        description: 'Title of the button to apply the reverse effect',
+        defaultMessage: 'Reverse'
     },
     fadeOut: {
-        id: "gui.soundEditor.fadeOut",
-        description: "Title of the button to apply the fade out effect",
-        defaultMessage: "Fade out",
+        id: 'gui.soundEditor.fadeOut',
+        description: 'Title of the button to apply the fade out effect',
+        defaultMessage: 'Fade out'
     },
     fadeIn: {
-        id: "gui.soundEditor.fadeIn",
-        description: "Title of the button to apply the fade in effect",
-        defaultMessage: "Fade in",
+        id: 'gui.soundEditor.fadeIn',
+        description: 'Title of the button to apply the fade in effect',
+        defaultMessage: 'Fade in'
     },
     mute: {
-        id: "gui.soundEditor.mute",
-        description: "Title of the button to apply the mute effect",
-        defaultMessage: "Mute",
-    },
+        id: 'gui.soundEditor.mute',
+        description: 'Title of the button to apply the mute effect',
+        defaultMessage: 'Mute'
+    }
 });
 
 const formatTime = timeSeconds => {
     const minutes = Math.floor(timeSeconds / 60)
         .toString()
-        .padStart(2, "0");
-    const seconds = (timeSeconds % 60).toFixed(2).padStart(5, "0");
+        .padStart(2, '0');
+    const seconds = (timeSeconds % 60).toFixed(2).padStart(5, '0');
     return `${minutes}:${seconds}`;
 };
 
-const formatDuration = (
-    playheadPercent,
-    trimStartPercent,
-    trimEndPercent,
-    durationSeconds
-) => {
+const formatDuration = (playheadPercent, trimStartPercent, trimEndPercent, durationSeconds) => {
     // If no selection, the trim is the entire sound.
     trimStartPercent = trimStartPercent === null ? 0 : trimStartPercent;
     trimEndPercent = trimEndPercent === null ? 1 : trimEndPercent;
 
     // If the playhead doesn't exist, assume it's at the start of the selection.
-    playheadPercent =
-        playheadPercent === null ? trimStartPercent : playheadPercent;
+    playheadPercent = playheadPercent === null ? trimStartPercent : playheadPercent;
 
     // If selection has zero length, treat it as the entire sound being selected.
     // This happens when the user first clicks to start making a selection.
@@ -187,11 +175,7 @@ const formatSoundSize = bytes => {
 };
 
 const SoundEditor = props => (
-    <div
-        className={styles.editorContainer}
-        ref={props.setRef}
-        onMouseDown={props.onContainerClick}
-    >
+    <div className={styles.editorContainer} ref={props.setRef} onMouseDown={props.onContainerClick}>
         <div className={styles.row}>
             <div className={styles.inputGroup}>
                 <Label text={props.intl.formatMessage(messages.sound)}>
@@ -210,11 +194,7 @@ const SoundEditor = props => (
                         title={props.intl.formatMessage(messages.undo)}
                         onClick={props.onUndo}
                     >
-                        <TWRenderRecoloredImage
-                            className={styles.undoIcon}
-                            draggable={false}
-                            src={undoIcon}
-                        />
+                        <TWRenderRecoloredImage className={styles.undoIcon} draggable={false} src={undoIcon} />
                     </button>
                     <button
                         className={styles.button}
@@ -222,11 +202,7 @@ const SoundEditor = props => (
                         title={props.intl.formatMessage(messages.redo)}
                         onClick={props.onRedo}
                     >
-                        <TWRenderRecoloredImage
-                            className={styles.redoIcon}
-                            draggable={false}
-                            src={redoIcon}
-                        />
+                        <TWRenderRecoloredImage className={styles.redoIcon} draggable={false} src={redoIcon} />
                     </button>
                 </div>
             </div>
@@ -273,18 +249,10 @@ const SoundEditor = props => (
             </div>
         </div>
         <div className={classNames(styles.row, styles.rowReverse)}>
-            <div
-                className={classNames(
-                    styles.roundButtonOuter,
-                    styles.inputGroup
-                )}
-            >
+            <div className={classNames(styles.roundButtonOuter, styles.inputGroup)}>
                 {props.playhead ? (
                     <button
-                        className={classNames(
-                            styles.roundButton,
-                            styles.stopButtonn
-                        )}
+                        className={classNames(styles.roundButton, styles.stopButtonn)}
                         title={props.intl.formatMessage(messages.stop)}
                         onClick={props.onStop}
                     >
@@ -292,10 +260,7 @@ const SoundEditor = props => (
                     </button>
                 ) : (
                     <button
-                        className={classNames(
-                            styles.roundButton,
-                            styles.playButton
-                        )}
+                        className={classNames(styles.roundButton, styles.playButton)}
                         title={props.intl.formatMessage(messages.play)}
                         onClick={props.onPlay}
                     >
@@ -318,28 +283,19 @@ const SoundEditor = props => (
                 />
                 <IconButton
                     disabled={props.tooLoud}
-                    className={classNames(
-                        styles.effectButton,
-                        styles.flipInRtl
-                    )}
+                    className={classNames(styles.effectButton, styles.flipInRtl)}
                     img={louderIcon}
                     title={<FormattedMessage {...messages.louder} />}
                     onClick={props.onLouder}
                 />
                 <IconButton
-                    className={classNames(
-                        styles.effectButton,
-                        styles.flipInRtl
-                    )}
+                    className={classNames(styles.effectButton, styles.flipInRtl)}
                     img={softerIcon}
                     title={<FormattedMessage {...messages.softer} />}
                     onClick={props.onSofter}
                 />
                 <IconButton
-                    className={classNames(
-                        styles.effectButton,
-                        styles.flipInRtl
-                    )}
+                    className={classNames(styles.effectButton, styles.flipInRtl)}
                     img={muteIcon}
                     title={<FormattedMessage {...messages.mute} />}
                     onClick={props.onMute}
@@ -378,12 +334,7 @@ const SoundEditor = props => (
         </div>
         <div className={styles.infoRow}>
             <div className={styles.duration}>
-                {formatDuration(
-                    props.playhead,
-                    props.trimStart,
-                    props.trimEnd,
-                    props.duration
-                )}
+                {formatDuration(props.playhead, props.trimStart, props.trimEnd, props.duration)}
             </div>
             <div className={styles.advancedInfo}>
                 {props.isStereo ? (
@@ -459,7 +410,7 @@ SoundEditor.propTypes = {
     setRef: PropTypes.func,
     tooLoud: PropTypes.bool.isRequired,
     trimEnd: PropTypes.number,
-    trimStart: PropTypes.number,
+    trimStart: PropTypes.number
 };
 
 export default injectIntl(SoundEditor);

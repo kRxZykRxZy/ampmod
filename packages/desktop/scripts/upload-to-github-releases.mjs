@@ -18,17 +18,13 @@ const githubHeaders = {
  * @param {number} ms
  * @returns {Promise<void>}
  */
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 /**
  * @returns {string} Name of tag for current commit
  */
 const getMostRecentTag = () => {
-    const gitProcess = childProcess.spawnSync('git', [
-        'describe',
-        '--tags',
-        '--abbrev=0'
-    ]);
+    const gitProcess = childProcess.spawnSync('git', ['describe', '--tags', '--abbrev=0']);
 
     if (gitProcess.error) {
         throw gitProcess.error;
@@ -90,7 +86,7 @@ const getReleaseForTag = async (owner, repo, tagName) => {
  * @param {string} file File name or path
  * @returns {string}
  */
-const getContentType = (file) => {
+const getContentType = file => {
     file = file.toLowerCase();
     if (file.endsWith('.exe')) return 'application/vnd.microsoft.portable-executable';
     if (file.endsWith('.dmg')) return 'application/x-apple-diskimage';
@@ -117,15 +113,18 @@ const uploadReleaseAsset = async (owner, repo, releaseId, file) => {
     const fileType = getContentType(fileName);
     const fileData = await fsPromises.readFile(file);
 
-    const res = await fetch(`https://uploads.github.com/repos/${owner}/${repo}/releases/${releaseId}/assets?name=${encodeURIComponent(fileName)}`, {
-        method: 'POST',
-        headers: {
-            ...githubHeaders,
-            'Content-Length': fileData.byteLength,
-            'Content-Type': fileType
-        },
-        body: fileData
-    });
+    const res = await fetch(
+        `https://uploads.github.com/repos/${owner}/${repo}/releases/${releaseId}/assets?name=${encodeURIComponent(fileName)}`,
+        {
+            method: 'POST',
+            headers: {
+                ...githubHeaders,
+                'Content-Length': fileData.byteLength,
+                'Content-Type': fileType
+            },
+            body: fileData
+        }
+    );
 
     if (!res.ok) {
         throw new Error(`HTTP ${res.status} uploading asset to release`);
@@ -164,10 +163,8 @@ const run = async () => {
 };
 
 run()
-    .then(() => {
-
-    })
-    .catch((err) => {
+    .then(() => {})
+    .catch(err => {
         console.error(err);
         process.exit(1);
     });

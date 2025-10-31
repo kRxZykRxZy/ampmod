@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Button from "../button/button.jsx";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Button from '../button/button.jsx';
 
 class CustomFontButton extends React.Component {
     constructor(props) {
@@ -22,7 +22,7 @@ class CustomFontButton extends React.Component {
 CustomFontButton.propTypes = {
     children: PropTypes.node.isRequired,
     font: PropTypes.string.isRequired,
-    onMouseOver: PropTypes.func.isRequired,
+    onMouseOver: PropTypes.func.isRequired
 };
 
 export default CustomFontButton;

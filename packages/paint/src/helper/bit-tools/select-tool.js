@@ -1,12 +1,12 @@
-import paper from "@turbowarp/paper";
-import Modes from "../../lib/modes";
+import paper from '@turbowarp/paper';
+import Modes from '../../lib/modes';
 
-import { getRaster } from "../layer";
-import { commitSelectionToBitmap } from "../bitmap";
+import {getRaster} from '../layer';
+import {commitSelectionToBitmap} from '../bitmap';
 
-import BoundingBoxTool from "../selection-tools/bounding-box-tool";
-import NudgeTool from "../selection-tools/nudge-tool";
-import SelectionBoxTool from "../selection-tools/selection-box-tool";
+import BoundingBoxTool from '../selection-tools/bounding-box-tool';
+import NudgeTool from '../selection-tools/nudge-tool';
+import SelectionBoxTool from '../selection-tools/selection-box-tool';
 
 /**
  * paper.Tool that handles select mode in bitmap. This is made up of 2 subtools.
@@ -26,12 +26,7 @@ class SelectTool extends paper.Tool {
      * @param {function} setCursor Callback to set the visible mouse cursor
      * @param {!function} onUpdateImage A callback to call when the image visibly changes
      */
-    constructor(
-        setSelectedItems,
-        clearSelectedItems,
-        setCursor,
-        onUpdateImage
-    ) {
+    constructor(setSelectedItems, clearSelectedItems, setCursor, onUpdateImage) {
         super();
         this.onUpdateImage = onUpdateImage;
         this.boundingBoxTool = new BoundingBoxTool(
@@ -41,16 +36,8 @@ class SelectTool extends paper.Tool {
             setCursor,
             onUpdateImage
         );
-        const nudgeTool = new NudgeTool(
-            Modes.BIT_SELECT,
-            this.boundingBoxTool,
-            onUpdateImage
-        );
-        this.selectionBoxTool = new SelectionBoxTool(
-            Modes.BIT_SELECT,
-            setSelectedItems,
-            clearSelectedItems
-        );
+        const nudgeTool = new NudgeTool(Modes.BIT_SELECT, this.boundingBoxTool, onUpdateImage);
+        this.selectionBoxTool = new SelectionBoxTool(Modes.BIT_SELECT, setSelectedItems, clearSelectedItems);
         this.selectionBoxMode = false;
         this.selection = null;
         this.active = false;
@@ -72,11 +59,7 @@ class SelectTool extends paper.Tool {
      */
     onSelectionChanged(selectedItems) {
         this.boundingBoxTool.onSelectionChanged(selectedItems);
-        if (
-            this.selection &&
-            this.selection.parent &&
-            !this.selection.selected
-        ) {
+        if (this.selection && this.selection.parent && !this.selection.selected) {
             // Selection got deselected
             this.commitSelection();
         }
@@ -109,11 +92,8 @@ class SelectTool extends paper.Tool {
                 if (!hitResult.item.data || !hitResult.item.data.isHelperItem) {
                     return true;
                 }
-                return (
-                    hitResult.item.data.isScaleHandle ||
-                    hitResult.item.data.isRotHandle
-                );
-            },
+                return hitResult.item.data.isScaleHandle || hitResult.item.data.isRotHandle;
+            }
         };
     }
     handleMouseDown(event) {

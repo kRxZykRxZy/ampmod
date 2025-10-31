@@ -1,21 +1,20 @@
-import createThumbnail from "./thumbnail";
+import createThumbnail from './thumbnail';
 
 const spritePayload = (id, vm) => {
     const target = vm.runtime.getTargetById(id);
     if (!target) return null;
 
-    return vm.exportSprite(id, "base64").then(zippedSprite => {
+    return vm.exportSprite(id, 'base64').then(zippedSprite => {
         const payload = {
-            type: "sprite",
+            type: 'sprite',
             name: target.sprite.name,
-            mime: "application/zip",
+            mime: 'application/zip',
             body: zippedSprite,
             // Filled in below
-            thumbnail: "",
+            thumbnail: ''
         };
 
-        const costumeDataUrl =
-            target.sprite.costumes[target.currentCostume].asset.encodeDataURI();
+        const costumeDataUrl = target.sprite.costumes[target.currentCostume].asset.encodeDataURI();
 
         return createThumbnail(costumeDataUrl).then(thumbnail => {
             payload.thumbnail = thumbnail;

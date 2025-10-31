@@ -1,8 +1,8 @@
 // @ts-check
 
-const Cast = require("../util/cast");
-const { InputOpcode, InputType } = require("./enums.js");
-const log = require("../util/log");
+const Cast = require('../util/cast');
+const {InputOpcode, InputType} = require('./enums.js');
+const log = require('../util/log');
 
 /**
  * @fileoverview Common intermediates shared amongst parts of the compiler.
@@ -17,7 +17,7 @@ class IntermediateStackBlock {
      * @param {Object} inputs
      * @param {boolean} yields
      */
-    constructor(opcode, inputs = {}, yields = false) {
+    constructor (opcode, inputs = {}, yields = false) {
         /**
          * The type of the stackable block.
          * @type {import("./enums").StackOpcode}
@@ -59,18 +59,12 @@ class IntermediateStackBlock {
  * This could be a constant, variable or math operation.
  */
 class IntermediateInput {
-    static getNumberInputType(number) {
-        if (typeof number !== "number") throw new Error("Expected a number.");
+    static getNumberInputType (number) {
+        if (typeof number !== 'number') throw new Error('Expected a number.');
         if (number === Infinity) return InputType.NUMBER_POS_INF;
         if (number === -Infinity) return InputType.NUMBER_NEG_INF;
-        if (number < 0)
-            return Number.isInteger(number)
-                ? InputType.NUMBER_NEG_INT
-                : InputType.NUMBER_NEG_FRACT;
-        if (number > 0)
-            return Number.isInteger(number)
-                ? InputType.NUMBER_POS_INT
-                : InputType.NUMBER_POS_FRACT;
+        if (number < 0) return Number.isInteger(number) ? InputType.NUMBER_NEG_INT : InputType.NUMBER_NEG_FRACT;
+        if (number > 0) return Number.isInteger(number) ? InputType.NUMBER_POS_INT : InputType.NUMBER_POS_FRACT;
         if (Number.isNaN(number)) return InputType.NUMBER_NAN;
         if (Object.is(number, -0)) return InputType.NUMBER_NEG_ZERO;
         return InputType.NUMBER_ZERO;
@@ -82,7 +76,7 @@ class IntermediateInput {
      * @param {Object} inputs
      * @param {boolean} yields
      */
-    constructor(opcode, type, inputs = {}, yields = false) {
+    constructor (opcode, type, inputs = {}, yields = false) {
         /**
          * @type {InputOpcode}
          */
@@ -109,11 +103,10 @@ class IntermediateInput {
      * @param {*} value The value
      * @returns {boolean}
      */
-    isConstant(value) {
+    isConstant (value) {
         if (this.opcode !== InputOpcode.CONSTANT) return false;
         let equal = this.inputs.value === value;
-        if (!equal && typeof value === "number")
-            equal = +this.inputs.value === value;
+        if (!equal && typeof value === 'number') equal = +this.inputs.value === value;
         return equal;
     }
 
@@ -122,7 +115,7 @@ class IntermediateInput {
      * @param {InputType} type
      * @returns {boolean}
      */
-    isAlwaysType(type) {
+    isAlwaysType (type) {
         return (this.type & type) === this.type;
     }
 
@@ -131,7 +124,7 @@ class IntermediateInput {
      * @param {InputType} type
      * @returns
      */
-    isSometimesType(type) {
+    isSometimesType (type) {
         return (this.type & type) !== 0;
     }
 
@@ -142,30 +135,33 @@ class IntermediateInput {
      * @param {InputType} targetType
      * @returns {IntermediateInput} An input with the new type.
      */
-    toType(targetType) {
+    toType (targetType) {
         let castOpcode;
         switch (targetType) {
-            case InputType.BOOLEAN:
-                castOpcode = InputOpcode.CAST_BOOLEAN;
-                break;
-            case InputType.NUMBER:
-                castOpcode = InputOpcode.CAST_NUMBER;
-                break;
-            case InputType.NUMBER_INDEX:
-                castOpcode = InputOpcode.CAST_NUMBER_INDEX;
-                break;
-            case InputType.NUMBER_OR_NAN:
-                castOpcode = InputOpcode.CAST_NUMBER_OR_NAN;
-                break;
-            case InputType.STRING:
-                castOpcode = InputOpcode.CAST_STRING;
-                break;
-            case InputType.COLOR:
-                castOpcode = InputOpcode.CAST_COLOR;
-                break;
-            default:
-                log.warn(`Cannot cast to type: ${targetType}`, this);
-                throw new Error(`Cannot cast to type: ${targetType}`);
+        case InputType.BOOLEAN:
+            castOpcode = InputOpcode.CAST_BOOLEAN;
+            break;
+        case InputType.NUMBER:
+            castOpcode = InputOpcode.CAST_NUMBER;
+            break;
+        case InputType.NUMBER_INDEX:
+            castOpcode = InputOpcode.CAST_NUMBER_INDEX;
+            break;
+        case InputType.NUMBER_OR_NAN:
+            castOpcode = InputOpcode.CAST_NUMBER_OR_NAN;
+            break;
+        case InputType.STRING:
+            castOpcode = InputOpcode.CAST_STRING;
+            break;
+        case InputType.COLOR:
+            castOpcode = InputOpcode.CAST_COLOR;
+            break;
+        case InputType.ARRAY:
+            castOpcode = InputOpcode.CAST_ARRAY;
+            break;
+        default:
+            log.warn(`Cannot cast to type: ${targetType}`, this);
+            throw new Error(`Cannot cast to type: ${targetType}`);
         }
 
         if (this.isAlwaysType(targetType)) return this;
@@ -173,48 +169,49 @@ class IntermediateInput {
         if (this.opcode === InputOpcode.CONSTANT) {
             // If we are a constant, we can do the cast here at compile time
             switch (castOpcode) {
-                case InputOpcode.CAST_BOOLEAN:
-                    this.inputs.value = Cast.toBoolean(this.inputs.value);
-                    this.type = InputType.BOOLEAN;
-                    break;
-                case InputOpcode.CAST_NUMBER:
-                case InputOpcode.CAST_NUMBER_INDEX:
-                case InputOpcode.CAST_NUMBER_OR_NAN: {
-                    if (this.isAlwaysType(InputType.BOOLEAN_INTERPRETABLE)) {
-                        this.type = InputType.NUMBER;
-                        this.inputs.value = +Cast.toBoolean(this.inputs.value);
-                    }
-                    const numberValue = +this.inputs.value;
-                    if (numberValue) {
-                        this.inputs.value = numberValue;
-                    } else if (Object.is(numberValue, -0)) {
-                        /* numberValue is one of 0, -0, or NaN */ this.inputs.value =
-                            -0;
-                    } else {
-                        this.inputs.value = 0; // Convert NaN to 0
-                    }
-                    if (castOpcode === InputOpcode.CAST_NUMBER_INDEX) {
-                        // Round numberValue to an integer
-                        this.inputs.value |= 0;
-                    }
-                    this.type = IntermediateInput.getNumberInputType(
-                        this.inputs.value
-                    );
-                    break;
+            case InputOpcode.CAST_BOOLEAN:
+                this.inputs.value = Cast.toBoolean(this.inputs.value);
+                this.type = InputType.BOOLEAN;
+                break;
+            case InputOpcode.CAST_NUMBER:
+            case InputOpcode.CAST_NUMBER_INDEX:
+            case InputOpcode.CAST_NUMBER_OR_NAN: {
+                if (this.isAlwaysType(InputType.BOOLEAN_INTERPRETABLE)) {
+                    this.type = InputType.NUMBER;
+                    this.inputs.value = +Cast.toBoolean(this.inputs.value);
                 }
-                case InputOpcode.CAST_STRING:
-                    this.inputs.value += "";
-                    this.type = InputType.STRING;
-                    break;
-                case InputOpcode.CAST_COLOR:
-                    this.inputs.value = Cast.toRgbColorList(this.inputs.value);
-                    this.type = InputType.COLOR;
-                    break;
+                const numberValue = +this.inputs.value;
+                if (numberValue) {
+                    this.inputs.value = numberValue;
+                } else if (Object.is(numberValue, -0)) {
+                    /* numberValue is one of 0, -0, or NaN */ this.inputs.value = -0;
+                } else {
+                    this.inputs.value = 0; // Convert NaN to 0
+                }
+                if (castOpcode === InputOpcode.CAST_NUMBER_INDEX) {
+                    // Round numberValue to an integer
+                    this.inputs.value |= 0;
+                }
+                this.type = IntermediateInput.getNumberInputType(this.inputs.value);
+                break;
+            }
+            case InputOpcode.CAST_STRING:
+                this.inputs.value += '';
+                this.type = InputType.STRING;
+                break;
+            case InputOpcode.CAST_COLOR:
+                this.inputs.value = Cast.toRgbColorList(this.inputs.value);
+                this.type = InputType.COLOR;
+                break;
+            case InputOpcode.CAST_ARRAY:
+                this.inputs.value = Cast.toList(this.inputs.value);
+                this.type = InputType.ARRAY;
+                break;
             }
             return this;
         }
 
-        return new IntermediateInput(castOpcode, targetType, { target: this });
+        return new IntermediateInput(castOpcode, targetType, {target: this});
     }
 }
 
@@ -235,9 +232,7 @@ const stringifyType = type => {
                 }
             }
 
-            formatFlags = formatFlags.filter(
-                value => (InputType[value] & testFormat) !== InputType[value]
-            );
+            formatFlags = formatFlags.filter(value => (InputType[value] & testFormat) !== InputType[value]);
             formatFlags.push(enumValue);
         }
     }
@@ -253,7 +248,7 @@ const stringifyType = type => {
     }
 
     if (str === null) {
-        return "INVALID";
+        return 'INVALID';
     }
 
     return str;
@@ -267,7 +262,7 @@ class IntermediateStack {
     /**
      * @param {IntermediateStackBlock[]} [blocks]
      */
-    constructor(blocks) {
+    constructor (blocks) {
         /** @type {IntermediateStackBlock[]} */
         this.blocks = blocks ?? [];
     }
@@ -278,7 +273,7 @@ class IntermediateStack {
  * Scripts do not necessarily have hats.
  */
 class IntermediateScript {
-    constructor() {
+    constructor () {
         /**
          * The ID of the top block of this script.
          * @type {string?}
@@ -301,13 +296,13 @@ class IntermediateScript {
          * This procedure's variant, if any.
          * @type {string}
          */
-        this.procedureVariant = "";
+        this.procedureVariant = '';
 
         /**
          * This procedure's code, if any.
          * @type {string}
          */
-        this.procedureCode = "";
+        this.procedureCode = '';
 
         /**
          * List of names of arguments accepted by this function, if it is a procedure.
@@ -370,7 +365,7 @@ class IntermediateRepresentation {
      * @param {IntermediateScript} entry
      * @param {Object.<string, IntermediateScript>} procedures
      */
-    constructor(entry, procedures) {
+    constructor (entry, procedures) {
         /**
          * The entry point of this IR.
          * @type {IntermediateScript}
@@ -389,10 +384,8 @@ class IntermediateRepresentation {
      * @param {string} proccode
      * @returns {IntermediateScript | undefined}
      */
-    getProcedure(proccode) {
-        return Object.values(this.procedures).find(
-            procedure => procedure.procedureCode === proccode
-        );
+    getProcedure (proccode) {
+        return Object.values(this.procedures).find(procedure => procedure.procedureCode === proccode);
     }
 }
 
@@ -402,5 +395,5 @@ module.exports = {
     IntermediateStack,
     IntermediateScript,
     IntermediateRepresentation,
-    stringifyType,
+    stringifyType
 };

@@ -1,8 +1,8 @@
-const Cast = require("../util/cast.js");
-const MathUtil = require("../util/math-util.js");
+const Cast = require('../util/cast.js');
+const MathUtil = require('../util/math-util.js');
 
 class Scratch3OperatorsBlocks {
-    constructor(runtime) {
+    constructor (runtime) {
         /**
          * The runtime instantiating this block package.
          * @type {Runtime}
@@ -14,7 +14,7 @@ class Scratch3OperatorsBlocks {
      * Retrieve the block primitives implemented by this package.
      * @return {object.<string, Function>} Mapping of opcode to Function.
      */
-    getPrimitives() {
+    getPrimitives () {
         return {
             operator_add: this.add,
             operator_subtract: this.subtract,
@@ -35,64 +35,63 @@ class Scratch3OperatorsBlocks {
             operator_mod: this.mod,
             operator_round: this.round,
             operator_mathop: this.mathop,
-            operator_newline: this.newline,
+            operator_newline: this.newline
         };
     }
 
-    add(args) {
+    add (args) {
         return Cast.toNumber(args.NUM1) + Cast.toNumber(args.NUM2);
     }
 
-    subtract(args) {
+    subtract (args) {
         return Cast.toNumber(args.NUM1) - Cast.toNumber(args.NUM2);
     }
 
-    multiply(args) {
+    multiply (args) {
         return Cast.toNumber(args.NUM1) * Cast.toNumber(args.NUM2);
     }
 
-    divide(args) {
+    divide (args) {
         return Cast.toNumber(args.NUM1) / Cast.toNumber(args.NUM2);
     }
 
-    exponent(args) {
+    exponent (args) {
         return Cast.toNumber(args.NUM1) ** Cast.toNumber(args.NUM2);
     }
 
-    lt(args) {
+    lt (args) {
         return Cast.compare(args.OPERAND1, args.OPERAND2) < 0;
     }
 
-    equals(args) {
+    equals (args) {
         // amp: Handle case sensitivity.
         // We don't do this with lt or gt since we only expect those to be used for numbers.
         if (this.runtime.runtimeOptions.caseSensitivity) {
             return Cast.compareCS(args.OPERAND1, args.OPERAND2) === 0;
-        } else {
-            return Cast.compare(args.OPERAND1, args.OPERAND2) === 0;
         }
+        return Cast.compare(args.OPERAND1, args.OPERAND2) === 0;
     }
 
-    gt(args) {
+    gt (args) {
         return Cast.compare(args.OPERAND1, args.OPERAND2) > 0;
     }
 
-    and(args) {
+    and (args) {
         return Cast.toBoolean(args.OPERAND1) && Cast.toBoolean(args.OPERAND2);
     }
 
-    or(args) {
+    or (args) {
         return Cast.toBoolean(args.OPERAND1) || Cast.toBoolean(args.OPERAND2);
     }
 
-    not(args) {
+    not (args) {
         return !Cast.toBoolean(args.OPERAND);
     }
 
-    random(args) {
+    random (args) {
         return this._random(args.FROM, args.TO);
     }
-    _random(from, to) {
+    _random (from, to) {
         // used by compiler
         const nFrom = Cast.toNumber(from);
         const nTo = Cast.toNumber(to);
@@ -106,32 +105,32 @@ class Scratch3OperatorsBlocks {
         return Math.random() * (high - low) + low;
     }
 
-    join(args) {
+    join (args) {
         return Cast.toString(args.STRING1) + Cast.toString(args.STRING2);
     }
 
-    letterOf(args) {
+    letterOf (args) {
         const index = Cast.toNumber(args.LETTER) - 1;
         const str = Cast.toString(args.STRING);
         // Out of bounds?
         if (index < 0 || index >= str.length) {
-            return "";
+            return '';
         }
         return str.charAt(index);
     }
 
-    length(args) {
+    length (args) {
         return Cast.toString(args.STRING).length;
     }
 
-    contains(args) {
+    contains (args) {
         const format = function (string) {
             return Cast.toString(string).toLowerCase();
         };
         return format(args.STRING1).includes(format(args.STRING2));
     }
 
-    mod(args) {
+    mod (args) {
         const n = Cast.toNumber(args.NUM1);
         const modulus = Cast.toNumber(args.NUM2);
         let result = n % modulus;
@@ -140,46 +139,46 @@ class Scratch3OperatorsBlocks {
         return result;
     }
 
-    round(args) {
+    round (args) {
         return Math.round(Cast.toNumber(args.NUM));
     }
 
-    newline() {
-        return "\n";
+    newline () {
+        return '\n';
     }
 
-    mathop(args) {
+    mathop (args) {
         const operator = Cast.toString(args.OPERATOR).toLowerCase();
         const n = Cast.toNumber(args.NUM);
         switch (operator) {
-            case "abs":
-                return Math.abs(n);
-            case "floor":
-                return Math.floor(n);
-            case "ceiling":
-                return Math.ceil(n);
-            case "sqrt":
-                return Math.sqrt(n);
-            case "sin":
-                return Math.round(Math.sin((Math.PI * n) / 180) * 1e10) / 1e10;
-            case "cos":
-                return Math.round(Math.cos((Math.PI * n) / 180) * 1e10) / 1e10;
-            case "tan":
-                return MathUtil.tan(n);
-            case "asin":
-                return (Math.asin(n) * 180) / Math.PI;
-            case "acos":
-                return (Math.acos(n) * 180) / Math.PI;
-            case "atan":
-                return (Math.atan(n) * 180) / Math.PI;
-            case "ln":
-                return Math.log(n);
-            case "log":
-                return Math.log(n) / Math.LN10;
-            case "e ^":
-                return Math.exp(n);
-            case "10 ^":
-                return Math.pow(10, n);
+        case 'abs':
+            return Math.abs(n);
+        case 'floor':
+            return Math.floor(n);
+        case 'ceiling':
+            return Math.ceil(n);
+        case 'sqrt':
+            return Math.sqrt(n);
+        case 'sin':
+            return Math.round(Math.sin((Math.PI * n) / 180) * 1e10) / 1e10;
+        case 'cos':
+            return Math.round(Math.cos((Math.PI * n) / 180) * 1e10) / 1e10;
+        case 'tan':
+            return MathUtil.tan(n);
+        case 'asin':
+            return (Math.asin(n) * 180) / Math.PI;
+        case 'acos':
+            return (Math.acos(n) * 180) / Math.PI;
+        case 'atan':
+            return (Math.atan(n) * 180) / Math.PI;
+        case 'ln':
+            return Math.log(n);
+        case 'log':
+            return Math.log(n) / Math.LN10;
+        case 'e ^':
+            return Math.exp(n);
+        case '10 ^':
+            return Math.pow(10, n);
         }
         return 0;
     }

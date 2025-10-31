@@ -1,18 +1,17 @@
-@import "../../css/units.css";
-@import "../../css/colors.css";
-@import "../../css/z-index.css";
-@import "../../css/filters.css";
+@import '../../css/units.css';
+@import '../../css/colors.css';
+@import '../../css/z-index.css';
+@import '../../css/filters.css';
 
 .stage-header-wrapper {
     position: absolute;
     top: 0;
-    font-family:
-        "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-[dir="ltr"] .stage-header-wrapper {
+[dir='ltr'] .stage-header-wrapper {
     right: 0;
 }
-[dir="rtl"] .stage-header-wrapper {
+[dir='rtl'] .stage-header-wrapper {
     left: 0;
 }
 
@@ -54,13 +53,13 @@
     border-radius: $form-radius;
 }
 
-[dir="ltr"] .stage-size-toggle-group,
-[dir="ltr"] .settings-button {
+[dir='ltr'] .stage-size-toggle-group,
+[dir='ltr'] .settings-button {
     margin-right: 0.2rem;
 }
 
-[dir="rtl"] .stage-size-toggle-group,
-[dir="rtl"] .settings-button {
+[dir='rtl'] .stage-size-toggle-group,
+[dir='rtl'] .settings-button {
     margin-left: 0.2rem;
 }
 
@@ -86,7 +85,7 @@
     filter: $filter-icon-gray;
 }
 
-[dir="rtl"] .stage-button-icon {
+[dir='rtl'] .stage-button-icon {
     transform: scaleX(-1);
 }
 

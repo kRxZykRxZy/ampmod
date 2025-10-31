@@ -1,11 +1,11 @@
-import paper from "@turbowarp/paper";
-import Modes from "../../lib/modes";
-import { styleShape } from "../style-path";
-import { clearSelection } from "../selection";
-import { getSquareDimensions } from "../math";
-import BoundingBoxTool from "../selection-tools/bounding-box-tool";
-import NudgeTool from "../selection-tools/nudge-tool";
-import log from "../../log/log";
+import paper from '@turbowarp/paper';
+import Modes from '../../lib/modes';
+import {styleShape} from '../style-path';
+import {clearSelection} from '../selection';
+import {getSquareDimensions} from '../math';
+import BoundingBoxTool from '../selection-tools/bounding-box-tool';
+import NudgeTool from '../selection-tools/nudge-tool';
+import log from '../../log/log';
 
 /**
  * amp: Tool for drawing rounded rectangles. Implementation of Scratch's stub.
@@ -21,12 +21,7 @@ class RoundedRectTool extends paper.Tool {
      * @param {function} setCursor Callback to set the visible mouse cursor
      * @param {!function} onUpdateImage A callback to call when the image visibly changes
      */
-    constructor(
-        setSelectedItems,
-        clearSelectedItems,
-        setCursor,
-        onUpdateImage
-    ) {
+    constructor(setSelectedItems, clearSelectedItems, setCursor, onUpdateImage) {
         super();
         this.setSelectedItems = setSelectedItems;
         this.clearSelectedItems = clearSelectedItems;
@@ -38,11 +33,7 @@ class RoundedRectTool extends paper.Tool {
             setCursor,
             onUpdateImage
         );
-        const nudgeTool = new NudgeTool(
-            Modes.ROUNDED_RECT,
-            this.boundingBoxTool,
-            onUpdateImage
-        );
+        const nudgeTool = new NudgeTool(Modes.ROUNDED_RECT, this.boundingBoxTool, onUpdateImage);
         // We have to set these functions instead of just declaring them because
         // paper.js tools hook up the listeners in the setter functions.
         this.onMouseDown = this.handleMouseDown;
@@ -64,14 +55,12 @@ class RoundedRectTool extends paper.Tool {
      * @param {paper.Size|number} cornerSize The corner size as a paper.Size object or a number for uniform rounding.
      */
     setCornerSize(cornerSize) {
-        if (typeof cornerSize === "number") {
+        if (typeof cornerSize === 'number') {
             this._cornerSize = new paper.Size(cornerSize, cornerSize);
         } else if (cornerSize instanceof paper.Size) {
             this._cornerSize = cornerSize;
         } else {
-            log.warn(
-                "Invalid cornerSize provided to RoundedRectTool.setCornerSize"
-            );
+            log.warn('Invalid cornerSize provided to RoundedRectTool.setCornerSize');
             this._cornerSize = new paper.Size(10, 10);
         }
         // If a rectangle is currently selected, update its roundness
@@ -93,11 +82,9 @@ class RoundedRectTool extends paper.Tool {
             fill: true,
             guide: false,
             match: hitResult =>
-                (hitResult.item.data &&
-                    (hitResult.item.data.isScaleHandle ||
-                        hitResult.item.data.isRotHandle)) ||
+                (hitResult.item.data && (hitResult.item.data.isScaleHandle || hitResult.item.data.isRotHandle)) ||
                 hitResult.item.selected,
-            tolerance: RoundedRectTool.TOLERANCE / paper.view.zoom,
+            tolerance: RoundedRectTool.TOLERANCE / paper.view.zoom
         };
     }
 
@@ -142,10 +129,7 @@ class RoundedRectTool extends paper.Tool {
             this.rect.remove();
         }
         const rect = new paper.Rectangle(event.downPoint, event.point);
-        const squareDimensions = getSquareDimensions(
-            event.downPoint,
-            event.point
-        );
+        const squareDimensions = getSquareDimensions(event.downPoint, event.point);
         if (event.modifiers.shift) {
             rect.size = squareDimensions.size.abs();
         }

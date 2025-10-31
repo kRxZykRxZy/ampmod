@@ -1,5 +1,5 @@
-@import "../../css/colors.css";
-@import "../../css/filters.css";
+@import '../../css/colors.css';
+@import '../../css/filters.css';
 
 .badge {
     padding: 0.5rem;

@@ -1,23 +1,23 @@
-import bindAll from "lodash.bindall";
-import { getEventXY } from "../lib/touch-utils";
+import bindAll from 'lodash.bindall';
+import {getEventXY} from '../lib/touch-utils';
 
 class DragRecognizer {
     /* Gesture states */
     static get STATE_UNIDENTIFIED() {
-        return "unidentified";
+        return 'unidentified';
     }
     static get STATE_SCROLL() {
-        return "scroll";
+        return 'scroll';
     }
     static get STATE_DRAG() {
-        return "drag";
+        return 'drag';
     }
 
     constructor({
         onDrag = () => {},
         onDragEnd = () => {},
         touchDragAngle = 70, // Angle and distance thresholds are the same as scratch-blocks
-        distanceThreshold = 3,
+        distanceThreshold = 3
     }) {
         this._onDrag = onDrag;
         this._onDragEnd = onDragEnd;
@@ -27,17 +27,11 @@ class DragRecognizer {
         this._initialOffset = null;
         this._gestureState = DragRecognizer.STATE_UNIDENTIFIED;
 
-        bindAll(this, [
-            "start",
-            "gestureInProgress",
-            "reset",
-            "_handleMove",
-            "_handleEnd",
-        ]);
+        bindAll(this, ['start', 'gestureInProgress', 'reset', '_handleMove', '_handleEnd']);
     }
 
     start(event) {
-        if (typeof event.button === "number" && event.button !== 0) {
+        if (typeof event.button === 'number' && event.button !== 0) {
             return;
         }
         this._initialOffset = getEventXY(event);
@@ -59,21 +53,21 @@ class DragRecognizer {
     //
 
     _bindListeners() {
-        window.addEventListener("mouseup", this._handleEnd);
-        window.addEventListener("mousemove", this._handleMove);
-        window.addEventListener("touchend", this._handleEnd);
+        window.addEventListener('mouseup', this._handleEnd);
+        window.addEventListener('mousemove', this._handleMove);
+        window.addEventListener('touchend', this._handleEnd);
         // touchmove must be marked as non-passive, or else it cannot prevent scrolling
-        window.addEventListener("touchmove", this._handleMove, {
-            passive: false,
+        window.addEventListener('touchmove', this._handleMove, {
+            passive: false
         });
     }
 
     _unbindListeners() {
-        window.removeEventListener("mouseup", this._handleEnd);
-        window.removeEventListener("mousemove", this._handleMove);
-        window.removeEventListener("touchend", this._handleEnd);
-        window.removeEventListener("touchmove", this._handleMove, {
-            passive: false,
+        window.removeEventListener('mouseup', this._handleEnd);
+        window.removeEventListener('mousemove', this._handleMove);
+        window.removeEventListener('touchend', this._handleEnd);
+        window.removeEventListener('touchmove', this._handleMove, {
+            passive: false
         });
     }
 
@@ -91,7 +85,7 @@ class DragRecognizer {
             if (dragDistance < this._distanceThreshold) return;
 
             // For touch moves, additionally check if the angle suggests drag vs. scroll
-            if (event.type === "touchmove") {
+            if (event.type === 'touchmove') {
                 // Direction goes from -180 to 180, with 0 toward the right.
                 let angle = (Math.atan2(dy, dx) / Math.PI) * 180;
                 // Fold over horizontal axis, range now 0 to 180

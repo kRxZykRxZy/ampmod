@@ -9,15 +9,15 @@
 /* eslint-disable max-len */
 
 const globalState = {
-    Timer: require("../util/timer"),
-    Cast: require("../util/cast"),
-    log: require("../util/log"),
-    blockUtility: require("./compat-block-utility"),
+    Timer: require('../util/timer'),
+    Cast: require('../util/cast'),
+    log: require('../util/log'),
+    blockUtility: require('./compat-block-utility'),
     /** @type{import("../engine/thread")?} */
-    thread: null,
+    thread: null
 };
 
-let baseRuntime = "";
+let baseRuntime = '';
 const runtimeFunctions = {};
 
 /**
@@ -545,6 +545,38 @@ runtimeFunctions.listContents = `const listContents = list => {
 runtimeFunctions.colorToList = `const colorToList = color => globalState.Cast.toRgbColorList(color)`;
 
 /**
+ * Convert to a list
+ * @param {*} value The value to convert
+ * @return {Array.<any>}
+ */
+runtimeFunctions.toList = `
+    const toList = value => {
+        if (Array.isArray(value)) {
+            return value;
+        }
+
+        if (typeof value === 'string') {
+            try {
+                const parsed = JSON.parse(value);
+                if (Array.isArray(parsed)) {
+                    return parsed;
+                }
+                return [parsed];
+            } catch {
+                // not valid JSON
+                return [value];
+            }
+        }
+
+        if (!value) {
+            return [];
+        }
+
+        return [value];
+    }
+`;
+
+/**
  * Implements Scratch modulo (floored division instead of truncated division)
  * @param {number} n Number
  * @param {number} modulus Base
@@ -625,9 +657,9 @@ const insertRuntime = source => {
 const scopedEval = source => {
     const withRuntime = insertRuntime(source);
     try {
-        return new Function("globalState", withRuntime)(globalState);
+        return new Function('globalState', withRuntime)(globalState);
     } catch (e) {
-        globalState.log.error("was unable to compile script", withRuntime);
+        globalState.log.error('was unable to compile script', withRuntime);
         throw e;
     }
 };

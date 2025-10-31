@@ -1,13 +1,9 @@
-import {
-    BitmapAdapter,
-    sanitizeSvg,
-    fixForVanilla,
-} from "@turbowarp/scratch-svg-renderer";
-import randomizeSpritePosition from "./randomize-sprite-position.js";
-import bmpConverter from "./bmp-converter";
-import gifDecoder from "./gif-decoder";
-import convertAudioToWav from "./tw-convert-audio-wav.js";
-import log from "./log.js";
+import {BitmapAdapter, sanitizeSvg, fixForVanilla} from '@turbowarp/scratch-svg-renderer';
+import randomizeSpritePosition from './randomize-sprite-position.js';
+import bmpConverter from './bmp-converter';
+import gifDecoder from './gif-decoder';
+import convertAudioToWav from './tw-convert-audio-wav.js';
+import log from './log.js';
 
 /**
  * Extract the file name given a string of the form fileName + ext
@@ -17,7 +13,7 @@ import log from "./log.js";
  */
 const extractFileName = function (nameExt) {
     // There could be multiple dots, but get the stuff before the first .
-    const nameParts = nameExt.split(".", 1); // we only care about the first .
+    const nameParts = nameExt.split('.', 1); // we only care about the first .
     return nameParts[0];
 };
 
@@ -88,7 +84,7 @@ const createVMAsset = function (storage, assetType, dataFormat, data) {
         dataFormat: dataFormat,
         asset: asset,
         md5: `${asset.assetId}.${dataFormat}`,
-        assetId: asset.assetId,
+        assetId: asset.assetId
     };
 };
 
@@ -103,23 +99,17 @@ const createVMAsset = function (storage, assetType, dataFormat, data) {
  * adding the costume to the VM and handling other UI flow that should come after adding the costume
  * @param {Function} handleError The function to execute if there is an error parsing the costume
  */
-const costumeUpload = function (
-    fileData,
-    fileType,
-    vm,
-    handleCostume,
-    handleError = () => {}
-) {
+const costumeUpload = function (fileData, fileType, vm, handleCostume, handleError = () => {}) {
     const storage = vm.runtime.storage;
     let costumeFormat = null;
     let assetType = null;
     switch (fileType) {
-        case "image/svg+xml": {
+        case 'image/svg+xml': {
             // fix any vanilla compatibility issues in the SVG first
             try {
                 fileData = fixForVanilla(fileData);
             } catch (e) {
-                log.error("fixForVanilla error", e);
+                log.error('fixForVanilla error', e);
             }
 
             // run svg bytes through scratch-svg-renderer's sanitization code
@@ -129,38 +119,38 @@ const costumeUpload = function (
             assetType = storage.AssetType.ImageVector;
             break;
         }
-        case "image/jpeg": {
+        case 'image/jpeg': {
             costumeFormat = storage.DataFormat.JPG;
             assetType = storage.AssetType.ImageBitmap;
             break;
         }
-        case "image/bmp": {
+        case 'image/bmp': {
             // Convert .bmp files to .png to compress them. .bmps are completely uncompressed,
             // and would otherwise take up a lot of storage space and take much longer to upload and download.
             bmpConverter(fileData).then(dataUrl => {
-                costumeUpload(dataUrl, "image/png", vm, handleCostume);
+                costumeUpload(dataUrl, 'image/png', vm, handleCostume);
             });
             return; // Return early because we're triggering another proper costumeUpload
         }
-        case "image/png": {
+        case 'image/png': {
             costumeFormat = storage.DataFormat.PNG;
             assetType = storage.AssetType.ImageBitmap;
             break;
         }
-        case "image/webp": {
+        case 'image/webp': {
             // Scratch does not natively support webp, so convert to png
             // see image/bmp logic above
-            bmpConverter(fileData, "image/webp").then(dataUrl => {
-                costumeUpload(dataUrl, "image/png", vm, handleCostume);
+            bmpConverter(fileData, 'image/webp').then(dataUrl => {
+                costumeUpload(dataUrl, 'image/png', vm, handleCostume);
             });
             return;
         }
-        case "image/gif": {
+        case 'image/gif': {
             let costumes = [];
             gifDecoder(fileData, (frameNumber, dataUrl, numFrames) => {
                 costumeUpload(
                     dataUrl,
-                    "image/png",
+                    'image/png',
                     vm,
                     costumes_ => {
                         costumes = costumes.concat(costumes_);
@@ -185,12 +175,7 @@ const costumeUpload = function (
         bitmapAdapter.setStageSize(width, height);
     }
     const addCostumeFromBuffer = function (dataBuffer) {
-        const vmCostume = createVMAsset(
-            storage,
-            assetType,
-            costumeFormat,
-            dataBuffer
-        );
+        const vmCostume = createVMAsset(storage, assetType, costumeFormat, dataBuffer);
         handleCostume([vmCostume]);
     };
 
@@ -202,10 +187,7 @@ const costumeUpload = function (
         addCostumeFromBuffer(new Uint8Array(fileData));
     } else {
         // otherwise it's a bitmap
-        bitmapAdapter
-            .importBitmap(fileData, fileType)
-            .then(addCostumeFromBuffer)
-            .catch(handleError);
+        bitmapAdapter.importBitmap(fileData, fileType).then(addCostumeFromBuffer).catch(handleError);
     }
 };
 
@@ -220,79 +202,55 @@ const costumeUpload = function (
  * as well as handling other UI flow that should come after adding the sound
  * @param {Function} handleError The function to execute if there is an error parsing the sound
  */
-const soundUpload = function (
-    fileData,
-    fileType,
-    storage,
-    handleSound,
-    handleError
-) {
+const soundUpload = function (fileData, fileType, storage, handleSound, handleError) {
     let soundFormat;
     switch (fileType) {
-        case "audio/mp3":
-        case "audio/mpeg": {
+        case 'audio/mp3':
+        case 'audio/mpeg': {
             soundFormat = storage.DataFormat.MP3;
             break;
         }
-        case "audio/wav":
-        case "audio/wave":
-        case "audio/x-wav":
-        case "audio/x-pn-wav": {
+        case 'audio/wav':
+        case 'audio/wave':
+        case 'audio/x-wav':
+        case 'audio/x-pn-wav': {
             soundFormat = storage.DataFormat.WAV;
             break;
         }
         default:
             convertAudioToWav(fileData)
                 .then(fixed => {
-                    soundUpload(
-                        fixed,
-                        "audio/wav",
-                        storage,
-                        handleSound,
-                        handleError
-                    );
+                    soundUpload(fixed, 'audio/wav', storage, handleSound, handleError);
                 })
                 .catch(handleError);
             return;
     }
 
-    const vmSound = createVMAsset(
-        storage,
-        storage.AssetType.Sound,
-        soundFormat,
-        new Uint8Array(fileData)
-    );
+    const vmSound = createVMAsset(storage, storage.AssetType.Sound, soundFormat, new Uint8Array(fileData));
 
     handleSound(vmSound);
 };
 
-const spriteUpload = function (
-    fileData,
-    fileType,
-    spriteName,
-    vm,
-    handleSprite,
-    handleError = () => {}
-) {
+const spriteUpload = function (fileData, fileType, spriteName, vm, handleSprite, handleError = () => {}) {
     switch (fileType) {
-        case "":
+        case '':
         // scratch-vm specifies application/x.scratch.sprite3 for sprite3 files. Real packages in the
         // wild use hyphens instead of periods. We'll just support all of the reasonable variations.
-        case "application/x-scratch2-sprite":
-        case "application/x-scratch3-sprite":
-        case "application/x.scratch2.sprite":
-        case "application/x.scratch3.sprite":
-        case "application/zip": {
+        case 'application/x-scratch2-sprite':
+        case 'application/x-scratch3-sprite':
+        case 'application/x.scratch2.sprite':
+        case 'application/x.scratch3.sprite':
+        case 'application/zip': {
             // We think this is a .sprite2 or .sprite3 file
             handleSprite(new Uint8Array(fileData));
             return;
         }
-        case "image/svg+xml":
-        case "image/png":
-        case "image/bmp":
-        case "image/jpeg":
-        case "image/webp":
-        case "image/gif": {
+        case 'image/svg+xml':
+        case 'image/png':
+        case 'image/bmp':
+        case 'image/jpeg':
+        case 'image/webp':
+        case 'image/gif': {
             // Make a sprite from an image by making it a costume first
             costumeUpload(
                 fileData,
@@ -300,7 +258,7 @@ const spriteUpload = function (
                 vm,
                 vmCostumes => {
                     vmCostumes.forEach((costume, i) => {
-                        costume.name = `${spriteName}${i ? i + 1 : ""}`;
+                        costume.name = `${spriteName}${i ? i + 1 : ''}`;
                     });
                     const newSprite = {
                         name: spriteName,
@@ -309,14 +267,14 @@ const spriteUpload = function (
                         y: 0,
                         visible: true,
                         size: 100,
-                        rotationStyle: "all around",
+                        rotationStyle: 'all around',
                         direction: 90,
                         draggable: false,
                         currentCostume: 0,
                         blocks: {},
                         variables: {},
                         costumes: vmCostumes,
-                        sounds: [], // TODO are all of these necessary?
+                        sounds: [] // TODO are all of these necessary?
                     };
                     randomizeSpritePosition(newSprite);
                     // TODO probably just want sprite upload to handle this object directly
@@ -333,4 +291,4 @@ const spriteUpload = function (
     }
 };
 
-export { handleFileUpload, costumeUpload, soundUpload, spriteUpload };
+export {handleFileUpload, costumeUpload, soundUpload, spriteUpload};

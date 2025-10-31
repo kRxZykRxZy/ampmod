@@ -1,26 +1,23 @@
-import paper from "@turbowarp/paper";
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
-import bindAll from "lodash.bindall";
-import Modes from "../lib/modes";
+import paper from '@turbowarp/paper';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
+import bindAll from 'lodash.bindall';
+import Modes from '../lib/modes';
 
-import { changeMode } from "../reducers/modes";
-import { clearHoveredItem, setHoveredItem } from "../reducers/hover";
-import {
-    clearSelectedItems,
-    setSelectedItems,
-} from "../reducers/selected-items";
-import { setCursor } from "../reducers/cursor";
+import {changeMode} from '../reducers/modes';
+import {clearHoveredItem, setHoveredItem} from '../reducers/hover';
+import {clearSelectedItems, setSelectedItems} from '../reducers/selected-items';
+import {setCursor} from '../reducers/cursor';
 
-import { getSelectedLeafItems } from "../helper/selection";
-import SelectTool from "../helper/selection-tools/select-tool";
-import SelectModeComponent from "../components/select-mode/select-mode.jsx";
+import {getSelectedLeafItems} from '../helper/selection';
+import SelectTool from '../helper/selection-tools/select-tool';
+import SelectModeComponent from '../components/select-mode/select-mode.jsx';
 
 class SelectMode extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["activateTool", "deactivateTool"]);
+        bindAll(this, ['activateTool', 'deactivateTool']);
     }
     componentDidMount() {
         if (this.props.isSelectModeActive) {
@@ -37,10 +34,7 @@ class SelectMode extends React.Component {
 
         if (nextProps.isSelectModeActive && !this.props.isSelectModeActive) {
             this.activateTool();
-        } else if (
-            !nextProps.isSelectModeActive &&
-            this.props.isSelectModeActive
-        ) {
+        } else if (!nextProps.isSelectModeActive && this.props.isSelectModeActive) {
             this.deactivateTool();
         }
     }
@@ -71,10 +65,7 @@ class SelectMode extends React.Component {
     }
     render() {
         return (
-            <SelectModeComponent
-                isSelected={this.props.isSelectModeActive}
-                onMouseDown={this.props.handleMouseDown}
-            />
+            <SelectModeComponent isSelected={this.props.isSelectModeActive} onMouseDown={this.props.handleMouseDown} />
         );
     }
 }
@@ -90,13 +81,13 @@ SelectMode.propTypes = {
     setCursor: PropTypes.func.isRequired,
     setHoveredItem: PropTypes.func.isRequired,
     setSelectedItems: PropTypes.func.isRequired,
-    switchToTextTool: PropTypes.func.isRequired,
+    switchToTextTool: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
     isSelectModeActive: state.scratchPaint.mode === Modes.SELECT,
     hoveredItemId: state.scratchPaint.hoveredItemId,
-    selectedItems: state.scratchPaint.selectedItems,
+    selectedItems: state.scratchPaint.selectedItems
 });
 const mapDispatchToProps = dispatch => ({
     setHoveredItem: hoveredItemId => {
@@ -109,9 +100,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(clearSelectedItems());
     },
     setSelectedItems: () => {
-        dispatch(
-            setSelectedItems(getSelectedLeafItems(), false /* bitmapMode */)
-        );
+        dispatch(setSelectedItems(getSelectedLeafItems(), false /* bitmapMode */));
     },
     setCursor: cursorString => {
         dispatch(setCursor(cursorString));
@@ -121,7 +110,7 @@ const mapDispatchToProps = dispatch => ({
     },
     switchToTextTool: () => {
         dispatch(changeMode(Modes.TEXT));
-    },
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectMode);

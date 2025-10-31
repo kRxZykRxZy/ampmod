@@ -2,8 +2,8 @@ const jpegThumbnail = dataUrl =>
     new Promise((resolve, reject) => {
         const image = new Image();
         image.onload = () => {
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
 
             const maxDimension = 96; // 3x the maximum displayed size of 32px
 
@@ -26,9 +26,7 @@ const jpegThumbnail = dataUrl =>
 
             // TW: PNG allows using transparency while JPEG does not.
             // A white background looks quite ugly in dark mode.
-            const dataURL = canvas
-                .toDataURL("image/png")
-                .replace("data:image/png;base64,", "");
+            const dataURL = canvas.toDataURL('image/png').replace('data:image/png;base64,', '');
             resolve(dataURL);
         };
         image.onerror = err => {

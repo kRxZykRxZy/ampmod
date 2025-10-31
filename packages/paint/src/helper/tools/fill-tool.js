@@ -1,8 +1,8 @@
-import paper from "@turbowarp/paper";
-import { getHoveredItem } from "../hover";
-import { expandBy } from "../math";
-import { createGradientObject } from "../style-path";
-import GradientTypes from "../../lib/gradient-types";
+import paper from '@turbowarp/paper';
+import {getHoveredItem} from '../hover';
+import {expandBy} from '../math';
+import {createGradientObject} from '../style-path';
+import GradientTypes from '../../lib/gradient-types';
 
 class FillTool extends paper.Tool {
     static get TOLERANCE() {
@@ -56,14 +56,11 @@ class FillTool extends paper.Tool {
             guide: false,
             match: function (hitResult) {
                 // Allow fills to be hit only if the item has a fill already or the path is closed/nearly closed
-                const hitFill =
-                    hitResult.item.hasFill() ||
-                    hitResult.item.closed ||
-                    isAlmostClosedPath(hitResult.item);
+                const hitFill = hitResult.item.hasFill() || hitResult.item.closed || isAlmostClosedPath(hitResult.item);
                 if (
                     hitResult.item instanceof paper.Path &&
                     // Disallow hits that don't qualify for the fill criteria, but only if they're fills
-                    (hitFill || hitResult.type !== "fill")
+                    (hitFill || hitResult.type !== 'fill')
                 ) {
                     return true;
                 }
@@ -77,10 +74,8 @@ class FillTool extends paper.Tool {
             // flicker back and forth between transparent/its previous color as we hit it, then stop hitting it, etc.
             // If the color *is* visible, then don't hit "invisible" outlines, since this would add visible outlines to
             // non-outlined shapes when you hovered over where their outlines would be.
-            hitUnstrokedPaths:
-                this.gradientType === GradientTypes.SOLID &&
-                this.fillColor === null,
-            tolerance: FillTool.TOLERANCE / paper.view.zoom,
+            hitUnstrokedPaths: this.gradientType === GradientTypes.SOLID && this.fillColor === null,
+            tolerance: FillTool.TOLERANCE / paper.view.zoom
         };
     }
     setFillColor(fillColor) {
@@ -103,17 +98,11 @@ class FillTool extends paper.Tool {
         this.prevHoveredItemId = prevHoveredItemId;
     }
     updateFillPreview(event) {
-        const hoveredItem = getHoveredItem(
-            event,
-            this.getHitOptions(),
-            true /* subselect */
-        );
+        const hoveredItem = getHoveredItem(event, this.getHitOptions(), true /* subselect */);
         if (
             (!hoveredItem && this.prevHoveredItemId) || // There is no longer a hovered item
             (hoveredItem && !this.prevHoveredItemId) || // There is now a hovered item
-            (hoveredItem &&
-                this.prevHoveredItemId &&
-                hoveredItem.id !== this.prevHoveredItemId)
+            (hoveredItem && this.prevHoveredItemId && hoveredItem.id !== this.prevHoveredItemId)
         ) {
             // hovered item changed
             this.setHoveredItem(hoveredItem ? hoveredItem.id : null);
@@ -122,19 +111,13 @@ class FillTool extends paper.Tool {
         const hitType = hoveredItem ? hoveredItem.data.hitResult.type : null;
 
         // The hit "target" changes if we switch items or switch between fill/outline on the same item
-        const hitTargetChanged =
-            hitItem !== this.fillItem || hitType !== this.fillProperty;
+        const hitTargetChanged = hitItem !== this.fillItem || hitType !== this.fillProperty;
 
         // Still hitting the same thing
         if (!hitTargetChanged) {
             // Only radial gradient needs to be updated
             if (this.gradientType === GradientTypes.RADIAL) {
-                this._setFillItemColor(
-                    this.fillColor,
-                    this.fillColor2,
-                    this.gradientType,
-                    event.point
-                );
+                this._setFillItemColor(this.fillColor, this.fillColor2, this.gradientType, event.point);
             }
             return;
         }
@@ -152,13 +135,9 @@ class FillTool extends paper.Tool {
         if (hitItem) {
             this.fillItem = hitItem;
             this.fillProperty = hitType;
-            const colorProp = hitType === "fill" ? "fillColor" : "strokeColor";
+            const colorProp = hitType === 'fill' ? 'fillColor' : 'strokeColor';
             this.fillItemOrigColor = hitItem[colorProp];
-            if (
-                hitItem.parent instanceof paper.CompoundPath &&
-                hitItem.area < 0 &&
-                hitType === "fill"
-            ) {
+            if (hitItem.parent instanceof paper.CompoundPath && hitItem.area < 0 && hitType === 'fill') {
                 // hole
                 if (!this.fillColor) {
                     // Hole filled with transparent is no-op
@@ -179,12 +158,7 @@ class FillTool extends paper.Tool {
             } else if (this.fillItem.parent instanceof paper.CompoundPath) {
                 this.fillItemOrigColor = hitItem.parent[colorProp];
             }
-            this._setFillItemColor(
-                this.fillColor,
-                this.fillColor2,
-                this.gradientType,
-                event.point
-            );
+            this._setFillItemColor(this.fillColor, this.fillColor2, this.gradientType, event.point);
         }
     }
     handleMouseDown(event) {
@@ -203,9 +177,8 @@ class FillTool extends paper.Tool {
             if (
                 this.addedFillItem &&
                 this._noStroke(this.fillItem.parent) &&
-                this.addedFillItem.fillColor.type !== "gradient" &&
-                this.fillItem.parent.fillColor.toCSS() ===
-                    this.addedFillItem.fillColor.toCSS()
+                this.addedFillItem.fillColor.type !== 'gradient' &&
+                this.fillItem.parent.fillColor.toCSS() === this.addedFillItem.fillColor.toCSS()
             ) {
                 this.addedFillItem.remove();
                 this.addedFillItem = null;
@@ -216,19 +189,12 @@ class FillTool extends paper.Tool {
             } else if (this.addedFillItem) {
                 // Fill in a hole.
                 this.addedFillItem.data.noHover = false;
-            } else if (
-                !this.fillColor &&
-                this.fillItem.data &&
-                this.fillItem.data.origItem
-            ) {
+            } else if (!this.fillColor && this.fillItem.data && this.fillItem.data.origItem) {
                 // Filling a hole filler with transparent returns it to being gone
                 // instead of making a shape that's transparent
                 const group = this.fillItem.parent;
                 this.fillItem.remove();
-                if (
-                    !(group instanceof paper.Layer) &&
-                    group.children.length === 1
-                ) {
+                if (!(group instanceof paper.Layer) && group.children.length === 1) {
                     group.reduce();
                 }
             }
@@ -242,19 +208,14 @@ class FillTool extends paper.Tool {
         }
     }
     _noStroke(item) {
-        return (
-            !item.strokeColor ||
-            item.strokeColor.alpha === 0 ||
-            item.strokeWidth === 0
-        );
+        return !item.strokeColor || item.strokeColor.alpha === 0 || item.strokeWidth === 0;
     }
     // Either pass in a fully defined paper.Color as color1,
     // or pass in 2 color strings, a gradient type, and a pointer location
     _setFillItemColor(color1, color2, gradientType, pointerLocation) {
         const item = this._getFillItem();
         if (!item) return;
-        const colorProp =
-            this.fillProperty === "fill" ? "fillColor" : "strokeColor";
+        const colorProp = this.fillProperty === 'fill' ? 'fillColor' : 'strokeColor';
         // Only create a gradient if specifically requested, else use color1 directly
         // This ensures we do not set a gradient by accident (see scratch-paint#830).
         if (gradientType && gradientType !== GradientTypes.SOLID) {
@@ -273,10 +234,7 @@ class FillTool extends paper.Tool {
     _getFillItem() {
         if (this.addedFillItem) {
             return this.addedFillItem;
-        } else if (
-            this.fillItem &&
-            this.fillItem.parent instanceof paper.CompoundPath
-        ) {
+        } else if (this.fillItem && this.fillItem.parent instanceof paper.CompoundPath) {
             return this.fillItem.parent;
         }
         return this.fillItem;

@@ -1,4 +1,4 @@
-import CloudProvider from "../../../src/lib/cloud-provider";
+import CloudProvider from '../../../src/lib/cloud-provider';
 
 let websocketConstructorCount = 0;
 
@@ -18,10 +18,10 @@ global.WebSocket = function (url) {
 
     websocketConstructorCount++;
 };
-global.WebSocket.CLOSING = "CLOSING";
-global.WebSocket.CLOSED = "CLOSED";
+global.WebSocket.CLOSING = 'CLOSING';
+global.WebSocket.CLOSED = 'CLOSED';
 
-describe("CloudProvider", () => {
+describe('CloudProvider', () => {
     let cloudProvider = null;
     let vmIOData = [];
     let timeout = 0;
@@ -32,7 +32,7 @@ describe("CloudProvider", () => {
         cloudProvider.vm = {
             postIOData: (_namespace, data) => {
                 vmIOData.push(data);
-            },
+            }
         };
         // Stub setTimeout so this can run instantly.
         cloudProvider.setTimeout = (fn, after) => {
@@ -43,91 +43,91 @@ describe("CloudProvider", () => {
         cloudProvider.randomizeDuration = t => t;
     });
 
-    test("createVariable", () => {
-        cloudProvider.createVariable("hello", 1);
+    test('createVariable', () => {
+        cloudProvider.createVariable('hello', 1);
         const obj = JSON.parse(cloudProvider.connection._sentMessages[0]);
-        expect(obj.method).toEqual("create");
-        expect(obj.name).toEqual("hello");
+        expect(obj.method).toEqual('create');
+        expect(obj.name).toEqual('hello');
         expect(obj.value).toEqual(1);
     });
 
-    test("updateVariable", () => {
-        cloudProvider.updateVariable("hello", 1);
+    test('updateVariable', () => {
+        cloudProvider.updateVariable('hello', 1);
         const obj = JSON.parse(cloudProvider.connection._sentMessages[0]);
-        expect(obj.method).toEqual("set");
-        expect(obj.name).toEqual("hello");
+        expect(obj.method).toEqual('set');
+        expect(obj.name).toEqual('hello');
         expect(obj.value).toEqual(1);
     });
 
-    test("updateVariable with falsey value", () => {
-        cloudProvider.updateVariable("hello", 0);
+    test('updateVariable with falsey value', () => {
+        cloudProvider.updateVariable('hello', 0);
         const obj = JSON.parse(cloudProvider.connection._sentMessages[0]);
-        expect(obj.method).toEqual("set");
-        expect(obj.name).toEqual("hello");
+        expect(obj.method).toEqual('set');
+        expect(obj.name).toEqual('hello');
         expect(obj.value).toEqual(0);
     });
 
-    test("renameVariable", () => {
-        cloudProvider.renameVariable("oldName", "newName");
+    test('renameVariable', () => {
+        cloudProvider.renameVariable('oldName', 'newName');
         const obj = JSON.parse(cloudProvider.connection._sentMessages[0]);
-        expect(obj.method).toEqual("rename");
-        expect(obj.name).toEqual("oldName");
-        expect(typeof obj.value).toEqual("undefined");
-        expect(obj.new_name).toEqual("newName");
+        expect(obj.method).toEqual('rename');
+        expect(obj.name).toEqual('oldName');
+        expect(typeof obj.value).toEqual('undefined');
+        expect(obj.new_name).toEqual('newName');
     });
 
-    test("deleteVariable", () => {
-        cloudProvider.deleteVariable("hello");
+    test('deleteVariable', () => {
+        cloudProvider.deleteVariable('hello');
         const obj = JSON.parse(cloudProvider.connection._sentMessages[0]);
-        expect(obj.method).toEqual("delete");
-        expect(obj.name).toEqual("hello");
-        expect(typeof obj.value).toEqual("undefined");
+        expect(obj.method).toEqual('delete');
+        expect(obj.name).toEqual('hello');
+        expect(typeof obj.value).toEqual('undefined');
     });
 
-    test("onMessage set", () => {
+    test('onMessage set', () => {
         const msg = JSON.stringify({
-            method: "set",
-            name: "name",
-            value: "value",
+            method: 'set',
+            name: 'name',
+            value: 'value'
         });
-        cloudProvider.connection._receive({ data: msg });
-        expect(vmIOData[0].varUpdate.name).toEqual("name");
-        expect(vmIOData[0].varUpdate.value).toEqual("value");
+        cloudProvider.connection._receive({data: msg});
+        expect(vmIOData[0].varUpdate.name).toEqual('name');
+        expect(vmIOData[0].varUpdate.value).toEqual('value');
     });
 
-    test("onMessage with newline at the end", () => {
+    test('onMessage with newline at the end', () => {
         const msg1 = JSON.stringify({
-            method: "set",
-            name: "name1",
-            value: "value",
+            method: 'set',
+            name: 'name1',
+            value: 'value'
         });
-        cloudProvider.onMessage({ data: `${msg1}\n` });
-        expect(vmIOData[0].varUpdate.name).toEqual("name1");
+        cloudProvider.onMessage({data: `${msg1}\n`});
+        expect(vmIOData[0].varUpdate.name).toEqual('name1');
     });
 
-    test("onMessage with multiple commands", () => {
+    test('onMessage with multiple commands', () => {
         const msg1 = JSON.stringify({
-            method: "set",
-            name: "name1",
-            value: "value",
+            method: 'set',
+            name: 'name1',
+            value: 'value'
         });
         const msg2 = JSON.stringify({
-            method: "set",
-            name: "name2",
-            value: "value2",
+            method: 'set',
+            name: 'name2',
+            value: 'value2'
         });
-        cloudProvider.connection._receive({ data: `${msg1}\n${msg2}` });
-        expect(vmIOData[0].varUpdate.name).toEqual("name1");
-        expect(vmIOData[1].varUpdate.name).toEqual("name2");
+        cloudProvider.connection._receive({data: `${msg1}\n${msg2}`});
+        expect(vmIOData[0].varUpdate.name).toEqual('name1');
+        expect(vmIOData[1].varUpdate.name).toEqual('name2');
     });
 
-    test("connnection attempts set back to 1 when socket is opened", () => {
+    test('connnection attempts set back to 1 when socket is opened', () => {
         cloudProvider.connectionAttempts = 100;
         cloudProvider.connection._open();
         expect(cloudProvider.connectionAttempts).toBe(1);
     });
 
-    test("disconnect waits for a period equal to 2^k-1 before trying again", () => {
+    test('disconnect waits for a period equal to 2^k-1 before trying again', () => {
         websocketConstructorCount = 1; // This is global, so set it back to 1 to start
         // Constructor attempts to open connection, so attempts is initially 1
         expect(cloudProvider.connectionAttempts).toBe(1);
@@ -164,7 +164,7 @@ describe("CloudProvider", () => {
         expect(cloudProvider.connectionAttempts).toBe(7);
     });
 
-    test("close after connection is opened waits 1s before reconnecting", () => {
+    test('close after connection is opened waits 1s before reconnecting', () => {
         // This test is basically to check that opening the connection does not impact
         // the time until reconnection for the first reconnect.
         // It is easy to introduce a bug that causes reconnection time to be different
@@ -177,34 +177,34 @@ describe("CloudProvider", () => {
         expect(cloudProvider.connectionAttempts).toBe(2);
     });
 
-    test("exponentialTimeout caps connection attempt number", () => {
+    test('exponentialTimeout caps connection attempt number', () => {
         cloudProvider.connectionAttempts = 1000;
         expect(cloudProvider.exponentialTimeout()).toEqual(31 * 1000);
     });
 
-    test("requestCloseConnection does not try to reconnect", () => {
+    test('requestCloseConnection does not try to reconnect', () => {
         websocketConstructorCount = 1; // This is global, so set it back to 1 to start
         cloudProvider.requestCloseConnection();
         expect(websocketConstructorCount).toBe(1); // No reconnection attempts
     });
 
-    test("close with code 4002 triggers invalid username", () => {
+    test('close with code 4002 triggers invalid username', () => {
         cloudProvider.onInvalidUsername = jest.fn();
-        cloudProvider.onClose({ code: 4002 });
+        cloudProvider.onClose({code: 4002});
         expect(cloudProvider.onInvalidUsername).toHaveBeenCalledTimes(1);
     });
 
-    test("close with normal code does not trigger invalid username", () => {
-        cloudProvider.username = "aaa";
+    test('close with normal code does not trigger invalid username', () => {
+        cloudProvider.username = 'aaa';
         cloudProvider.onInvalidUsername = jest.fn();
-        cloudProvider.onClose({ code: 1000 });
+        cloudProvider.onClose({code: 1000});
         expect(cloudProvider.onInvalidUsername).not.toHaveBeenCalled();
     });
 });
 
-test("username anonymization", () => {
-    const anonymized = new CloudProvider("", null, "player1234", "");
-    expect(anonymized.username).toBe("player");
-    const verbatim = new CloudProvider("", null, "abcdef", "");
-    expect(verbatim.username).toBe("abcdef");
+test('username anonymization', () => {
+    const anonymized = new CloudProvider('', null, 'player1234', '');
+    expect(anonymized.username).toBe('player');
+    const verbatim = new CloudProvider('', null, 'abcdef', '');
+    expect(verbatim.username).toBe('abcdef');
 });

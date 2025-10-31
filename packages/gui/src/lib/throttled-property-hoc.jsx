@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 /* Higher Order Component to throttle updates to specific props.
  * Why? Because certain prop updates are expensive, and need to be throttled.
@@ -18,10 +18,7 @@ const ThrottledPropertyHOC = function (propName, throttleTime) {
         class ThrottledPropertyWrapper extends React.Component {
             shouldComponentUpdate(nextProps) {
                 for (const property in nextProps) {
-                    if (
-                        property !== propName &&
-                        this.props[property] !== nextProps[property]
-                    ) {
+                    if (property !== propName && this.props[property] !== nextProps[property]) {
                         return true; // Always update if another property has changed
                     }
                 }

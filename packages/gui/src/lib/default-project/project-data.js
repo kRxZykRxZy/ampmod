@@ -1,15 +1,15 @@
-import { defineMessages } from "react-intl";
-import sharedMessages from "../shared-messages";
+import {defineMessages} from 'react-intl';
+import sharedMessages from '../shared-messages';
 
 let messages = defineMessages({
     variable: {
-        defaultMessage: "my variable",
-        description: "Name for the default variable",
-        id: "gui.defaultProject.variable",
-    },
+        defaultMessage: 'my variable',
+        description: 'Name for the default variable',
+        id: 'gui.defaultProject.variable'
+    }
 });
 
-messages = { ...messages, ...sharedMessages };
+messages = {...messages, ...sharedMessages};
 
 // use the default message if a translation function is not passed
 const defaultTranslator = msgObj => msgObj.defaultMessage;
@@ -25,12 +25,9 @@ const projectData = translateFunction => {
         targets: [
             {
                 isStage: true,
-                name: "Stage",
+                name: 'Stage',
                 variables: {
-                    "`jEk@4|i[#Fk?(8x)AV.-my variable": [
-                        translator(messages.variable),
-                        0,
-                    ],
+                    '`jEk@4|i[#Fk?(8x)AV.-my variable': [translator(messages.variable), 0]
                 },
                 lists: {},
                 broadcasts: {},
@@ -38,20 +35,20 @@ const projectData = translateFunction => {
                 currentCostume: 0,
                 costumes: [
                     {
-                        assetId: "cd21514d0531fdffb22204e0ec5ed84a",
-                        name: translator(messages.backdrop, { index: 1 }),
-                        md5ext: "cd21514d0531fdffb22204e0ec5ed84a.svg",
-                        dataFormat: "svg",
+                        assetId: 'cd21514d0531fdffb22204e0ec5ed84a',
+                        name: translator(messages.backdrop, {index: 1}),
+                        md5ext: 'cd21514d0531fdffb22204e0ec5ed84a.svg',
+                        dataFormat: 'svg',
                         rotationCenterX: 240,
-                        rotationCenterY: 180,
-                    },
+                        rotationCenterY: 180
+                    }
                 ],
                 sounds: [],
-                volume: 100,
+                volume: 100
             },
             {
                 isStage: false,
-                name: translator(messages.sprite, { index: 1 }),
+                name: translator(messages.sprite, {index: 1}),
                 variables: {},
                 lists: {},
                 broadcasts: {},
@@ -60,14 +57,14 @@ const projectData = translateFunction => {
                 currentCostume: 0,
                 costumes: [
                     {
-                        assetId: "1fe66020da00ba6c793c45d652e6b9cd",
-                        name: translator(messages.costume, { index: 1 }),
+                        assetId: '1fe66020da00ba6c793c45d652e6b9cd',
+                        name: translator(messages.costume, {index: 1}),
                         bitmapResolution: 1,
-                        md5ext: "1fe66020da00ba6c793c45d652e6b9cd.svg",
-                        dataFormat: "svg",
+                        md5ext: '1fe66020da00ba6c793c45d652e6b9cd.svg',
+                        dataFormat: 'svg',
                         rotationCenterX: 28.989415000000065,
-                        rotationCenterY: 29.324178162470673,
-                    },
+                        rotationCenterY: 29.324178162470673
+                    }
                 ],
                 sounds: [],
                 volume: 100,
@@ -77,14 +74,14 @@ const projectData = translateFunction => {
                 size: 100,
                 direction: 90,
                 draggable: false,
-                rotationStyle: "all around",
-            },
+                rotationStyle: 'all around'
+            }
         ],
         meta: {
-            semver: "3.0.0",
-            vm: "0.1.0",
-            agent: "",
-        },
+            semver: '3.0.0',
+            vm: '0.1.0',
+            agent: ''
+        }
     };
 };
 

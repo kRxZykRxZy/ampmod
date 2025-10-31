@@ -1,5 +1,5 @@
-@import "../../css/colors.css";
-@import "../../css/units.css";
+@import '../../css/colors.css';
+@import '../../css/units.css';
 
 .wrapper {
     width: 150px;
@@ -28,7 +28,7 @@
 $fade-out-distance: 100px;
 
 .new-buttons:before {
-    content: "";
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
@@ -53,7 +53,7 @@ $fade-out-distance: 100px;
 
 .list-area:after {
     /* Make sure there is room to scroll beyond the last tile */
-    content: "";
+    content: '';
     display: block;
     height: 70px;
     width: 100%;

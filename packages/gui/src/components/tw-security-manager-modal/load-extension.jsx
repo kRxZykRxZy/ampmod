@@ -1,15 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FormattedMessage } from "react-intl";
-import styles from "./load-extension.css";
-import URL from "./url.jsx";
-import DataURL from "./data-url.jsx";
-import FancyCheckbox from "../tw-fancy-checkbox/checkbox.jsx";
-import { APP_NAME } from "@ampmod/branding";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {FormattedMessage} from 'react-intl';
+import styles from './load-extension.css';
+import URL from './url.jsx';
+import DataURL from './data-url.jsx';
+import FancyCheckbox from '../tw-fancy-checkbox/checkbox.jsx';
+import {APP_NAME} from '@ampmod/branding';
 
 const LoadExtensionModal = props => (
     <div>
-        {props.url.startsWith("data:") ? (
+        {props.url.startsWith('data:') ? (
             <React.Fragment>
                 <FormattedMessage
                     defaultMessage="The project wants to load a custom extension with the code:"
@@ -51,7 +51,7 @@ const LoadExtensionModal = props => (
                             description="Part of modal asking for permission to automatically load custom extension"
                             id="tw.loadExtension.unsandboxedWarning"
                             values={{
-                                APP_NAME,
+                                APP_NAME
                             }}
                         />
                     </div>
@@ -74,7 +74,7 @@ const LoadExtensionModal = props => (
 LoadExtensionModal.propTypes = {
     url: PropTypes.string.isRequired,
     unsandboxed: PropTypes.bool.isRequired,
-    onChangeUnsandboxed: PropTypes.func,
+    onChangeUnsandboxed: PropTypes.func
 };
 
 export default LoadExtensionModal;

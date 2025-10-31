@@ -1,22 +1,17 @@
-import {
-    defineMessages,
-    FormattedMessage,
-    intlShape,
-    injectIntl,
-} from "react-intl";
-import PropTypes from "prop-types";
-import React from "react";
-import classNames from "classnames";
-import bindAll from "lodash.bindall";
-import Box from "../box/box.jsx";
-import Modal from "../../containers/modal.jsx";
-import FancyCheckbox from "../tw-fancy-checkbox/checkbox.jsx";
-import Input from "../forms/input.jsx";
-import BufferedInputHOC from "../forms/buffered-input-hoc.jsx";
-import DocumentationLink from "../tw-documentation-link/documentation-link.jsx";
-import styles from "./settings-modal.css";
-import helpIcon from "./help-icon.svg";
-import { APP_NAME } from "@ampmod/branding";
+import {defineMessages, FormattedMessage, intlShape, injectIntl} from 'react-intl';
+import PropTypes from 'prop-types';
+import React from 'react';
+import classNames from 'classnames';
+import bindAll from 'lodash.bindall';
+import Box from '../box/box.jsx';
+import Modal from '../../containers/modal.jsx';
+import FancyCheckbox from '../tw-fancy-checkbox/checkbox.jsx';
+import Input from '../forms/input.jsx';
+import BufferedInputHOC from '../forms/buffered-input-hoc.jsx';
+import DocumentationLink from '../tw-documentation-link/documentation-link.jsx';
+import styles from './settings-modal.css';
+import helpIcon from './help-icon.svg';
+import {APP_NAME} from '@ampmod/branding';
 
 /* eslint-disable react/no-multi-comp */
 
@@ -24,25 +19,22 @@ const BufferedInput = BufferedInputHOC(Input);
 
 const messages = defineMessages({
     title: {
-        defaultMessage: "Advanced Settings",
-        description: "Title of settings modal",
-        id: "tw.settingsModal.title",
+        defaultMessage: 'Advanced Settings',
+        description: 'Title of settings modal',
+        id: 'tw.settingsModal.title'
     },
     help: {
-        defaultMessage: "Click for help",
-        description: "Hover text of help icon in settings",
-        id: "tw.settingsModal.help",
-    },
+        defaultMessage: 'Click for help',
+        description: 'Hover text of help icon in settings',
+        id: 'tw.settingsModal.help'
+    }
 });
 
 const LearnMore = props => (
     <React.Fragment>
-        {" "}
+        {' '}
         <DocumentationLink {...props}>
-            <FormattedMessage
-                defaultMessage="Learn more."
-                id="gui.alerts.cloudInfoLearnMore"
-            />
+            <FormattedMessage defaultMessage="Learn more." id="gui.alerts.cloudInfoLearnMore" />
         </DocumentationLink>
     </React.Fragment>
 );
@@ -50,29 +42,29 @@ const LearnMore = props => (
 class UnwrappedSetting extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ["handleClickHelp"]);
+        bindAll(this, ['handleClickHelp']);
         this.state = {
-            helpVisible: false,
+            helpVisible: false
         };
     }
     componentDidUpdate(prevProps) {
         if (this.props.active && !prevProps.active) {
             // eslint-disable-next-line react/no-did-update-set-state
             this.setState({
-                helpVisible: true,
+                helpVisible: true
             });
         }
     }
     handleClickHelp() {
         this.setState(prevState => ({
-            helpVisible: !prevState.helpVisible,
+            helpVisible: !prevState.helpVisible
         }));
     }
     render() {
         return (
             <div
                 className={classNames(styles.setting, {
-                    [styles.active]: this.props.active,
+                    [styles.active]: this.props.active
                 })}
             >
                 <div className={styles.label}>
@@ -88,9 +80,7 @@ class UnwrappedSetting extends React.Component {
                 {this.state.helpVisible && (
                     <div className={styles.detail}>
                         {this.props.help}
-                        {this.props.slug && (
-                            <LearnMore slug={this.props.slug} />
-                        )}
+                        {this.props.slug && <LearnMore slug={this.props.slug} />}
                     </div>
                 )}
                 {this.props.secondary}
@@ -104,21 +94,17 @@ UnwrappedSetting.propTypes = {
     help: PropTypes.node,
     primary: PropTypes.node,
     secondary: PropTypes.node,
-    slug: PropTypes.string,
+    slug: PropTypes.string
 };
 const Setting = injectIntl(UnwrappedSetting);
 
-const BooleanSetting = ({ value, onChange, label, ...props }) => (
+const BooleanSetting = ({value, onChange, label, ...props}) => (
     <Setting
         {...props}
         active={value}
         primary={
             <label className={styles.label}>
-                <FancyCheckbox
-                    className={styles.checkbox}
-                    checked={value}
-                    onChange={onChange}
-                />
+                <FancyCheckbox className={styles.checkbox} checked={value} onChange={onChange} />
                 {label}
             </label>
         }
@@ -127,7 +113,7 @@ const BooleanSetting = ({ value, onChange, label, ...props }) => (
 BooleanSetting.propTypes = {
     onChange: PropTypes.func.isRequired,
     value: PropTypes.bool.isRequired,
-    label: PropTypes.node.isRequired,
+    label: PropTypes.node.isRequired
 };
 
 const HighQualityPen = props => (
@@ -178,7 +164,7 @@ const CustomFPS = props => (
                                 id="tw.settingsModal.fpsHelp.customFramerate"
                             />
                         </a>
-                    ),
+                    )
                 }}
             />
         }
@@ -188,7 +174,7 @@ const CustomFPS = props => (
 CustomFPS.propTypes = {
     framerate: PropTypes.number,
     onChange: PropTypes.func,
-    onCustomizeFramerate: PropTypes.func,
+    onCustomizeFramerate: PropTypes.func
 };
 
 const Interpolation = props => (
@@ -337,7 +323,7 @@ const DisableCompiler = props => (
                 description="Disable Compiler help"
                 id="tw.settingsModal.disableCompilerHelp"
                 values={{
-                    APP_NAME,
+                    APP_NAME
                 }}
             />
         }
@@ -350,7 +336,7 @@ const CustomStageSize = ({
     stageWidth,
     onStageWidthChange,
     stageHeight,
-    onStageHeightChange,
+    onStageHeightChange
 }) => (
     <Setting
         active={customStageSizeEnabled}
@@ -370,7 +356,7 @@ const CustomStageSize = ({
                     max="1024"
                     step="1"
                 />
-                <span>{"×"}</span>
+                <span>{'×'}</span>
                 <BufferedInput
                     value={stageHeight}
                     onSubmit={onStageHeightChange}
@@ -411,10 +397,10 @@ CustomStageSize.propTypes = {
     stageWidth: PropTypes.number,
     onStageWidthChange: PropTypes.func,
     stageHeight: PropTypes.number,
-    onStageHeightChange: PropTypes.func,
+    onStageHeightChange: PropTypes.func
 };
 
-const StoreProjectOptions = ({ onStoreProjectOptions }) => (
+const StoreProjectOptions = ({onStoreProjectOptions}) => (
     <div className={styles.setting}>
         <div>
             <button onClick={onStoreProjectOptions} className={styles.button}>
@@ -428,7 +414,7 @@ const StoreProjectOptions = ({ onStoreProjectOptions }) => (
     </div>
 );
 StoreProjectOptions.propTypes = {
-    onStoreProjectOptions: PropTypes.func,
+    onStoreProjectOptions: PropTypes.func
 };
 
 const Header = props => (
@@ -438,7 +424,7 @@ const Header = props => (
     </div>
 );
 Header.propTypes = {
-    children: PropTypes.node,
+    children: PropTypes.node
 };
 
 const SettingsModalComponent = props => (
@@ -462,14 +448,8 @@ const SettingsModalComponent = props => (
                 onChange={props.onFramerateChange}
                 onCustomizeFramerate={props.onCustomizeFramerate}
             />
-            <HighQualityPen
-                value={props.highQualityPen}
-                onChange={props.onHighQualityPenChange}
-            />
-            <WarpTimer
-                value={props.warpTimer}
-                onChange={props.onWarpTimerChange}
-            />
+            <HighQualityPen value={props.highQualityPen} onChange={props.onHighQualityPenChange} />
+            <WarpTimer value={props.warpTimer} onChange={props.onWarpTimerChange} />
             <Header>
                 <FormattedMessage
                     defaultMessage="Remove Limits"
@@ -477,22 +457,10 @@ const SettingsModalComponent = props => (
                     id="tw.settingsModal.removeLimits"
                 />
             </Header>
-            <InfiniteClones
-                value={props.infiniteClones}
-                onChange={props.onInfiniteClonesChange}
-            />
-            <RemoveFencing
-                value={props.removeFencing}
-                onChange={props.onRemoveFencingChange}
-            />
-            <CaseSensitivity
-                value={props.caseSensitivity}
-                onChange={props.onCaseSensitivityChange}
-            />
-            <RemoveMiscLimits
-                value={props.removeLimits}
-                onChange={props.onRemoveLimitsChange}
-            />
+            <InfiniteClones value={props.infiniteClones} onChange={props.onInfiniteClonesChange} />
+            <RemoveFencing value={props.removeFencing} onChange={props.onRemoveFencingChange} />
+            <CaseSensitivity value={props.caseSensitivity} onChange={props.onCaseSensitivityChange} />
+            <RemoveMiscLimits value={props.removeLimits} onChange={props.onRemoveLimitsChange} />
             <Header>
                 <FormattedMessage
                     defaultMessage="Danger Zone"
@@ -500,14 +468,8 @@ const SettingsModalComponent = props => (
                     id="tw.settingsModal.dangerZone"
                 />
             </Header>
-            <Interpolation
-                value={props.interpolation}
-                onChange={props.onInterpolationChange}
-            />
-            <DisableCompiler
-                value={props.disableCompiler}
-                onChange={props.onDisableCompilerChange}
-            />
+            <Interpolation value={props.interpolation} onChange={props.onInterpolationChange} />
+            <DisableCompiler value={props.disableCompiler} onChange={props.onDisableCompilerChange} />
         </Box>
     </Modal>
 );
@@ -532,7 +494,7 @@ SettingsModalComponent.propTypes = {
     warpTimer: PropTypes.bool,
     onWarpTimerChange: PropTypes.func,
     disableCompiler: PropTypes.bool,
-    onDisableCompilerChange: PropTypes.func,
+    onDisableCompilerChange: PropTypes.func
 };
 
 export default injectIntl(SettingsModalComponent);

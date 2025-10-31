@@ -1,46 +1,46 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
-import bindAll from "lodash.bindall";
-import styles from "./fonts-modal.css";
-import FontDropdownItem from "./font-dropdown-item.jsx";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+import bindAll from 'lodash.bindall';
+import styles from './fonts-modal.css';
+import FontDropdownItem from './font-dropdown-item.jsx';
 
 class FontName extends React.Component {
     constructor(props) {
         super(props);
         bindAll(this, [
-            "setInputRef",
-            "handleChange",
-            "handleFocus",
-            "handleBlur",
-            "handleResize",
-            "handleSelectFont",
-            "handleKeyDown",
+            'setInputRef',
+            'handleChange',
+            'handleFocus',
+            'handleBlur',
+            'handleResize',
+            'handleSelectFont',
+            'handleKeyDown'
         ]);
         this.state = {
             focused: false,
             rect: null,
-            localFonts: [],
+            localFonts: []
         };
     }
 
     componentDidMount() {
-        window.addEventListener("resize", this.handleResize);
+        window.addEventListener('resize', this.handleResize);
 
         // Chrome-only API
-        if (typeof queryLocalFonts === "function") {
+        if (typeof queryLocalFonts === 'function') {
             // eslint-disable-next-line no-undef
             queryLocalFonts().then(fonts => {
                 const uniqueFamilies = [...new Set(fonts.map(i => i.family))];
                 this.setState({
-                    localFonts: uniqueFamilies,
+                    localFonts: uniqueFamilies
                 });
             });
         }
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", this.handleResize);
+        window.removeEventListener('resize', this.handleResize);
     }
 
     setInputRef(input) {
@@ -59,7 +59,7 @@ class FontName extends React.Component {
     handleFocus() {
         this.setState({
             focused: true,
-            rect: this.input.getBoundingClientRect(),
+            rect: this.input.getBoundingClientRect()
         });
     }
 
@@ -69,14 +69,14 @@ class FontName extends React.Component {
             : this.props.fontManager.getUnusedSystemFont(this.props.name);
         this.props.onChange(sanitizedName);
         this.setState({
-            focused: false,
+            focused: false
         });
     }
 
     handleResize() {
         if (this.state.focused) {
             this.setState({
-                rect: this.input.getBoundingClientRect(),
+                rect: this.input.getBoundingClientRect()
             });
         }
     }
@@ -86,7 +86,7 @@ class FontName extends React.Component {
     }
 
     handleKeyDown(e) {
-        if (e.key === "Enter") {
+        if (e.key === 'Enter') {
             this.handleBlur();
             e.target.blur();
         }
@@ -97,9 +97,7 @@ class FontName extends React.Component {
             return [];
         }
         const name = this.props.name.toLowerCase();
-        const candidates = this.state.localFonts.filter(family =>
-            family.toLowerCase().includes(name)
-        );
+        const candidates = this.state.localFonts.filter(family => family.toLowerCase().includes(name));
         if (candidates.length === 1 && candidates[0] === this.props.name) {
             return [];
         }
@@ -140,15 +138,11 @@ class FontName extends React.Component {
                             style={{
                                 left: `${this.state.rect.left - 4}px`,
                                 top: `${this.state.rect.top + this.state.rect.height + 4}px`,
-                                width: `${this.state.rect.width + 8}px`,
+                                width: `${this.state.rect.width + 8}px`
                             }}
                         >
                             {this.getFilteredOptions().map(family => (
-                                <FontDropdownItem
-                                    key={family}
-                                    family={family}
-                                    onSelect={this.handleSelectFont}
-                                />
+                                <FontDropdownItem key={family} family={family} onSelect={this.handleSelectFont} />
                             ))}
                         </div>,
                         document.body
@@ -163,9 +157,9 @@ FontName.propTypes = {
     onChange: PropTypes.func.isRequired,
     fontManager: PropTypes.shape({
         getUnusedSystemFont: PropTypes.func.isRequired,
-        getUnusedCustomFont: PropTypes.func.isRequired,
+        getUnusedCustomFont: PropTypes.func.isRequired
     }).isRequired,
-    isCustom: PropTypes.bool.isRequired,
+    isCustom: PropTypes.bool.isRequired
 };
 
 export default FontName;

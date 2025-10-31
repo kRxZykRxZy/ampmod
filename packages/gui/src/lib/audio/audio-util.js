@@ -1,4 +1,4 @@
-import WavEncoder from "wav-encoder";
+import WavEncoder from 'wav-encoder';
 
 export const SOUND_BYTE_LIMIT = 10 * 1000 * 1000; // 10mb
 
@@ -16,8 +16,7 @@ const _computeRMS = function (samples, start, end, scaling = 0.55) {
     return Math.sqrt(val);
 };
 
-const computeRMS = (samples, scaling) =>
-    _computeRMS(samples, 0, samples.length, scaling);
+const computeRMS = (samples, scaling) => _computeRMS(samples, 0, samples.length, scaling);
 
 const computeChunkedRMS = function (samples, chunkSize = 1024) {
     const sampleCount = samples.length;
@@ -29,22 +28,16 @@ const computeChunkedRMS = function (samples, chunkSize = 1024) {
     return chunkLevels;
 };
 
-const encodeAndAddSoundToVM = function (
-    vm,
-    samples,
-    sampleRate,
-    name,
-    callback
-) {
+const encodeAndAddSoundToVM = function (vm, samples, sampleRate, name, callback) {
     WavEncoder.encode({
         sampleRate: sampleRate,
-        channelData: [samples],
+        channelData: [samples]
     }).then(wavBuffer => {
         const vmSound = {
-            format: "",
-            dataFormat: "wav",
+            format: '',
+            dataFormat: 'wav',
             rate: sampleRate,
-            sampleCount: samples.length,
+            sampleCount: samples.length
         };
 
         // Create an asset from the encoded .wav and get resulting md5
@@ -83,15 +76,15 @@ const encodeAndAddSoundToVM = function (
  * @returns {SoundBuffer} Downsampled buffer with half the sample rate
  */
 const downsampleIfNeeded = (buffer, resampler) => {
-    const { samples, sampleRate } = buffer;
+    const {samples, sampleRate} = buffer;
     const encodedByteLength = samples.length * 2; /* bitDepth 16 bit */
     // Resolve immediately if already within byte limit
     if (encodedByteLength < SOUND_BYTE_LIMIT) {
-        return Promise.resolve({ samples, sampleRate });
+        return Promise.resolve({samples, sampleRate});
     }
     // TW: Don't check if the sound will still fit at this reduced sample rate.
     // Instead the GUI will show a warning if it's too large.
-    return resampler({ samples, sampleRate }, 22050);
+    return resampler({samples, sampleRate}, 22050);
 };
 
 /**
@@ -107,14 +100,8 @@ const dropEveryOtherSample = buffer => {
     }
     return {
         samples: newSamples,
-        sampleRate: buffer.sampleRate / 2,
+        sampleRate: buffer.sampleRate / 2
     };
 };
 
-export {
-    computeRMS,
-    computeChunkedRMS,
-    encodeAndAddSoundToVM,
-    downsampleIfNeeded,
-    dropEveryOtherSample,
-};
+export {computeRMS, computeChunkedRMS, encodeAndAddSoundToVM, downsampleIfNeeded, dropEveryOtherSample};
