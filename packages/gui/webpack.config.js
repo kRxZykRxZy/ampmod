@@ -313,7 +313,7 @@ module.exports = [
                 chunks: "all",
                 minChunks: 1,
                 minSize: 10000,
-                maxSize: 300000,
+                maxSize: 2000000,
                 maxInitialRequests: 8,
                 cacheGroups: {
                     reactVendor: {

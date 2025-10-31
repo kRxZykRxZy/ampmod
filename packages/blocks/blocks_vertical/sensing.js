@@ -604,3 +604,48 @@ Blockly.Blocks["sensing_userid"] = {
         });
     },
 };
+
+Blockly.Blocks["sensing_mousebuttondown"] = {
+    /**
+     * Block to report if a specific mouse button is pressed.
+     * @this Blockly.Block
+     */
+    init: function () {
+        this.jsonInit({
+            message0: Blockly.Msg.SENSING_MOUSEBUTTONDOWN,
+            args0: [
+                {
+                    type: "input_value",
+                    name: "MOUSEBUTTONMENU",
+                },
+            ],
+            category: Blockly.Categories.sensing,
+            extensions: ["colours_sensing", "output_boolean"],
+        });
+    },
+};
+
+Blockly.Blocks["sensing_mousebuttonmenu"] = {
+    /**
+     * Dropdown block for selecting a mouse button.
+     * @this Blockly.Block
+     */
+    init: function () {
+        this.jsonInit({
+            message0: "%1",
+            args0: [
+                {
+                    type: "field_dropdown",
+                    name: "MOUSEBUTTON",
+                    options: [
+                        [Blockly.Msg.SENSING_MOUSEBUTTON_PRIMARY, 0],
+                        [Blockly.Msg.SENSING_MOUSEBUTTON_MIDDLE, 1],
+                        [Blockly.Msg.SENSING_MOUSEBUTTON_SECONDARY, 2],
+                    ],
+                },
+            ],
+            category: Blockly.Categories.sensing,
+            extensions: ["colours_sensing", "output_string"],
+        });
+    },
+};

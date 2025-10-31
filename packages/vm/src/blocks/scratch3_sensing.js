@@ -76,6 +76,7 @@ class Scratch3SensingBlocks {
             sensing_answer: this.getAnswer,
             sensing_username: this.getUsername,
             sensing_lastkeypressed: this.lastKeyPressed,
+            sensing_mousebuttondown: this.getButtonIsDown,
             sensing_userid: () => {}, // legacy no-op block
         };
     }
@@ -109,6 +110,10 @@ class Scratch3SensingBlocks {
                 // something that is not currently supported in scratch 3.
                 getId: (_, fields) =>
                     getMonitorIdForBlockWithArgs("current", fields), // _${param}`
+            },
+            sensing_mousebuttondown: {
+                getId: (_, fields) =>
+                    getMonitorIdForBlockWithArgs("mousebuttondown", fields), // _${param}`
             },
         };
     }
@@ -390,6 +395,13 @@ class Scratch3SensingBlocks {
 
     lastKeyPressed(args, util) {
         return util.ioQuery("keyboard", "getLastKeyPressed");
+    }
+
+    // from upstream TurboWarp Blocks extension
+    // https://github.com/TurboWarp/scratch-vm/blob/20f53fa4d7b/src/extensions/tw/index.js
+    getButtonIsDown(args, util) {
+        const button = Cast.toNumber(args.MOUSEBUTTONMENU);
+        return util.ioQuery("mouse", "getButtonIsDown", [button]);
     }
 }
 

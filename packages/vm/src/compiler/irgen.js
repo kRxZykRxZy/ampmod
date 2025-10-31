@@ -966,6 +966,17 @@ class ScriptTreeGenerator {
                         ).toType(InputType.STRING),
                     }
                 );
+            case "sensing_mousebuttondown":
+                return new IntermediateInput(
+                    InputOpcode.SENSING_MOUSE_BUTTON_DOWN,
+                    InputType.BOOLEAN,
+                    {
+                        button: this.descendInputOfBlock(
+                            block,
+                            "MOUSEBUTTTONMENU"
+                        ).toType(InputType.NUMBER),
+                    }
+                );
             case "sensing_keypressed":
                 return new IntermediateInput(
                     InputOpcode.SENSING_KEY_DOWN,

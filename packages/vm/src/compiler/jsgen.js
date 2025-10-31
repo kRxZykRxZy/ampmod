@@ -608,6 +608,8 @@ class JSGenerator {
 
             case InputOpcode.TW_KEY_LAST_PRESSED:
                 return "runtime.ioDevices.keyboard.getLastKeyPressed()";
+            case InputOpcode.SENSING_MOUSE_BUTTON_DOWN:
+                return `runtime.ioDevices.mouse.getButtonIsDown(${this.descendInput(node.button)})`;
 
             case InputOpcode.VAR_GET:
                 return `${this.referenceVariable(node.variable)}.value`;

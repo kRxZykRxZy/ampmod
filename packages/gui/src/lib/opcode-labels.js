@@ -155,6 +155,24 @@ const messages = defineMessages({
             "Label for the last key pressed monitor when shown on the stage",
         id: "amp.opcodeLabels.lastkeypressed",
     },
+    sensing_mousebuttondown_primary: {
+        defaultMessage: "primary mouse button down?",
+        description:
+            "Label for the primary mouse button down monitor when shown on the stage",
+        id: "amp.opcodeLabels.mbdPrimary",
+    },
+    sensing_mousebuttondown_middle: {
+        defaultMessage: "middle mouse button down?",
+        description:
+            "Label for the middle mouse button down monitor when shown on the stage",
+        id: "amp.opcodeLabels.middle",
+    },
+    sensing_mousebuttondown_secondary: {
+        defaultMessage: "secondary mouse button down?",
+        description:
+            "Label for the secondary mouse button down monitor when shown on the stage",
+        id: "amp.opcodeLabels.secondary",
+    },
 });
 
 class OpcodeLabels {
@@ -203,6 +221,7 @@ class OpcodeLabels {
             sensing_timer: { category: "sensing" },
             sensing_dayssince2000: { category: "sensing" },
             sensing_lastkeypressed: { category: "sensing" },
+            sensing_mousebuttondown: { category: "sensing" },
         };
 
         // Initialize opcodeMap with default strings
@@ -291,6 +310,22 @@ class OpcodeLabels {
                     return this._translator(messages.sensing_current_minute);
                 case "second":
                     return this._translator(messages.sensing_current_second);
+            }
+        };
+        this._opcodeMap.sensing_mousebuttondown.labelFn = params => {
+            switch (params.MOUSEBUTTONMENU.toLowerCase()) {
+                case "0":
+                    return this._translator(
+                        messages.sensing_mousebuttondown_primary
+                    );
+                case "1":
+                    return this._translator(
+                        messages.sensing_mousebuttondown_middle
+                    );
+                case "2":
+                    return this._translator(
+                        messages.sensing_mousebuttondown_secondary
+                    );
             }
         };
         this._opcodeMap.sensing_timer.labelFn = () =>

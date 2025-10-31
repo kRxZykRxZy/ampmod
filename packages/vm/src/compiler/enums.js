@@ -274,6 +274,7 @@ const InputOpcode = {
     SENSING_DISTANCE: "sensing.distance",
     SENSING_KEY_DOWN: "keyboard.pressed",
     SENSING_MOUSE_DOWN: "mouse.down",
+    SENSING_MOUSE_BUTTON_DOWN: "mouse.buttonDown",
     SENSING_MOUSE_X: "mouse.x",
     SENSING_MOUSE_Y: "mouse.y",
     SENSING_OF: "sensing.of",
