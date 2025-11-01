@@ -1,19 +1,36 @@
 @import '../../css/colors.css';
+@import '../../css/default-colors.css';
 
 .styled-headings h2 {
     position: relative;
-    padding-left: 16px;
+    padding-left: 40px;
 }
 
 /* Marker on the left */
 .styled-headings h2::before {
-    content: '';
+    content: 'Q';
     position: absolute;
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 9px;
+    width: 24px;
     height: 24px;
-    background-color: $motion-primary;
-    border-radius: 2px;
+    background-color: $data-primary;
+    border: 1px solid $ui-black-transparent-default;
+    color: white;
+    border-radius: 9999em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+[dir="rtl"] .styled-headings h2 {
+    padding-left: 0;
+    padding-right: 40px;
+}
+
+[dir="rtl"] .styled-headings h2::before {
+    left: auto;
+    right: 0;
 }

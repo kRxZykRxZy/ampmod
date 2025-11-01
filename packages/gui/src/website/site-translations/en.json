@@ -88,14 +88,14 @@
     "examples.apz.battery": "What's my battery on?",
     "examples.apz.battery.description": "The Battery extension can get the battery percentage of your device.",
 
-    "faq.title": "{APP_NAME} FAQ",
+    "faq.title": "Frequently Asked Questions",
 
-    "faq.why.q": "Why does {APP_NAME} exist?",
-    "faq.why.a1": "Scratch has became a phenomenon in educational cirriculums across the world and even at homes as a hobby, but it is tightly controlled by its developers at the Scratch Foundation, who target it at beginners. Because of this, the Scratch Team has rejected several complex features, and coding classes in schools generally stop using it in higher periods.",
-    "faq.why.a2": "However, we do believe block-based programming allows people of all ages to create games, stories, and animations without even knowing how to use a keyboard to type. However, our goal isn't just to be educational - even though that's on our priority map, our main focus is simply improving on the Scratch Team's work. That's why we made {APP_NAME}.",
+    "faq.why.q": "Why was {APP_NAME} created?",
+    "faq.why.a1": "Scratch is tightly controlled by its developers at the Scratch Foundation, who target it at beginners. Because of this, the Scratch Team has rejected several complex features, and people eventually stop using it and learn languages like Python instead.",
+    "faq.why.a2": "However, we do believe block-based programming allows people to quickly build projects. That's why we made {APP_NAME} - an advanced modification of Scratch.",
 
-    "faq.opensource.q": "Is {APP_NAME} open-source?",
-    "faq.opensource.a": "Yes! {APP_NAME} is entirely open-source. You can see the source code {onCodeberg}.",
+    "faq.opensource.q": "Where can I find the {APP_NAME} source code?",
+    "faq.opensource.a": "You can see the {APP_NAME} source code {onCodeberg} under multiple licences (this is clarified in the LICENSE.md file).",
     "onCodeberg": "on Codeberg",
 
     "faq.philosophy.q": "What is the philosophy behind {APP_NAME}?",
@@ -105,7 +105,7 @@
     "faq.philosophy.appropriate": "Be appropriate for all ages.",
 
     "faq.browsers.q": "Which browsers work best with {APP_NAME}?",
-    "faq.browsers.a": "{APP_NAME} is primarily tested on Firefox and Chrome; however, most browsers released in the last 2 years should work.",
+    "faq.browsers.a": "{APP_NAME} is primarily tested on Firefox and Chrome. Most browsers released in the last 2 years should hopefully work.",
 
     "faq.updates.q": "How often is {APP_NAME} updated?",
     "faq.updates.a": "{APP_NAME} receives several patch updates per year to fix bugs, and a few occasional minor releases with new features.",
@@ -114,7 +114,7 @@
     "faq.extensions.a": "Custom extensions are extensions in {APP_NAME} that are not available in the official Scratch editor. They can range from unsandboxed extensions on the official {APP_NAME} extension gallery to sandboxed extensions on third-party hosts.",
 
     "faq.performance.q": "Does {APP_NAME} run efficiently?",
-    "faq.performance.a": "Yes! {APP_NAME} uses about 50% less memory than vanilla Scratch, and only slightly more than TurboWarp.",
+    "faq.performance.a": "Yes! {APP_NAME} uses slightly less memory than vanilla Scratch, and only slightly more than TurboWarp.",
 
     "faq.contribute.q": "How can I contribute to {APP_NAME}?",
     "faq.contribute.a": "We're always looking for contributors! Check out the {applicationsTagOnForums} on the forums to see what you can help with.",
