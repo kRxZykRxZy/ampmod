@@ -264,6 +264,7 @@ module.exports = [
             'home': './src/website/home/home.jsx',
             'notfound': './src/website/not-found.js',
             'minorpages': './src/website/minor-pages/render.jsx',
+            'faq': './src/website/faq/faq.jsx',
             'examples': './src/website/examples/examples.jsx'
         },
         output: {
@@ -385,6 +386,16 @@ module.exports = [
                 // prettier-ignore
                 // eslint-disable-next-line max-len
                 description: `Example projects for ${APP_NAME}.`,
+                ...htmlWebpackPluginCommon
+            }),
+            new HtmlWebpackPlugin({
+                chunks: ['info', 'faq'],
+                template: 'src/playground/simple.ejs',
+                filename: 'faq.html',
+                title: `FAQ - ${APP_NAME}`,
+                // prettier-ignore
+                // eslint-disable-next-line max-len
+                description: `Frequently asked questions about ${APP_NAME}.`,
                 ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({

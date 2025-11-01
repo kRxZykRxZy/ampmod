@@ -70,7 +70,7 @@ const Footer = () => {
                         <h3>
                             <Localise id="footer.heading.about" />
                         </h3>
-                        <a href="https://ampmod.netlify.app/faq">
+                        <a href="./faq.html">
                             <Localise id="tw.footer.faq" />
                         </a>
                         {APP_BLOG && (
