@@ -1,4 +1,5 @@
 import {BLOCKS_THREE} from '.';
+import './amp-blockly-fixes.css'; // amp: Fix Blockly bugs related to styles depending on the legacy stylesheet.
 
 const getBlockIconURI = extensionIcons => {
     if (!extensionIcons) return null;
