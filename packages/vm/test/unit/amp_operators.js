@@ -22,3 +22,8 @@ test('equals - case sensitive', t => {
     t.strictEqual(sensitiveBlocks.equals({OPERAND1: 'a', OPERAND2: 'A'}), false);
     t.end();
 });
+
+test('new line', t => {
+    t.strictEqual(blocks.newline(), "\n");
+    t.end();
+});
