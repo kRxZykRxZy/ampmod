@@ -53,19 +53,19 @@ a:focus {
 .header {
     position: relative;
     padding: 8px 20px;
-    background-color: $ui-secondary;
+    background-color: $menu-bar-background;
+    color: $menu-bar-foreground;
     box-shadow: 0 2px 5px $shadow;
 }
-@media (max-width: 700px) {
-    .header {
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-}
+
 .header .section {
+    width: 100%;
+    max-width: 100% !important;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+    gap: 10px;
 }
 
 .button {
@@ -93,7 +93,8 @@ a:focus {
 
 .search-container {
     display: flex;
-    background-color: $ui-secondary;
+    align-items: center;
+    background-color: $ui-white;
     border: 1px solid $ui-black-transparent;
     border-radius: 4px;
 }
@@ -101,14 +102,25 @@ a:focus {
     box-shadow: 0 0 0 3px $looks-transparent;
 }
 .search-input {
-    color: inherit;
-    width: 150px;
+    color: $text-primary;
+    width: 400px;
     height: 16px;
     padding: 10px 0 10px 15px;
     border: none;
     outline: none;
     background-color: transparent;
     font-size: 14px;
+}
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+.title img {
+    filter: var(--menu-bar-icon-filter);
 }
 /* legacy edge */
 .search-input::-ms-clear {
@@ -131,14 +143,12 @@ a:focus {
 }
 
 .feedback-button-outer {
-    background: $ui-secondary;
-    border: 1px solid $ui-black-transparent;
-    color: inherit !important; /* override <a> colors */
+    background: $feedback-background;
+    color: $feedback-foreground !important; /* override <a> colors */
     height: 36px;
     box-sizing: border-box;
     border-radius: 4px;
     padding: 0 12px;
-    margin-left: 10px;
     font-size: 12px;
     outline: none;
     display: flex;
@@ -573,6 +583,7 @@ a:focus {
 .dirty-inner {
     padding: 8px;
     background: $ui-tertiary;
+    color: $text-primary;
     box-shadow: 0 2px 5px $shadow;
     border-radius: 4px;
     pointer-events: auto;

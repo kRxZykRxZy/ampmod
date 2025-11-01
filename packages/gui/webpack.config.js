@@ -400,7 +400,7 @@ module.exports = [
             }),
             new HtmlWebpackPlugin({
                 chunks: ['addon-settings'],
-                template: 'src/playground/simple.ejs',
+                template: 'src/playground/index.ejs',
                 filename: 'addons.html',
                 title: `Addon Settings - ${APP_NAME}`,
                 ...htmlWebpackPluginCommon
