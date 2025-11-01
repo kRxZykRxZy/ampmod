@@ -1,4 +1,5 @@
 @import '../../../css/colors.css';
+@import '../../../css/default-colors.css';
 
 .footer {
     padding: 10px 0;
@@ -49,4 +50,87 @@
 .semicolon {
     background: $page-background;
     width: 100%;
+}
+
+.customDropdown {
+    position: relative;
+    display: inline-block;
+    width: 300px;
+    font-family: inherit;
+}
+
+.dropdownToggle {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: white;
+    background: $motion-primary;
+    border: 1px solid $ui-black-transparent-default;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.dropdownToggle::after {
+    content: '▼'; /* arrow icon */
+    font-size: 0.7em;
+    margin-left: 0.5em;
+    transition: transform 0.2s ease;
+}
+
+.dropdownToggle.open::after {
+    transform: rotate(180deg); /* flip when open */
+}
+
+.dropdownMenu {
+    position: absolute;
+    bottom: 100%; /* dropdown opens above */
+    left: 0;
+    width: 100%;
+    color: white;
+    background: $motion-primary;
+    border: 1px solid $ui-black-transparent-default;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1000;
+    list-style: none; /* hide markers */
+    padding: 0;
+    line-height: 1;
+    gap: 0;
+}
+
+.dropdownItem {
+    padding: 10px 10px;
+    padding-left: 35px;
+    cursor: pointer;
+    text-align: start;
+    font-weight: bold;
+    padding-inline-start: 24px;
+    position: relative;
+}
+
+.dropdownItem::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 10.5px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg); /* rotate to get the checkmark angle */
+    width: 6px;
+    height: 12px;
+    border-bottom: 2px solid white;
+    border-right: 2px solid white;
+    opacity: 0;
+}
+
+.dropdownItemSelected::before {
+    opacity: 1;
+}
+
+.dropdownItem:hover {
+    background: $ui-black-transparent-default;
 }
