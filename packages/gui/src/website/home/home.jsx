@@ -38,10 +38,10 @@ const Home = () => (
                     </section>
                     <section>
                         <h2>
-                            <Localise id="notJustScratch" values={{APP_NAME}} />
+                            <Localise id="buildEasily" />
                         </h2>
                         <p>
-                            <Localise id="appConvenience" values={{APP_NAME}} />
+                            <Localise id="buildEasilyText" values={{APP_NAME}} />
                         </p>
                     </section>
                     <section>
