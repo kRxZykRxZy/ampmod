@@ -1,0 +1,19 @@
+@import '../../css/colors.css';
+
+.styled-headings h2 {
+    position: relative;
+    padding-left: 16px;
+}
+
+/* Marker on the left */
+.styled-headings h2::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 9px;
+    height: 24px;
+    background-color: $motion-primary;
+    border-radius: 2px;
+}
