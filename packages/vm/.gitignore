@@ -8,6 +8,7 @@ npm-*
 # Testing
 /.nyc_output
 /coverage
+matrix-inline-output-do-not-commit.xml
 
 # Editor
 /.idea
