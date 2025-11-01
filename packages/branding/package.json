@@ -9,8 +9,5 @@
     "license": "0BSD",
     "author": "AmpElectrecuted",
     "type": "commonjs",
-    "main": "src/index.js",
-    "scripts": {
-        "prepare": "exit 0"
-    }
+    "main": "src/index.js"
 }

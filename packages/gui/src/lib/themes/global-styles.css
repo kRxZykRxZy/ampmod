@@ -23,6 +23,12 @@
     stroke: $ui-black-transparent !important;
 }
 
+:global(html), :global(input) {
+    font-feature-settings: 'calt' 1;
+    font-feature-settings: 'case' 1;
+    font-feature-settings: 'ss02' 1;
+}
+
 /* ScratchAdddons editor-dark-mode compatibility */
 :root {
     --editorDarkMode-primary: $looks-secondary;

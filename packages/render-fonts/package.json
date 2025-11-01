@@ -14,8 +14,7 @@
         "clean": "rimraf ./dist",
         "lint": "eslint .",
         "test": "pnpm run build",
-        "watch": "webpack --progress --watch",
-        "prepare": "# no prepare script"
+        "watch": "webpack --progress --watch"
     },
     "config": {
         "commitizen": {

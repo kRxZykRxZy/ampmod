@@ -18,7 +18,6 @@
         "i18n:src": "mkdirp translations/core && format-message extract --out-file translations/core/en.json src/extensions/**/index.js",
         "i18n:push": "tx-push-src scratch-editor extensions translations/core/en.json",
         "lint": "eslint .",
-        "prepare": "exit 0",
         "start": "webpack-dev-server",
         "tap": "tap ./test/{unit,integration}/*.js",
         "tap:unit": "tap ./test/unit/*.js",
