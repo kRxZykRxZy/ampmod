@@ -141,6 +141,7 @@
     border: 1px solid $ui-black-transparent;
     border-radius: 4px;
     transition: box-shadow 0.2s ease;
+    font-size: 1.1em;
 }
 .selected-preset {
     border-color: $looks-secondary;

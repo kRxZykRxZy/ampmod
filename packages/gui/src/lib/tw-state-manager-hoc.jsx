@@ -13,6 +13,7 @@ import {generateRandomUsername} from './tw-username';
 import {setSearchParams} from './tw-navigation-utils';
 import {defaultStageSize} from '../reducers/custom-stage-size';
 import {lsNamespace} from './amp-localstorage-namespace';
+import { sizePresets } from '../components/tw-settings-modal/settings-modal';
 
 /* eslint-disable no-alert */
 
@@ -418,7 +419,15 @@ const TWStateManager = function (WrappedComponent) {
                 if (width === defaultStageSize.width && height === defaultStageSize.height) {
                     searchParams.delete('size');
                 } else {
-                    searchParams.set('size', `${width}x${height}`);
+                    const matchingPreset = sizePresets.find(
+                        preset => preset.width === width && preset.height === height
+                    );
+
+                    if (matchingPreset) {
+                        searchParams.set('size', matchingPreset.id);
+                    } else {
+                        searchParams.set('size', `${width}x${height}`);
+                    }
                 }
 
                 if (this.props.framerate === 30) {

@@ -33,7 +33,7 @@
   "amp.settingsModal.caseSensitivityHelp": "Makes the () = () block case-sensitive. E.g. with this option, (Apple) = (APPLE) will equal false, but when it is disabled, it will equal true. This may break vanilla Scratch projects.",
   "amp.settingsModal.fps": "Custom FPS:",
   "amp.settingsModal.fpsHelp": "Runs scripts at a custom amount of times per second instead of 30. 60 is a common option. Use 0 to un-cap the FPS so it runs at the monitor's refresh rate.",
-  "amp.settingsModal.presetStageCinematic": "Cinematic",
+  "amp.settingsModal.presetStageMobile": "Mobile",
   "amp.settingsModal.presetStageRetro": "Retro",
   "amp.settingsModal.presetStageWidescreen": "Widescreen",
   "amp.settingsModal.qol": "Quality of Life",

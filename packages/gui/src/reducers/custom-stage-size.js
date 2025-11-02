@@ -1,22 +1,29 @@
 const SET_CUSTOM_STAGE_SIZE = 'tw/custom-stage-size/SET';
+import { sizePresets } from "../components/tw-settings-modal/settings-modal";
 
 const getDimensions = () => {
-    // Running in node.js
     if (typeof URLSearchParams === 'undefined') {
         return null;
     }
 
     const urlParameters = new URLSearchParams(location.search);
     const dimensionsQuery = urlParameters.get('size');
-    if (dimensionsQuery === null) {
+    if (!dimensionsQuery) {
         return null;
     }
+
+    const preset = sizePresets.find(p => p.id === dimensionsQuery);
+    if (preset) {
+        return { width: preset.width, height: preset.height };
+    }
+
     const match = dimensionsQuery.match(/^(\d+)[^\d]+(\d+)$/);
     if (!match) {
         // eslint-disable-next-line no-alert
         alert('Could not parse custom stage size');
         return null;
     }
+
     const [_, widthText, heightText] = match;
     if (!widthText || !heightText) {
         return null;
@@ -24,11 +31,9 @@ const getDimensions = () => {
 
     const width = Math.max(0, Math.min(4096, +widthText));
     const height = Math.max(0, Math.min(4096, +heightText));
-    return {
-        width,
-        height
-    };
+    return { width, height };
 };
+
 
 const defaultStageSize = {
     width: 480,

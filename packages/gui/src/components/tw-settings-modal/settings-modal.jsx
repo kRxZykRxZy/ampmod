@@ -334,6 +334,39 @@ const DisableCompiler = props => (
     />
 );
 
+export const sizePresets = [
+    {
+        id: 'r',
+        width: 480,
+        height: 360,
+        message: {
+            id: 'amp.settingsModal.presetStageRetro',
+            defaultMessage: 'Retro',
+            description: 'Preset label for 4:3 stage size'
+        }
+    },
+    {
+        id: 'w',
+        width: 640,
+        height: 360,
+        message: {
+            id: 'amp.settingsModal.presetStageWidescreen',
+            defaultMessage: 'Widescreen',
+            description: 'Preset label for 16:9 stage size'
+        }
+    },
+    {
+        id: 'm',
+        width: 360,
+        height: 640,
+        message: {
+            id: 'amp.settingsModal.presetStageMobile',
+            defaultMessage: 'Mobile',
+            description: 'Preset label for 9:16 stage size'
+        }
+    },
+];
+
 const CustomStageSize = ({
     customStageSizeEnabled,
     stageWidth,
@@ -342,39 +375,6 @@ const CustomStageSize = ({
     onStageHeightChange,
     onPresetSelected
 }) => {
-    const presets = [
-        {
-            id: 'retro',
-            width: 480,
-            height: 360,
-            message: {
-                id: 'amp.settingsModal.presetStageRetro',
-                defaultMessage: 'Retro',
-                description: 'Preset label for 4:3 stage size'
-            }
-        },
-        {
-            id: 'wide',
-            width: 640,
-            height: 360,
-            message: {
-                id: 'amp.settingsModal.presetStageWidescreen',
-                defaultMessage: 'Widescreen',
-                description: 'Preset label for 16:9 stage size'
-            }
-        },
-        {
-            id: 'cinematic',
-            width: 720,
-            height: 360,
-            message: {
-                id: 'amp.settingsModal.presetStageCinematic',
-                defaultMessage: 'Cinematic',
-                description: 'Preset label for 16:10 stage size'
-            }
-        },
-    ];
-
     const applyPreset = preset => {
         onPresetSelected(preset.width, preset.height);
     };
@@ -423,10 +423,9 @@ const CustomStageSize = ({
                         </div>
                     )}
                     <div className={styles.presetButtons}>
-                        {presets.map(preset => {
+                        {sizePresets.map(preset => {
                             const isSelected =
                                 stageWidth === preset.width && stageHeight === preset.height;
-
                             return (
                                 <button
                                     key={preset.id}
@@ -435,13 +434,14 @@ const CustomStageSize = ({
                                         [styles.selectedPreset]: isSelected
                                     })}
                                     style={{
-                                        width: preset.width / 4,
-                                        height: preset.height / 4
+                                        height: 135,
+                                        width: (preset.width / preset.height) * 135
                                     }}
                                 >
                                     <FormattedMessage {...preset.message} />
                                 </button>
                             );
+
                         })}
                     </div>
                 </>
