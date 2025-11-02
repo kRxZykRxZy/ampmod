@@ -1,6 +1,6 @@
 import {defineMessages, FormattedMessage, intlShape, injectIntl} from 'react-intl';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import Box from '../box/box.jsx';
@@ -336,12 +336,12 @@ const DisableCompiler = props => (
 
 export const sizePresets = [
     {
-        id: 'r',
+        id: 'd',
         width: 480,
         height: 360,
         message: {
-            id: 'amp.settingsModal.presetStageRetro',
-            defaultMessage: 'Retro',
+            id: 'amp.settingsModal.presetStageDefault',
+            defaultMessage: 'Default',
             description: 'Preset label for 4:3 stage size'
         }
     },
@@ -356,15 +356,15 @@ export const sizePresets = [
         }
     },
     {
-        id: 'm',
-        width: 480,
-        height: 640,
+        id: 's',
+        width: 360,
+        height: 360,
         message: {
-            id: 'amp.settingsModal.presetStageMobile',
-            defaultMessage: 'Mobile',
-            description: 'Preset label for 9:16 stage size'
+            id: 'amp.settingsModal.presetStageSquare',
+            defaultMessage: 'Square',
+            description: 'Preset label for 1:1 stage size'
         }
-    },
+    }
 ];
 
 const CustomStageSize = ({
@@ -378,6 +378,12 @@ const CustomStageSize = ({
     const applyPreset = preset => {
         onPresetSelected(preset.width, preset.height);
     };
+
+    const getAspectRatio = (width, height) => {
+        const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
+        const divisor = gcd(width, height);
+        return `${width / divisor}:${height / divisor}`;
+    }
 
     return (
         <Setting
@@ -439,6 +445,9 @@ const CustomStageSize = ({
                                     }}
                                 >
                                     <FormattedMessage {...preset.message} />
+                                    <div style={{ fontSize: 12, marginTop: 4 }}>
+                                        {getAspectRatio(preset.width, preset.height)}
+                                    </div>
                                 </button>
                             );
 
@@ -492,6 +501,29 @@ Header.propTypes = {
     children: PropTypes.node
 };
 
+const CollapsibleSection = ({titleId, children}) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+        <div className={styles.collapsibleSection}>
+            <div
+                className={styles.header}
+                onClick={() => setIsOpen(prev => !prev)}
+                style={{cursor: 'pointer'}}
+            >
+                <FormattedMessage {...titleId} />
+                <div className={styles.divider} />
+                <span className={styles.collapseArrow}>{isOpen ? '▲' : '▼'}</span>
+            </div>
+            {isOpen && children}
+        </div>
+    );
+};
+CollapsibleSection.propTypes = {
+    titleId: PropTypes.object,
+    children: PropTypes.node
+}
+
 const SettingsModalComponent = props => (
     <Modal
         className={styles.modalContent}
@@ -520,17 +552,19 @@ const SettingsModalComponent = props => (
             </Header>
             <InfiniteClones value={props.infiniteClones} onChange={props.onInfiniteClonesChange} />
             <RemoveFencing value={props.removeFencing} onChange={props.onRemoveFencingChange} />
-            <CaseSensitivity value={props.caseSensitivity} onChange={props.onCaseSensitivityChange} />
             <RemoveMiscLimits value={props.removeLimits} onChange={props.onRemoveLimitsChange} />
-            <Header>
-                <FormattedMessage
-                    defaultMessage="Danger Zone"
-                    description="Settings modal section"
-                    id="tw.settingsModal.dangerZone"
-                />
-            </Header>
-            <Interpolation value={props.interpolation} onChange={props.onInterpolationChange} />
-            <DisableCompiler value={props.disableCompiler} onChange={props.onDisableCompilerChange} />
+            <CollapsibleSection titleId={{defaultMessage: 'Danger Zone', description: 'Settings modal section', id: 'tw.settingsModal.dangerZone'}}>
+                <div className={styles.warning}>
+                    <FormattedMessage
+                        defaultMessage="These options may change behaviour of certain blocks, and will often break your project."
+                        description="Danger zone warning"
+                        id="amp.settingsModal.dangerZoneWarning"
+                    />
+                </div>
+                <CaseSensitivity value={props.caseSensitivity} onChange={props.onCaseSensitivityChange} />
+                <Interpolation value={props.interpolation} onChange={props.onInterpolationChange} />
+                <DisableCompiler value={props.disableCompiler} onChange={props.onDisableCompilerChange} />
+            </CollapsibleSection>
         </Box>
     </Modal>
 );

@@ -102,7 +102,7 @@
 .divider {
     flex-grow: 1;
     margin-left: 1rem;
-    border-top: 1px dashed $ui-tertiary;
+    border-top: 1px dashed $ui-black-transparent;
 }
 
 .button {
@@ -125,10 +125,9 @@
 
 .warning {
     padding: 0.5rem 1rem;
-    margin: 0.25rem 0;
-    border-radius: 4px;
-    background: rgb(233, 233, 53);
-    color: $text-primary-default;
+    border-radius: 0.5rem;
+    background-color: rgba(255, 0, 0, 0.18);
+    border: 2px solid rgba(255, 0, 0, 0.568);
 }
 
 .preset-buttons {
@@ -146,4 +145,15 @@
 .selected-preset {
     border-color: $looks-secondary;
     box-shadow: 0 0 0 3px $looks-transparent;
+}
+
+.collapsible-section .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.collapse-arrow {
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
 }
