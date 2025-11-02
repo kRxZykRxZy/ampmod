@@ -357,7 +357,7 @@ export const sizePresets = [
     },
     {
         id: 'm',
-        width: 360,
+        width: 480,
         height: 640,
         message: {
             id: 'amp.settingsModal.presetStageMobile',

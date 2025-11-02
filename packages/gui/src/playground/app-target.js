@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import {setAppElement} from 'react-modal';
 import * as bowser from 'bowser';
 import {APP_NAME, APP_SOURCE} from '@ampmod/branding';
+import {lsNamespace} from "../lib/amp-localstorage-namespace";
 
 const appTarget = document.getElementById('app');
 let migrationOccurred = false;
@@ -184,6 +185,7 @@ async function runAllMigrations() {
 
     // Part 3: Reload if any migrations occurred.
     if (migrationOccurred) {
+        localStorage.setItem("amp:welcome-closed", "true");
         window.SetCustomSplashInfo('Done! Reloading...');
         window.location.reload();
     }
@@ -200,7 +202,7 @@ if (new URLSearchParams(window.location.search).has('crash-accidentally')) {
 setAppElement(appTarget);
 
 const render = children => {
-    if (!process.env.ampmod_mode === 'canary') {
+    if (lsNamespace === "amp:") {
         runAllMigrations();
     }
     if (!migrationOccurred) {
