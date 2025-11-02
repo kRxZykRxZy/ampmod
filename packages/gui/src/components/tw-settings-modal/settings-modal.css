@@ -130,3 +130,19 @@
     background: rgb(233, 233, 53);
     color: $text-primary-default;
 }
+
+.preset-buttons {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    margin-top: 4px;
+}
+.preset-button {
+    border: 1px solid $ui-black-transparent;
+    border-radius: 4px;
+    transition: box-shadow 0.2s ease;
+}
+.selected-preset {
+    border-color: $looks-secondary;
+    box-shadow: 0 0 0 3px $looks-transparent;
+}

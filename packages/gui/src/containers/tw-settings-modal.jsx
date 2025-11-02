@@ -20,7 +20,6 @@ class UsernameModal extends React.Component {
         super(props);
         bindAll(this, [
             'handleFramerateChange',
-            'handleCustomizeFramerate',
             'handleHighQualityPenChange',
             'handleInterpolationChange',
             'handleInfiniteClonesChange',
@@ -31,24 +30,15 @@ class UsernameModal extends React.Component {
             'handleStageHeightChange',
             'handleDisableCompilerChange',
             'handleCaseSensitivityChange',
+            'handlePresetSelected',
             'handleStoreProjectOptions'
         ]);
     }
 
-    handleFramerateChange(e) {
-        this.props.vm.setFramerate(e.target.checked ? 60 : 30);
+    handleFramerateChange(value) {
+        const numeric = Number(value) ?? 30;
+        this.props.vm.setFramerate(numeric);
         if (!this.props.isEmbedded) this.handleStoreProjectOptions();
-    }
-
-    async handleCustomizeFramerate() {
-        // prompt() returns Promise in desktop app
-        // eslint-disable-next-line no-alert
-        const newFramerate = await prompt(this.props.intl.formatMessage(messages.newFramerate), this.props.framerate);
-        const parsed = parseFloat(newFramerate);
-        if (isFinite(parsed)) {
-            this.props.vm.setFramerate(parsed);
-            if (!this.props.isEmbedded) this.handleStoreProjectOptions();
-        }
     }
 
     handleHighQualityPenChange(e) {
@@ -93,29 +83,12 @@ class UsernameModal extends React.Component {
         this.props.vm.setCompilerOptions({
             warpTimer: e.target.checked
         });
-        // Do not store automatically
     }
 
     handleDisableCompilerChange(e) {
         this.props.vm.setCompilerOptions({
             enabled: !e.target.checked
         });
-        // Do not store automatically
-    }
-
-    handleDisableSecmanChange(e) {
-        // eslint-disable-next-line max-len
-        if (
-            !e.target.checked ||
-            confirm(
-                'This *dangerous* option allows potentially malicious third-party extensions to corrupt your project, phish for passwords, install malware, and more.\n\nDo not blindly enable this. The prompts may look annoying, but they will prevent malicious projects from going undercover.\n\nIf you don\'t understand what "security" means, you should not enable this option.'
-            )
-        ) {
-            this.props.vm.setRuntimeOptions({
-                secman: !e.target.checked
-            });
-        }
-        // Do not store automatically
     }
 
     handleStageWidthChange(value) {
@@ -125,6 +98,11 @@ class UsernameModal extends React.Component {
 
     handleStageHeightChange(value) {
         this.props.vm.setStageSize(this.props.customStageSize.width, value);
+        if (!this.props.isEmbedded) this.handleStoreProjectOptions();
+    }
+
+    handlePresetSelected(width, height) {
+        this.props.vm.setStageSize(width, height);
         if (!this.props.isEmbedded) this.handleStoreProjectOptions();
     }
 
@@ -144,7 +122,6 @@ class UsernameModal extends React.Component {
             <SettingsModalComponent
                 onClose={this.props.onClose}
                 onFramerateChange={this.handleFramerateChange}
-                onCustomizeFramerate={this.handleCustomizeFramerate}
                 onHighQualityPenChange={this.handleHighQualityPenChange}
                 onInterpolationChange={this.handleInterpolationChange}
                 onInfiniteClonesChange={this.handleInfiniteClonesChange}
@@ -161,6 +138,7 @@ class UsernameModal extends React.Component {
                     this.props.customStageSize.width !== defaultStageSize.width ||
                     this.props.customStageSize.height !== defaultStageSize.height
                 }
+                onPresetSelected={this.handlePresetSelected}
                 onStoreProjectOptions={this.handleStoreProjectOptions}
                 {...props}
             />

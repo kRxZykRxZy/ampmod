@@ -19,9 +19,9 @@ const BufferedInput = BufferedInputHOC(Input);
 
 const messages = defineMessages({
     title: {
-        defaultMessage: 'Advanced Settings',
+        defaultMessage: 'Program Settings',
         description: 'Title of settings modal',
-        id: 'tw.settingsModal.title'
+        id: 'amp.settingsModal.title'
     },
     help: {
         defaultMessage: 'Click for help',
@@ -139,38 +139,41 @@ const HighQualityPen = props => (
 );
 
 const CustomFPS = props => (
-    <BooleanSetting
-        value={props.framerate !== 30}
-        onChange={props.onChange}
-        label={
-            <FormattedMessage
-                defaultMessage="60 FPS (Custom FPS)"
-                description="FPS setting"
-                id="tw.settingsModal.fps"
-            />
+    <Setting
+        active={props.framerate !== 30}
+        primary={
+            <div className={classNames(styles.label, styles.customStageSize)}>
+                <FormattedMessage
+                    defaultMessage="Custom FPS:"
+                    description="FPS setting"
+                    id="amp.settingsModal.fps"
+                />
+                <BufferedInput
+                    value={props.framerate}
+                    onSubmit={props.onChange}
+                    min="0"
+                    max="250"
+                    type="number"
+                />
+            </div>
         }
         help={
             <FormattedMessage
                 // eslint-disable-next-line max-len
-                defaultMessage="Runs scripts 60 times per second instead of 30. Most vanilla Scratch projects will not handle this properly; you can try Interpolation instead. {customFramerate}."
+                defaultMessage="Runs scripts at a custom amount of times per second instead of 30. 60 is a common option. Use 0 to un-cap the FPS so it runs at the monitor's refresh rate."
                 description="FPS setting help"
-                id="tw.settingsModal.fpsHelp"
-                values={{
-                    customFramerate: (
-                        <a onClick={props.onCustomizeFramerate} tabIndex="0">
-                            <FormattedMessage
-                                defaultMessage="Click to use a framerate other than 30 or 60"
-                                description="FPS settings help"
-                                id="tw.settingsModal.fpsHelp.customFramerate"
-                            />
-                        </a>
-                    )
-                }}
+                id="amp.settingsModal.fpsHelp"
             />
         }
         slug="custom-fps"
     />
 );
+CustomFPS.propTypes = {
+    framerate: PropTypes.number,
+    onFramerateChange: PropTypes.func
+};
+
+
 CustomFPS.propTypes = {
     framerate: PropTypes.number,
     onChange: PropTypes.func,
@@ -336,62 +339,124 @@ const CustomStageSize = ({
     stageWidth,
     onStageWidthChange,
     stageHeight,
-    onStageHeightChange
-}) => (
-    <Setting
-        active={customStageSizeEnabled}
-        primary={
-            <div className={classNames(styles.label, styles.customStageSize)}>
-                <FormattedMessage
-                    defaultMessage="Custom Stage Size:"
-                    description="Custom Stage Size option"
-                    id="tw.settingsModal.customStageSize"
-                />
-                <BufferedInput
-                    value={stageWidth}
-                    onSubmit={onStageWidthChange}
-                    className={styles.customStageSizeInput}
-                    type="number"
-                    min="0"
-                    max="1024"
-                    step="1"
-                />
-                <span>{'×'}</span>
-                <BufferedInput
-                    value={stageHeight}
-                    onSubmit={onStageHeightChange}
-                    className={styles.customStageSizeInput}
-                    type="number"
-                    min="0"
-                    max="1024"
-                    step="1"
-                />
-            </div>
-        }
-        secondary={
-            (stageWidth >= 1000 || stageHeight >= 1000) && (
-                <div className={styles.warning}>
+    onStageHeightChange,
+    onPresetSelected
+}) => {
+    const presets = [
+        {
+            id: 'retro',
+            width: 480,
+            height: 360,
+            message: {
+                id: 'amp.settingsModal.presetStageRetro',
+                defaultMessage: 'Retro',
+                description: 'Preset label for 4:3 stage size'
+            }
+        },
+        {
+            id: 'wide',
+            width: 640,
+            height: 360,
+            message: {
+                id: 'amp.settingsModal.presetStageWidescreen',
+                defaultMessage: 'Widescreen',
+                description: 'Preset label for 16:9 stage size'
+            }
+        },
+        {
+            id: 'cinematic',
+            width: 720,
+            height: 360,
+            message: {
+                id: 'amp.settingsModal.presetStageCinematic',
+                defaultMessage: 'Cinematic',
+                description: 'Preset label for 16:10 stage size'
+            }
+        },
+    ];
+
+    const applyPreset = preset => {
+        onPresetSelected(preset.width, preset.height);
+    };
+
+    return (
+        <Setting
+            active={customStageSizeEnabled}
+            primary={
+                <div className={classNames(styles.label, styles.customStageSize)}>
                     <FormattedMessage
-                        // eslint-disable-next-line max-len
-                        defaultMessage="Using a custom stage size this large is not recommended! Instead, use a lower size with the same aspect ratio and let fullscreen mode upscale it to match the user's display."
-                        description="Warning about using stages that are too large in settings modal"
-                        id="tw.settingsModal.largeStageWarning"
+                        defaultMessage="Custom Stage Size:"
+                        description="Custom Stage Size option"
+                        id="tw.settingsModal.customStageSize"
                     />
-                    <LearnMore slug="custom-stage-size" />
+                    <BufferedInput
+                        value={stageWidth}
+                        onSubmit={onStageWidthChange}
+                        className={styles.customStageSizeInput}
+                        type="number"
+                        min="0"
+                        max="1024"
+                        step="1"
+                    />
+                    <span>{'×'}</span>
+                    <BufferedInput
+                        value={stageHeight}
+                        onSubmit={onStageHeightChange}
+                        className={styles.customStageSizeInput}
+                        type="number"
+                        min="0"
+                        max="1024"
+                        step="1"
+                    />
                 </div>
-            )
-        }
-        help={
-            <FormattedMessage
-                // eslint-disable-next-line max-len
-                defaultMessage="Changes the size of the stage from 480x360 to something else. Try 640x360 to make the stage widescreen. Very few vanilla Scratch projects will handle this properly."
-                description="Custom Stage Size option"
-                id="tw.settingsModal.customStageSizeHelp"
-            />
-        }
-        slug="custom-stage-size"
-    />
-);
+            }
+            secondary={
+                <>
+                    {(stageWidth >= 1000 || stageHeight >= 1000) && (
+                        <div className={styles.warning}>
+                            <FormattedMessage
+                                defaultMessage="Using a custom stage size this large is not recommended! Instead, use a lower size with the same aspect ratio and let fullscreen mode upscale it to match the user's display."
+                                description="Warning about using stages that are too large in settings modal"
+                                id="tw.settingsModal.largeStageWarning"
+                            />
+                            <LearnMore slug="custom-stage-size" />
+                        </div>
+                    )}
+                    <div className={styles.presetButtons}>
+                        {presets.map(preset => {
+                            const isSelected =
+                                stageWidth === preset.width && stageHeight === preset.height;
+
+                            return (
+                                <button
+                                    key={preset.id}
+                                    onClick={() => applyPreset(preset)}
+                                    className={classNames(styles.presetButton, {
+                                        [styles.selectedPreset]: isSelected
+                                    })}
+                                    style={{
+                                        width: preset.width / 4,
+                                        height: preset.height / 4
+                                    }}
+                                >
+                                    <FormattedMessage {...preset.message} />
+                                </button>
+                            );
+                        })}
+                    </div>
+                </>
+            }
+            help={
+                <FormattedMessage
+                    defaultMessage="Changes the size of the stage from 480x360 to something else. Try 640x360 to make the stage widescreen. Very few vanilla Scratch projects will handle this properly."
+                    description="Custom Stage Size option help text"
+                    id="tw.settingsModal.customStageSizeHelp"
+                />
+            }
+            slug="custom-stage-size"
+        />
+    );
+};
 CustomStageSize.propTypes = {
     customStageSizeEnabled: PropTypes.bool,
     stageWidth: PropTypes.number,
@@ -437,17 +502,13 @@ const SettingsModalComponent = props => (
         <Box className={styles.body}>
             <Header>
                 <FormattedMessage
-                    defaultMessage="Featured"
+                    defaultMessage="Quality of Life"
                     description="Settings modal section"
-                    id="tw.settingsModal.featured"
+                    id="amp.settingsModal.qol"
                 />
             </Header>
             {!props.isEmbedded && <CustomStageSize {...props} />}
-            <CustomFPS
-                framerate={props.framerate}
-                onChange={props.onFramerateChange}
-                onCustomizeFramerate={props.onCustomizeFramerate}
-            />
+            <CustomFPS framerate={props.framerate} onChange={props.onFramerateChange} />
             <HighQualityPen value={props.highQualityPen} onChange={props.onHighQualityPenChange} />
             <WarpTimer value={props.warpTimer} onChange={props.onWarpTimerChange} />
             <Header>
