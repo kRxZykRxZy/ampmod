@@ -33,7 +33,7 @@ import GUIComponent from '../components/gui/gui.jsx';
 import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
 import TWFullScreenResizerHOC from '../lib/tw-fullscreen-resizer-hoc.jsx';
 import TWThemeManagerHOC from './tw-theme-manager-hoc.jsx';
-import {lsNamespace} from '../lib/amp-localstorage-namespace.js';
+import {lsNamespace} from '../lib/amp-localstorage-namespace';
 
 const {RequestMetadata, setMetadata, unsetMetadata} = storage.scratchFetch;
 
@@ -57,6 +57,16 @@ class GUI extends React.Component {
         if (!localStorage.getItem(`${lsNamespace}welcome-closed`)) {
             if (!this.props.welcomeModalVisible && this.props.onOpenWelcomeModal) {
                 this.props.onOpenWelcomeModal();
+            }
+        } else {
+            const currentVersion = process.env.ampmod_version.match(/\d+\.\d+/)[0];
+            const lastShownVersion = localStorage.getItem(`${lsNamespace}update-notice-shown`) || process.env.ampmod_version;
+
+            if (currentVersion !== lastShownVersion || new URLSearchParams(location.search).has('patchNotes')) {
+                if (this.props.onOpenUpdateNoticeModal) {
+                    this.props.onOpenUpdateNoticeModal();
+                }
+                localStorage.setItem(`${lsNamespace}update-notice-shown`, currentVersion);
             }
         }
     }
@@ -177,6 +187,7 @@ const mapStateToProps = state => {
         fontsModalVisible: state.scratchGui.modals.fontsModal,
         unknownPlatformModalVisible: state.scratchGui.modals.unknownPlatformModal,
         invalidProjectModalVisible: state.scratchGui.modals.invalidProjectModal,
+        updateNoticeModalVisible: state.scratchGui.modals.updateNoticeModal,
         vm: state.scratchGui.vm
     };
 };
@@ -193,7 +204,9 @@ const mapDispatchToProps = dispatch => ({
         localStorage.setItem(`${lsNamespace}welcome-closed`, 'true');
         dispatch(closeWelcomeModal());
     },
-    onOpenWelcomeModal: () => dispatch(require('../reducers/modals').openWelcomeModal())
+    onOpenWelcomeModal: () => dispatch(require('../reducers/modals').openWelcomeModal()),
+    onOpenUpdateNoticeModal: () => dispatch(require('../reducers/modals').openUpdateNoticeModal()),
+    onRequestCloseUpdateModal: () => dispatch(require('../reducers/modals').closeUpdateNoticeModal()),
 });
 
 const ConnectedGUI = injectIntl(connect(mapStateToProps, mapDispatchToProps)(GUI));

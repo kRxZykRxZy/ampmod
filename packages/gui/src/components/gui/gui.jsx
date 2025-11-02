@@ -37,6 +37,7 @@ import TWRestorePointManager from '../../containers/tw-restore-point-manager.jsx
 import TWFontsModal from '../../containers/tw-fonts-modal.jsx';
 import TWUnknownPlatformModal from '../../containers/tw-unknown-platform-modal.jsx';
 import TWInvalidProjectModal from '../../containers/tw-invalid-project-modal.jsx';
+import UpdateNoticeModal from '../amp-update-notice/update-notice';
 
 import {STAGE_SIZE_MODES, FIXED_WIDTH, UNCONSTRAINED_NON_STAGE_WIDTH} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
@@ -121,6 +122,7 @@ const GUIComponent = props => {
         onClickAddonSettings,
         onClickDesktopSettings,
         onOpenAddonSettings,
+        onOpenWelcomeModal,
         onClickNewWindow,
         onClickPackager,
         onClickExampleProjects,
@@ -138,6 +140,8 @@ const GUIComponent = props => {
         onRequestCloseCostumeLibrary,
         onRequestCloseTelemetryModal,
         onRequestCloseWelcomeModal,
+        onRequestCloseUpdateModal,
+        onOpenUpdateNoticeModal,
         onSeeCommunity,
         onShare,
         onShowPrivacyPolicy,
@@ -163,6 +167,7 @@ const GUIComponent = props => {
         unknownPlatformModalVisible,
         invalidProjectModalVisible,
         vm,
+        updateNoticeModalVisible,
         ...componentProps
     } = omit(props, 'dispatch');
 
@@ -256,6 +261,12 @@ const GUIComponent = props => {
                                         onShowPrivacyPolicy={onShowPrivacyPolicy}
                                     />
                                 ) : null}
+                                {!loading && updateNoticeModalVisible && (
+                                    <UpdateNoticeModal
+                                        onCancel={onRequestCloseUpdateModal}
+                                        intl={intl}
+                                    />
+                                )}
                                 {loading && !isCreating ? <Loader isFullScreen /> : null}
                                 {isCreating ? <Loader isFullScreen messageId="gui.loader.creating" /> : null}
                                 {tipsLibraryVisible ? <TipsLibrary /> : null}
@@ -496,6 +507,7 @@ GUIComponent.propTypes = {
     onRequestCloseBackdropLibrary: PropTypes.func,
     onRequestCloseCostumeLibrary: PropTypes.func,
     onRequestCloseTelemetryModal: PropTypes.func,
+    onRequestCloseUpdateModal: PropTypes.func,
     onSeeCommunity: PropTypes.func,
     onShare: PropTypes.func,
     onShowPrivacyPolicy: PropTypes.func,
@@ -514,6 +526,8 @@ GUIComponent.propTypes = {
     stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
     targetIsStage: PropTypes.bool,
     telemetryModalVisible: PropTypes.bool,
+    welcomeModalVisible: PropTypes.bool,
+    updateModalVisible: PropTypes.bool,
     theme: PropTypes.instanceOf(Theme),
     tipsLibraryVisible: PropTypes.bool,
     usernameModalVisible: PropTypes.bool,
