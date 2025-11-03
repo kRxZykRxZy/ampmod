@@ -129,11 +129,17 @@ const base = {
                     loader: 'postcss-loader',
                         options: {
                             postcssOptions: {
-                            plugins: [
-                                require('postcss-import'),
-                                require('postcss-simple-vars'),
-                                require('autoprefixer')
-                            ]
+                                plugins: [
+                                    require('postcss-import'),
+                                    require('postcss-simple-vars'),
+                                    require('postcss-nesting'),
+                                    require('autoprefixer'),
+                                    require('cssnano')({
+                                        preset: ['default', {
+                                            normalizeUrl: false
+                                        }]
+                                    })
+                                ]
                             }
                         }
                     }
