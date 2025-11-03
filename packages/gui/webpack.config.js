@@ -120,12 +120,6 @@ const base = {
                         }
                     },
                     {
-                        loader: 'esbuild-loader',
-                        options: {
-                            target: 'es2019'
-                        }
-                    },
-                    {
                     loader: 'postcss-loader',
                         options: {
                             postcssOptions: {
@@ -305,7 +299,7 @@ module.exports = [
                     }
                 }
             },
-            minimizer: [new EsbuildPlugin({css: true, target: 'es2019'})]
+            minimizer: [new EsbuildPlugin({target: 'es2019'})]
         },
         stats:
             process.env.NODE_ENV === 'production'
