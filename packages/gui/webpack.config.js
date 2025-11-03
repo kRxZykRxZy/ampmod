@@ -7,6 +7,7 @@ const monorepoPackageJson = require('../../package.json');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {EsbuildPlugin} = require('esbuild-loader');
+const HtmlInlineScriptWebpackPlugin = require('html-inline-script-webpack-plugin');
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
 const {APP_NAME, APP_SLOGAN, APP_DESCRIPTION, APP_SOURCE} = require('@ampmod/branding');
@@ -440,15 +441,17 @@ module.exports = [
 ].concat(
     process.env.NODE_ENV === 'production' || process.env.BUILD_MODE === 'dist'
         ? // export as library
+          // amp: We modify this heavily for aw3 to play well and to remove stuff only vanilla uses.
           defaultsDeep({}, base, {
               target: 'web',
               entry: {
-                  'scratch-gui': './src/index.js'
+                  'ampmod-for-aw3': ['./src/playground/editor.jsx'],
+                  'ampmod-addon-settings-for-aw3': ['./src/playground/addon-settings.jsx'],
               },
               output: {
                   libraryTarget: 'umd',
-                  filename: 'js/[name].js',
-                  chunkFilename: 'js/[name].js',
+                  filename: '[name].js',
+                  chunkFilename: '[name].js',
                   path: path.resolve('dist'),
                   publicPath: `${STATIC_PATH}/`
               },
@@ -458,34 +461,61 @@ module.exports = [
                           test: /\.(svg|png|wav|mp3|gif|jpg|woff2|hex)$/,
                           loader: 'url-loader',
                           options: {
-                              limit: 2048,
-                              outputPath: 'static/assets/',
-                              publicPath: `${STATIC_PATH}/assets/`,
+                              esModule: false
+                          }
+                      }
+                  ])
+              },
+          })
+        : []
+).concat(
+    process.env.BUILD_MODE === 'standalone'
+        ? defaultsDeep({}, base, {
+              target: 'web',
+              entry: {
+                  'standalone_main': [
+                      './src/playground/editor.jsx',
+                  ]
+              },
+              output: {
+                  library: 'AmpModStandalone',
+                  libraryTarget: 'umd',
+                  filename: '[name].js', 
+                  chunkFilename: '[name].js',
+                  path: path.resolve('standalone'),
+                  publicPath: `${STATIC_PATH}/`
+              },
+              optimization: {
+                  splitChunks: false,
+                  runtimeChunk: false,
+                  minimizer: [new EsbuildPlugin({target: 'es2019'})]
+              },
+              module: {
+                  rules: base.module.rules.concat([
+                      {
+                          test: /\.(svg|png|wav|mp3|gif|jpg|woff2|hex)$/,
+                          loader: 'url-loader',
+                          options: {
+                              limit: true,
                               esModule: false
                           }
                       }
                   ])
               },
               plugins: base.plugins.concat([
-                  new CopyWebpackPlugin({
-                      patterns: [
-                          {
-                              from: 'extension-worker.{js,js.map}',
-                              context: 'node_modules/scratch-vm/dist/web',
-                              noErrorOnMissing: true
-                          }
-                      ]
+                  new webpack.optimize.LimitChunkCountPlugin({
+                      maxChunks: 1
                   }),
-                  // Include library JSON files for scratch-desktop to use for downloading
-                  new CopyWebpackPlugin({
-                      patterns: [
-                          {
-                              from: 'src/lib/libraries/*.json',
-                              to: 'libraries',
-                              flatten: true
-                          }
-                      ]
-                  })
+                  new HtmlWebpackPlugin({
+                      chunks: ['standalone_main'],
+                      template: 'src/playground/simple.ejs',
+                      filename: `AmpMod-Standalone-${monorepoPackageJson.version}-EXPERIMENTAL.html`,
+                      inject: 'body',
+                      title: `${APP_NAME} - ${APP_SLOGAN}`,
+                      isEditor: true,
+                      ...htmlWebpackPluginCommon
+                  }),
+                  new HtmlInlineScriptWebpackPlugin([/./]),
               ])
           })
         : []
