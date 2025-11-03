@@ -11,9 +11,8 @@ const majorMinorVersion =
 
 const messages = defineMessages({
   updatedNoticeTitle: {
-    defaultMessage: 'AmpMod {version} Patch Notes',
+    defaultMessage: '{APP_NAME} {version} Patch Notes',
     description: 'Title for the modal that shows when AmpMod is updated',
-    values: { APP_NAME, version: majorMinorVersion },
     id: 'amp.updatedNotice.title',
   },
 });
@@ -21,7 +20,7 @@ const messages = defineMessages({
 export default props => (
   <Modal
     className={styles.modalContent}
-    contentLabel={props.intl.formatMessage(messages.updatedNoticeTitle, { version: majorMinorVersion })}
+    contentLabel={props.intl.formatMessage(messages.updatedNoticeTitle, { APP_NAME, version: majorMinorVersion })}
     onRequestClose={props.onCancel}
     id="ampmodUpdated"
   >
@@ -37,7 +36,7 @@ export default props => (
 
       <h3>Let's start off with a PSA about addons</h3>
       <p>
-        We are aware 0.3 currently breaks several addons. This is mainly due us
+        We are aware 0.3 currently breaks several addons. This is mainly due to us
         updating our development stack to newer versions, even though the addons
         rely on weird patches to get into our editor's internals. A lot of addons
         will still work fine, but we will fix the broken ones in version 0.3.1.
@@ -49,7 +48,7 @@ export default props => (
 
       <h3>New compiler!</h3>
       <p>
-        As you may know. TurboWarp now includes a new compiler to make projects run faster.
+        As you may know, TurboWarp now includes a new compiler to make projects run faster.
       </p>
       <p>
         This compiler has been ported to AmpMod to make projects made in it run
@@ -100,7 +99,7 @@ export default props => (
           The Arrays+ extension includes blocks that expand the Arrays category
           with new features!
         </li>
-        <li>Stage size presets have been added to the settings menu.</li>
+        <li>Stage size presets have been added to the Project Settings menu.</li>
         <li>
           The "Editor customisable colours" addon has been added, allowing you
           to change the colours of the editor UI to what you prefer.

@@ -26,13 +26,13 @@ importers:
         version: 4.2.3(webpack@4.47.0)
       webpack:
         specifier: ^4.47.0
-        version: 4.47.0(webpack-cli@3.3.12)
+        version: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
       webpack-cli:
         specifier: ^3.3.12
         version: 3.3.12(webpack@4.47.0)
       webpack-dev-server:
         specifier: ^3.11.3
-        version: 3.11.3(webpack-cli@3.3.12)(webpack@4.47.0)
+        version: 3.11.3(webpack-cli@3.3.12(webpack@4.47.0))(webpack@4.47.0)
 
   packages/blocks:
     devDependencies:
@@ -86,7 +86,7 @@ importers:
         version: 1.6.6
       uglifyjs-webpack-plugin:
         specifier: 1.3.0
-        version: 1.3.0(webpack@4.47.0)
+        version: 1.3.0(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
       which:
         specifier: ^4.0.0
         version: 4.0.0
@@ -167,7 +167,7 @@ importers:
         version: 4.47.0(webpack-cli@4.10.0)
       webpack-cli:
         specifier: ^4.10.0
-        version: 4.10.0(webpack-dev-server@3.11.3(webpack-cli@3.3.12)(webpack@4.47.0))(webpack@4.47.0)
+        version: 4.10.0(webpack-dev-server@3.11.3(webpack-cli@3.3.12(webpack@4.47.0))(webpack@4.47.0))(webpack@4.47.0)
 
   packages/gui:
     dependencies:
@@ -191,7 +191,7 @@ importers:
         version: 3.1001.202405101234
       '@turbowarp/scratch-storage':
         specifier: ^0.0.202403251715
-        version: 0.0.202403251715(encoding@0.1.13)(webpack@4.47.0(webpack-cli@3.3.12))
+        version: 0.0.202403251715(encoding@0.1.13)(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
       '@turbowarp/scratch-svg-renderer':
         specifier: ^1.0.202505311824
         version: 1.0.202505311824(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)
@@ -202,8 +202,8 @@ importers:
         specifier: ^1.0.8
         version: 1.0.8
       autoprefixer:
-        specifier: ^9.8.8
-        version: 9.8.8
+        specifier: ^10.4.21
+        version: 10.4.21(postcss@8.5.6)
       balance-text:
         specifier: 3.3.1
         version: 3.3.1
@@ -221,10 +221,10 @@ importers:
         version: 4.0.0
       copy-webpack-plugin:
         specifier: 6.4.1
-        version: 6.4.1(webpack@4.47.0(webpack-cli@3.3.12))
+        version: 6.4.1(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
       css-loader:
         specifier: ^1.0.1
-        version: 1.0.1(webpack@4.47.0(webpack-cli@3.3.12))
+        version: 1.0.1(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
       dapjs:
         specifier: 2.3.0
         version: 2.3.0
@@ -268,14 +268,14 @@ importers:
         specifier: 5.3.0
         version: 5.3.0
       postcss-import:
-        specifier: ^12.0.1
-        version: 12.0.1
+        specifier: ^14.1.0
+        version: 14.1.0(postcss@8.5.6)
       postcss-loader:
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^4.3.0
+        version: 4.3.0(postcss@8.5.6)(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
       postcss-simple-vars:
-        specifier: ^5.0.2
-        version: 5.0.2
+        specifier: ^6.0.3
+        version: 6.0.3(postcss@8.5.6)
       prop-types:
         specifier: ^15.8.1
         version: 15.8.1
@@ -344,7 +344,7 @@ importers:
         version: link:../paint
       scratch-render:
         specifier: github:TurboWarp/scratch-render#develop
-        version: https://codeload.github.com/TurboWarp/scratch-render/tar.gz/dd5d399eace4b5bae11906e2237fe67ee6b79d84(webpack@4.47.0(webpack-cli@3.3.12))
+        version: https://codeload.github.com/TurboWarp/scratch-render/tar.gz/dd5d399eace4b5bae11906e2237fe67ee6b79d84(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
       scratch-vm:
         specifier: workspace:^
         version: link:../vm
@@ -384,13 +384,13 @@ importers:
         version: 10.1.0(eslint@9.38.0(jiti@2.6.1))
       babel-loader:
         specifier: 8.3.0
-        version: 8.3.0(@babel/core@7.28.5)(webpack@4.47.0(webpack-cli@3.3.12))
+        version: 8.3.0(@babel/core@7.28.5)(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
       chromedriver:
         specifier: 117.0.3
         version: 117.0.3
       compression-webpack-plugin:
         specifier: ^6.1.2
-        version: 6.1.2(webpack@4.47.0(webpack-cli@3.3.12))
+        version: 6.1.2(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
       enzyme:
         specifier: 3.10.0
         version: 3.10.0
@@ -405,7 +405,7 @@ importers:
         version: 9.0.3(@babel/eslint-parser@7.28.5(@babel/core@7.28.5)(eslint@9.38.0(jiti@2.6.1)))(eslint@9.38.0(jiti@2.6.1))
       eslint-import-resolver-webpack:
         specifier: 0.11.1
-        version: 0.11.1(eslint-plugin-import@2.32.0)(webpack@4.47.0(webpack-cli@3.3.12))
+        version: 0.11.1(eslint-plugin-import@2.32.0)(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
       eslint-plugin-import:
         specifier: 2.32.0
         version: 2.32.0(eslint-import-resolver-webpack@0.11.1)(eslint@9.38.0(jiti@2.6.1))
@@ -420,13 +420,13 @@ importers:
         version: 7.33.2(eslint@9.38.0(jiti@2.6.1))
       file-loader:
         specifier: 6.2.0
-        version: 6.2.0(webpack@4.47.0(webpack-cli@3.3.12))
+        version: 6.2.0(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
       html-inline-script-webpack-plugin:
         specifier: ^1.1.6
-        version: 1.1.6(@types/webpack@4.41.40)(html-webpack-plugin@4.5.2(webpack@4.47.0(webpack-cli@3.3.12)))(webpack@4.47.0(webpack-cli@3.3.12))
+        version: 1.1.6(@types/webpack@4.41.40)(html-webpack-plugin@4.5.2(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))))(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
       html-webpack-plugin:
         specifier: ^4.5.2
-        version: 4.5.2(webpack@4.47.0(webpack-cli@3.3.12))
+        version: 4.5.2(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
       http-server:
         specifier: ^14.1.1
         version: 14.1.1
@@ -453,10 +453,10 @@ importers:
         version: 3.6.0
       uglifyjs-webpack-plugin:
         specifier: 1.3.0
-        version: 1.3.0(webpack@4.47.0)
+        version: 1.3.0(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
       url-loader:
         specifier: 4.1.1
-        version: 4.1.1(file-loader@6.2.0(webpack@4.47.0(webpack-cli@3.3.12)))(webpack@4.47.0(webpack-cli@3.3.12))
+        version: 4.1.1(file-loader@6.2.0(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))))(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
       web-audio-test-api:
         specifier: 0.5.2
         version: 0.5.2
@@ -3009,6 +3009,13 @@ packages:
     resolution: {integrity: sha512-b7ZmHGyjcAI3KmshPa4YSPxPbjglZQtKfZtzqhUfE3VeoANTsNffywkmujI32Sj31Aku/aB9s3BW4r3nmTF88g==}
     deprecated: Depends on Web-Audio-API implementation. Use either web-audio-api, web-audio-js or web-audio-engine package.
 
+  autoprefixer@10.4.21:
+    resolution: {integrity: sha512-O+A6LWV5LDHSJD3LjHYoNi4VLsj/Whi7k6zG12xTYaU4cQ8oxQGckXNX8cRHK5yOZ/ppVHe0ZBXGzSV9jXdVbQ==}
+    engines: {node: ^10 || ^12 || >=14}
+    hasBin: true
+    peerDependencies:
+      postcss: ^8.1.0
+
   autoprefixer@9.7.4:
     resolution: {integrity: sha512-g0Ya30YrMBAEZk60lp+qfX5YQllG+S5W3GYCFvyHTvhOki0AEQJLPEcIuGRsqVwLi8FvXPVtwTGhfr38hVpm0g==}
     engines: {node: '>=6.0.0'}
@@ -3364,8 +3371,8 @@ packages:
     resolution: {integrity: sha512-5T6P4xPgpp0YDFvSWwEZ4NoE3aM4QBQXDzmVbraCkFj8zHM+mba8SyqB5DbZWyR7mYHo6Y7BdQo3MoA4m0TeQg==}
     engines: {node: '>=0.10.0'}
 
-  baseline-browser-mapping@2.8.21:
-    resolution: {integrity: sha512-JU0h5APyQNsHOlAM7HnQnPToSDQoEBZqzu/YBlqDnEeymPnZDREeXJA3KBMQee+dKteAxZ2AtvQEvVYdZf241Q==}
+  baseline-browser-mapping@2.8.23:
+    resolution: {integrity: sha512-616V5YX4bepJFzNyOfce5Fa8fDJMfoxzOIzDCZwaGL8MKVpFrXqfNUoIpRn9YMI5pXf/VKgzjB4htFMsFKKdiQ==}
     hasBin: true
 
   basic-auth@2.0.1:
@@ -3642,6 +3649,9 @@ packages:
 
   caniuse-lite@1.0.30001751:
     resolution: {integrity: sha512-A0QJhug0Ly64Ii3eIqHu5X51ebln3k4yTUkY1j8drqpWHVreg/VLijN48cZ1bYPiqOQuqpkIKnzr/Ul8V+p6Cw==}
+
+  caniuse-lite@1.0.30001753:
+    resolution: {integrity: sha512-Bj5H35MD/ebaOV4iDLqPEtiliTN29qkGtEHCwawWn4cYm+bPJM2NsaP30vtZcnERClMzp52J4+aw2UNbK4o+zw==}
 
   canvas-toBlob@1.0.0:
     resolution: {integrity: sha512-oU5bawygt/Nef9F+C49eTFmzXzz6yKdGqn6J1wn/LZQF5ulnnZVm0KIZzik85I6tjCbZFH6aa47j4bU2tkHxRw==}
@@ -4615,6 +4625,9 @@ packages:
   electron-to-chromium@1.5.243:
     resolution: {integrity: sha512-ZCphxFW3Q1TVhcgS9blfut1PX8lusVi2SvXQgmEEnK4TCmE1JhH2JkjJN+DNt0pJJwfBri5AROBnz2b/C+YU9g==}
 
+  electron-to-chromium@1.5.244:
+    resolution: {integrity: sha512-OszpBN7xZX4vWMPJwB9illkN/znA8M36GQqQxi6MNy9axWxhOfJyZZJtSLQCpEFLHP2xK33BiWx9aIuIEXVCcw==}
+
   electron-winstaller@5.4.0:
     resolution: {integrity: sha512-bO3y10YikuUwUuDUQRM4KfwNkKhnpVO7IPdbsrejwN9/AABJzzTQ4GeHwyzNSrVO+tEH3/Np255a3sVZpZDjvg==}
     engines: {node: '>=8.0.0'}
@@ -5497,6 +5510,9 @@ packages:
   forwarded@0.2.0:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
     engines: {node: '>= 0.6'}
+
+  fraction.js@4.3.7:
+    resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
 
   fragment-cache@0.2.1:
     resolution: {integrity: sha512-GMBAbW9antB8iZRHLoGw0b3HANt57diZYFO/HL1JGIC1MjKrdmhxvrJbupnVvpys0zsz7yBApXdQyfepKly2kA==}
@@ -13545,7 +13561,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@turbowarp/scratch-storage@0.0.202403251715(encoding@0.1.13)(webpack@4.47.0(webpack-cli@3.3.12))':
+  '@turbowarp/scratch-storage@0.0.202403251715(encoding@0.1.13)(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))':
     dependencies:
       '@babel/runtime': 7.21.0
       '@turbowarp/nanolog': 0.2.0
@@ -13554,7 +13570,7 @@ snapshots:
       cross-fetch: 3.1.5(encoding@0.1.13)
       fastestsmallesttextencoderdecoder: 1.0.22
       js-md5: 0.7.3
-      worker-loader: 2.0.0(webpack@4.47.0)
+      worker-loader: 2.0.0(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
     transitivePeerDependencies:
       - encoding
       - webpack
@@ -13843,18 +13859,18 @@ snapshots:
   '@webpack-cli/configtest@1.2.0(webpack-cli@4.10.0)(webpack@4.47.0)':
     dependencies:
       webpack: 4.47.0(webpack-cli@4.10.0)
-      webpack-cli: 4.10.0(webpack-dev-server@3.11.3(webpack-cli@3.3.12)(webpack@4.47.0))(webpack@4.47.0)
+      webpack-cli: 4.10.0(webpack-dev-server@3.11.3(webpack-cli@3.3.12(webpack@4.47.0))(webpack@4.47.0))(webpack@4.47.0)
 
   '@webpack-cli/info@1.5.0(webpack-cli@4.10.0)':
     dependencies:
       envinfo: 7.19.0
-      webpack-cli: 4.10.0(webpack-dev-server@3.11.3(webpack-cli@3.3.12)(webpack@4.47.0))(webpack@4.47.0)
+      webpack-cli: 4.10.0(webpack-dev-server@3.11.3(webpack-cli@3.3.12(webpack@4.47.0))(webpack@4.47.0))(webpack@4.47.0)
 
-  '@webpack-cli/serve@1.7.0(webpack-cli@4.10.0)(webpack-dev-server@3.11.3(webpack-cli@3.3.12)(webpack@4.47.0))':
+  '@webpack-cli/serve@1.7.0(webpack-cli@4.10.0)(webpack-dev-server@3.11.3(webpack-cli@3.3.12(webpack@4.47.0))(webpack@4.47.0))':
     dependencies:
-      webpack-cli: 4.10.0(webpack-dev-server@3.11.3(webpack-cli@3.3.12)(webpack@4.47.0))(webpack@4.47.0)
+      webpack-cli: 4.10.0(webpack-dev-server@3.11.3(webpack-cli@3.3.12(webpack@4.47.0))(webpack@4.47.0))(webpack@4.47.0)
     optionalDependencies:
-      webpack-dev-server: 3.11.3(webpack-cli@3.3.12)(webpack@4.47.0)
+      webpack-dev-server: 3.11.3(webpack-cli@3.3.12(webpack@4.47.0))(webpack@4.47.0)
 
   '@xmldom/xmldom@0.8.11': {}
 
@@ -14257,6 +14273,16 @@ snapshots:
     dependencies:
       global: 4.4.0
 
+  autoprefixer@10.4.21(postcss@8.5.6):
+    dependencies:
+      browserslist: 4.27.0
+      caniuse-lite: 1.0.30001753
+      fraction.js: 4.3.7
+      normalize-range: 0.1.2
+      picocolors: 1.1.1
+      postcss: 8.5.6
+      postcss-value-parser: 4.2.0
+
   autoprefixer@9.7.4:
     dependencies:
       browserslist: 4.27.0
@@ -14519,14 +14545,14 @@ snapshots:
       schema-utils: 2.7.1
       webpack: 4.47.0(webpack-cli@3.3.12)
 
-  babel-loader@8.3.0(@babel/core@7.28.5)(webpack@4.47.0(webpack-cli@3.3.12)):
+  babel-loader@8.3.0(@babel/core@7.28.5)(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))):
     dependencies:
       '@babel/core': 7.28.5
       find-cache-dir: 3.3.2
       loader-utils: 2.0.4
       make-dir: 3.1.0
       schema-utils: 2.7.1
-      webpack: 4.47.0(webpack-cli@3.3.12)
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
 
   babel-loader@8.4.1(@babel/core@7.28.5)(webpack@4.47.0):
     dependencies:
@@ -14998,7 +15024,7 @@ snapshots:
       mixin-deep: 1.3.2
       pascalcase: 0.1.1
 
-  baseline-browser-mapping@2.8.21: {}
+  baseline-browser-mapping@2.8.23: {}
 
   basic-auth@2.0.1:
     dependencies:
@@ -15178,14 +15204,14 @@ snapshots:
 
   browserslist@3.2.8:
     dependencies:
-      caniuse-lite: 1.0.30001751
+      caniuse-lite: 1.0.30001753
       electron-to-chromium: 1.5.243
 
   browserslist@4.27.0:
     dependencies:
-      baseline-browser-mapping: 2.8.21
-      caniuse-lite: 1.0.30001751
-      electron-to-chromium: 1.5.243
+      baseline-browser-mapping: 2.8.23
+      caniuse-lite: 1.0.30001753
+      electron-to-chromium: 1.5.244
       node-releases: 2.0.27
       update-browserslist-db: 1.1.4(browserslist@4.27.0)
 
@@ -15432,11 +15458,13 @@ snapshots:
   caniuse-api@3.0.0:
     dependencies:
       browserslist: 4.27.0
-      caniuse-lite: 1.0.30001751
+      caniuse-lite: 1.0.30001753
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
 
   caniuse-lite@1.0.30001751: {}
+
+  caniuse-lite@1.0.30001753: {}
 
   canvas-toBlob@1.0.0: {}
 
@@ -15757,13 +15785,13 @@ snapshots:
     dependencies:
       mime-db: 1.54.0
 
-  compression-webpack-plugin@6.1.2(webpack@4.47.0(webpack-cli@3.3.12)):
+  compression-webpack-plugin@6.1.2(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))):
     dependencies:
       cacache: 15.3.0
       find-cache-dir: 3.3.2
       schema-utils: 3.3.0
       serialize-javascript: 5.0.1
-      webpack: 4.47.0(webpack-cli@3.3.12)
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
       webpack-sources: 1.4.3
     transitivePeerDependencies:
       - bluebird
@@ -15852,7 +15880,7 @@ snapshots:
       p-limit: 1.3.0
       serialize-javascript: 1.9.1
 
-  copy-webpack-plugin@6.4.1(webpack@4.47.0(webpack-cli@3.3.12)):
+  copy-webpack-plugin@6.4.1(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))):
     dependencies:
       cacache: 15.3.0
       fast-glob: 3.3.3
@@ -15864,7 +15892,7 @@ snapshots:
       p-limit: 3.1.0
       schema-utils: 3.3.0
       serialize-javascript: 5.0.1
-      webpack: 4.47.0(webpack-cli@3.3.12)
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
       webpack-sources: 1.4.3
     transitivePeerDependencies:
       - bluebird
@@ -16035,7 +16063,7 @@ snapshots:
     dependencies:
       postcss: 8.5.6
 
-  css-loader@1.0.1(webpack@4.47.0(webpack-cli@3.3.12)):
+  css-loader@1.0.1(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))):
     dependencies:
       babel-code-frame: 6.26.0
       css-selector-tokenizer: 0.7.3
@@ -16049,7 +16077,7 @@ snapshots:
       postcss-modules-values: 1.3.0
       postcss-value-parser: 3.3.1
       source-list-map: 2.0.1
-      webpack: 4.47.0(webpack-cli@3.3.12)
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
 
   css-loader@1.0.1(webpack@4.47.0):
     dependencies:
@@ -16649,6 +16677,8 @@ snapshots:
 
   electron-to-chromium@1.5.243: {}
 
+  electron-to-chromium@1.5.244: {}
+
   electron-winstaller@5.4.0:
     dependencies:
       '@electron/asar': 3.4.1
@@ -16999,7 +17029,7 @@ snapshots:
       esbuild: 0.25.11
       get-tsconfig: 4.13.0
       loader-utils: 2.0.4
-      webpack: 4.47.0(webpack-cli@3.3.12)
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
       webpack-sources: 1.4.3
 
   esbuild@0.25.11:
@@ -17101,7 +17131,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-webpack@0.11.1(eslint-plugin-import@2.32.0)(webpack@4.47.0(webpack-cli@3.3.12)):
+  eslint-import-resolver-webpack@0.11.1(eslint-plugin-import@2.32.0)(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))):
     dependencies:
       array-find: 1.0.0
       debug: 2.6.9(supports-color@6.1.0)
@@ -17114,7 +17144,7 @@ snapshots:
       node-libs-browser: 2.2.1
       resolve: 1.22.11
       semver: 5.7.2
-      webpack: 4.47.0(webpack-cli@3.3.12)
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
     transitivePeerDependencies:
       - supports-color
 
@@ -17124,7 +17154,7 @@ snapshots:
     optionalDependencies:
       eslint: 9.38.0(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-webpack: 0.11.1(eslint-plugin-import@2.32.0)(webpack@4.47.0(webpack-cli@3.3.12))
+      eslint-import-resolver-webpack: 0.11.1(eslint-plugin-import@2.32.0)(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
     transitivePeerDependencies:
       - supports-color
 
@@ -17837,17 +17867,17 @@ snapshots:
       schema-utils: 2.7.1
       webpack: 4.47.0(webpack-cli@3.3.12)
 
-  file-loader@6.2.0(webpack@4.47.0(webpack-cli@3.3.12)):
+  file-loader@6.2.0(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))):
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
-      webpack: 4.47.0(webpack-cli@3.3.12)
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
 
   file-loader@6.2.0(webpack@4.47.0):
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
-      webpack: 4.47.0(webpack-cli@4.10.0)
+      webpack: 4.47.0(webpack-cli@3.3.12)
 
   file-type@11.1.0: {}
 
@@ -18113,6 +18143,8 @@ snapshots:
       lookup-closest-locale: 6.2.0
 
   forwarded@0.2.0: {}
+
+  fraction.js@4.3.7: {}
 
   fragment-cache@0.2.1:
     dependencies:
@@ -18661,11 +18693,11 @@ snapshots:
 
   html-escaper@2.0.2: {}
 
-  html-inline-script-webpack-plugin@1.1.6(@types/webpack@4.41.40)(html-webpack-plugin@4.5.2(webpack@4.47.0(webpack-cli@3.3.12)))(webpack@4.47.0(webpack-cli@3.3.12)):
+  html-inline-script-webpack-plugin@1.1.6(@types/webpack@4.41.40)(html-webpack-plugin@4.5.2(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))))(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))):
     dependencies:
       '@types/webpack': 4.41.40
-      html-webpack-plugin: 4.5.2(webpack@4.47.0(webpack-cli@3.3.12))
-      webpack: 4.47.0(webpack-cli@3.3.12)
+      html-webpack-plugin: 4.5.2(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
 
   html-minifier-terser@5.1.1:
     dependencies:
@@ -18698,7 +18730,7 @@ snapshots:
       util.promisify: 1.0.0
       webpack: 4.47.0(webpack-cli@3.3.12)
 
-  html-webpack-plugin@4.5.2(webpack@4.47.0(webpack-cli@3.3.12)):
+  html-webpack-plugin@4.5.2(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))):
     dependencies:
       '@types/html-minifier-terser': 5.1.2
       '@types/tapable': 1.0.12
@@ -18709,7 +18741,7 @@ snapshots:
       pretty-error: 2.1.2
       tapable: 1.1.3
       util.promisify: 1.0.0
-      webpack: 4.47.0(webpack-cli@3.3.12)
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
 
   htmlparser2@10.0.0:
     dependencies:
@@ -21318,7 +21350,7 @@ snapshots:
       cssnano: 5.1.15(postcss@8.5.6)
       last-call-webpack-plugin: 3.0.0
       postcss: 8.5.6
-      webpack: 4.47.0(webpack-cli@3.3.12)
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
 
   optionator@0.8.3:
     dependencies:
@@ -21732,6 +21764,16 @@ snapshots:
       postcss: 7.0.39
       postcss-load-config: 2.1.2
       schema-utils: 1.0.0
+
+  postcss-loader@4.3.0(postcss@8.5.6)(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))):
+    dependencies:
+      cosmiconfig: 7.1.0
+      klona: 2.0.6
+      loader-utils: 2.0.4
+      postcss: 8.5.6
+      schema-utils: 3.3.0
+      semver: 7.7.3
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
 
   postcss-loader@4.3.0(postcss@8.5.6)(webpack@4.47.0):
     dependencies:
@@ -22865,7 +22907,7 @@ snapshots:
     transitivePeerDependencies:
       - webpack
 
-  scratch-render@https://codeload.github.com/TurboWarp/scratch-render/tar.gz/dd5d399eace4b5bae11906e2237fe67ee6b79d84(webpack@4.47.0(webpack-cli@3.3.12)):
+  scratch-render@https://codeload.github.com/TurboWarp/scratch-render/tar.gz/dd5d399eace4b5bae11906e2237fe67ee6b79d84(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))):
     dependencies:
       '@turbowarp/ancient-hull.js': 0.2.13
       '@turbowarp/nanolog': 0.2.0
@@ -22874,7 +22916,7 @@ snapshots:
       ify-loader: 1.0.4
       linebreak: 0.3.0
       raw-loader: 0.5.1
-      scratch-storage: 1.3.6(webpack@4.47.0)
+      scratch-storage: 1.3.6(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
       twgl.js: 4.4.0
     transitivePeerDependencies:
       - scratch-render-fonts
@@ -22885,6 +22927,17 @@ snapshots:
       js-md5: 0.7.3
       minilog: 3.1.0
       text-encoding: 0.7.0
+
+  scratch-storage@1.3.6(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))):
+    dependencies:
+      arraybuffer-loader: 1.0.8
+      base64-js: 1.3.0
+      fastestsmallesttextencoderdecoder: 1.0.22
+      js-md5: 0.7.3
+      minilog: 3.1.0
+      worker-loader: 2.0.0(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
+    transitivePeerDependencies:
+      - webpack
 
   scratch-storage@1.3.6(webpack@4.47.0):
     dependencies:
@@ -23934,6 +23987,19 @@ snapshots:
       ansi-escapes: 4.3.2
       supports-hyperlinks: 2.3.0
 
+  terser-webpack-plugin@1.4.6(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))):
+    dependencies:
+      cacache: 12.0.4
+      find-cache-dir: 2.1.0
+      is-wsl: 1.1.0
+      schema-utils: 1.0.0
+      serialize-javascript: 4.0.0
+      source-map: 0.6.1
+      terser: 4.8.1
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
+      webpack-sources: 1.4.3
+      worker-farm: 1.7.0
+
   terser-webpack-plugin@1.4.6(webpack@4.47.0):
     dependencies:
       cacache: 12.0.4
@@ -23957,7 +24023,7 @@ snapshots:
       serialize-javascript: 5.0.1
       source-map: 0.6.1
       terser: 5.44.0
-      webpack: 4.47.0(webpack-cli@3.3.12)
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
       webpack-sources: 1.4.3
     transitivePeerDependencies:
       - bluebird
@@ -24257,6 +24323,18 @@ snapshots:
       webpack-sources: 1.4.3
       worker-farm: 1.7.0
 
+  uglifyjs-webpack-plugin@1.3.0(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))):
+    dependencies:
+      cacache: 10.0.4
+      find-cache-dir: 1.0.0
+      schema-utils: 0.4.7
+      serialize-javascript: 1.9.1
+      source-map: 0.6.1
+      uglify-es: 3.3.9
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
+      webpack-sources: 1.4.3
+      worker-farm: 1.7.0
+
   uglifyjs-webpack-plugin@1.3.0(webpack@4.47.0):
     dependencies:
       cacache: 10.0.4
@@ -24396,14 +24474,14 @@ snapshots:
     optionalDependencies:
       file-loader: 6.2.0(webpack@4.47.0)
 
-  url-loader@4.1.1(file-loader@6.2.0(webpack@4.47.0(webpack-cli@3.3.12)))(webpack@4.47.0(webpack-cli@3.3.12)):
+  url-loader@4.1.1(file-loader@6.2.0(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))))(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))):
     dependencies:
       loader-utils: 2.0.4
       mime-types: 2.1.35
       schema-utils: 3.3.0
-      webpack: 4.47.0(webpack-cli@3.3.12)
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
     optionalDependencies:
-      file-loader: 6.2.0(webpack@4.47.0(webpack-cli@3.3.12))
+      file-loader: 6.2.0(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
 
   url-loader@4.1.1(file-loader@6.2.0(webpack@4.47.0))(webpack@4.47.0):
     dependencies:
@@ -24594,15 +24672,15 @@ snapshots:
       loader-utils: 1.4.2
       supports-color: 6.1.0
       v8-compile-cache: 2.4.0
-      webpack: 4.47.0(webpack-cli@3.3.12)
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
       yargs: 13.3.2
 
-  webpack-cli@4.10.0(webpack-dev-server@3.11.3(webpack-cli@3.3.12)(webpack@4.47.0))(webpack@4.47.0):
+  webpack-cli@4.10.0(webpack-dev-server@3.11.3(webpack-cli@3.3.12(webpack@4.47.0))(webpack@4.47.0))(webpack@4.47.0):
     dependencies:
       '@discoveryjs/json-ext': 0.5.7
       '@webpack-cli/configtest': 1.2.0(webpack-cli@4.10.0)(webpack@4.47.0)
       '@webpack-cli/info': 1.5.0(webpack-cli@4.10.0)
-      '@webpack-cli/serve': 1.7.0(webpack-cli@4.10.0)(webpack-dev-server@3.11.3(webpack-cli@3.3.12)(webpack@4.47.0))
+      '@webpack-cli/serve': 1.7.0(webpack-cli@4.10.0)(webpack-dev-server@3.11.3(webpack-cli@3.3.12(webpack@4.47.0))(webpack@4.47.0))
       colorette: 2.0.20
       commander: 7.2.0
       cross-spawn: 7.0.6
@@ -24613,7 +24691,7 @@ snapshots:
       webpack: 4.47.0(webpack-cli@4.10.0)
       webpack-merge: 5.10.0
     optionalDependencies:
-      webpack-dev-server: 3.11.3(webpack-cli@3.3.12)(webpack@4.47.0)
+      webpack-dev-server: 3.11.3(webpack-cli@3.3.12(webpack@4.47.0))(webpack@4.47.0)
 
   webpack-dev-middleware@3.7.3(webpack@4.47.0):
     dependencies:
@@ -24621,7 +24699,7 @@ snapshots:
       mime: 2.6.0
       mkdirp: 0.5.6
       range-parser: 1.2.1
-      webpack: 4.47.0(webpack-cli@3.3.12)
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
       webpack-log: 2.0.0
 
   webpack-dev-server@3.11.2(webpack-cli@3.1.0)(webpack@4.47.0):
@@ -24708,7 +24786,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  webpack-dev-server@3.11.3(webpack-cli@3.3.12)(webpack@4.47.0):
+  webpack-dev-server@3.11.3(webpack-cli@3.3.12(webpack@4.47.0))(webpack@4.47.0):
     dependencies:
       ansi-html-community: 0.0.8
       bonjour: 3.5.0
@@ -24739,7 +24817,7 @@ snapshots:
       strip-ansi: 3.0.1
       supports-color: 6.1.0
       url: 0.11.4
-      webpack: 4.47.0(webpack-cli@3.3.12)
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
       webpack-dev-middleware: 3.7.3(webpack@4.47.0)
       webpack-log: 2.0.0
       ws: 6.2.3
@@ -24793,6 +24871,36 @@ snapshots:
       webpack-sources: 1.4.3
     optionalDependencies:
       webpack-cli: 3.1.0(webpack@4.47.0)
+    transitivePeerDependencies:
+      - supports-color
+
+  webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)):
+    dependencies:
+      '@webassemblyjs/ast': 1.9.0
+      '@webassemblyjs/helper-module-context': 1.9.0
+      '@webassemblyjs/wasm-edit': 1.9.0
+      '@webassemblyjs/wasm-parser': 1.9.0
+      acorn: 6.4.2
+      ajv: 6.12.6
+      ajv-keywords: 3.5.2(ajv@6.12.6)
+      chrome-trace-event: 1.0.4
+      enhanced-resolve: 4.5.0
+      eslint-scope: 4.0.3
+      json-parse-better-errors: 1.0.2
+      loader-runner: 2.4.0
+      loader-utils: 1.4.2
+      memory-fs: 0.4.1
+      micromatch: 3.1.10(supports-color@6.1.0)
+      mkdirp: 0.5.6
+      neo-async: 2.6.2
+      node-libs-browser: 2.2.1
+      schema-utils: 1.0.0
+      tapable: 1.1.3
+      terser-webpack-plugin: 1.4.6(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0)))
+      watchpack: 1.7.5
+      webpack-sources: 1.4.3
+    optionalDependencies:
+      webpack-cli: 3.3.12(webpack@4.47.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -24852,7 +24960,7 @@ snapshots:
       watchpack: 1.7.5
       webpack-sources: 1.4.3
     optionalDependencies:
-      webpack-cli: 4.10.0(webpack-dev-server@3.11.3(webpack-cli@3.3.12)(webpack@4.47.0))(webpack@4.47.0)
+      webpack-cli: 4.10.0(webpack-dev-server@3.11.3(webpack-cli@3.3.12(webpack@4.47.0))(webpack@4.47.0))(webpack@4.47.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -24963,6 +25071,12 @@ snapshots:
       loader-utils: 1.4.2
       schema-utils: 0.4.7
       webpack: 4.47.0(webpack-cli@3.1.0)
+
+  worker-loader@2.0.0(webpack@4.47.0(webpack-cli@3.3.12(webpack@4.47.0))):
+    dependencies:
+      loader-utils: 1.4.2
+      schema-utils: 0.4.7
+      webpack: 4.47.0(webpack-cli@3.3.12(webpack@4.47.0))
 
   worker-loader@2.0.0(webpack@4.47.0):
     dependencies:

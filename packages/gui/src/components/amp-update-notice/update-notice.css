@@ -2,26 +2,18 @@
 
 .modal-content {
     max-width: 700px;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-sizing: border-box;
-    padding: 0;
-    display: block;
-    background: $ui-modal-background;
 }
 
 .update-modal-content {
     background: $ui-modal-background;
-    color: $page-foreground;
-    padding: 20px;
+    padding: 1.5rem 2.25rem;
+    min-height: 150px;
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
     display: flex;
+    user-select: text;
     flex-direction: column;
-    gap: 16px;
-    align-items: flex-start;
-    width: 100%;
-    box-sizing: border-box;
-    min-height: 0;
-    overflow: visible;
+    gap: 1em;
 }
 
 .update-modal-content ul {
@@ -29,6 +21,9 @@
     padding-left: 1.2em;
     max-width: 100%;
     word-break: break-word;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 /* the below mimicks the buttons from the home page */

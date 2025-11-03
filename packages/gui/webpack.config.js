@@ -8,11 +8,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {EsbuildPlugin} = require('esbuild-loader');
 
-// PostCss
-const autoprefixer = require('autoprefixer');
-const postcssVars = require('postcss-simple-vars');
-const postcssImport = require('postcss-import');
-
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
 const {APP_NAME, APP_SLOGAN, APP_DESCRIPTION, APP_SOURCE} = require('@ampmod/branding');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -131,11 +126,14 @@ const base = {
                         }
                     },
                     {
-                        loader: 'postcss-loader',
+                    loader: 'postcss-loader',
                         options: {
-                            ident: 'postcss',
-                            plugins: function () {
-                                return [postcssImport, postcssVars, autoprefixer];
+                            postcssOptions: {
+                            plugins: [
+                                require('postcss-import'),
+                                require('postcss-simple-vars'),
+                                require('autoprefixer')
+                            ]
                             }
                         }
                     }
