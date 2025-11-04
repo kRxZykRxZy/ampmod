@@ -15,6 +15,8 @@ import {defaultStageSize} from '../reducers/custom-stage-size';
 import {lsNamespace} from './amp-localstorage-namespace';
 import { sizePresets } from '../components/tw-settings-modal/settings-modal';
 
+const isStandalone = process.env.STANDALONE === 'true';
+
 /* eslint-disable no-alert */
 
 const messages = defineMessages({
@@ -366,17 +368,21 @@ const TWStateManager = function (WrappedComponent) {
                 this.props.vm.extensionManager.loadExtensionURL(extension);
             }
 
-            const routerCallbacks = {
-                onSetProjectId: this.onSetProjectId,
-                onSetIsPlayerOnly: this.onSetIsPlayerOnly,
-                onSetIsFullScreen: this.onSetIsFullScreen
-            };
-            this.router = createRouter(this.props.routingStyle, routerCallbacks);
-            this.router.onhashchange();
-            window.addEventListener('hashchange', this.handleHashChange);
-            window.addEventListener('popstate', this.handlePopState);
+            if (!isStandalone) {
+                const routerCallbacks = {
+                    onSetProjectId: this.onSetProjectId,
+                    onSetIsPlayerOnly: this.onSetIsPlayerOnly,
+                    onSetIsFullScreen: this.onSetIsFullScreen
+                };
+                this.router = createRouter(this.props.routingStyle, routerCallbacks);
+                this.router.onhashchange();
+                window.addEventListener('hashchange', this.handleHashChange);
+                window.addEventListener('popstate', this.handlePopState);
+            }
         }
         componentDidUpdate(prevProps) {
+            if (isStandalone) return;
+
             if (this.props.username !== prevProps.username && this.props.username !== this.doNotPersistUsername) {
                 // TODO: this always restores the current username once at startup, which is unnecessary
                 setLocalStorage(USERNAME_KEY, this.props.username);

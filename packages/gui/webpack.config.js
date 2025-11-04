@@ -472,9 +472,11 @@ module.exports = [
     process.env.BUILD_MODE === 'standalone'
         ? defaultsDeep({}, base, {
               target: 'web',
+              mode: "production",
+              devtool: false,
               entry: {
-                  'standalone_main': [
-                      './src/playground/editor.jsx',
+                  'standalone': [
+                      './src/playground/amp-standalone-handler.jsx',
                   ]
               },
               output: {
@@ -488,7 +490,10 @@ module.exports = [
               optimization: {
                   splitChunks: false,
                   runtimeChunk: false,
-                  minimizer: [new EsbuildPlugin({target: 'es2019'})]
+                  usedExports: true,
+                  sideEffects: true,
+                  concatenateModules: true,
+                  minimizer: [new EsbuildPlugin({target: 'es2019', minify: true, css: true})]
               },
               module: {
                   rules: base.module.rules.concat([
@@ -507,12 +512,10 @@ module.exports = [
                       maxChunks: 1
                   }),
                   new HtmlWebpackPlugin({
-                      chunks: ['standalone_main'],
-                      template: 'src/playground/simple.ejs',
+                      chunks: ['standalone'],
+                      template: 'src/playground/embed.ejs',
                       filename: `AmpMod-Standalone-${monorepoPackageJson.version}-EXPERIMENTAL.html`,
                       inject: 'body',
-                      title: `${APP_NAME} - ${APP_SLOGAN}`,
-                      isEditor: true,
                       ...htmlWebpackPluginCommon
                   }),
                   new HtmlInlineScriptWebpackPlugin([/./]),

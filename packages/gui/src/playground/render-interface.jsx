@@ -55,6 +55,12 @@ if (AddonChannels.changeChannel) {
 }
 
 const handleClickAddonSettings = addonId => {
+    if (process.env.ampmod_mode === "standalone") {
+        const url = new URL(window.location.href);
+        url.searchParams.append('addon-settings', '');
+        window.open(url.toString(), '_blank');
+        return;
+    }
     // addonId might be a string of the addon to focus on, undefined, or an event (treat like undefined)
     const path = process.env.ROUTING_STYLE === 'wildcard' ? 'addons' : 'addons.html';
     const url = `${process.env.ROOT}${path}${typeof addonId === 'string' ? `#${addonId}` : ''}`;

@@ -149,7 +149,7 @@ class SettingsMenu extends React.Component {
                             <MenuItem>
                                 <div className={`${styles.option} ${styles.disabled}`}>
                                     <span className={styles.submenuLabel}>
-                                        {APP_NAME} v{process.env.ampmod_version}
+                                        {APP_NAME} v{process.env.ampmod_version} {process.env.ampmod_mode === "standalone" && "Standalone (prealpha)"}
                                     </span>
                                 </div>
                             </MenuItem>

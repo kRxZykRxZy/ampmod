@@ -39,6 +39,7 @@ import {applyGuiColors} from '../../lib/themes/guiHelpers.js';
 import {APP_FORUMS, APP_NAME} from '@ampmod/branding';
 import 'modern-normalize';
 import logo from "../../components/menu-bar/addons.svg";
+import {lazyLoad} from "../../lib/amp-lazy-launch.jsx";
 
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
@@ -980,7 +981,7 @@ class AddonSettingsComponent extends React.Component {
                                 />
                                 <div className={styles.searchButton} onClick={this.handleClickSearchButton} />
                             </div>
-                            {APP_FORUMS && (
+                            {APP_FORUMS &&
                                 <a
                                     href={APP_FORUMS}
                                     target="_blank"
@@ -989,7 +990,7 @@ class AddonSettingsComponent extends React.Component {
                                 >
                                     <span className={styles.feedbackButtonInner}>{APP_NAME} Forums</span>
                                 </a>
-                            )}
+                            }
                         </div>
                     </div>
                     {this.state.dirty && <Dirty onReloadNow={Channels.reloadChannel ? this.handleReloadNow : null} />}
