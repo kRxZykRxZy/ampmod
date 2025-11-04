@@ -27,6 +27,9 @@ importers:
       optimize-css-assets-webpack-plugin:
         specifier: ^6.0.1
         version: 6.0.1(webpack@5.102.1)
+      sugarss:
+        specifier: ^5.0.1
+        version: 5.0.1(postcss@8.5.6)
       swc-loader:
         specifier: ^0.2.6
         version: 0.2.6(@swc/core@1.15.0)(webpack@5.102.1)
@@ -10419,6 +10422,12 @@ packages:
     engines: {node: ^10 || ^12 || >=14.0}
     peerDependencies:
       postcss: ^8.2.15
+
+  sugarss@5.0.1:
+    resolution: {integrity: sha512-ctS5RYCBVvPoZAnzIaX5QSShK8ZiZxD5HUqSxlusvEMC+QZQIPCPOIJg6aceFX+K2rf4+SH89eu++h1Zmsr2nw==}
+    engines: {node: '>=18.0'}
+    peerDependencies:
+      postcss: ^8.3.3
 
   sumchecker@3.0.1:
     resolution: {integrity: sha512-MvjXzkz/BOfyVDkG0oFOtBxHX2u3gKbMHIF/dXblZsgD3BWOFLmHovIpZY7BykJdAjcqRCBi1WYBNdEC9yI7vg==}
@@ -24612,6 +24621,10 @@ snapshots:
       browserslist: 4.27.0
       postcss: 8.5.6
       postcss-selector-parser: 6.1.2
+
+  sugarss@5.0.1(postcss@8.5.6):
+    dependencies:
+      postcss: 8.5.6
 
   sumchecker@3.0.1:
     dependencies:

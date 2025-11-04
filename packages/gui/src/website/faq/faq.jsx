@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import render from '../../playground/app-target.js';
-import styles from '../design.css';
+import styles from '../design.sss';
 import myStyles from './faq.css';
 
 import {APP_NAME} from '@ampmod/branding';

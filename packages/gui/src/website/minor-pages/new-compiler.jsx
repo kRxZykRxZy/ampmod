@@ -1,4 +1,4 @@
-import styles from '../design.css';
+import styles from '../design.sss';
 import newCompilerStyles from './minor-pages.css';
 
 import {APP_NAME} from '@ampmod/branding';

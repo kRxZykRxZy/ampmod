@@ -165,8 +165,41 @@ const base = {
                                 require('postcss-import'),
                                 require('postcss-simple-vars'),
                                 require('postcss-nesting'),
-                                require('autoprefixer')
+                                require('autoprefixer'),
+                                require('cssnano')({ preset: 'default' })
                             ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.sss$/i,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                namedExport: false,
+                                localIdentName: '[name]_[local]_[hash:base64:5]',
+                                exportLocalsConvention: 'camelCaseOnly'
+                            },
+                            importLoaders: 1
+                        }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                parser: "sugarss",
+                                plugins: [
+                                    require('postcss-import'),
+                                    require('postcss-simple-vars'),
+                                    require('postcss-nesting'),
+                                    require('autoprefixer'),
+                                    require('cssnano')({ preset: 'default' })
+                                ]
                             }
                         }
                     }
@@ -271,7 +304,7 @@ module.exports = [
             'website': [
                 './src/website/components/header/header.jsx',
                 './src/website/components/footer/footer.jsx',
-                './src/website/design.css'
+                './src/website/design.sss'
             ],
             'editor': './src/playground/editor.jsx',
             'fullscreen': './src/playground/fullscreen.jsx',

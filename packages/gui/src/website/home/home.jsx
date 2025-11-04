@@ -3,7 +3,7 @@ import React from 'react';
 import render from '../../playground/app-target.js';
 
 // This page diverges significantly from other pages and thus uses its own independent styles altogether.
-// design.css is only used for the hero in a separate component.
+// design.sss is only used for the hero in a separate component.
 import styles from './home.css';
 
 import {APP_FORUMS, APP_NAME, APP_WIKI, APP_SLOGAN} from '@ampmod/branding';

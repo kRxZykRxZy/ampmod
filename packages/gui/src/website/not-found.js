@@ -4,7 +4,7 @@ import '@fontsource/inter';
 import {APP_FORUMS, APP_NAME} from '@ampmod/branding';
 import {applyGuiColors} from '../lib/themes/guiHelpers';
 import {detectTheme} from '../lib/themes/themePersistance';
-import styles from './design.css';
+import styles from './design.sss';
 
 applyGuiColors(detectTheme());
 document.documentElement.lang = 'en';
