@@ -57,7 +57,14 @@ if (AddonChannels.changeChannel) {
 const handleClickAddonSettings = addonId => {
     if (process.env.ampmod_mode === "standalone") {
         const url = new URL(window.location.href);
-        url.searchParams.append('addon-settings', '');
+        url.searchParams.set('addon-settings', '');
+
+        if (typeof addonId === 'string' && addonId.length > 0) {
+            url.hash = `#${addonId}`;
+        } else {
+            url.hash = '';
+        }
+
         window.open(url.toString(), '_blank');
         return;
     }

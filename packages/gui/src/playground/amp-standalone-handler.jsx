@@ -30,7 +30,7 @@ const onExportSettings = settings => {
 
 const urlParams = new URLSearchParams(location.search);
 if (urlParams.has('addon-settings')) {
-    const AddonSettings = require("../addons/settings/settings");
+    const AddonSettings = require("../addons/settings/settings").default;
     render(
         <React.Fragment>
             <Clippy isFixed />

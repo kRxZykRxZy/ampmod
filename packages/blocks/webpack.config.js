@@ -64,7 +64,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             filename: "[name].js",
         },
         optimization: {
-            minimizer: [new EsbuildPlugin({ target: "es2019" })],
+            minimizer: [new EsbuildPlugin({ target: "es2022" })],
         },
         plugins: [],
     },
