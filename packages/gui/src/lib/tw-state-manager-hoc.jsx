@@ -15,7 +15,7 @@ import {defaultStageSize} from '../reducers/custom-stage-size';
 import {lsNamespace} from './amp-localstorage-namespace';
 import { sizePresets } from '../components/tw-settings-modal/settings-modal';
 
-const isStandalone = process.env.STANDALONE === 'true';
+const isStandalone = process.env.NODE_ENV === "standalone";
 
 /* eslint-disable no-alert */
 
@@ -277,7 +277,7 @@ const TWStateManager = function (WrappedComponent) {
 
             if (
                 process.env.NODE_ENV !== 'production' ||
-                (urlParams.has('nerd_mode') && urlParams.get('nerd_mode') === 'i_will_not_ask_for_help_if_this_breaks')
+                (   urlParams.has('nerd_mode') && urlParams.get('nerd_mode') === 'i_will_not_ask_for_help_if_this_breaks')
             ) {
                 this.props.vm.extensionManager.loadExtensionURL('electroTest');
             }

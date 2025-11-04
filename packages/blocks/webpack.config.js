@@ -1,11 +1,11 @@
 // patch 'fs' to fix EMFILE errors, for example on WSL
-var realFs = require("fs");
-var gracefulFs = require("graceful-fs");
+const realFs = require("fs");
+const gracefulFs = require("graceful-fs");
 const webpack = require("webpack");
 gracefulFs.gracefulify(realFs);
 
-var CopyWebpackPlugin = require("copy-webpack-plugin");
-var path = require("path");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const path = require("path");
 const { EsbuildPlugin } = require("esbuild-loader");
 
 module.exports = [
@@ -19,7 +19,7 @@ module.exports = [
         },
         output: {
             library: "ScratchBlocks",
-            libraryTarget: "commonjs2",
+            libraryTarget: "commonjs2", // still valid
             path: path.resolve(__dirname, "dist"),
             filename: "[name].js",
         },
@@ -43,7 +43,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
-            `.trim(),
+        `.trim(),
             }),
         ],
     },
@@ -53,12 +53,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 ? "production"
                 : "development",
         entry: {
-            // horizontal entry removed
             vertical: "./shim/vertical.js",
         },
         output: {
             library: "Blockly",
-            libraryTarget: "umd",
+            library: {
+                type: "umd", // updated Webpack 5 syntax
+            },
             path: path.resolve(__dirname, "dist", "web"),
             filename: "[name].js",
         },
@@ -84,37 +85,57 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             hints: false,
         },
         plugins: [
-            new CopyWebpackPlugin([
-                {
-                    from: "blocks_common",
-                    to: "playgrounds/blocks_common",
-                },
-                {
-                    from: "blocks_vertical",
-                    to: "playgrounds/blocks_vertical",
-                },
-                {
-                    from: "core",
-                    to: "playgrounds/core",
-                },
-                {
-                    from: "media",
-                    to: "playgrounds/media",
-                },
-                {
-                    from: "msg",
-                    to: "playgrounds/msg",
-                },
-                {
-                    from: "tests",
-                    to: "playgrounds/tests",
-                },
-                {
-                    from: "*.js",
-                    ignore: "webpack.config.js",
-                    to: "playgrounds",
-                },
-            ]),
+            new CopyWebpackPlugin({
+                patterns: [
+                    {
+                        from: "blocks_vertical",
+                        to: "playgrounds/blocks_vertical",
+                    },
+                    {
+                        from: "core",
+                        to: "playgrounds/core",
+                    },
+                    {
+                        from: "media",
+                        to: "playgrounds/media",
+                    },
+                    {
+                        from: "msg",
+                        to: "playgrounds/msg",
+                    },
+                    {
+                        from: "tests",
+                        to: "playgrounds/tests",
+                    },
+                    {
+                        from: "*.js",
+                        globOptions: {ignore: "webpack.config.js"},
+                        to: "playgrounds",
+                    },
+                ]
+            }),
+            new CopyWebpackPlugin({
+                patterns: [
+                    {
+                        from: "../../node_modules/google-closure-library",
+                        to: "closure-library",
+                    },
+                    { from: "blocks_common", to: "playgrounds/blocks_common" },
+                    {
+                        from: "blocks_vertical",
+                        to: "playgrounds/blocks_vertical",
+                    },
+                    { from: "core", to: "playgrounds/core" },
+                    { from: "media", to: "playgrounds/media" },
+                    { from: "msg", to: "playgrounds/msg" },
+                    { from: "tests", to: "playgrounds/tests" },
+                    {
+                        from: "*.js",
+                        to: "playgrounds",
+                        globOptions: { ignore: ["webpack.config.js"] },
+                    },
+                ],
+            }),
         ],
     },
 ];

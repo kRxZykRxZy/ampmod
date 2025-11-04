@@ -27,7 +27,7 @@ const base = {
             },
             {
                 test: /\.mp3$/,
-                loader: 'file-loader',
+                loader: "asset/resource",
                 options: {
                     outputPath: 'media/music/'
                 }

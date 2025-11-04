@@ -17,7 +17,7 @@ const base = {
             },
             {
                 test: /\.(svg|png|wav|gif|jpg|mp3|woff2|hex)$/,
-                loader: "file-loader",
+                loader: "asset/resource",
                 options: {
                     outputPath: "static/assets/",
                     esModule: false,

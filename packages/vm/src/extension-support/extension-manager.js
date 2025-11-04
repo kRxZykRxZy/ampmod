@@ -232,10 +232,15 @@ class ExtensionManager {
         }
 
         let ExtensionWorker;
-        if (sandboxMode === 'worker') {
-            ExtensionWorker = require('worker-loader?name=js/extension-worker/extension-worker.[hash].js!./extension-worker');
-        } else if (sandboxMode === 'iframe') {
-            ExtensionWorker = (await import('./tw-iframe-extension-worker')).default;
+        if (sandboxMode === "worker") {
+            ExtensionWorker = new Worker(
+                new URL("./extension-worker.js", import.meta.url, {
+                    type: "classic",
+                })
+            );
+        } else if (sandboxMode === "iframe") {
+            ExtensionWorker = (await import("./tw-iframe-extension-worker"))
+                .default;
         } else {
             throw new Error(`Invalid sandbox mode: ${sandboxMode}`);
         }

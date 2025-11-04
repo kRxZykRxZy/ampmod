@@ -27,14 +27,12 @@
     "devDependencies": {
         "babel-core": "6.26.3",
         "babel-eslint": "^8.2.6",
-        "babel-loader": "7.1.5",
+        "babel-loader": "10.0.0",
         "babel-preset-env": "1.7.0",
         "eslint": "^4.19.1",
         "eslint-config-scratch": "^5.1.0",
         "json": "^10.0.0",
         "lodash.defaultsdeep": "4.6.1",
-        "rimraf": "^2.7.1",
-        "webpack": "^4.47.0",
-        "webpack-cli": "^3.3.12"
+        "rimraf": "^2.7.1"
     }
 }

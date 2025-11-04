@@ -211,36 +211,59 @@ class Tab extends EventTargetShim {
             },
             getWorkspace: () => AddonHooks.blocklyWorkspace,
             getPaper: async () => {
-                const modeSelector = await this.waitForElement("[class*='paint-editor_mode-selector']", {
-                    reduxCondition: state => (
-                        state.scratchGui.editorTab.activeTabIndex === 1 && !state.scratchGui.mode.isPlayerOnly
-                    )
-                });
-                const reactInternalKey = Object.keys(modeSelector)
-                    .find(key => key.startsWith('_reactInternals'));
-                const internalState = modeSelector[reactInternalKey].child;
-                // .tool or .blob.tool only exists on the selected tool
-                let toolState = internalState;
-                let tool;
-                while (toolState) {
-                    const toolInstance = toolState.child.stateNode;
-                    if (toolInstance.tool) {
-                        tool = toolInstance.tool;
-                        break;
-                    }
-                    if (toolInstance.blob && toolInstance.blob.tool) {
-                        tool = toolInstance.blob.tool;
-                        break;
-                    }
-                    toolState = toolState.sibling;
-                }
-                if (tool) {
-                    const paperScope = tool._scope;
-                    return paperScope;
-                }
-                throw new Error('cannot find paper :(');
-            },
-            getInternalKey
+    const modeSelector = await this.waitForElement("[class*='paint-editor_mode-selector']", {
+        reduxCondition: state => (
+            state.scratchGui.editorTab.activeTabIndex === 1 && !state.scratchGui.mode.isPlayerOnly
+        )
+    });
+
+    // Find the react internal key safely
+    const reactInternalKey = Object.keys(modeSelector).find(key => key.startsWith('_reactInternals'));
+    if (!reactInternalKey) {
+        throw new Error('React internal key not found on modeSelector');
+    }
+
+    const internalState = modeSelector[reactInternalKey]?.child;
+    if (!internalState) {
+        throw new Error('React internal child not found');
+    }
+
+    // Traverse to find the tool safely
+    let toolState = internalState;
+    let tool;
+    while (toolState) {
+        const toolInstance = toolState.child?.stateNode;
+        if (!toolInstance) {
+            toolState = toolState.sibling;
+            continue;
+        }
+
+        if (toolInstance.tool) {
+            tool = toolInstance.tool;
+            break;
+        }
+
+        if (toolInstance.blob?.tool) {
+            tool = toolInstance.blob.tool;
+            break;
+        }
+
+        toolState = toolState.sibling;
+    }
+
+    if (!tool) {
+        throw new Error('Cannot find tool instance');
+    }
+
+    const paperScope = tool._scope;
+    if (!paperScope) {
+        throw new Error('Cannot find paper scope on tool');
+    }
+
+    return paperScope;
+},
+getInternalKey
+
         };
     }
 
@@ -743,7 +766,7 @@ class AddonRunner {
         this.resources = null;
 
         this.publicAPI = {
-            global,
+            globalThis,
             console,
             addon: {
                 tab: new Tab(id),

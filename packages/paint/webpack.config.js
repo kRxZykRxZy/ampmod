@@ -62,13 +62,21 @@ const base = {
             },
             {
                 test: /\.png$/i,
-                loader: 'url-loader'
+                loader: "asset/resource",
             },
             {
                 test: /\.svg$/,
-                loader: 'svg-url-loader?noquotes'
-            }
-        ]
+                type: "asset",
+                parser: {
+                    dataUrlCondition: {
+                        maxSize: 8 * 1024,
+                    },
+                },
+                generator: {
+                    filename: "static/assets/[name][hash][ext]",
+                },
+            },
+        ],
     },
     optimization: {
         minimizer: [

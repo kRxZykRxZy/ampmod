@@ -7,7 +7,7 @@ const monorepoPackageJson = require('../../package.json');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {EsbuildPlugin} = require('esbuild-loader');
-const HtmlInlineScriptWebpackPlugin = require('html-inline-script-webpack-plugin');
+const HtmlInlineScriptPlugin = require('html-inline-script-webpack-plugin');
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
 const {APP_NAME, APP_SLOGAN, APP_DESCRIPTION, APP_SOURCE} = require('@ampmod/branding');
@@ -30,6 +30,15 @@ const htmlWebpackPluginCommon = {
     meta: JSON.parse(process.env.EXTRA_META || '{}'),
     APP_NAME,
     isCbp: process.env.IS_CBP_BUILD || false,
+    NODE_ENV: process.env.NODE_ENV,
+    BUILD_MODE: process.env.BUILD_MODE,
+    DEBUG: Boolean(process.env.DEBUG),
+    ROUTING_STYLE: process.env.ROUTING_STYLE || "filehash",
+    ampmod_version: monorepoPackageJson.version,
+    ampmod_mode: process.env.BUILD_MODE,
+    LAB_EXPERIMENT_NAME: process.env.LAB_EXPERIMENT_NAME || "default",
+    LAB_EXPERIMENT_NAME_FULL:
+        process.env.LAB_EXPERIMENT_NAME_FULL || "AmpMod Lab",
     minify:
         process.env.NODE_ENV === 'production'
             ? {
@@ -52,11 +61,10 @@ const CACHE_EPOCH = `amp-${monorepoPackageJson.version}`;
 
 const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-    devtool: process.env.SOURCEMAP || (process.env.NODE_ENV === 'production' ? false : 'eval-cheap-module-source-map'),
+    devtool: process.env.SOURCEMAP || (process.env.NODE_ENV === 'production' ? false : 'source-map'),
     devServer: {
-        contentBase: path.resolve(__dirname, 'build'),
-        host: '0.0.0.0',
-        disableHostCheck: true,
+        static: { directory: path.resolve(__dirname, "build") },
+        host: "0.0.0.0",
         compress: true,
         port: process.env.PORT || 8601,
         // allows ROUTING_STYLE=wildcard to work properly
@@ -74,18 +82,27 @@ const base = {
                 {from: /^\/examples\/?$/, to: '/examples.html'},
                 {from: /./, to: '/404.html'}
             ]
+        },
+        client: {
+            overlay: false,
         }
     },
     output: {
-        library: 'GUI',
-        filename: process.env.NODE_ENV === 'production' ? `js/${CACHE_EPOCH}/[name].[hash].js` : 'js/[name].js',
+        library: "GUI",
+        filename:
+            process.env.NODE_ENV === "production"
+                ? `js/${CACHE_EPOCH}/[name].[contenthash].js`
+                : "js/[name].js",
         chunkFilename:
             process.env.NODE_ENV === 'production' ? `js/${CACHE_EPOCH}/[name].[contenthash].js` : 'js/[name].js',
         publicPath: root
     },
     resolve: {
         symlinks: false,
-        extensions: ['.jsx', '.js', '.ts', '.tsx'],
+        extensions: [".jsx", ".js", ".ts", ".tsx"],
+        fallback: {
+            buffer: require.resolve("buffer/"),
+        },
         alias: {
             'text-encoding$': path.resolve(__dirname, 'src/lib/tw-text-encoder'),
             'scratch-render-fonts$': path.resolve(__dirname, 'src/lib/tw-scratch-render-fonts'),
@@ -96,6 +113,7 @@ const base = {
     module: {
         rules: [
             {
+                // JS/TSX loader
                 test: /\.[jt]sx?$/,
                 loader: 'esbuild-loader',
                 include: [path.resolve(__dirname, 'src'), /node_modules[\\/]scratch-[^\\/]+[\\/]src/],
@@ -106,50 +124,75 @@ const base = {
                 }
             },
             {
-                test: /\.css$/,
+                test: /\.css$/i,
                 use: [
-                    {
-                        loader: 'style-loader'
-                    },
+                    'style-loader',
                     {
                         loader: 'css-loader',
                         options: {
-                            modules: true,
-                            importLoaders: 1,
-                            localIdentName: '[name]_[local]_[hash:base64:5]',
-                            camelCase: true
+                            modules: {
+                                namedExport: false,
+                                localIdentName: '[name]_[local]_[hash:base64:5]',
+                                exportLocalsConvention: 'camelCaseOnly'
+                            },
+                            importLoaders: 1
                         }
                     },
                     {
-                    loader: 'postcss-loader',
+                        loader: 'postcss-loader',
                         options: {
                             postcssOptions: {
-                                plugins: [
-                                    require('postcss-import'),
-                                    require('postcss-simple-vars'),
-                                    require('postcss-nesting'),
-                                    require('autoprefixer'),
-                                    require('cssnano')({
-                                        preset: ['default', {
-                                            normalizeUrl: false
-                                        }]
-                                    })
-                                ]
+                            plugins: [
+                                require('postcss-import'),
+                                require('postcss-simple-vars'),
+                                require('postcss-nesting'),
+                                require('autoprefixer')
+                            ]
                             }
                         }
                     }
                 ]
             },
             {
+                // Static assets
                 test: /\.(svg|png|wav|mp3|gif|jpg|woff2?|hex)$/,
-                loader: 'url-loader',
-                options: {
-                    limit: 8192, // Convert images < 8kb to base64 strings
-                    outputPath: 'static/assets/',
-                    esModule: false
-                }
+                type: "asset",
+                parser: { dataUrlCondition: { maxSize: 8 * 1024 } },
+                generator: { filename: "static/assets/[name][hash][ext]" },
+            },
+            {
+                resourceQuery: /raw/,
+                type: 'asset/source',
+            },
+            {
+                resourceQuery: /bytes/,
+                type: 'asset/bytes',
             }
         ]
+    },
+    optimization: {
+        moduleIds: "deterministic",
+        chunkIds: "named",
+        runtimeChunk: "single",
+        splitChunks: {
+            chunks: "all",
+            minSize: 10000,
+            minChunks: 1,
+            maxInitialRequests: 3,
+            cacheGroups: {
+                defaultVendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10,
+                    reuseExistingChunk: true,
+                },
+                default: {
+                    minChunks: 2,
+                    priority: -20,
+                    reuseExistingChunk: true,
+                },
+            },
+        },
+        emitOnErrors: true,
     },
     plugins: [
         new webpack.BannerPlugin({
@@ -172,24 +215,28 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             `.trim()
         }),
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`,
-            'process.env.DEBUG': Boolean(process.env.DEBUG),
-            'process.env.DISABLE_SERVICE_WORKER': JSON.stringify(process.env.DISABLE_SERVICE_WORKER || ''),
-            'process.env.ROOT': JSON.stringify(root),
-            'process.env.ROUTING_STYLE': JSON.stringify(process.env.ROUTING_STYLE || 'filehash'),
-            'process.env.ampmod_version': JSON.stringify(monorepoPackageJson.version),
-            'process.env.ampmod_mode': JSON.stringify(process.env.BUILD_MODE),
-            'process.env.ampmod_lab_experiment_name': JSON.stringify(process.env.LAB_EXPERIMENT_NAME || 'default'),
-            'process.env.ampmod_lab_experiment_name_full': JSON.stringify(
-                process.env.LAB_EXPERIMENT_NAME_FULL || 'AmpMod Lab'
-            )
+            "process.env.DEBUG": Boolean(process.env.DEBUG),
+            "process.env.DISABLE_SERVICE_WORKER": JSON.stringify(
+                process.env.DISABLE_SERVICE_WORKER || ""
+            ),
+            "process.env.ROOT": JSON.stringify(root),
+            "process.env.ROUTING_STYLE": JSON.stringify(
+                process.env.ROUTING_STYLE || "filehash"
+            ),
+            "process.env.ampmod_version": JSON.stringify(
+                monorepoPackageJson.version
+            ),
+            "process.env.ampmod_mode": JSON.stringify(process.env.BUILD_MODE),
+            "process.env.ampmod_lab_experiment_name": JSON.stringify(
+                process.env.LAB_EXPERIMENT_NAME || "default"
+            ),
+            "process.env.ampmod_lab_experiment_name_full": JSON.stringify(
+                process.env.LAB_EXPERIMENT_NAME_FULL || "AmpMod Lab"
+            ),
         }),
         new CopyWebpackPlugin({
             patterns: [
-                {
-                    from: '../blocks/media',
-                    to: 'static/blocks-media/default'
-                },
+                { from: "../blocks/media", to: "static/blocks-media/default" },
                 {
                     from: '../blocks/media',
                     to: 'static/blocks-media/high-contrast'
@@ -199,47 +246,18 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                     to: 'static/blocks-media/high-contrast',
                     force: true
                 },
+                { from: "../blocks/media", to: "static/blocks-media/dark" },
                 {
-                    from: '../blocks/media',
-                    to: 'static/blocks-media/dark'
+                    from: "src/lib/themes/blocks/dark-media/blocks-media",
+                    to: "static/blocks-media/dark",
+                    force: true,
                 },
-                {
-                    from: 'src/lib/themes/blocks/dark-media/blocks-media',
-                    to: 'static/blocks-media/dark',
-                    force: true
-                }
-            ]
-        })
-        /* new CompressionPlugin({
-            filename:
-                process.env.NODE_ENV === "production"
-                    ? `js/${CACHE_EPOCH}/[name].js.br`
-                    : "js/[name].js.br",
-            algorithm: "brotliCompress",
-            test: /js\/amp\-.*\.js$/,
-            compressionOptions: {
-                params: {
-                    [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
-                },
-            },
-            threshold: 1000,
-            minRatio: 0.85,
-            deleteOriginalAssets: "keep-source-map",
+            ],
         }),
-        new CompressionPlugin({
-            filename: "microbit/[mame].hex.br",
-            algorithm: "brotliCompress",
-            test: /microbit\/.*\.hex$/,
-            compressionOptions: {
-                params: {
-                    [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
-                },
-            },
-            threshold: 1,
-            minRatio: 0,
-            deleteOriginalAssets: true,
-        }), */
-    ]
+        new webpack.ProvidePlugin({
+            Buffer: ["buffer", "Buffer"],
+        }),
+    ],
 };
 
 if (!process.env.CI) {
@@ -312,7 +330,6 @@ module.exports = [
                       colors: true
                   },
         plugins: base.plugins.concat([
-            new OptimizeCssAssetsPlugin(),
             new HtmlWebpackPlugin({
                 chunks: ['info', 'minorpages'],
                 title: `Privacy Policy - ${APP_NAME}`,
@@ -323,15 +340,16 @@ module.exports = [
                 ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
-                chunks: ['editor'],
-                template: 'src/playground/index.ejs',
-                // In lab, editor is the default page
-                filename: process.env.BUILD_MODE === 'lab' ? 'index.html' : 'editor.html',
+                chunks: ["editor"],
+                template: "src/playground/index.ejs",
+                filename:
+                    process.env.BUILD_MODE === "lab"
+                        ? "index.html"
+                        : "editor.html",
                 title: `${APP_NAME} - ${APP_SLOGAN}`,
                 isEditor: true,
                 ...htmlWebpackPluginCommon
             }),
-            // player: dupe of the above for compatibility
             new HtmlWebpackPlugin({
                 chunks: ['editor'],
                 template: 'src/playground/index.ejs',
@@ -430,45 +448,15 @@ module.exports = [
             new CopyWebpackPlugin({
                 patterns: [
                     {
-                        from: 'extensions/**',
-                        to: 'static',
-                        context: 'src/examples'
-                    }
-                ]
-            })
-        ])
-    })
+                        from: "extensions/**",
+                        to: "static",
+                        context: "src/examples",
+                    },
+                ],
+            }),
+        ]),
+    }),
 ].concat(
-    process.env.NODE_ENV === 'production' || process.env.BUILD_MODE === 'dist'
-        ? // export as library
-          // amp: We modify this heavily for aw3 to play well and to remove stuff only vanilla uses.
-          defaultsDeep({}, base, {
-              target: 'web',
-              entry: {
-                  'ampmod-for-aw3': ['./src/playground/editor.jsx'],
-                  'ampmod-addon-settings-for-aw3': ['./src/playground/addon-settings.jsx'],
-              },
-              output: {
-                  libraryTarget: 'umd',
-                  filename: '[name].js',
-                  chunkFilename: '[name].js',
-                  path: path.resolve('dist'),
-                  publicPath: `${STATIC_PATH}/`
-              },
-              module: {
-                  rules: base.module.rules.concat([
-                      {
-                          test: /\.(svg|png|wav|mp3|gif|jpg|woff2|hex)$/,
-                          loader: 'url-loader',
-                          options: {
-                              esModule: false
-                          }
-                      }
-                  ])
-              },
-          })
-        : []
-).concat(
     process.env.BUILD_MODE === 'standalone'
         ? defaultsDeep({}, base, {
               target: 'web',
@@ -501,12 +489,10 @@ module.exports = [
                       base.module.rules[1],
                       {
                           test: /\.(svg|png|wav|mp3|gif|jpg|woff2?)$/,
-                          loader: 'url-loader',
-                          options: {
-                              limit: Infinity, 
-                              esModule: false
-                          }
-                      }
+                          type: 'asset/inline',
+                      },
+                      base.module.rules[3],
+                      base.module.rules[4],
                   ]
               },
               plugins: base.plugins.concat([
@@ -522,8 +508,10 @@ module.exports = [
                       inject: 'body',
                       ...htmlWebpackPluginCommon
                   }),
-                  new HtmlInlineScriptWebpackPlugin([/./]),
-              ])
+                new HtmlInlineScriptPlugin({
+                    scriptMatchPattern: [/./],
+                }),
+            ])
           })
         : []
 );

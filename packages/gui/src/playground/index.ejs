@@ -156,12 +156,12 @@
         <div class="loading-dots">
           <a></a><a></a><a></a>
         </div>
-        <% if (process.env.ampmod_mode === "canary") { %>
+        <% if (htmlWebpackPlugin.options.ampmod_mode === "canary") { %>
           <div class="splash-canary-title"><span data-amp-translation="canaryBuild"></span></div>
         <% } %>
         <div class="splash-taking-too-long" hidden>
           <span data-amp-translation="tooLong1"></span>
-          <% if (process.env.ampmod_is_cbp) { %>
+          <% if (htmlWebpackPlugin.options.ampmod_is_cbp) { %>
             <br /><span data-amp-translation="tooLong2"></span>
           <% } %>
         </div>
@@ -214,7 +214,7 @@
         });
 
         const splash = document.querySelector('.spash-waiting-for-js');
-        const canary = <%= process.env.ampmod_mode === "canary" %>;
+        const canary = <%= htmlWebpackPlugin.options.ampmod_mode === "canary" %>;
         let accent = canary ? '#FF4C4C' : '#4fa55c';
         let theme = '';
 
@@ -258,7 +258,7 @@
             splashMain.hidden = true;
             splashErrorScreen.hidden = false;
             const infoEl = document.createElement('div');
-            infoEl.textContent = "INFO FOR REPORTING: Version <%= process.env.ampmod_version %> with <%= process.env.ampmod_mode || 'default' %> mode.";
+            infoEl.textContent = "INFO FOR REPORTING: Version <%= htmlWebpackPlugin.options.ampmod_version %> with <%= htmlWebpackPlugin.options.ampmod_mode || 'default' %> mode.";
             splashErrors.appendChild(infoEl);
           }
 
