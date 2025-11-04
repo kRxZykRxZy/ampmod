@@ -6,7 +6,7 @@ const monorepoPackageJson = require('../../package.json');
 // Plugins
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const {EsbuildPlugin} = require('esbuild-loader');
+const { SwcMinifyWebpackPlugin } = require('swc-minify-webpack-plugin');
 const HtmlInlineScriptPlugin = require('html-inline-script-webpack-plugin');
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
@@ -113,14 +113,33 @@ const base = {
     module: {
         rules: [
             {
-                // JS/TSX loader
                 test: /\.[jt]sx?$/,
-                loader: 'esbuild-loader',
-                include: [path.resolve(__dirname, 'src'), /node_modules[\\/]scratch-[^\\/]+[\\/]src/],
+                loader: 'swc-loader',
+                include: [
+                    path.resolve(__dirname, 'src'),
+                    /node_modules[\\/]scratch-[^\\/]+[\\/]src/
+                ],
                 options: {
-                    loader: 'tsx',
-                    jsx: 'automatic',
-                    target: 'es2022'
+                    jsc: {
+                        parser: {
+                            syntax: 'typescript',
+                            tsx: true,
+                            decorators: false,
+                            dynamicImport: true
+                        },
+                        target: 'es2022',
+                        transform: {
+                            react: {
+                                runtime: 'automatic',
+                                pragma: 'React.createElement',
+                                pragmaFrag: 'React.Fragment',
+                                throwIfNamespace: true,
+                                development: process.env.NODE_ENV !== 'production',
+                                useBuiltins: true
+                            }
+                        }
+                    },
+                    sourceMaps: process.env.NODE_ENV !== 'production'
                 }
             },
             {
@@ -195,25 +214,6 @@ const base = {
         emitOnErrors: true,
     },
     plugins: [
-        new webpack.BannerPlugin({
-            // eslint-disable-next-line max-len
-            banner: `${APP_NAME} uses multiple licenses.\nFor detailed information, see:\nhttps://codeberg.org/ampmod/ampmod/src/branch/develop/LICENSE.md\n\nSource code (open source!): ${APP_SOURCE}`
-        }),
-        new webpack.BannerPlugin({
-            banner: `
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License version 3 as
-published by the Free Software Foundation.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <https://www.gnu.org/licenses/>.
-            `.trim()
-        }),
         new webpack.DefinePlugin({
             "process.env.DEBUG": Boolean(process.env.DEBUG),
             "process.env.DISABLE_SERVICE_WORKER": JSON.stringify(
@@ -318,7 +318,7 @@ module.exports = [
                     }
                 }
             },
-            minimizer: [new EsbuildPlugin({target: 'es2022'})]
+            minimizer: [new SwcMinifyWebpackPlugin({compress: true, mangle: true, format: {comments: "some"}})]
         },
         stats:
             process.env.NODE_ENV === 'production'
@@ -480,7 +480,6 @@ module.exports = [
                   sideEffects: true,
                   concatenateModules: true,
                   minimize: true,
-                  minimizer: [new EsbuildPlugin({target: 'es2022', minify: true, css: true})]
               },
               module: {
                   rules: [

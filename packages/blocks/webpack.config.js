@@ -6,7 +6,7 @@ gracefulFs.gracefulify(realFs);
 
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const path = require("path");
-const { EsbuildPlugin } = require("esbuild-loader");
+const { SwcMinifyWebpackPlugin } = require('swc-minify-webpack-plugin');
 
 module.exports = [
     {
@@ -28,24 +28,7 @@ module.exports = [
         },
         performance: {
             hints: false,
-        },
-        plugins: [
-            new webpack.BannerPlugin({
-                banner: `
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License version 3 as
-published by the Free Software Foundation.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <https://www.gnu.org/licenses/>.
-        `.trim(),
-            }),
-        ],
+        }
     },
     {
         mode:
@@ -64,7 +47,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             filename: "[name].js",
         },
         optimization: {
-            minimizer: [new EsbuildPlugin({ target: "es2022" })],
+            minimizer: [new SwcMinifyWebpackPlugin({ compress: true, mangle: true })],
         },
         plugins: [],
     },
