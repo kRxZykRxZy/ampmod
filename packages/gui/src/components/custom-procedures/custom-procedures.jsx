@@ -47,7 +47,7 @@ const CustomProcedures = props => (
                         />
                     </div>
                 </div>
-                <div className={styles.optionCard} role="button" tabIndex="0" onClick={props.onAddNumber}>
+                {/* <div className={styles.optionCard} role="button" tabIndex="0" onClick={props.onAddNumber}>
                     <img className={styles.optionIcon} src={textInputIcon} draggable={false} />
                     <div className={styles.optionTitle}>
                         <FormattedMessage
@@ -63,7 +63,7 @@ const CustomProcedures = props => (
                             id="gui.customProcedures.numberType"
                         />
                     </div>
-                </div>
+                </div> */}
                 <div className={styles.optionCard} role="button" tabIndex="0" onClick={props.onAddBoolean}>
                     <img className={styles.optionIcon} src={booleanInputIcon} draggable={false} />
                     <div className={styles.optionTitle}>

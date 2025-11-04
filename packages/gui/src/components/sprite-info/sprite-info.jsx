@@ -192,7 +192,7 @@ class SpriteInfo extends React.Component {
                             disabled={this.props.disabled}
                         />
                     </div>
-                    <div className={styles.group} disabled={true}>
+                    {/* <div className={styles.group} disabled={true}>
                         <ComingSoonTooltip place="bottom" tooltipId="draggable-tooltip">
                             <ToggleButtons
                                 buttons={[
@@ -212,7 +212,7 @@ class SpriteInfo extends React.Component {
                                 disabled={this.props.disabled}
                             />
                         </ComingSoonTooltip>
-                    </div>
+                    </div> */}
                     <div className={styles.group}>
                         <Label secondary above={labelAbove} text={sizeLabel}>
                             <BufferedInput
