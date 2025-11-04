@@ -19,9 +19,9 @@ import './import-first.js';
 import React from 'react';
 
 import Interface from './render-interface.jsx';
-import AddonSettings from '../addons/settings/settings.jsx';
 import Clippy from '../containers/amp-clippy.jsx';
 import render from './app-target.js';
+import downloadBlob from '../lib/download-blob.js';
 
 const onExportSettings = settings => {
     const blob = new Blob([JSON.stringify(settings)]);
@@ -30,6 +30,7 @@ const onExportSettings = settings => {
 
 const urlParams = new URLSearchParams(location.search);
 if (urlParams.has('addon-settings')) {
+    const AddonSettings = require("../addons/settings/settings");
     render(
         <React.Fragment>
             <Clippy isFixed />

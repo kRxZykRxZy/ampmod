@@ -496,16 +496,18 @@ module.exports = [
                   minimizer: [new EsbuildPlugin({target: 'es2019', minify: true, css: true})]
               },
               module: {
-                  rules: base.module.rules.concat([
+                  rules: [
+                      base.module.rules[0],
+                      base.module.rules[1],
                       {
-                          test: /\.(svg|png|wav|mp3|gif|jpg|woff2|hex)$/,
+                          test: /\.(svg|png|wav|mp3|gif|jpg|woff2?)$/,
                           loader: 'url-loader',
                           options: {
-                              limit: true,
+                              limit: Infinity, 
                               esModule: false
                           }
                       }
-                  ])
+                  ]
               },
               plugins: base.plugins.concat([
                   new webpack.optimize.LimitChunkCountPlugin({
@@ -513,8 +515,10 @@ module.exports = [
                   }),
                   new HtmlWebpackPlugin({
                       chunks: ['standalone'],
-                      template: 'src/playground/embed.ejs',
+                      template: 'src/playground/index.ejs',
                       filename: `AmpMod-Standalone-${monorepoPackageJson.version}-EXPERIMENTAL.html`,
+                      title: `${APP_NAME} - ${APP_SLOGAN}`,
+                      isEditor: true,
                       inject: 'body',
                       ...htmlWebpackPluginCommon
                   }),
