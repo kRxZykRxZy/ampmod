@@ -34,14 +34,14 @@ goog.require("Blockly.BlockSvg.render");
 goog.require("Blockly.DropDownDiv");
 goog.require("Blockly.Events");
 goog.require("Blockly.FieldAngle");
-// goog.require("Blockly.FieldCheckbox");
+goog.require("Blockly.FieldCheckbox");
 goog.require("Blockly.FieldColour");
 goog.require("Blockly.FieldColourSlider");
 // Date picker commented out since it increases footprint by 60%.
 // Add it only if you need it.
 //goog.require('Blockly.FieldDate');
 goog.require("Blockly.FieldDropdown");
-// goog.require("Blockly.FieldIconMenu");
+goog.require("Blockly.FieldIconMenu");
 goog.require("Blockly.FieldImage");
 goog.require("Blockly.FieldNote");
 goog.require("Blockly.FieldTextInput");
@@ -52,7 +52,7 @@ goog.require("Blockly.FieldNumberDropdown");
 goog.require("Blockly.FieldMatrix");
 goog.require("Blockly.FieldVariable");
 goog.require("Blockly.FieldVerticalSeparator");
-// goog.require("Blockly.Generator");
+goog.require("Blockly.Generator");
 goog.require("Blockly.Msg");
 goog.require("Blockly.Procedures");
 goog.require("Blockly.ScratchMsgs");
