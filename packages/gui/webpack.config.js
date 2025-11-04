@@ -166,7 +166,9 @@ const base = {
                                 require('postcss-simple-vars'),
                                 require('postcss-nesting'),
                                 require('autoprefixer'),
-                                require('cssnano')({ preset: 'default' })
+                                ...(process.env.NODE_ENV === 'production'
+                                    ? [require('cssnano')({ preset: 'default' })]
+                                    : [])
                             ]
                             }
                         }
@@ -198,7 +200,9 @@ const base = {
                                     require('postcss-simple-vars'),
                                     require('postcss-nesting'),
                                     require('autoprefixer'),
-                                    require('cssnano')({ preset: 'default' })
+                                    ...(process.env.NODE_ENV === 'production'
+                                        ? [require('cssnano')({ preset: 'default' })]
+                                        : [])
                                 ]
                             }
                         }
