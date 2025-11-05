@@ -24,8 +24,6 @@
 }
 
 :global(html), :global(input) {
-    font-feature-settings: 'calt' 1;
-    font-feature-settings: 'case' 1;
     font-feature-settings: 'ss02' 1;
 }
 
