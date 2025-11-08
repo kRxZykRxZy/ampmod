@@ -1,7 +1,7 @@
 /* eslint-env node */
 /* eslint-disable import/no-commonjs, import/no-nodejs-modules */
 
-const defaultsDeep = require('lodash.defaultsdeep');
+const { merge } = require('webpack-merge');
 const path = require('path');
 const webpack = require('webpack');
 const monorepoPackageJson = require('../../package.json');
@@ -91,13 +91,14 @@ const base = {
         }
     },
     output: {
+        clean: !process.env.CI,
         library: "GUI",
         filename:
             process.env.NODE_ENV === "production"
-                ? `js/${CACHE_EPOCH}/[name].[contenthash].js`
+                ? `js/${CACHE_EPOCH}/[contenthash:6].js`
                 : "js/[name].js",
         chunkFilename:
-            process.env.NODE_ENV === 'production' ? `js/${CACHE_EPOCH}/[name].[contenthash].js` : 'js/[name].js',
+            process.env.NODE_ENV === 'production' ? `js/${CACHE_EPOCH}/[contenthash:6].js` : 'js/[name].js',
         publicPath: root
     },
     resolve: {
@@ -231,7 +232,7 @@ const base = {
     },
     optimization: {
         moduleIds: "deterministic",
-        chunkIds: "named",
+        chunkIds: "deterministic",
         runtimeChunk: "single",
         splitChunks: {
             chunks: "all",
@@ -306,7 +307,7 @@ if (!process.env.CI) {
 
 module.exports = [
     // to run editor examples
-    defaultsDeep({}, base, {
+    merge(base, {
         entry: {
             'website': [
                 './src/website/components/header/header.jsx',
@@ -322,9 +323,10 @@ module.exports = [
             'notfound': './src/website/not-found.js',
             'minorpages': './src/website/minor-pages/render.jsx',
             'faq': './src/website/faq/faq.jsx',
-            'examples': './src/website/examples/examples.jsx'
+            'examples-landing': './src/website/examples/examples.jsx'
         },
         output: {
+            hashFunction: 'sha256',
             path: path.resolve(__dirname, 'build')
         },
         optimization: {
@@ -342,18 +344,18 @@ module.exports = [
                         chunks: 'all',
                         priority: 20
                     },
-                    global: {
-                        test: /[\\/]src[\\/]/,
-                        name: 'shared',
-                        minChunks: 4,
-                        priority: 10,
+                    examples: {
+                        test: /[\\/]src[\\/]lib[\\/]examples[\\/]/,
+                        name: 'examples',
+                        priority: 50,
                         reuseExistingChunk: true
                     },
-                    defaultVendors: {
-                        test: /[\\/]node_modules[\\/]/,
-                        name: 'vendors',
-                        chunks: 'all',
-                        priority: 0,
+                    sharedEditor: {
+                        test: /[\\/]src[\\/]playground[\\/]/,
+                        name: 'ampmod-ide',
+                        chunks: chunk => ['editor','fullscreen','embed'].includes(chunk.name),
+                        minChunks: 2,
+                        priority: 35,
                         reuseExistingChunk: true
                     }
                 }
@@ -436,7 +438,7 @@ module.exports = [
                 ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
-                chunks: ['info', 'examples'],
+                chunks: ['info', 'examples-landing'],
                 template: 'src/playground/simple.ejs',
                 filename: 'examples.html',
                 title: `Examples - ${APP_NAME}`,
@@ -498,7 +500,7 @@ module.exports = [
     }),
 ].concat(
     process.env.BUILD_MODE === 'standalone'
-        ? defaultsDeep({}, base, {
+        ? merge(base, {
               target: 'web',
               mode: 'production',
               devtool: false,

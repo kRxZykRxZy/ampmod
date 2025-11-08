@@ -20,8 +20,6 @@ import {activateTab, BLOCKS_TAB_INDEX} from '../reducers/editor-tab';
 import log from './log';
 import storage from './storage';
 
-import examples from './examples';
-
 import VM from 'scratch-vm';
 import {fetchProjectMeta} from './tw-project-meta-fetcher-hoc.jsx';
 
@@ -73,6 +71,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 this.props.setProjectId(props.projectId.toString());
             }
         }
+
         componentDidUpdate(prevProps) {
             if (prevProps.projectHost !== this.props.projectHost) {
                 storage.setProjectHost(this.props.projectHost);
@@ -93,6 +92,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 this.props.onActivateTab(BLOCKS_TAB_INDEX);
             }
         }
+
         fetchProject(projectId, loadingState) {
             // tw: clear and stop the VM before fetching
             // these will also happen later after the project is fetched, but fetching may take a while and
@@ -100,19 +100,25 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             this.props.vm.clear();
             this.props.vm.quit();
 
+            // amp: Check if we're loading an example project
             let exampleId =
                 typeof URLSearchParams === 'undefined' ? null : new URLSearchParams(location.search).get('example');
 
-            if (exampleId && examples.hasOwnProperty(exampleId)) {
-                return examples[exampleId]()
-                    .then(module => {
+            if (exampleId) {
+                // We don't need to load the examples manifest unless there actually is an example to load
+                return import('./examples').then(examplesModule => {
+                    const examples = examplesModule.default;
+                    if (!examples.hasOwnProperty(exampleId)) {
+                        throw new Error(`Example ID ${exampleId} not found`);
+                    }
+                    return examples[exampleId]().then(module => {
                         const exampleData = module.default; // ArrayBuffer from loader
                         this.props.onFetchedProjectData(exampleData, loadingState);
-                    })
-                    .catch(err => {
-                        log.error(err);
-                        this.props.onError(err);
                     });
+                }).catch(err => {
+                    log.error(err);
+                    this.props.onError(err);
+                });
             }
 
             let assetPromise;
@@ -158,9 +164,9 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                     log.error(err);
                 });
         }
+
         render() {
             const {
-                 
                 assetHost,
                 intl,
                 isLoadingProject: isLoadingProjectProp,
@@ -173,13 +179,14 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 projectId,
                 reduxProjectId,
                 setProjectId: setProjectIdProp,
-                 
                 isFetchingWithId: isFetchingWithIdProp,
                 ...componentProps
             } = this.props;
+
             return <WrappedComponent fetchingProject={isFetchingWithIdProp} {...componentProps} />;
         }
     }
+
     ProjectFetcherComponent.propTypes = {
         assetHost: PropTypes.string,
         canSave: PropTypes.bool,
@@ -200,6 +207,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         setProjectId: PropTypes.func,
         vm: PropTypes.instanceOf(VM)
     };
+
     ProjectFetcherComponent.defaultProps = {
         assetHost: 'https://assets.scratch.mit.edu',
         projectHost: 'https://projects.scratch.mit.edu'
@@ -214,6 +222,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         reduxProjectId: state.scratchGui.projectState.projectId,
         vm: state.scratchGui.vm
     });
+
     const mapDispatchToProps = dispatch => ({
         onActivateTab: tab => dispatch(activateTab(tab)),
         onError: error => dispatch(projectError(error)),
@@ -221,8 +230,11 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         setProjectId: projectId => dispatch(setProjectId(projectId)),
         onProjectUnchanged: () => dispatch(setProjectUnchanged())
     });
+
     // Allow incoming props to override redux-provided props. Used to mock in tests.
-    const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign({}, stateProps, dispatchProps, ownProps);
+    const mergeProps = (stateProps, dispatchProps, ownProps) =>
+        Object.assign({}, stateProps, dispatchProps, ownProps);
+
     return injectIntl(connect(mapStateToProps, mapDispatchToProps, mergeProps)(ProjectFetcherComponent));
 };
 

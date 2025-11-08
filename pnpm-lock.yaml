@@ -48,6 +48,9 @@ importers:
       webpack-dev-server:
         specifier: ^5.2.2
         version: 5.2.2(webpack-cli@6.0.1)(webpack@5.102.1)
+      webpack-merge:
+        specifier: ^6.0.1
+        version: 6.0.1
 
   packages/blocks:
     devDependencies:
@@ -7603,6 +7606,7 @@ packages:
   libtap@1.4.1:
     resolution: {integrity: sha512-S9v19shLTigoMn3c02V7LZ4t09zxmVP3r3RbEAwuHFYeKgF+ESFJxoQ0PMFKW4XdgQhcjVBEwDoopG6WROq/gw==}
     engines: {node: '>=10'}
+    deprecated: This library is no longer used by node-tap, and is unmaintained.
 
   lie@3.1.1:
     resolution: {integrity: sha512-RiNhHysUjhrDQntfYSfY4MU24coXXdEOgw9WGcKHNeEwffDYbF//u87M1EWaMGzuFoSbqW0C9C6lEEhDOAswfw==}
