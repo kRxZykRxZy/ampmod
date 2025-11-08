@@ -6,9 +6,7 @@ import styles from './framerate-indicator.css';
 
 const FramerateIndicator = ({framerate, interpolation}) => (
     <React.Fragment>
-        {/* 0 is technically a valid framerate that means "at monitor refresh rate" */}
-        {/* we won't display anything for that yet because we don't know how to explain it */}
-        {framerate !== 30 && framerate !== 60 && framerate !== 0 && (
+        {framerate !== 30 && framerate !== 0 && (
             <div className={styles.framerateContainer}>
                 <div className={styles.framerateLabel}>
                     <FormattedMessage
@@ -21,6 +19,18 @@ const FramerateIndicator = ({framerate, interpolation}) => (
                     />
                 </div>
             </div>
+        )}
+        { // amp: special behaviour for framerate 0
+            framerate === 0 && (
+                <div className={styles.framerateContainer}>
+                    <div className={styles.framerateLabel}>
+                        <FormattedMessage
+                            defaultMessage="Uncapped FPS"
+                            description="Label to indicate that the framerate is not capped, i.e. running at screen refresh rate"
+                            id="amp.uncappedFPS"
+                        />
+                    </div>
+                </div>
         )}
         {interpolation && (
             <div className={styles.framerateContainer}>
