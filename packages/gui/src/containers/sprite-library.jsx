@@ -49,7 +49,11 @@ class SpriteLibrary extends React.PureComponent {
                 id="spriteLibrary"
                 tags={spriteTags}
                 title={this.props.intl.formatMessage(messages.libraryTitle)}
-                removedTrademarks
+                sidebarNotice={{             
+                    defaultMessage: "Some items that contained Scratch trademarks are no longer listed here.",
+                    description: "Appears at the bottom of the builtin 'Choose a Costume' and 'Choose a Sprite' libraries. We are obviously not scanning projects for trademarks, just removing Scratch Cat and some others from the builtin libraries as we do not have permission to use them right now.",
+                    id: "tw.removedTrademarks"
+                }}
                 onItemSelected={this.handleItemSelect}
                 onRequestClose={this.props.onRequestClose}
             />

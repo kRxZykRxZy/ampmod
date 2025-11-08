@@ -11,8 +11,7 @@ import Filter from '../filter/filter.jsx';
 import TagButton from '../../containers/tag-button.jsx';
 import Spinner from '../spinner/spinner.jsx';
 import Separator from '../tw-extension-separator/separator.jsx';
-import RemovedTrademarks from '../tw-removed-trademarks/removed-trademarks.jsx';
-import PenIsCategory from '../tw-removed-trademarks/pen-is-category.jsx';
+import SidebarNotice from '../amp-sidebar-notice/sidebar-notice.jsx';
 import {APP_NAME} from '@ampmod/branding';
 import Clippy from '../../containers/amp-clippy.jsx';
 import lsNamespace from '../../lib/amp-localstorage-namespace.js';
@@ -325,6 +324,12 @@ class LibraryComponent extends React.Component {
                                     })}
                                 </div>
                             )}
+                            {filteredData && this.props.sidebarNotice && (
+                                <React.Fragment>
+                                    {filteredData.length > 0 && <Separator />}
+                                    <SidebarNotice message={this.props.intl.formatMessage(this.props.sidebarNotice)} />
+                                </React.Fragment>
+                            )}
                         </div>
                     )}
                     <div
@@ -333,12 +338,6 @@ class LibraryComponent extends React.Component {
                         })}
                         ref={this.setFilteredDataRef}
                     >
-                        {filteredData && this.props.penIsCategory && (
-                            <React.Fragment>
-                                <PenIsCategory />
-                                {filteredData.length > 0 && <Separator />}
-                            </React.Fragment>
-                        )}{' '}
                         {filteredData &&
                             this.getFilteredData().map((dataItem, index) =>
                                 dataItem === '---' ? (
@@ -382,12 +381,6 @@ class LibraryComponent extends React.Component {
                                     />
                                 )
                             )}
-                        {filteredData && this.props.removedTrademarks && (
-                            <React.Fragment>
-                                {filteredData.length > 0 && <Separator />}
-                                <RemovedTrademarks />
-                            </React.Fragment>
-                        )}
                         {!filteredData && (
                             <div className={styles.spinnerWrapper}>
                                 <Spinner large level="primary" />
@@ -430,7 +423,7 @@ LibraryComponent.propTypes = {
     showPlayButton: PropTypes.bool,
     tags: PropTypes.arrayOf(PropTypes.shape(TagButton.propTypes)),
     title: PropTypes.string.isRequired,
-    removedTrademarks: PropTypes.bool
+    sidebarNotice: PropTypes.object
 };
 
 LibraryComponent.defaultProps = {
