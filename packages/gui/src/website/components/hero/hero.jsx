@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import styles from '../../design.sss';
+import styles from '../../design.css';
 import myStyles from './hero.css';
 import WelcomeBanner from '../../../components/amp-welcome/welcome-banner.svg';
 import * as Bowser from 'bowser';

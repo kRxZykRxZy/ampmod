@@ -308,7 +308,7 @@ module.exports = [
             'website': [
                 './src/website/components/header/header.jsx',
                 './src/website/components/footer/footer.jsx',
-                './src/website/design.sss'
+                './src/website/design.css'
             ],
             'editor': './src/playground/editor.jsx',
             'fullscreen': './src/playground/fullscreen.jsx',

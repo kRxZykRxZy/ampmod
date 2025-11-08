@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import styles from '../design.sss';
+import styles from '../design.css';
 import {APP_NAME} from '@ampmod/branding';
 import {lsNamespace} from '../../lib/amp-localstorage-namespace';
 

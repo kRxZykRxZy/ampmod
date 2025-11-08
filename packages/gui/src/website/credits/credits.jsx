@@ -2,7 +2,7 @@ import '../import-first';
 import React from 'react';
 import PropTypes from 'prop-types';
 import render from '../../playground/app-target.js';
-import styles from '../design.sss';
+import styles from '../design.css';
 import myStyles from './credits.css';
 
 import {APP_NAME, APP_FORUMS} from '@ampmod/branding';

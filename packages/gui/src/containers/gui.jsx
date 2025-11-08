@@ -59,15 +59,18 @@ class GUI extends React.Component {
                 this.props.onOpenWelcomeModal();
             }
         } else {
-            const currentVersion = process.env.ampmod_version.match(/\d+\.\d+/)[0];
-            const lastShownVersion = localStorage.getItem(`${lsNamespace}update-notice-shown`) || process.env.ampmod_version;
+            const currentVersion = process.env.ampmod_version.match(/^(\d+\.\d+)/)[1];
+            const lastShownRaw = localStorage.getItem(`${lsNamespace}update-notice-shown`);
+            const lastShownVersion = lastShownRaw?.match(/^(\d+\.\d+)/)?.[1];
 
-            if (currentVersion !== lastShownVersion || new URLSearchParams(location.search).has('patchNotes')) {
-                if (this.props.onOpenUpdateNoticeModal) {
-                    this.props.onOpenUpdateNoticeModal();
-                }
-                localStorage.setItem(`${lsNamespace}update-notice-shown`, currentVersion);
+            const isFirstLaunch = !lastShownVersion;
+            const isUpgrade = lastShownVersion && lastShownVersion !== currentVersion;
+
+            if (isUpgrade) {
+                this.props.onOpenUpdateNoticeModal();
             }
+
+            localStorage.setItem(`${lsNamespace}update-notice-shown`, process.env.ampmod_version);
         }
     }
     componentDidUpdate(prevProps) {

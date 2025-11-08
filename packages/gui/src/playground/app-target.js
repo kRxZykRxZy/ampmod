@@ -186,6 +186,7 @@ async function runAllMigrations() {
     // Part 3: Reload if any migrations occurred.
     if (migrationOccurred) {
         localStorage.setItem("amp:welcome-closed", "true");
+        localStorage.setItem("amp:update-notice-shown", "0.2.2");
         window.SetCustomSplashInfo('Done! Reloading...');
         window.location.reload();
     }
