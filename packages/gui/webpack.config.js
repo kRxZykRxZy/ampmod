@@ -95,10 +95,10 @@ const base = {
         library: "GUI",
         filename:
             process.env.NODE_ENV === "production"
-                ? `js/${CACHE_EPOCH}/[contenthash:6].js`
+                ? `js/${CACHE_EPOCH}/[contenthash].js`
                 : "js/[name].js",
         chunkFilename:
-            process.env.NODE_ENV === 'production' ? `js/${CACHE_EPOCH}/[contenthash:6].js` : 'js/[name].js',
+            process.env.NODE_ENV === 'production' ? `js/${CACHE_EPOCH}/[contenthash].js` : 'js/[name].js',
         publicPath: root
     },
     resolve: {
