@@ -1,3 +1,6 @@
+/* eslint-env node */
+/* eslint-disable import/no-commonjs, import/no-nodejs-modules */
+
 const defaultsDeep = require('lodash.defaultsdeep');
 const path = require('path');
 const webpack = require('webpack');
@@ -427,7 +430,7 @@ module.exports = [
                 filename: 'new-compiler.html',
                 title: `New compiler - ${APP_NAME}`,
                 // prettier-ignore
-                // eslint-disable-next-line max-len
+                 
                 description: `${APP_NAME} 0.3 includes a rewritten compiler to make projects run up to 2 times faster than in ${APP_NAME} 0.2.2.`,
                 page: 'newcompiler',
                 ...htmlWebpackPluginCommon
@@ -438,7 +441,7 @@ module.exports = [
                 filename: 'examples.html',
                 title: `Examples - ${APP_NAME}`,
                 // prettier-ignore
-                // eslint-disable-next-line max-len
+                 
                 description: `Example projects for ${APP_NAME}.`,
                 ...htmlWebpackPluginCommon
             }),
@@ -448,7 +451,7 @@ module.exports = [
                 filename: 'faq.html',
                 title: `FAQ - ${APP_NAME}`,
                 // prettier-ignore
-                // eslint-disable-next-line max-len
+                 
                 description: `Frequently asked questions about ${APP_NAME}.`,
                 ...htmlWebpackPluginCommon
             }),

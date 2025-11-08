@@ -16,7 +16,7 @@
 
 /* eslint-disable import/no-commonjs */
 /* eslint-disable import/no-nodejs-modules */
-/* eslint-disable no-console */
+ 
 /* global __dirname */
 
 const fs = require('fs');
@@ -140,12 +140,12 @@ const detectUnimplementedAPIs = (addonId, contents) => {
     }
 
     if (contents.includes('addon.self.dir')) {
-        // eslint-disable-next-line max-len
+         
         console.warn(`Warning: ${addonId} contains un-rewritten addon.self.dir. It or this script should be modified so that it will be rewritten.`);
     }
 
     if (contents.includes('addon.self.lib')) {
-        // eslint-disable-next-line max-len
+         
         console.warn(`Warning: ${addonId} contains un-rewritten addon.self.lib. It should use modern ES6 import statements.`);
     }
 };
@@ -408,7 +408,7 @@ const generateEntries = (items, callback) => {
     for (const i of items) {
         const {src, name, type} = callback(i);
         if (type === 'lazy-import') {
-            // eslint-disable-next-line max-len
+             
             exportSection += `  ${JSON.stringify(i)}: () => import(/* webpackChunkName: ${JSON.stringify(name)} */ ${JSON.stringify(src)}),\n`;
         } else if (type === 'lazy-require') {
             exportSection += `  ${JSON.stringify(i)}: () => require(${JSON.stringify(src)}),\n`;

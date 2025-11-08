@@ -28,7 +28,7 @@ const CloudVariableBadge = props => {
             <div className={styles.title}>
                 <img className={styles.cloudIcon} src={cloudIcon} alt="" width={32} height={32} draggable={false} />
                 <FormattedMessage
-                    // eslint-disable-next-line max-len
+                     
                     defaultMessage="This project uses cloud variables."
                     description="Cloud variable information shown under projects with cloud variables"
                     id="tw.usesCloudVariables"
@@ -36,9 +36,9 @@ const CloudVariableBadge = props => {
             </div>
 
             <FormattedMessage
-                // eslint-disable-next-line max-len
+                 
                 defaultMessage="{APP_NAME}'s cloud variables are not connected to Scratch's. Anyone can {changeTheirUsername} to anything, so beware of impersonation."
-                // eslint-disable-next-line max-len
+                 
                 description="Cloud variable information shown under projects with cloud variables. {changeTheirUsername} will be replaced with a link with text 'change their username' (translated)"
                 id="tw.usesCloudVariables2"
                 values={{
@@ -47,7 +47,7 @@ const CloudVariableBadge = props => {
                         <a onClick={props.onOpenChangeUsername}>
                             <FormattedMessage
                                 defaultMessage="change their username"
-                                // eslint-disable-next-line max-len
+                                 
                                 description="Link that opens modal to change one's username. Used in the context 'Anyone can change their username'"
                                 id="tw.usesCloudVariables2.change"
                             />
@@ -76,7 +76,7 @@ const CloudVariableBadge = props => {
             ) : (
                 <FormattedMessage
                     defaultMessage="Using a custom cloud variable server: {server}"
-                    // eslint-disable-next-line max-len
+                     
                     description="Appears when using a non-TurboWarp provided cloud variable server. {server} is replaced with the server's URL, eg. wss://clouddata.turbowarp.org"
                     id="tw.customCloudServer"
                     values={{

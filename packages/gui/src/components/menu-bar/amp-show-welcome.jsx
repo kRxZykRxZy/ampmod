@@ -13,7 +13,7 @@ const ShowWelcomeMessageButton = () => {
             <MenuItem>
                 <div
                     className={styles.option}
-                    // eslint-disable-next-line react/jsx-no-bind
+                     
                     onClick={openWelcomeModal}
                 >
                     <span className={styles.submenuLabel}>

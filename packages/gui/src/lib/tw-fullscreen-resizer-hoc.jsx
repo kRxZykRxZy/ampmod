@@ -24,10 +24,10 @@ const TWFullScreenResizerHOC = function (WrappedComponent) {
         }
         render() {
             const {
-                /* eslint-disable no-unused-vars */
+                 
                 onSetDimensions,
                 isFullScreen,
-                /* eslint-enable no-unused-vars */
+                 
                 ...props
             } = this.props;
             return <WrappedComponent {...props} />;

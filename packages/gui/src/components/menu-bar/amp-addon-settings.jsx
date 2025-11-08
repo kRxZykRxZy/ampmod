@@ -36,7 +36,7 @@ const GuiThemeMenu = ({onChangeTheme, theme}) => (
     <MenuItem>
         <div
             className={styles.option}
-            // eslint-disable-next-line react/jsx-no-bind
+             
             onClick={handleClickAddonSettings}
         >
             <img src={addonsIcon} draggable={false} width={24} height={24} className={styles.icon} />

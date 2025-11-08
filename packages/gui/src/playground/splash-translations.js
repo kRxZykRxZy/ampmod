@@ -17,4 +17,6 @@ context.keys().forEach(file => {
     );
 });
 
-export default translations;
+// Hack to make eslint happy
+const const_translations = translations;
+export default const_translations;

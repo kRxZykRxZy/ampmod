@@ -55,7 +55,7 @@ class LibraryItem extends React.PureComponent {
         if (this.props.deprecated) {
             if (
                 !window.confirm(
-                    // eslint-disable-next-line max-len
+                     
                     `${this.props.intl.formatMessage(messages.deprecated1)}\n\n${this.props.deprecated}\n\n${this.props.intl.formatMessage(messages.deprecated2)}`
                 )
             ) {

@@ -32,7 +32,7 @@ class MonitorList extends React.Component {
         }
     }
     handleMonitorChange(id, x, y) {
-        // eslint-disable-line no-unused-vars
+         
         this.props.moveMonitorRect(id, x, y);
     }
     render() {
@@ -47,8 +47,8 @@ MonitorList.propTypes = {
         height: PropTypes.number
     }),
     monitorLayout: PropTypes.shape({
-        monitors: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-        savedMonitorPositions: PropTypes.object // eslint-disable-line react/forbid-prop-types
+        monitors: PropTypes.object,  
+        savedMonitorPositions: PropTypes.object  
     }).isRequired,
     moveMonitorRect: PropTypes.func.isRequired,
     resetMonitorLayout: PropTypes.func

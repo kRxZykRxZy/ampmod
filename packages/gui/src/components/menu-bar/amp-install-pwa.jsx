@@ -25,7 +25,7 @@ const InstallPWAButton = () => {
             <MenuItem>
                 <div
                     className={styles.option}
-                    // eslint-disable-next-line react/jsx-no-bind
+                     
                     onClick={handleClickPwaInstall}
                 >
                     <span className={styles.submenuLabel}>

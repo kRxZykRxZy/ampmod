@@ -7,7 +7,7 @@ import SecurityManagerModal from '../components/tw-security-manager-modal/securi
 import SecurityModals from '../lib/tw-security-manager-constants';
 import {getPersistedUnsandboxed, setPersistedUnsandboxed} from '../lib/tw-persisted-unsandboxed.js';
 
-/* eslint-disable require-atomic-updates */
+ 
 
 /**
  * Set of extension URLs that the user has manually trusted to load unsandboxed.
@@ -152,7 +152,6 @@ class TWSecurityManagerComponent extends React.Component {
         }
     }
 
-    // eslint-disable-next-line valid-jsdoc
     /**
      * @returns {Promise<() => Promise<boolean>>} Resolves with a function that you can call to show the modal.
      * The resolved function returns a promise that resolves with true if the request was approved.

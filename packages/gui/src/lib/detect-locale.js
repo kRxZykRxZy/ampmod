@@ -4,7 +4,7 @@
  */
 
 import queryString from 'query-string';
-import {lsNamespace} from './amp-localstorage-namespace';
+import lsNamespace from './amp-localstorage-namespace';
 
 // tw: read language from localStorage
 export const LANGUAGE_KEY = `${lsNamespace}language`;

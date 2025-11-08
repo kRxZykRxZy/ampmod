@@ -33,7 +33,7 @@ import GUIComponent from '../components/gui/gui.jsx';
 import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
 import TWFullScreenResizerHOC from '../lib/tw-fullscreen-resizer-hoc.jsx';
 import TWThemeManagerHOC from './tw-theme-manager-hoc.jsx';
-import {lsNamespace} from '../lib/amp-localstorage-namespace';
+import lsNamespace from '../lib/amp-localstorage-namespace';
 
 const {RequestMetadata, setMetadata, unsetMetadata} = storage.scratchFetch;
 
@@ -94,7 +94,7 @@ class GUI extends React.Component {
             throw this.props.error;
         }
         const {
-            /* eslint-disable no-unused-vars */
+             
             assetHost,
             cloudHost,
             error,
@@ -107,7 +107,7 @@ class GUI extends React.Component {
             onVmInit,
             projectHost,
             projectId,
-            /* eslint-enable no-unused-vars */
+             
             children,
             fetchingProject,
             isLoading,

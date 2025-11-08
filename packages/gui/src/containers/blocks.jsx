@@ -50,28 +50,28 @@ import {blockMsg} from '../lib/amp-weblate/blocks';
 const messages = defineMessages({
     PROCEDURES_RETURN: {
         defaultMessage: 'return {v}',
-        // eslint-disable-next-line max-len
+         
         description:
             'The name of the "return" block from the Custom Reporters extension. {v} is replaced with a slot to insert a value.',
         id: 'tw.blocks.PROCEDURES_RETURN'
     },
     PROCEDURES_TO_REPORTER: {
         defaultMessage: 'Change To Reporter',
-        // eslint-disable-next-line max-len
+         
         description:
             'Context menu item to change a command-shaped custom block into a reporter. Part of the Custom Reporters extension.',
         id: 'tw.blocks.PROCEDURES_TO_REPORTER'
     },
     PROCEDURES_TO_STATEMENT: {
         defaultMessage: 'Change To Statement',
-        // eslint-disable-next-line max-len
+         
         description:
             'Context menu item to change a reporter-shaped custom block into a statement/command. Part of the Custom Reporters extension.',
         id: 'tw.blocks.PROCEDURES_TO_STATEMENT'
     },
     PROCEDURES_DOCS: {
         defaultMessage: 'How to use return',
-        // eslint-disable-next-line max-len
+         
         description:
             'Button in extension list to learn how to use the "return" block from the Custom Reporters extension.',
         id: 'tw.blocks.PROCEDURES_DOCS'
@@ -687,7 +687,7 @@ class Blocks extends React.Component {
         this.requestToolboxUpdate();
     }
     render() {
-        /* eslint-disable no-unused-vars */
+         
         const {
             anyModalVisible,
             canUseCloud,
@@ -714,7 +714,7 @@ class Blocks extends React.Component {
             workspaceMetrics,
             ...props
         } = this.props;
-        /* eslint-enable no-unused-vars */
+         
         return (
             <React.Fragment>
                 <DroppableBlocks componentRef={this.setBlocks} onDrop={this.handleDrop} {...props} />

@@ -22,8 +22,8 @@ class LanguageSelector extends React.Component {
     }
     render() {
         const {
-            onChangeLanguage, // eslint-disable-line no-unused-vars
-            messagesByLocale, // eslint-disable-line no-unused-vars
+            onChangeLanguage,  
+            messagesByLocale,  
             children,
             ...props
         } = this.props;
@@ -39,7 +39,7 @@ LanguageSelector.propTypes = {
     children: PropTypes.node,
     currentLocale: PropTypes.string.isRequired,
     // Only checking key presence for messagesByLocale, no need to be more specific than object
-    messagesByLocale: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+    messagesByLocale: PropTypes.object,  
     onChangeLanguage: PropTypes.func.isRequired
 };
 

@@ -4,7 +4,7 @@ import styles from './drag-layer.css';
 
 /* eslint no-confusing-arrow: ["error", {"allowParens": true}] */
 const DragLayer = ({dragging, img, currentOffset}) =>
-    dragging ? (
+    (dragging ? (
         <div className={styles.dragLayer}>
             <div
                 className={styles.imageWrapper}
@@ -15,7 +15,7 @@ const DragLayer = ({dragging, img, currentOffset}) =>
                 <img className={styles.image} src={img} draggable={false} />
             </div>
         </div>
-    ) : null;
+    ) : null);
 
 DragLayer.propTypes = {
     currentOffset: PropTypes.shape({

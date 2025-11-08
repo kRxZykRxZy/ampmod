@@ -13,7 +13,7 @@ import styles from './settings-modal.css';
 import helpIcon from './help-icon.svg';
 import {APP_NAME} from '@ampmod/branding';
 
-/* eslint-disable react/no-multi-comp */
+ 
 
 const BufferedInput = BufferedInputHOC(Input);
 
@@ -49,7 +49,7 @@ class UnwrappedSetting extends React.Component {
     }
     componentDidUpdate(prevProps) {
         if (this.props.active && !prevProps.active) {
-            // eslint-disable-next-line react/no-did-update-set-state
+             
             this.setState({
                 helpVisible: true
             });
@@ -128,7 +128,7 @@ const HighQualityPen = props => (
         }
         help={
             <FormattedMessage
-                // eslint-disable-next-line max-len
+                 
                 defaultMessage="Allows pen projects to render at higher resolutions and disables some coordinate rounding in the editor. Not all projects benefit from this setting and it may impact performance."
                 description="High quality pen setting help"
                 id="tw.settingsModal.highQualityPenHelp"
@@ -159,7 +159,7 @@ const CustomFPS = props => (
         }
         help={
             <FormattedMessage
-                // eslint-disable-next-line max-len
+                 
                 defaultMessage="Runs scripts at a custom amount of times per second instead of 30. 60 is a common option. Use 0 to un-cap the FPS so it runs at the monitor's refresh rate."
                 description="FPS setting help"
                 id="amp.settingsModal.fpsHelp"
@@ -192,7 +192,7 @@ const Interpolation = props => (
         }
         help={
             <FormattedMessage
-                // eslint-disable-next-line max-len
+                 
                 defaultMessage="Makes projects appear smoother by interpolating sprite motion. For AmpMod projects, you should use Custom FPS instead."
                 description="Interpolation setting help"
                 id="tw.settingsModal.interpolationHelp"
@@ -235,7 +235,7 @@ const RemoveFencing = props => (
         }
         help={
             <FormattedMessage
-                // eslint-disable-next-line max-len
+                 
                 defaultMessage="Allows sprites to move offscreen, become as large or as small as they want, and makes touching blocks work offscreen."
                 description="Remove Fencing setting help"
                 id="tw.settingsModal.removeFencingHelp"
@@ -278,7 +278,7 @@ const WarpTimer = props => (
         }
         help={
             <FormattedMessage
-                // eslint-disable-next-line max-len
+                 
                 defaultMessage="Makes scripts check if they are stuck in a long or infinite loop and run at a low framerate instead of getting stuck until the loop finishes. This fixes most crashes but has a significant performance impact."
                 description="Warp Timer help"
                 id="tw.settingsModal.warpTimerHelp"
@@ -300,7 +300,7 @@ const CaseSensitivity = props => (
         }
         help={
             <FormattedMessage
-                // eslint-disable-next-line max-len
+                 
                 defaultMessage="Makes the () = () block case-sensitive. E.g. with this option, (Apple) = (APPLE) will equal false, but when it is disabled, it will equal true. This may break vanilla Scratch projects."
                 description="Case Sensitivity help"
                 id="amp.settingsModal.caseSensitivityHelp"
@@ -321,7 +321,7 @@ const DisableCompiler = props => (
         }
         help={
             <FormattedMessage
-                // eslint-disable-next-line max-len
+                 
                 defaultMessage="Disables the {APP_NAME} compiler. You may want to enable this while editing projects so that scripts update immediately. Otherwise, you should never enable this."
                 description="Disable Compiler help"
                 id="tw.settingsModal.disableCompilerHelp"

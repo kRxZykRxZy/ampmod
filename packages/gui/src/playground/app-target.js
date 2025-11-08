@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 import {setAppElement} from 'react-modal';
 import * as bowser from 'bowser';
 import {APP_NAME, APP_SOURCE} from '@ampmod/branding';
-import {lsNamespace} from "../lib/amp-localstorage-namespace";
+import lsNamespace from "../lib/amp-localstorage-namespace";
 import { runAllMigrations } from './amp-migrate-storage';
 
 const appTarget = document.getElementById('app');

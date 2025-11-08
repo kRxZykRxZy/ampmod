@@ -298,7 +298,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
 
         render() {
             const {
-                /* eslint-disable no-unused-vars */
+                 
                 autoSaveTimeoutId,
                 autoSaveIntervalSecs,
                 isCreatingCopy,
@@ -334,7 +334,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
                 reduxProjectId,
                 reduxProjectTitle,
                 setAutoSaveTimeoutId: setAutoSaveTimeoutIdProp,
-                /* eslint-enable no-unused-vars */
+                 
                 ...componentProps
             } = this.props;
             return <WrappedComponent isCreating={isAnyCreatingNewState} {...componentProps} />;

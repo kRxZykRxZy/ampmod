@@ -142,7 +142,7 @@ const cloudManagerHOC = function (WrappedComponent) {
         }
         render() {
             const {
-                /* eslint-disable no-unused-vars */
+                 
                 canModifyCloudData,
                 cloudHost,
                 reduxCloudHost,
@@ -154,7 +154,7 @@ const cloudManagerHOC = function (WrappedComponent) {
                 isShowingWithId,
                 onShowCloudInfo,
                 onInvalidUsername,
-                /* eslint-enable no-unused-vars */
+                 
                 vm,
                 ...componentProps
             } = this.props;

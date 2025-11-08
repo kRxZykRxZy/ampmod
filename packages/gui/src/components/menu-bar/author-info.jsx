@@ -11,7 +11,7 @@ const ActualAuthorInfo = ({
     imageUrl,
     projectTitle,
     // TODO: use userId to link to user's profile
-    userId, // eslint-disable-line no-unused-vars
+    userId,  
     username
 }) => (
     <div className={classNames(className, styles.authorInfo)}>

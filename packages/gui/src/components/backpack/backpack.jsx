@@ -89,7 +89,7 @@ const Backpack = ({
                 onMouseLeave={onMouseLeave}
                 style={{height: 'auto'}} // Add this line
             >
-                {/* eslint-disable-next-line no-negated-condition */}
+                { }
                 {error !== false ? (
                     <div className={styles.statusMessage}>
                         <FormattedMessage

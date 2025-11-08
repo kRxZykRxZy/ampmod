@@ -218,7 +218,7 @@ class ExtensionLibrary extends React.PureComponent {
                     })
                     .catch(err => {
                         log.error(err);
-                        // eslint-disable-next-line no-alert
+                         
                         alert(err);
                     });
             }
@@ -290,7 +290,7 @@ ExtensionLibrary.propTypes = {
     onOpenCustomExtensionModal: PropTypes.func,
     onRequestClose: PropTypes.func,
     visible: PropTypes.bool,
-    vm: PropTypes.instanceOf(VM).isRequired // eslint-disable-line react/no-unused-prop-types
+    vm: PropTypes.instanceOf(VM).isRequired  
 };
 
 export default injectIntl(ExtensionLibrary);

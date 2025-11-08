@@ -33,7 +33,7 @@ const InvalidProjectModal = props => (
             <p>
                 <FormattedMessage
                     defaultMessage="Could not load project:"
-                    // eslint-disable-next-line max-len
+                     
                     description="Part of modal that appears when a project could not be loaded. Followed by error message."
                     id="tw.invalidProject.error"
                 />
@@ -50,9 +50,9 @@ const InvalidProjectModal = props => (
             {formatError(props.error).includes('validationError') && (
                 <p>
                     <FormattedMessage
-                        // eslint-disable-next-line max-len
+                         
                         defaultMessage="This error often means that a small part of the project has been corrupted, but that it is otherwise valid. This can be easy to fix, so please {reportIt}."
-                        // eslint-disable-next-line max-len
+                         
                         description="Part of modal that appears when a project could not be loaded. {reportIt} becomes a link 'report it'."
                         id="tw.invalidProject.validationError"
                         values={{
@@ -60,7 +60,7 @@ const InvalidProjectModal = props => (
                                 <a href="https://github.com/TurboWarp/sb3fix/issues" target="_blank" rel="noreferrer">
                                     <FormattedMessage
                                         defaultMessage="report it"
-                                        // eslint-disable-next-line max-len
+                                         
                                         description="Part of modal that appears when a project could not be loaded. Used in context 'Please report this as this is ...'"
                                         id="tw.invalidProject.reportIt"
                                     />
@@ -73,7 +73,7 @@ const InvalidProjectModal = props => (
 
             <p>
                 <FormattedMessage
-                    // eslint-disable-next-line max-len
+                     
                     defaultMessage="You may be able to recover an older version of the project from automatic restore points or other backups."
                     description="Part of modal that appears when a project could not be loaded."
                     id="tw.invalidProject.options"
@@ -83,7 +83,7 @@ const InvalidProjectModal = props => (
             <button className={styles.button} onClick={props.onClickRestorePoints}>
                 <FormattedMessage
                     defaultMessage="View Restore Points"
-                    // eslint-disable-next-line max-len
+                     
                     description="Part of modal that appears when a project could not be loaded. This is a button that opens the restore point menu."
                     id="tw.invalidProject.restorePoints"
                 />

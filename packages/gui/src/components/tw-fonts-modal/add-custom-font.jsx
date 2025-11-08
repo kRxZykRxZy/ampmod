@@ -101,7 +101,7 @@ class AddCustomFont extends React.Component {
             this.props.onClose();
         };
         fr.onerror = () => {
-            // eslint-disable-next-line no-alert
+             
             alert(this.props.intl.formatMessage(messages.error), {
                 error: fr.error
             });
@@ -171,7 +171,7 @@ AddCustomFont.propTypes = {
     fontManager: PropTypes.shape({
         addCustomFont: PropTypes.func,
         runtime: PropTypes.shape({
-            // eslint-disable-next-line react/forbid-prop-types
+             
             storage: PropTypes.any
         })
     }),

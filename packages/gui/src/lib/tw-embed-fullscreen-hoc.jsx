@@ -40,11 +40,11 @@ const TWFullScreenHOC = function (WrappedComponent) {
         }
         render() {
             const {
-                /* eslint-disable no-unused-vars */
+                 
                 isFullScreen,
                 onSetIsFullScreen,
                 onSetWindowIsFullScreen,
-                /* eslint-enable no-unused-vars */
+                 
                 ...props
             } = this.props;
             return <WrappedComponent {...props} />;

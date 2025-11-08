@@ -101,7 +101,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                         if (err && err.name === 'AbortError') {
                             return;
                         }
-                        // eslint-disable-next-line no-console
+                         
                         console.error(err);
                     }
                 })();
@@ -133,7 +133,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                 let uploadAllowed = true;
                 if (userOwnsProject || (projectChanged && isShowingWithoutId)) {
                     uploadAllowed = confirm(
-                        // eslint-disable-line no-alert
+                         
                         intl.formatMessage(sharedMessages.replaceProjectWarning)
                     );
                 }
@@ -226,7 +226,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
         }
         render() {
             const {
-                /* eslint-disable no-unused-vars */
+                 
                 cancelFileUpload,
                 closeFileMenu: closeFileMenuProp,
                 isLoadingUpload,
@@ -240,7 +240,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                 projectChanged,
                 requestProjectUpload: requestProjectUploadProp,
                 userOwnsProject,
-                /* eslint-enable no-unused-vars */
+                 
                 ...componentProps
             } = this.props;
             return (

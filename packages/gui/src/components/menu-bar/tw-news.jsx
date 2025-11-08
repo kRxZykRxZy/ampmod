@@ -51,7 +51,7 @@ class TWNews extends React.Component {
         return (
             <div className={styles.news}>
                 <div className={styles.text}>
-                    {/* eslint-disable-next-line max-len */}
+                    { }
                     {`The ${APP_NAME} privacy policy has been updated. You can also disable analytics. `}
                     <a href="privacy.html" target="_blank" rel="noreferrer">
                         {'View it here.'}

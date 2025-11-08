@@ -74,7 +74,7 @@ class LanguageMenu extends React.PureComponent {
                         <MenuItem
                             key={locale}
                             className={styles.languageMenuItem}
-                            // eslint-disable-next-line react/jsx-no-bind
+                             
                             onClick={() => this.props.onChangeLanguage(locale)}
                         >
                             <img

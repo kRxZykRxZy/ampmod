@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+ 
 import { APP_NAME } from "@ampmod/branding";
 import styles from "./update-notice.css";
 import { defineMessages } from "react-intl";

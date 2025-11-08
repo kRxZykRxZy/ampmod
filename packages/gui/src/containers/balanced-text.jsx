@@ -55,7 +55,7 @@ class BalancedText extends React.Component {
     render() {
         let {
             children,
-            resize, // eslint-disable-line no-unused-vars
+            resize,  
             style,
             ...otherProps
         } = this.props;
@@ -81,7 +81,7 @@ class BalancedText extends React.Component {
 BalancedText.propTypes = {
     children: PropTypes.node,
     resize: PropTypes.bool,
-    style: PropTypes.object // eslint-disable-line react/forbid-prop-types
+    style: PropTypes.object  
 };
 
 BalancedText.defaultProps = {

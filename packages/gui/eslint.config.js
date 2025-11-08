@@ -11,6 +11,8 @@ export default [
             'standalone/**',
             'test/**',
             'src/examples/**',
+            // Censored for Scratch policies
+            `src/addons/Scr*ns/**`,
             'src/addons/addons/**',
             'src/addons/libraries/**',
             'src/addons/api-libraries/**',
@@ -27,7 +29,7 @@ export default [
         },
         languageOptions: {
             parserOptions: {
-                ecmaVersion: 2020,
+                ecmaVersion: 2022,
                 sourceType: 'module',
                 ecmaFeatures: {
                     jsx: true

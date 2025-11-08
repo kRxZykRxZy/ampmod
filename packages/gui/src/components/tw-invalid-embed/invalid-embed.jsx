@@ -16,7 +16,7 @@ const InvalidEmbed = () => (
             <a href="https://docs.turbowarp.org/embedding" target="_blank" rel="noreferrer">
                 {'docs.turbowarp.org/embedding'}
             </a>
-            {/* eslint-disable-next-line max-len */}
+            { }
             {' for more information. You need to replace the iframe src with the embed page:'}
         </p>
         <p className={styles.code}>{'https://turbowarp.org/<project ID>/embed'}</p>

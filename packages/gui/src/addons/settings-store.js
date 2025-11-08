@@ -17,7 +17,7 @@
 import addons from './generated/addon-manifests';
 import upstreamMeta from './generated/upstream-meta.json';
 import EventTargetShim from './event-target';
-import { lsNamespace } from '../lib/amp-localstorage-namespace';
+import lsNamespace from '../lib/amp-localstorage-namespace';
 
 const SETTINGS_KEY = `${lsNamespace}addons`;
 const VERSION = 5;

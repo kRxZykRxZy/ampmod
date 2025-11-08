@@ -10,12 +10,12 @@ import {persistTheme} from '../../lib/themes/themePersistance.js';
 import errorIcon from './tw-error.svg';
 import styles from './settings-menu.css';
 
-import {lsNamespace} from '../../lib/amp-localstorage-namespace.js';
+import lsNamespace from '../../lib/amp-localstorage-namespace.js';
 
 const eraseData = async () => {
     if (
         confirm(
-            // eslint-disable-next-line max-len
+             
             'This will irreversably reset all your local data, including the Restore Points and backpack. Are you sure you want to continue?\n\nIf a project is currently open, save it before continuing. Erasing data will reload the page.'
         )
     ) {
@@ -35,7 +35,7 @@ const EraseButton = () => (
     <MenuItem>
         <div
             className={styles.option}
-            // eslint-disable-next-line react/jsx-no-bind
+             
             onClick={eraseData}
         >
             <img src={errorIcon} draggable={false} width={24} height={24} className={styles.icon} />

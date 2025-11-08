@@ -13,7 +13,7 @@ const translate = (id, english) => {
     return english;
 };
 
-/* eslint-disable no-unused-vars */
+ 
 const motion = function (isInitialSetup, isStage, targetId, colors) {
     const stageSelected = translate('MOTION_STAGE_SELECTED', 'Stage selected: no motion blocks');
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
@@ -981,7 +981,7 @@ const futureToolbox = function (isInitialSetup, isStage, targetId) {
     `;
 };
 
-/* eslint-enable no-unused-vars */
+ 
 
 const xmlOpen = '<xml style="display: none">';
 const xmlClose = '</xml>';

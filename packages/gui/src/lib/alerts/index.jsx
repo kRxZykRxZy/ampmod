@@ -292,7 +292,7 @@ const alerts = [
         content: (
             <FormattedMessage
                 defaultMessage='Access restore points in "File"'
-                // eslint-disable-next-line max-len
+                 
                 description="Menu bar message indicating that a restore point was successfully created. File refers to the file dropdown menu."
                 id="tw.alerts.restorePointSuccess"
             />
@@ -308,7 +308,7 @@ const alerts = [
         content: (
             <FormattedMessage
                 defaultMessage="Could not create restore point"
-                // eslint-disable-next-line max-len
+                 
                 description="Menu bar message indicating that a restore point could not be created."
                 id="tw.alerts.restorePointError"
             />
@@ -323,7 +323,7 @@ const alerts = [
         clearList: ['cloudInfo'],
         content: (
             <FormattedMessage
-                defaultMessage="Please note, cloud variables only support numbers, not letters or symbols. {learnMoreLink}" // eslint-disable-line max-len
+                defaultMessage="Please note, cloud variables only support numbers, not letters or symbols. {learnMoreLink}"  
                 description="Info about cloud variable limitations"
                 id="gui.alerts.cloudInfo"
                 values={{

@@ -43,7 +43,7 @@ class RecordingStep extends React.Component {
     }
     handleRecordingError(error) {
         log.error(error);
-        alert(this.props.intl.formatMessage(messages.alertMsg)); // eslint-disable-line no-alert
+        alert(this.props.intl.formatMessage(messages.alertMsg));  
     }
     handleLevelUpdate(level) {
         this.setState({
@@ -61,8 +61,8 @@ class RecordingStep extends React.Component {
     }
     render() {
         const {
-            onRecord, // eslint-disable-line no-unused-vars
-            onStopRecording, // eslint-disable-line no-unused-vars
+            onRecord,  
+            onStopRecording,  
             ...componentProps
         } = this.props;
         return (

@@ -88,7 +88,7 @@ const vmManagerHOC = function (WrappedComponent) {
         }
         render() {
             const {
-                /* eslint-disable no-unused-vars */
+                 
                 fontsLoaded,
                 loadingState,
                 locale,
@@ -98,7 +98,7 @@ const vmManagerHOC = function (WrappedComponent) {
                 onLoadedProject: onLoadedProjectProp,
                 onSetProjectUnchanged,
                 projectData,
-                /* eslint-enable no-unused-vars */
+                 
                 isLoadingWithId: isLoadingWithIdProp,
                 vm,
                 ...componentProps

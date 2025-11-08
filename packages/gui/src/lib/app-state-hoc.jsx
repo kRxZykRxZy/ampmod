@@ -97,9 +97,9 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
         }
         render() {
             const {
-                isFullScreen, // eslint-disable-line no-unused-vars
-                isPlayerOnly, // eslint-disable-line no-unused-vars
-                showTelemetryModal, // eslint-disable-line no-unused-vars
+                isFullScreen,  
+                isPlayerOnly,  
+                showTelemetryModal,  
                 ...componentProps
             } = this.props;
             return (

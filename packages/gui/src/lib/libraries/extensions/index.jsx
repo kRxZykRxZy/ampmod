@@ -434,7 +434,7 @@ export const galleryLoading = {
     iconURL: galleryIcon,
     description: (
         <FormattedMessage
-            // eslint-disable-next-line max-len
+             
             defaultMessage="Loading extension gallery..."
             description="Appears while loading extension list from the custom extension gallery"
             id="tw.extensionGallery.loading"
@@ -460,7 +460,7 @@ export const galleryMore = {
     iconURL: galleryIcon,
     description: (
         <FormattedMessage
-            // eslint-disable-next-line max-len
+             
             defaultMessage="Learn more about extensions at ampmod.codeberg.page/extensions."
             description="Appears after the extension list from the gallery was loaded successfully"
             id="amp.extensionGallery.more"
@@ -486,7 +486,7 @@ export const galleryError = {
     iconURL: galleryIcon,
     description: (
         <FormattedMessage
-            // eslint-disable-next-line max-len
+             
             defaultMessage="Error loading extension gallery. Visit ampmod.codeberg.page/extensions to find more extensions."
             description="Appears when an error occurred loading extension list from the custom extension gallery"
             id="amp.extensionGallery.error"

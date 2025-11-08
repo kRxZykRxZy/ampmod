@@ -1,10 +1,10 @@
 import projectData from './project-data';
 
-/* eslint-disable import/no-unresolved */
+ 
 import overrideDefaultProject from './override-default-project.sb3?bytes';
 import backdrop from './cd21514d0531fdffb22204e0ec5ed84a.svg?raw';
 import costume1 from './applecat.svg?raw';
-/* eslint-enable import/no-unresolved */
+ 
 import {TextEncoder} from '../tw-text-encoder';
 
 const defaultProject = translator => {

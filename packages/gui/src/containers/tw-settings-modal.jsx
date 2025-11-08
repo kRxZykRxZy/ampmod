@@ -112,10 +112,10 @@ class UsernameModal extends React.Component {
 
     render() {
         const {
-            /* eslint-disable no-unused-vars */
+             
             onClose,
             vm,
-            /* eslint-enable no-unused-vars */
+             
             ...props
         } = this.props;
         return (

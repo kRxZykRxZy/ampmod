@@ -79,9 +79,9 @@ const PackagerIntegrationHOC = function (WrappedComponent) {
         }
         render() {
             const {
-                /* eslint-disable no-unused-vars */
+                 
                 canOpenPackager,
-                /* eslint-enable no-unused-vars */
+                 
                 ...props
             } = this.props;
             return <WrappedComponent onClickPackager={this.handleClickPackager} {...props} />;

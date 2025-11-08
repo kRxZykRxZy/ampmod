@@ -36,11 +36,11 @@ const HashParserHOC = function (WrappedComponent) {
         }
         render() {
             const {
-                /* eslint-disable no-unused-vars */
+                 
                 isFetchingWithoutId: isFetchingWithoutIdProp,
                 reduxProjectId,
                 setProjectId: setProjectIdProp,
-                /* eslint-enable no-unused-vars */
+                 
                 ...componentProps
             } = this.props;
             return <WrappedComponent {...componentProps} />;

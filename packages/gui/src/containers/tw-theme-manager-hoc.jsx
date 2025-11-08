@@ -37,10 +37,10 @@ const TWThemeManagerHOC = function (WrappedComponent) {
         }
         render() {
             const {
-                /* eslint-disable no-unused-vars */
+                 
                 reduxTheme,
                 onChangeTheme,
-                /* eslint-enable no-unused-vars */
+                 
                 ...props
             } = this.props;
             return <WrappedComponent {...props} />;

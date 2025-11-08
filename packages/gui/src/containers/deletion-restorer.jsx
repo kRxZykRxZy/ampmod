@@ -34,10 +34,10 @@ class DeletionRestorer extends React.Component {
     }
     render() {
         const {
-            /* eslint-disable no-unused-vars */
+             
             children,
             dispatchUpdateRestore,
-            /* eslint-enable no-unused-vars */
+             
             ...props
         } = this.props;
         const restorable = typeof this.props.restore === 'function';

@@ -29,7 +29,7 @@ class FontName extends React.Component {
 
         // Chrome-only API
         if (typeof queryLocalFonts === 'function') {
-            // eslint-disable-next-line no-undef
+             
             queryLocalFonts().then(fonts => {
                 const uniqueFamilies = [...new Set(fonts.map(i => i.family))];
                 this.setState({
@@ -106,12 +106,12 @@ class FontName extends React.Component {
 
     render() {
         const {
-            /* eslint-disable no-unused-vars */
+             
             name,
             onChange,
             fontManager,
             isCustom,
-            /* eslint-enable no-unused-vars */
+             
             ...props
         } = this.props;
 

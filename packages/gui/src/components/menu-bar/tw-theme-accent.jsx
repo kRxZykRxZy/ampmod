@@ -144,7 +144,7 @@ const AccentThemeMenu = ({isOpen, isRtl, onChangeTheme, onOpen, theme}) => {
                         key={item}
                         id={item}
                         isSelected={theme.accent === item}
-                        // eslint-disable-next-line react/jsx-no-bind
+                         
                         onClick={() => onChangeTheme(theme.set('accent', item))}
                     />
                 ))}

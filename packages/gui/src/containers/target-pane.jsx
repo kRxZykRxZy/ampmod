@@ -230,7 +230,7 @@ class TargetPane extends React.Component {
         }
     }
     render() {
-        /* eslint-disable no-unused-vars */
+         
         const {
             dispatchUpdateRestore,
             isRtl,
@@ -242,7 +242,7 @@ class TargetPane extends React.Component {
             workspaceMetrics,
             ...componentProps
         } = this.props;
-        /* eslint-enable no-unused-vars */
+         
         return (
             <TargetPaneComponent
                 {...componentProps}
@@ -271,8 +271,8 @@ class TargetPane extends React.Component {
 }
 
 const {
-    onSelectSprite, // eslint-disable-line no-unused-vars
-    onActivateBlocksTab, // eslint-disable-line no-unused-vars
+    onSelectSprite,  
+    onActivateBlocksTab,  
     ...targetPaneProps
 } = TargetPaneComponent.propTypes;
 

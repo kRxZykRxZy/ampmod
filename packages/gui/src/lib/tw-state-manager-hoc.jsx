@@ -12,12 +12,12 @@ import {setPlayer, setFullScreen} from '../reducers/mode';
 import {generateRandomUsername} from './tw-username';
 import {setSearchParams} from './tw-navigation-utils';
 import {defaultStageSize} from '../reducers/custom-stage-size';
-import {lsNamespace} from './amp-localstorage-namespace';
+import lsNamespace from './amp-localstorage-namespace';
 import { sizePresets } from '../components/tw-settings-modal/settings-modal';
 
 const isStandalone = process.env.NODE_ENV === "standalone";
 
-/* eslint-disable no-alert */
+ 
 
 const messages = defineMessages({
     invalidFPS: {
@@ -531,7 +531,7 @@ const TWStateManager = function (WrappedComponent) {
         }
         render() {
             const {
-                /* eslint-disable no-unused-vars */
+                 
                 intl,
                 customStageSize,
                 isFullScreen,
@@ -552,7 +552,7 @@ const TWStateManager = function (WrappedComponent) {
                 routingStyle,
                 username,
                 vm,
-                /* eslint-enable no-unused-vars */
+                 
                 ...props
             } = this.props;
             return <WrappedComponent {...props} />;

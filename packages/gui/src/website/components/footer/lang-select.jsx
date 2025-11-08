@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { lsNamespace } from '../../../lib/amp-localstorage-namespace';
+import lsNamespace from '../../../lib/amp-localstorage-namespace';
 import locales from '@turbowarp/scratch-l10n';
 import styles from './footer.css';
 

@@ -92,12 +92,12 @@ const TWProjectMetaFetcherHOC = function (WrappedComponent) {
         }
         render() {
             const {
-                /* eslint-disable no-unused-vars */
+                 
                 reduxProjectId,
                 onSetAuthor,
                 onSetDescription,
                 onSetProjectTitle,
-                /* eslint-enable no-unused-vars */
+                 
                 ...props
             } = this.props;
             return <WrappedComponent {...props} />;

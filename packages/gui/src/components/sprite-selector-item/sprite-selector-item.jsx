@@ -90,7 +90,7 @@ SpriteSelectorItem.propTypes = {
     componentRef: PropTypes.func,
     costumeURL: PropTypes.string,
     details: PropTypes.string,
-    // eslint-disable-next-line react/forbid-prop-types
+     
     name: PropTypes.any,
     number: PropTypes.number,
     onClick: PropTypes.func,

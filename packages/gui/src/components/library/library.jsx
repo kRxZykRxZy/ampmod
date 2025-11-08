@@ -15,7 +15,7 @@ import RemovedTrademarks from '../tw-removed-trademarks/removed-trademarks.jsx';
 import PenIsCategory from '../tw-removed-trademarks/pen-is-category.jsx';
 import {APP_NAME} from '@ampmod/branding';
 import Clippy from '../../containers/amp-clippy.jsx';
-import {lsNamespace} from '../../lib/amp-localstorage-namespace.js';
+import lsNamespace from '../../lib/amp-localstorage-namespace.js';
 
 import styles from './library.css';
 
@@ -404,7 +404,7 @@ LibraryComponent.propTypes = {
     data: PropTypes.oneOfType([
         PropTypes.arrayOf(
             PropTypes.oneOfType([
-                /* eslint-disable react/no-unused-prop-types, lines-around-comment */
+                 
                 // An item in the library
                 PropTypes.shape({
                     // @todo remove md5/rawURL prop from library, refactor to use storage
@@ -413,7 +413,7 @@ LibraryComponent.propTypes = {
                     rawURL: PropTypes.string
                 }),
                 PropTypes.string
-                /* eslint-enable react/no-unused-prop-types, lines-around-comment */
+                 
             ])
         ),
         PropTypes.instanceOf(Promise)

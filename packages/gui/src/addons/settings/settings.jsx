@@ -41,10 +41,10 @@ import 'modern-normalize';
 import logo from "../../components/menu-bar/addons.svg";
 import {lazyLoad} from "../../lib/amp-lazy-launch.jsx";
 
-/* eslint-disable no-alert */
-/* eslint-disable no-console */
-/* eslint-disable react/no-multi-comp */
-/* eslint-disable react/jsx-no-bind */
+ 
+ 
+ 
+ 
 
 const locale = detectLocale(Object.keys(messagesByLocale));
 document.documentElement.lang = locale;
@@ -435,7 +435,7 @@ Setting.propTypes = {
         ),
         if: PropTypes.shape({
             addonEnabled: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-            // eslint-disable-next-line react/forbid-prop-types
+             
             settings: PropTypes.object
         })
     }),
@@ -1024,7 +1024,7 @@ class AddonSettingsComponent extends React.Component {
                                 <span className={styles.version} onClick={this.handleClickVersion}>
                                     {this.state.extended
                                         ? // Don't bother translating, pretty much no one will ever see this.
-                                          // eslint-disable-next-line max-len
+                                           
                                           `You have enabled debug mode. (Addons version ${upstreamMeta.commit})`
                                         : `Addons version ${upstreamMeta.commit}`}
                                 </span>

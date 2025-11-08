@@ -8,7 +8,7 @@ import {detectTheme} from '../lib/themes/themePersistance';
 import Header from '../components/amp-header/header.jsx';
 import Footer from '../components/amp-footer/footer.jsx';
 
-/* eslint-disable react/jsx-no-literals */
+ 
 
 applyGuiColors(detectTheme());
 document.documentElement.lang = 'en';

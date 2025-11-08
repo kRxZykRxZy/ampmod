@@ -120,7 +120,7 @@ const BlocksThemeMenu = ({isOpen, isRtl, onChangeTheme, onOpenCustomSettings, on
                         key={i}
                         id={i}
                         isSelected={theme.blocks === i}
-                        // eslint-disable-next-line react/jsx-no-bind
+                         
                         onClick={
                             i === BLOCKS_CUSTOM ? onOpenCustomSettings : () => onChangeTheme(theme.set('blocks', i))
                         }
