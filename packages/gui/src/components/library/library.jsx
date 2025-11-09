@@ -324,9 +324,9 @@ class LibraryComponent extends React.Component {
                                     })}
                                 </div>
                             )}
-                            {filteredData && this.props.sidebarNotice && (
+                            {this.props.sidebarNotice && (
                                 <React.Fragment>
-                                    {filteredData.length > 0 && <Separator />}
+                                    <Separator />
                                     <SidebarNotice message={this.props.intl.formatMessage(this.props.sidebarNotice)} />
                                 </React.Fragment>
                             )}
