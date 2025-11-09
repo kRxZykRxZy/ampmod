@@ -26,7 +26,10 @@ https://codeberg.org/ampmod/-/packages
 
 ## Setup
 
-In AmpMod, `pnpm` is used instead of `npm`.
+In AmpMod, `pnpm` is used instead of `npm`. If you use `npm` you will receive an error:
+```
+This project is configured to use pnpm because /path/to/ampmod/package.json has a "packageManager" field
+```
 
 Run `pnpm i` in the root directory to install all packages needed.
 
