@@ -268,6 +268,7 @@ const base = {
                 monorepoPackageJson.version
             ),
             "process.env.ampmod_mode": JSON.stringify(process.env.BUILD_MODE),
+            "process.env.ampmod_is_cbp": Boolean(process.env.IS_CBP_BUILD),
             "process.env.ampmod_lab_experiment_name": JSON.stringify(
                 process.env.LAB_EXPERIMENT_NAME || "default"
             ),
