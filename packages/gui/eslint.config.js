@@ -26,14 +26,17 @@ export default [
         plugins: {
             import: importPlugin,
             react: reactPlugin,
+            '@typescript-eslint': require('@typescript-eslint/eslint-plugin')
         },
         languageOptions: {
+            parser: require('@typescript-eslint/parser'),
             parserOptions: {
                 ecmaVersion: 2022,
                 sourceType: 'module',
                 ecmaFeatures: {
                     jsx: true
-                }
+                },
+                project: '../../tsconfig.json'
             },
             globals: {process: 'readonly'}
         },

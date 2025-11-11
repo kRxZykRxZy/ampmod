@@ -9,7 +9,7 @@ import {openSettingsModal} from '../reducers/modals';
 
 import {connect} from 'react-redux';
 
-import StageHeaderComponent from '../components/stage-header/stage-header.jsx';
+import StageHeaderComponent from '../components/stage-header/stage-header';
 
  
 class StageHeader extends React.Component {

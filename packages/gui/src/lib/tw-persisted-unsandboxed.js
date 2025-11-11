@@ -2,7 +2,7 @@
 // User still has to manually confirm loading the extension and has
 // every opportunity to uncheck the box.
 
-import lsNamespace from './amp-localstorage-namespace.js';
+import lsNamespace from './amp-localstorage-namespace';
 const PERSISTED_UNSANDBOXED_KEY = `${lsNamespace}persisted_unsandboxed`;
 
 /**

@@ -37,7 +37,7 @@ const defaultBuiltinExtensions = {
         return FutureCompat;
     },
 
-    electroTest: () => import(/* webpackChunkName: "electrotest" */ '../extensions/ampmod_electro_test')
+    electroTest: () => import(/* webpackChunkName: "electrotest" */ '../extensions/ampmod_electro_test/index.ts')
 };
 
 /**

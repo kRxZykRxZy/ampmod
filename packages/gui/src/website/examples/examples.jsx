@@ -11,7 +11,7 @@ import {detectTheme} from '../../lib/themes/themePersistance.js';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import Example from './example';
-import projects from './projects.js';
+import projects from './projects';
 import Localise, {localise, setHtmlLang} from '../components/localise/localise';
 
 applyGuiColors(detectTheme());

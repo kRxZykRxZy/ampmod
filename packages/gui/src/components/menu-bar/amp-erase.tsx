@@ -1,16 +1,9 @@
-import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
-import {connect} from 'react-redux';
-
 import {MenuItem} from '../menu/menu.jsx';
-import {GUI_DARK, GUI_LIGHT, Theme} from '../../lib/themes/index.js';
-import {closeSettingsMenu} from '../../reducers/menus.js';
-import {setTheme} from '../../reducers/theme.js';
-import {persistTheme} from '../../lib/themes/themePersistance.js';
 import errorIcon from './tw-error.svg';
 import styles from './settings-menu.css';
 
-import lsNamespace from '../../lib/amp-localstorage-namespace.js';
+import lsNamespace from '../../lib/amp-localstorage-namespace.ts';
 
 const eraseData = async () => {
     if (
@@ -34,8 +27,7 @@ const eraseData = async () => {
 const EraseButton = () => (
     <MenuItem>
         <div
-            className={styles.option}
-             
+            className={styles.option} 
             onClick={eraseData}
         >
             <img src={errorIcon} draggable={false} width={24} height={24} className={styles.icon} />

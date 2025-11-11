@@ -1,5 +1,5 @@
 import {BLOCKS_CUSTOM, GUI_CUSTOM, Theme} from '.';
-import lsNamespace from '../amp-localstorage-namespace.js';
+import lsNamespace from '../amp-localstorage-namespace';
 
 const matchMedia = query => (window.matchMedia ? window.matchMedia(query) : null);
 const PREFERS_HIGH_CONTRAST_QUERY = matchMedia('(prefers-contrast: more)');

@@ -11,7 +11,7 @@ export default () => {
         setAnalyticsOptOut(optedOut);
     }, []);
 
-    const handleCheckboxChange = e => {
+    const handleCheckboxChange = (e: { target: { checked: any; }; }) => {
         const checked = e.target.checked;
         setAnalyticsOptOut(checked);
         if (checked) {

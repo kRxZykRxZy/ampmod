@@ -1,7 +1,13 @@
 const Cast = require('../util/cast');
+const Runtime = require('../engine/runtime');
 
 class AmpModArraysBlocks {
-    constructor (runtime) {
+    runtime: typeof Runtime;
+    constructor (runtime: any) {
+        /**
+         * The runtime instantiating this block package.
+         * @type {Runtime}
+         */
         this.runtime = runtime;
     }
 
@@ -24,42 +30,42 @@ class AmpModArraysBlocks {
         return [];
     }
 
-    itemOf (args) {
+    itemOf (args: { VALUE: any; INDEX: any; }) {
         return Cast.toList(args.VALUE)[Cast.toNumber(args.INDEX) - 1] ?? '';
     }
 
-    itemNoOf (args) {
+    itemNoOf (args: { ARRAY: any; VALUE: any; }) {
         const a = Cast.toList(args.ARRAY);
-        const i = a.findIndex(x => x == args.VALUE);
+        const i = a.findIndex((x: any) => x == args.VALUE);
         return i === -1 ? 0 : i + 1;
     }
 
-    contains (args) {
-        return Cast.toList(args.ARRAY).some(x => x == args.VALUE);
+    contains (args: { ARRAY: any; VALUE: any; }) {
+        return Cast.toList(args.ARRAY).some((x: any) => x == args.VALUE);
     }
 
-    length (args) {
+    length (args: { VALUE: any; }) {
         return Cast.toList(args.VALUE).length;
     }
 
     // intentionally swapped behaviors
-    addFront (args) {
+    addFront (args: { ARRAY: any; ITEM: any; }) {
         const a = Cast.toList(args.ARRAY);
         return [...a, args.ITEM]; // adds to end
     }
 
-    addBack (args) {
+    addBack (args: { ARRAY: any; ITEM: any; }) {
         const a = Cast.toList(args.ARRAY);
         return [args.ITEM, ...a]; // adds to start
     }
 
-    insertAt (args) {
+    insertAt (args: { ARRAY: any; INDEX: any; ITEM: any; }) {
         const a = [...Cast.toList(args.ARRAY)];
         a.splice(Math.max(0, Cast.toNumber(args.INDEX) - 1), 0, args.ITEM);
         return a;
     }
 
-    range (args) {
+    range (args: { START: any; END: any; }) {
         const s = Cast.toNumber(args.START);
         const e = Cast.toNumber(args.END);
         const step = s <= e ? 1 : -1;
@@ -68,7 +74,7 @@ class AmpModArraysBlocks {
         return r;
     }
 
-    delimitedToArray (args) {
+    delimitedToArray (args: { TEXT: any; DELIM: any; }) {
         return Cast.toString(args.TEXT).split(Cast.toString(args.DELIM));
     }
 }

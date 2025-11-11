@@ -14,7 +14,7 @@ import Separator from '../tw-extension-separator/separator.jsx';
 import SidebarNotice from '../amp-sidebar-notice/sidebar-notice.jsx';
 import {APP_NAME} from '@ampmod/branding';
 import Clippy from '../../containers/amp-clippy.jsx';
-import lsNamespace from '../../lib/amp-localstorage-namespace.js';
+import lsNamespace from '../../lib/amp-localstorage-namespace';
 
 import styles from './library.css';
 

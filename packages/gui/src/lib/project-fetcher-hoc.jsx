@@ -101,6 +101,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             this.props.vm.quit();
 
             // amp: Check if we're loading an example project
+            // @ts-check
             let exampleId =
                 typeof URLSearchParams === 'undefined' ? null : new URLSearchParams(location.search).get('example');
 
@@ -120,6 +121,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                     this.props.onError(err);
                 });
             }
+            // @ts-nocheck
 
             let assetPromise;
             // In case running in node...

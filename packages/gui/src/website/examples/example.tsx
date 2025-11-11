@@ -1,20 +1,36 @@
 import '../../playground/import-first.js';
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import styles from './examples.css';
 import homeStyles from '../home/home.css';
-import Box from '../../components/box/box';
-import Modal from '../../components/modal/modal';
+import Box from '../../components/box/box.jsx';
+import Modal from '../../components/modal/modal.jsx';
 
-import examples from '../../lib/examples/index.js';
-import Localise, {localise} from '../components/localise/localise';
+import examples from '../../lib/examples';
+import Localise, { localise } from '../components/localise/localise.jsx';
 
-import {APP_NAME} from '@ampmod/branding';
+import { APP_NAME } from '@ampmod/branding';
 
-const ExampleModal = props => {
-    const [downloadLink, setDownloadLink] = useState(null);
+type ExampleID = keyof typeof examples; // e.g., "griffpatch" | "battery"
+type DownloadLink = { url: string; filename: string } | null;
+
+interface ExampleModalProps {
+  id: ExampleID;
+  onCancel?: () => void;
+  isSupported: boolean;
+  by?: string;
+}
+
+interface ExampleProps {
+  img?: string;
+  id: ExampleID;
+  by?: string;
+}
+
+const ExampleModal: React.FC<ExampleModalProps> = (props) => {
+    const [downloadLink, setDownloadLink] = useState<DownloadLink>(null);
 
     useEffect(() => {
-        const fetchDownloadLink = async (id, title) => {
+        const fetchDownloadLink = async (id: ExampleID, title: string) => {
             try {
                 const module = await examples[id](); // fetch module
                 if (!module) return;
@@ -28,6 +44,7 @@ const ExampleModal = props => {
                     return;
                 }
 
+                // @ts-ignore
                 const blob = new Blob([buffer], {
                     type: 'application/x.scratch.sb3'
                 });
@@ -45,7 +62,6 @@ const ExampleModal = props => {
             className={styles.modalContent}
             contentLabel={localise(`examples.apz.${props.id}`)}
             onRequestClose={props.onCancel}
-            id="exampleModal"
         >
             <Box className={styles.modalBody}>
                 <Localise id={`examples.apz.${props.id}.description`} values={{APP_NAME}} />
@@ -58,11 +74,9 @@ const ExampleModal = props => {
                     src={`embed.html?example=${props.id}&use-user-theme`}
                     width="386"
                     height="330"
-                    allowtransparency="true"
-                    frameBorder="0"
-                    scrolling="no"
-                    allowFullScreen=""
-                    style={{colorScheme: 'auto', borderRadius: '8px'}}
+                    allowTransparency
+                    allowFullScreen
+                    style={{colorScheme: 'auto', borderRadius: '8px', border: "none"}}
                 />
                 <div>{`Project created by ${props.by || 'AmpMod developers'}.`}</div>
                 <div className={homeStyles.buttonRow}>
@@ -80,7 +94,7 @@ const ExampleModal = props => {
     );
 };
 
-const Example = props => {
+const Example: React.FC<ExampleProps> = (props) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -99,7 +113,7 @@ const Example = props => {
                 </div>
             </div>
 
-            {isOpen && <ExampleModal {...props} onCancel={() => setIsOpen(false)} />}
+            {isOpen && <ExampleModal {...props} onCancel={() => setIsOpen(false)} isSupported={true} />}
         </>
     );
 };

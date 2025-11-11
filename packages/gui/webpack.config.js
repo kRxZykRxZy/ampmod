@@ -311,8 +311,8 @@ module.exports = [
     merge(base, {
         entry: {
             'website': [
-                './src/website/components/header/header.jsx',
-                './src/website/components/footer/footer.jsx',
+                './src/website/components/header/header.tsx',
+                './src/website/components/footer/footer.tsx',
                 './src/website/design.css'
             ],
             'editor': './src/playground/editor.jsx',
@@ -321,9 +321,9 @@ module.exports = [
             'addon-settings': './src/playground/addon-settings.jsx',
             'credits': './src/website/credits/credits.jsx',
             'home': './src/website/home/home.jsx',
-            'notfound': './src/website/not-found.js',
-            'minorpages': './src/website/minor-pages/render.jsx',
-            'faq': './src/website/faq/faq.jsx',
+            'notfound': './src/website/not-found.ts',
+            'minorpages': './src/website/minor-pages/render.tsx',
+            'faq': './src/website/faq/faq.tsx',
             'examples-landing': './src/website/examples/examples.jsx'
         },
         output: {

@@ -36,7 +36,7 @@
           <meta name="google-site-verification" content="xMC75_ZeQyXE1iaRV31N-hOLPJVubcfmiKfoiOqcNH8" /> 
           <script>
           (function() {
-            var lsNamespace = "<%= require('../lib/amp-localstorage-namespace.js').lsNamespace %>";
+            var lsNamespace = "<%= require('../lib/amp-localstorage-namespace').lsNamespace %>";
             const optedOut = localStorage.getItem(`${lsNamespace}:analytics-opted-out`) === 'true';
 
             if (!optedOut && <%= !htmlWebpackPlugin.options.skipSimpleAnalytics %>) {
@@ -99,7 +99,7 @@
             (function() {
               var theme = '';
 
-              var lsNamespace = "<%= require('../lib/amp-localstorage-namespace.js').lsNamespace %>";
+              var lsNamespace = "<%= require('../lib/amp-localstorage-namespace').lsNamespace %>";
 
               var themeSetting = localStorage.getItem(`${lsNamespace}theme`);
 

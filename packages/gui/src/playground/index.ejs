@@ -8,7 +8,7 @@
       <meta name="google-site-verification" content="xMC75_ZeQyXE1iaRV31N-hOLPJVubcfmiKfoiOqcNH8" /> 
       <script>
         (function() {
-          const lsNamespace = "<%= require('../lib/amp-localstorage-namespace.js').lsNamespace %>";
+          const lsNamespace = "<%= require('../lib/amp-localstorage-namespace').lsNamespace %>";
           if (localStorage.getItem(`${lsNamespace}:analytics-opted-out`) !== 'true') {
             const script = document.createElement('script');
             script.async = true;
@@ -182,7 +182,7 @@
         'use strict';
         
         const translations = <%= JSON.stringify(require("./splash-translations").default) %>;
-        const lsNamespace = "<%= require('../lib/amp-localstorage-namespace.js').lsNamespace %>";
+        const lsNamespace = "<%= require('../lib/amp-localstorage-namespace').lsNamespace %>";
         
         const storedLang = localStorage.getItem(lsNamespace + "language");
         const t = translations[storedLang] || translations["en"];

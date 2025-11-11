@@ -1,13 +1,10 @@
-import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
-import {connect} from 'react-redux';
-
 import {MenuItem} from '../menu/menu.jsx';
-import {closeSettingsMenu} from '../../reducers/menus.js';
 import styles from './settings-menu.css';
 import {notScratchDesktop} from '../../lib/isScratchDesktop.js';
 
 let showPwaButton = false;
+// @ts-ignore
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', e => {
     e.preventDefault();
@@ -15,12 +12,13 @@ window.addEventListener('beforeinstallprompt', e => {
     showPwaButton = true;
 });
 
-const handleClickPwaInstall = addonId => {
+const handleClickPwaInstall = () => {
+    // @ts-ignore
     deferredPrompt.prompt();
 };
 
 const InstallPWAButton = () => {
-    if (showPwaButton && notScratchDesktop) {
+    if (showPwaButton && notScratchDesktop()) {
         return (
             <MenuItem>
                 <div

@@ -4,12 +4,18 @@ import Footer from '../components/footer/footer';
 import Privacy from './privacy';
 import NewCompiler from './new-compiler';
 import './minor-pages.css';
-import render from '../../playground/app-target';
+import render from '../../playground/app-target.js';
 import {applyGuiColors} from '../../lib/themes/guiHelpers.js';
 import {detectTheme} from '../../lib/themes/themePersistance.js';
 
 applyGuiColors(detectTheme());
 document.documentElement.lang = 'en';
+
+declare global {
+    interface Window {
+        __PAGE__?: string;
+    }
+}
 
 function getPage() {
     switch (window.__PAGE__) {

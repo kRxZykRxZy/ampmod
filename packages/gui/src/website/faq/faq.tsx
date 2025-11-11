@@ -1,18 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import render from '../../playground/app-target.js';
 import styles from '../design.css';
 import myStyles from './faq.css';
 
 import {APP_NAME} from '@ampmod/branding';
-import {applyGuiColors} from '../../lib/themes/guiHelpers';
-import {detectTheme} from '../../lib/themes/themePersistance';
-import UserData from './users';
+import {applyGuiColors} from '../../lib/themes/guiHelpers.js';
+import {detectTheme} from '../../lib/themes/themePersistance.js';
 
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 
-import Localise, {setHtmlLang} from '../components/localise/localise';
+import Localise, {setHtmlLang} from '../components/localise/localise.jsx';
 
 applyGuiColors(detectTheme());
 setHtmlLang();

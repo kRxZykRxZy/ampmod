@@ -1,13 +1,15 @@
 const BlockType = require('../../extension-support/block-type');
 const ArgumentType = require('../../extension-support/argument-type');
 const AmpMod = require('../../extension-support/ampmod-api');
+const RuntimeType = require('../../engine/runtime');
 
 /**
  * Class for Electro Test blocks
  * @constructor
  */
 class ElectroTestBlocks {
-    constructor (runtime) {
+    runtime: typeof RuntimeType;
+    constructor (runtime: any) {
         /**
          * The runtime instantiating this block package.
          * @type {Runtime}
@@ -109,7 +111,7 @@ class ElectroTestBlocks {
         return ['hello', 'hi', 'greetings', 'welcome', 'hola', 'bonjour'];
     }
 
-    addRandomNumber (args) {
+    addRandomNumber (args: { ARRAY: any; }) {
         const baseArray = args.ARRAY;
         return [...baseArray, Math.floor(Math.random() * 10) + 1];
     }
