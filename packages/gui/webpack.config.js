@@ -11,6 +11,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { SwcMinifyWebpackPlugin } = require('swc-minify-webpack-plugin');
 const HtmlInlineScriptPlugin = require('html-inline-script-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
 const {APP_NAME, APP_SLOGAN, APP_DESCRIPTION, APP_SOURCE} = require('@ampmod/branding');
@@ -139,6 +140,7 @@ const base = {
                                 pragmaFrag: 'React.Fragment',
                                 throwIfNamespace: true,
                                 development: process.env.NODE_ENV !== 'production',
+                                refresh: process.env.NODE_ENV !== 'production',
                                 useBuiltins: true
                             }
                         }
@@ -304,6 +306,9 @@ const base = {
 
 if (!process.env.CI) {
     base.plugins.push(new webpack.ProgressPlugin());
+}
+if (process.env.NODE_ENV !== "production") {
+    base.plugins.push(new ReactRefreshWebpackPlugin({overlay: false}));
 }
 
 module.exports = [
