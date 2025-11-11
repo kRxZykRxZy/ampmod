@@ -25,6 +25,7 @@
     "dependencies": {
         "@turbowarp/nanolog": "^0.2.0",
         "@turbowarp/paper": "^0.12.202505131813",
+        "@types/react": "^17.0.89",
         "classnames": "2.2.5",
         "keymirror": "0.1.1",
         "lodash.bindall": "4.4.0",
