@@ -256,7 +256,7 @@ class SB3Downloader extends React.Component {
                       saveToLastFile: this.saveToLastFile,
                       saveToLastFileOrNew: this.saveToLastFileOrNew,
                       smartSave: this.saveToLastFileOrNew
-                  }
+                   }
                 : {
                       available: false,
                       smartSave: this.downloadProject
@@ -294,7 +294,7 @@ SB3Downloader.propTypes = {
 };
 SB3Downloader.defaultProps = {
     className: '',
-    showSaveFilePicker: typeof showSaveFilePicker === 'function' ? window.showSaveFilePicker.bind(window) : null
+    showSaveFilePicker: typeof showSaveFilePicker === 'function' && !navigator.userAgent.includes('Android') ? window.showSaveFilePicker.bind(window) : null
 };
 
 const mapStateToProps = state => ({
