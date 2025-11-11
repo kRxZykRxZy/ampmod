@@ -232,14 +232,14 @@ class ExtensionManager {
         }
 
         let ExtensionWorker;
-        if (sandboxMode === "worker") {
+        if (sandboxMode === 'worker') {
             ExtensionWorker = new Worker(
-                new URL("./extension-worker.js", import.meta.url, {
-                    type: "classic",
+                new URL('./extension-worker.js', import.meta.url, {
+                    type: 'classic'
                 })
             );
-        } else if (sandboxMode === "iframe") {
-            ExtensionWorker = (await import("./tw-iframe-extension-worker"))
+        } else if (sandboxMode === 'iframe') {
+            ExtensionWorker = (await import('./tw-iframe-extension-worker'))
                 .default;
         } else {
             throw new Error(`Invalid sandbox mode: ${sandboxMode}`);
@@ -373,7 +373,7 @@ class ExtensionManager {
     _getExtensionMenuItems (extensionObject, funcName) {
         const editingTarget = this.runtime.getEditingTarget() || this.runtime.getTargetForStage();
         const context = this.runtime.makeMessageContextForTarget(editingTarget);
-        const menuItems = extensionObject[funcName].call(extensionObject, editingTarget?.id).map(item => {
+        const menuItems = extensionObject[funcName](extensionObject, editingTarget?.id).map(item => {
             item = maybeFormatMessage(item, context);
             if (typeof item === 'object') return [maybeFormatMessage(item.text, context), item.value];
             if (typeof item === 'string') return [item, item];
