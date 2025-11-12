@@ -439,6 +439,24 @@ Blockly.Blocks["sensing_loud"] = {
     },
 };
 
+Blockly.Blocks["sensing_online"] = {
+    /**
+     * amp: Block to report if the user has internet access. This is an implementation
+     * of a block proposed to be in vanilla Scratch that as of writing has a PR from
+     * a Scratch Team member. However, the Scratch Team switched to AGPL a long time after
+     * the VM was forked by TurboWarp's developers.
+     * @this Blockly.Block
+     */
+    init: function () {
+        this.jsonInit({
+            message0: Blockly.Msg.SENSING_ONLINE,
+            category: Blockly.Categories.sensing,
+            checkboxInFlyout: true,
+            extensions: ["colours_sensing", "output_boolean"],
+        });
+    },
+};
+
 Blockly.Blocks["sensing_timer"] = {
     /**
      * Block to report timer

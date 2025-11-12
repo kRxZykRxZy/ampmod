@@ -16,6 +16,7 @@
     "CONTROL_SWITCH_BAD_SYNTAX": "\"if () was matched\" blocks must be in a \"test if () is matched\" C-block.",
     "OPERATORS_NEWLINE": "new line",
     "SENSING_LASTKEYPRESSED": "last key pressed",
+    "SENSING_ONLINE": "online?",
     "SENSING_MOUSEBUTTONDOWN": "%1 mouse button down?",
     "SENSING_MOUSEBUTTON_MIDDLE": "middle",
     "SENSING_MOUSEBUTTON_PRIMARY": "primary",

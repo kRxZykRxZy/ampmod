@@ -74,6 +74,7 @@ class Scratch3SensingBlocks {
             sensing_username: this.getUsername,
             sensing_lastkeypressed: this.lastKeyPressed,
             sensing_mousebuttondown: this.getButtonIsDown,
+            sensing_online: this.getOffline,
             sensing_userid: () => {} // legacy no-op block
         };
     }
@@ -100,6 +101,9 @@ class Scratch3SensingBlocks {
             },
             sensing_dayssince2000: {
                 getId: () => 'dayssince2000'
+            },
+            sensing_online: {
+                getId: () => 'offline'
             },
             sensing_current: {
                 // This is different from the default toolbox xml id in order to support
@@ -296,6 +300,15 @@ class Scratch3SensingBlocks {
 
     isLoud () {
         return this.getLoudness() > 10;
+    }
+
+    // The below is different from Scratch's implementation.
+    getOffline () {
+        // In case of node
+        if (typeof navigator !== 'object') {
+            return true;
+        }
+        return navigator.onLine ?? false;
     }
 
     getAttributeOf (args) {

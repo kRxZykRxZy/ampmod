@@ -627,7 +627,9 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
         <block id="current" type="sensing_current"/>
         <block type="sensing_dayssince2000"/>
         ${blockSeparator}
+        <block type="sensing_online"/>
         <block type="sensing_username"/>
+        ${blockSeparator}
         <block type="argument_reporter_boolean"><field name="VALUE">is AmpMod?</field></block>
         <block type="argument_reporter_boolean"><field name="VALUE">is compiled?</field></block>
         ${categorySeparator}

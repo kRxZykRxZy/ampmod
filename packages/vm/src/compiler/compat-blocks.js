@@ -45,6 +45,9 @@ const inputs = [
     'sensing_loud',
     'sensing_loudness',
     'sensing_userid',
+    // amp: This is our implementation of a vanilla but post-AGPLv3 block.
+    // Getting this into the compiler would be a bit complex
+    'sensing_online',
     'sound_volume'
 ];
 

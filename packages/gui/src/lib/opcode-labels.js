@@ -156,6 +156,11 @@ const messages = defineMessages({
         defaultMessage: 'secondary mouse button down?',
         description: 'Label for the secondary mouse button down monitor when shown on the stage',
         id: 'amp.opcodeLabels.secondary'
+    },
+    sensing_online: {
+        defaultMessage: 'online?',
+        description: 'Label for the offline monitor when shown on the stage',
+        id: 'amp.opcodeLabels.offline'
     }
 });
 
@@ -203,6 +208,7 @@ class OpcodeLabels {
             sensing_username: {category: 'sensing'},
             sensing_current: {category: 'sensing'},
             sensing_timer: {category: 'sensing'},
+            sensing_online: {category: 'sensing'},
             sensing_dayssince2000: {category: 'sensing'},
             sensing_lastkeypressed: {category: 'sensing'},
             sensing_mousebuttondown: {category: 'sensing'}
@@ -295,6 +301,7 @@ class OpcodeLabels {
         this._opcodeMap.sensing_timer.labelFn = () => this._translator(messages.sensing_timer);
         this._opcodeMap.sensing_dayssince2000.labelFn = () => this._translator(messages.sensing_dayssince2000);
         this._opcodeMap.sensing_lastkeypressed.labelFn = () => this._translator(messages.sensing_lastkeypressed);
+        this._opcodeMap.sensing_online.labelFn = () => this._translator(messages.sensing_online);
     }
 
     /**
