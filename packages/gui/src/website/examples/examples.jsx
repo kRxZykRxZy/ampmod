@@ -11,7 +11,7 @@ import {detectTheme} from '../../lib/themes/themePersistance.js';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import Example from './example';
-import projects from './projects';
+import projects from '../../lib/examples';
 import Localise, {localise, setHtmlLang} from '../components/localise/localise';
 
 applyGuiColors(detectTheme());
@@ -33,14 +33,12 @@ export const ExamplesPage = () => (
         <main className={styles.main}>
             <section>
                 <div className={myStyles.examplesRow}>
-                    {projects.map(proj => (
+                    {Object.values(projects).map(proj => (
                         <Example
                             key={proj.id}
                             id={proj.id}
-                            title={proj.title}
                             by={proj.by}
                             img={proj.img}
-                            description={proj.description}
                             isSupported={proj.isSupported ?? true}
                         />
                     ))}

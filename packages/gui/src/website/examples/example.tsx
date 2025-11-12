@@ -32,14 +32,14 @@ const ExampleModal: React.FC<ExampleModalProps> = (props) => {
     useEffect(() => {
         const fetchDownloadLink = async (id: ExampleID, title: string) => {
             try {
-                const module = await examples[id](); // fetch module
+                const module = await examples[id].loader(); // fetch module
                 if (!module) return;
 
                 // unwrap default export if exists
-                const buffer = module.default || module;
+                const buffer = module;
 
                 // ensure it's ArrayBuffer / Uint8Array
-                if (!(buffer instanceof ArrayBuffer || buffer instanceof Uint8Array)) {
+                if (!((buffer as any) instanceof ArrayBuffer || (buffer as any) instanceof Uint8Array)) {
                     console.error('Invalid buffer type for download:', buffer);
                     return;
                 }

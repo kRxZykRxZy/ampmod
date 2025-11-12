@@ -109,11 +109,8 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 // We don't need to load the examples manifest unless there actually is an example to load
                 return import('./examples').then(examplesModule => {
                     const examples = examplesModule.default;
-                    if (!examples.hasOwnProperty(exampleId)) {
-                        throw new Error(`Example ID ${exampleId} not found`);
-                    }
-                    return examples[exampleId]().then(module => {
-                        const exampleData = module.default; // ArrayBuffer from loader
+                    return examples[exampleId].loader().then(module => {
+                        const exampleData = module;
                         this.props.onFetchedProjectData(exampleData, loadingState);
                     });
                 }).catch(err => {
