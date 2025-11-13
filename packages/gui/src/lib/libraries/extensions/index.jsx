@@ -406,12 +406,21 @@ export default [
         extensionId: 'custom_extension',
         iconURL: customExtensionIcon,
         description: (
-            <FormattedMessage
-                defaultMessage="Load custom extensions from URLs, files, or JavaScript source code."
-                description="Description of library item to load a custom extension from a custom source"
-                id="tw.customExtension.description"
-            />
-        ),
+            <>
+                <div>
+                    <FormattedMessage
+                        defaultMessage="Load custom extensions from URLs, files, or JavaScript source code."
+                        description="Description of library item to load a custom extension from a custom source"
+                        id="tw.customExtension.description" />
+                </div>
+                <div style={{ marginTop: "8px" }}>
+                    <FormattedMessage
+                        defaultMessage="You can also save custom extensions, and they will be shown below."
+                        description="Part of description of library item to load a custom extension from a custom source"
+                        id="amp.customExtension.localExtensions" />
+                </div>
+            </>
+            ),
         tags: ['tw', 'ampmod'],
         featured: true
         // Not marked as incompatible with Scratch so that clicking on it doesn't show a prompt

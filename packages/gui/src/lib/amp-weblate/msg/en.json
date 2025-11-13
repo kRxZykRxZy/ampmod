@@ -8,6 +8,7 @@
   "amp.confirmDeprecated.2": "Are you sure you want to add it?",
   "amp.controls.pause": "Pause",
   "amp.controls.play": "Play",
+  "amp.customExtension.localExtensions": "You can also save custom extensions, and they will be shown below.",
   "amp.deprecatedExtension": "Deprecated: {reason}",
   "amp.extensionGallery.error": "Error loading extension gallery. Visit ampmod.codeberg.page/extensions to find more extensions.",
   "amp.extensionGallery.more": "Learn more about extensions at ampmod.codeberg.page/extensions.",
