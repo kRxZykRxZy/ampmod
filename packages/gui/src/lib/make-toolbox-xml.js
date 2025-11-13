@@ -676,17 +676,17 @@ const strings = function (isInitialSetup, isStage, targetId, colors) {
         <block type="operator_substring">
             <value name="START">
                 <shadow type="math_whole_number">
-                    <field name="NUM">1</field>
+                    <field name="NUM">${apple.length + 2}</field>
                 </shadow>
             </value>
             <value name="END">
                 <shadow type="math_whole_number">
-                    <field name="NUM">${apple.length}</field>
+                    <field name="NUM">${apple.length + 1 + banana.length}</field>
                 </shadow>
             </value>
             <value name="STRING">
                 <shadow type="text">
-                    <field name="TEXT">${apple}</field>
+                    <field name="TEXT">${apple} ${banana}</field>
                 </shadow>
             </value>
         </block>
@@ -886,6 +886,9 @@ const variables = function (isInitialSetup, isStage, targetId, colors) {
 
 const arrays = function (isInitialSetup, isStage, targetId, colors) {
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
+    const apple = translate('OPERATORS_JOIN_APPLE', 'apple');
+    const banana = translate('OPERATORS_JOIN_BANANA', 'banana');
+    const thing = translate('DEFAULT_LIST_ITEM', 'thing');
     return `
     <category
         name="Arrays"
@@ -897,7 +900,7 @@ const arrays = function (isInitialSetup, isStage, targetId, colors) {
         <block type="arrays_delimited_to_array">
             <value name="TEXT">
                 <shadow type="text">
-                    <field name="TEXT">apple,banana</field>
+                    <field name="TEXT">${apple},${banana}</field>
                 </shadow>
             </value>
             <value name="DELIM">
@@ -929,14 +932,14 @@ const arrays = function (isInitialSetup, isStage, targetId, colors) {
         <block type="arrays_item_no_of">
             <value name="VALUE">
                 <shadow type="text">
-                    <field name="TEXT">item</field>
+                    <field name="TEXT">${thing}</field>
                 </shadow>
             </value>
         </block>
         <block type="arrays_contains">
             <value name="VALUE">
                 <shadow type="text">
-                    <field name="TEXT">item</field>
+                    <field name="TEXT">${thing}</field>
                 </shadow>
             </value>
         </block>
@@ -945,21 +948,21 @@ const arrays = function (isInitialSetup, isStage, targetId, colors) {
         <block type="arrays_in_front_of">
             <value name="ITEM">
                 <shadow type="text">
-                    <field name="TEXT">item</field>
+                    <field name="TEXT">${thing}</field>
                 </shadow>
             </value>
         </block>
         <block type="arrays_behind">
             <value name="ITEM">
                 <shadow type="text">
-                    <field name="TEXT">item</field>
+                    <field name="TEXT">${thing}</field>
                 </shadow>
             </value>
         </block>
         <block type="arrays_at">
             <value name="ITEM">
                 <shadow type="text">
-                    <field name="TEXT">item</field>
+                    <field name="TEXT">${thing}</field>
                 </shadow>
             </value>
             <value name="INDEX">
