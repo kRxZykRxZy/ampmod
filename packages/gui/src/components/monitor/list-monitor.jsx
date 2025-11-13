@@ -22,7 +22,7 @@ const ListMonitor = ({ draggable, label, width, height, value, onResizeMouseDown
             <div className={(styles.listBody, 'no-drag')}>
                 {is2DArray ? (
                     // Render 2D array as a table
-                    <div style={{ overflowX: 'auto', maxHeight: height - 42 }}>
+                    <div style={{ overflowX: 'auto', height: height - 42 }}>
                         <table style={{ borderCollapse: 'collapse', width: '100%' }}>
                             <tbody>
                                 {value.map((row, rIdx) => (
