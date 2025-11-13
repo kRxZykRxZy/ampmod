@@ -58,12 +58,12 @@ const ListMonitor = ({ draggable, label, width, height, value, onResizeMouseDown
                 )}
             </div>
             <div className={styles.listFooter}>
-                <div
+                {/* <div
                     className={classNames(draggable ? styles.addButton : null, 'no-drag')}
                     onClick={draggable ? onAdd : null}
                 >
-                    {'+' /* TODO waiting on asset */}
-                </div>
+                    {'+' /* TODO waiting on asset * /}
+                </div> */}
                 <div className={styles.footerLength}>
                     <FormattedMessage
                         defaultMessage="length {length}"
