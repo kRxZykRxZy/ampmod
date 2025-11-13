@@ -1410,7 +1410,7 @@ class Runtime extends EventEmitter {
             helpUrl: blockInfo.helpURI ?? categoryInfo.docsURI,
             tooltip:
                 categoryInfo.id === 'pen' ?
-                    null :
+                    '' :
                     blockInfo.tooltip ?
                         `${blockInfo.tooltip} (From the "${categoryInfo.name}" extension.)` :
                         `From the "${categoryInfo.name}" extension.`
