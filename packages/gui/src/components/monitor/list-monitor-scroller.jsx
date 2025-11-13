@@ -14,7 +14,7 @@ class ListMonitorScroller extends React.Component {
     renderItem = (index) => {
         const value = this.props.values[index];
         const isNestedList = Array.isArray(value);
-        const { draggable, activeIndex, activeValue, categoryColor, onDeactivate, onInput, onFocus, onKeyPress, onRemove } = this.props;
+        const { draggable, activeIndex, activeValue, categoryColor, onDeactivate, onInput, onFocus, onKeyPress, onRemove, width } = this.props;
 
         return (
             <div className={styles.listRow}>
@@ -25,30 +25,39 @@ class ListMonitorScroller extends React.Component {
                     style={{ background: categoryColor.background, color: categoryColor.text }}
                     onClick={draggable ? this.handleEventFactory(index) : undefined}
                 >
-                    {draggable && activeIndex === index ? (
+                    {draggable && activeIndex === index && !isNestedList ? (
                         <div className={styles.inputWrapper}>
                             <input
                                 autoFocus
                                 autoComplete="off"
-                                className={classNames(styles.listInput, 'no-drag', isNestedList ? styles.nestedListInput : null)}
+                                className={classNames(styles.listInput, 'no-drag')}
                                 spellCheck={false}
                                 style={{ color: categoryColor.text }}
                                 type="text"
-                                value={isNestedList ? 'nested array' : activeValue}
+                                value={activeValue}
                                 onBlur={onDeactivate}
                                 onChange={onInput}
                                 onFocus={onFocus}
                                 onKeyDown={onKeyPress}
-                                readOnly={isNestedList}
                             />
                             <div className={styles.removeButton} onMouseDown={onRemove}>
                                 {'✖︎'}
                             </div>
                         </div>
-                    ) : (
-                        <div className={styles.valueInner}>
-                            {isNestedList ? <i>nested array</i> : value}
+                    ) : isNestedList ? (
+                        <div style={{ height: Math.min(150, value.length * 24), margin: '4px 0' }}>
+                            <Virtuoso
+                                style={{ height: '100%' }}
+                                totalCount={value.length}
+                                itemContent={(i) => (
+                                    <div className={styles.listValue}>
+                                        <div className={styles.valueInner}>{value[i]}</div>
+                                    </div>
+                                )}
+                            />
                         </div>
+                    ) : (
+                        <div className={styles.valueInner}>{value}</div>
                     )}
                 </div>
             </div>
