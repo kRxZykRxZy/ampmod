@@ -14,7 +14,7 @@
     max-width: calc((100% - 12px) / 4);
     flex-direction: column;
     border: 1px solid $ui-black-transparent;
-    border-radius: $space;
+    border-radius: $roundedness;
     overflow: hidden;
     cursor: pointer;
     width: 250px;
@@ -24,7 +24,7 @@
 .example-content {
     display: flex;
     flex-direction: column;
-    padding: calc($space * 1.2);
+    padding: calc($margin * 1.2);
     gap: 8px;
     align-items: center;
 }

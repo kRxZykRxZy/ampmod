@@ -112,7 +112,9 @@ const base = {
             'text-encoding$': path.resolve(__dirname, 'src/lib/tw-text-encoder'),
             'scratch-render-fonts$': path.resolve(__dirname, 'src/lib/tw-scratch-render-fonts'),
             '@ampmod/branding$': path.resolve(__dirname, 'src/lib/amp-intercept-branding'),
-            'real-branding$': path.resolve(__dirname, '../branding')
+            'real-branding$': path.resolve(__dirname, '../branding'),
+            'react/jsx-dev-runtime': 'react/jsx-dev-runtime.js',
+            'react/jsx-runtime': 'react/jsx-runtime.js' 
         }
     },
     module: {

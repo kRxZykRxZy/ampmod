@@ -65,8 +65,8 @@
     position: relative;
     align-items: center;
     white-space: nowrap;
-    height: calc($menu-bar-height - $space * 1.7);
-    border-radius: $space;
+    height: calc($menu-bar-height - $margin * 1.7);
+    border-radius: $roundedness;
 }
 
 .menu-bar-item.hoverable,

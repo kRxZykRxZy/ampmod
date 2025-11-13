@@ -1,97 +1,82 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import bindAll from 'lodash.bindall';
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import styles from './monitor.css';
-import {List} from 'react-virtualized';
+import { Virtuoso } from 'react-virtuoso';
 
 class ListMonitorScroller extends React.Component {
-    constructor(props) {
-        super(props);
-        bindAll(this, ['rowRenderer', 'noRowsRenderer', 'handleEventFactory']);
-    }
-    handleEventFactory(index) {
-        return () => this.props.onActivate(index);
-    }
-    noRowsRenderer() {
-        return (
-            <div className={classNames(styles.listRow, styles.listEmpty)}>
-                <FormattedMessage
-                    defaultMessage="(empty)"
-                    description="Text shown on a list monitor when a list is empty"
-                    id="gui.monitor.listMonitor.empty"
-                />
-            </div>
-        );
-    }
-    rowRenderer({index, key, style}) {
+    handleEventFactory = (index) => () => {
+        this.props.onActivate(index);
+    };
+
+    renderItem = (index) => {
         const value = this.props.values[index];
         const isNestedList = Array.isArray(value);
+        const { draggable, activeIndex, activeValue, categoryColor, onDeactivate, onInput, onFocus, onKeyPress, onRemove } = this.props;
 
         return (
-            <div className={styles.listRow} key={key} style={style}>
-                <div className={styles.listIndex}>{index + 1 /* one indexed */}</div>
+            <div className={styles.listRow}>
+                <div className={styles.listIndex}>{index + 1}</div>
                 <div
                     className={styles.listValue}
-                    dataIndex={index}
-                    style={{
-                        background: this.props.categoryColor.background,
-                        color: this.props.categoryColor.text
-                    }}
-                    onClick={this.props.draggable ? this.handleEventFactory(index) : null}
+                    data-index={index}
+                    style={{ background: categoryColor.background, color: categoryColor.text }}
+                    onClick={draggable ? this.handleEventFactory(index) : undefined}
                 >
-                    {this.props.draggable && this.props.activeIndex === index ? (
+                    {draggable && activeIndex === index ? (
                         <div className={styles.inputWrapper}>
                             <input
                                 autoFocus
-                                autoComplete={false}
-                                className={classNames(
-                                    styles.listInput,
-                                    'no-drag',
-                                    isNestedList ? styles.nestedListInput : null
-                                )}
+                                autoComplete="off"
+                                className={classNames(styles.listInput, 'no-drag', isNestedList ? styles.nestedListInput : null)}
                                 spellCheck={false}
-                                style={{color: this.props.categoryColor.text}}
+                                style={{ color: categoryColor.text }}
                                 type="text"
-                                value={isNestedList ? 'nested array' : this.props.activeValue}
-                                onBlur={this.props.onDeactivate}
-                                onChange={this.props.onInput}
-                                onFocus={this.props.onFocus}
-                                onKeyDown={this.props.onKeyPress} // key down to get ahead of blur
+                                value={isNestedList ? 'nested array' : activeValue}
+                                onBlur={onDeactivate}
+                                onChange={onInput}
+                                onFocus={onFocus}
+                                onKeyDown={onKeyPress}
                                 readOnly={isNestedList}
                             />
-                            <div
-                                className={styles.removeButton}
-                                onMouseDown={this.props.onRemove} // mousedown to get ahead of blur
-                            >
+                            <div className={styles.removeButton} onMouseDown={onRemove}>
                                 {'✖︎'}
                             </div>
                         </div>
                     ) : (
-                        <div className={styles.valueInner}>{isNestedList ? <i>nested array</i> : value}</div>
+                        <div className={styles.valueInner}>
+                            {isNestedList ? <i>nested array</i> : value}
+                        </div>
                     )}
                 </div>
             </div>
         );
-    }
+    };
+
+    renderEmpty = () => (
+        <div className={classNames(styles.listRow, styles.listEmpty)}>
+            <FormattedMessage
+                defaultMessage="(empty)"
+                description="Text shown on a list monitor when a list is empty"
+                id="gui.monitor.listMonitor.empty"
+            />
+        </div>
+    );
+
     render() {
-        const {height, values, width, activeIndex, activeValue} = this.props;
-        // Keep the active index in view if defined, else must be undefined for List component
-        const scrollToIndex = activeIndex === null ? undefined : activeIndex;  
+        const { height, values, width, activeIndex } = this.props;
+
         return (
-            <List
-                activeIndex={activeIndex}
-                activeValue={activeValue}
-                height={height - 42 /* Header/footer size, approx */}
-                noRowsRenderer={this.noRowsRenderer}
-                rowCount={values.length}
-                rowHeight={24 /* Row size is same for all rows */}
-                rowRenderer={this.rowRenderer}
-                scrollToIndex={scrollToIndex}  
-                values={values}
-                width={width}
+            <Virtuoso
+                style={{ height: height - 42, width }}
+                totalCount={values.length}
+                itemContent={(index) => this.renderItem(index)}
+                components={{
+                    EmptyPlaceholder: this.renderEmpty,
+                }}
+                followOutput={activeIndex !== null ? 'smooth' : false} // auto-scroll to activeIndex
             />
         );
     }
@@ -116,9 +101,10 @@ ListMonitorScroller.propTypes = {
         PropTypes.oneOfType([
             PropTypes.string,
             PropTypes.number,
-            PropTypes.array // Added support for arrays
+            PropTypes.array
         ])
     ),
     width: PropTypes.number
 };
+
 export default ListMonitorScroller;

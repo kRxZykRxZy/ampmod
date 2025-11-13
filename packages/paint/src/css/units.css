@@ -8,7 +8,8 @@ GRID UNITS.
 
 ALSO EDITED ON 11/13/2017 TO ADD IN CONTANTS FOR LAYOUT FROM `layout-contents.js`*/
 
-$space: 0.75rem;
+$margin: 0.75rem;
+$roundedness: 0.75rem;
 $grid-unit: 0.25rem;
 
 $sprites-per-row: 5;
@@ -19,7 +20,7 @@ $stage-menu-height: 2.75rem;
 
 $library-header-height: 4.375rem;
 
-$form-radius: calc($space / 2);
+$form-radius: calc($roundedness / 2);
 
 /* layout contants from `layout-constants.js`, minus 1px */
 $full-size: 1095px;

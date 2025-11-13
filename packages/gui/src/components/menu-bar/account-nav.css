@@ -20,11 +20,11 @@
 }
 
 [dir='ltr'] .user-info .avatar {
-    margin-right: calc($space * 0.8125);
+    margin-right: calc($margin * 0.8125);
 }
 
 [dir='rtl'] .user-info .avatar {
-    margin-left: calc($space * 0.8125);
+    margin-left: calc($margin * 0.8125);
 }
 
 .user-info .avatar {
@@ -33,11 +33,11 @@
 }
 
 [dir='ltr'] .user-info .dropdown-caret-position {
-    margin-left: calc($space * 0.8125);
+    margin-left: calc($margin * 0.8125);
 }
 
 [dir='rtl'] .user-info .dropdown-caret-position {
-    margin-right: calc($space * 0.8125);
+    margin-right: calc($margin * 0.8125);
 }
 
 .user-info .dropdown-caret-position {

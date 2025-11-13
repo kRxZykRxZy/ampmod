@@ -44,8 +44,8 @@ can set a width for example or what it should do in a flex box (eg. grow).
 .title-field:focus {
     outline: none;
     border: 1px solid $ui-transparent;
-    -webkit-box-shadow: 0 0 0 calc($space * 0.5) $ui-white-transparent-default;
-    box-shadow: 0 0 0 calc($space * 0.5) $ui-white-transparent-default;
+    -webkit-box-shadow: 0 0 0 calc($margin * 0.5) $ui-white-transparent-default;
+    box-shadow: 0 0 0 calc($margin * 0.5) $ui-white-transparent-default;
     background-color: $ui-white;
     color: $text-primary;
 }

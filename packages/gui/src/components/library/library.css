@@ -28,12 +28,12 @@
     justify-content: flex-start;
     background-color: $ui-tertiary;
     border: $ui-black-transparent 1px solid;
-    border-radius: $space;
-    margin: $space;
+    border-radius: $roundedness;
+    margin: $margin;
     font-size: 0.875rem;
-    height: calc(100% - calc($space - 2));
+    height: calc(100% - calc($margin - 2));
     width: 600px;
-    padding: calc($space * 3);
+    padding: calc($margin * 3);
     overflow-y: scroll;
     gap: 4px;
 }

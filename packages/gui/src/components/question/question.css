@@ -3,9 +3,9 @@
 @import '../../css/default-colors.css';
 
 .question-container {
-    margin: $space;
+    margin: $margin;
     border: 1px solid $ui-black-transparent-default;
-    border-radius: $space;
+    border-radius: $roundedness;
     border-width: 2px;
     padding: 1rem;
     background: white;
@@ -16,7 +16,7 @@
     font-weight: bold;
     font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: $text-primary-default;
-    padding-bottom: $space;
+    padding-bottom: $margin;
 }
 
 .question-input {
@@ -28,10 +28,10 @@
 .yes-icon,
 .no-icon {
     position: absolute;
-    top: calc($space / 2);
+    top: calc($margin / 2);
 
-    width: calc(2rem - $space);
-    height: calc(2rem - $space);
+    width: calc(2rem - $margin);
+    height: calc(2rem - $margin);
 
     border: none;
     border-radius: 9999em;
@@ -42,11 +42,11 @@
 }
 
 [dir='ltr'] .question-submit-button {
-    right: calc($space / 2);
+    right: calc($margin / 2);
 }
 
 [dir='rtl'] .question-submit-button {
-    left: calc($space / 2);
+    left: calc($margin / 2);
 }
 
 /* Input overrides: width, font-weight, focus outline and padding */
@@ -75,8 +75,8 @@
 .question-submit-button-icon,
 .yes-icon,
 .no-icon {
-    width: calc(2rem - $space);
-    height: calc(2rem - $space);
+    width: calc(2rem - $margin);
+    height: calc(2rem - $margin);
     position: relative;
     right: -7px;
     left: -7px;

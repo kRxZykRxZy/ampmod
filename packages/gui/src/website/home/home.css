@@ -5,7 +5,7 @@
 .button {
     background-color: $motion-primary;
     color: white;
-    border-radius: $space;
+    border-radius: $roundedness;
     padding: 8px 16px;
     text-decoration: none;
     display: inline-block;
@@ -28,7 +28,7 @@
     padding: 0 20px;
     background-color: var(--badge-background);
     border: 1px var(--badge-border) solid;
-    border-radius: $space;
+    border-radius: $roundedness;
 }
 
 .main-content-grid {
@@ -57,7 +57,7 @@ ul {
     display: flex;
     flex-direction: column;
     line-height: 1.4em;
-    gap: $space;
+    gap: $margin;
 }
 
 .button-row {

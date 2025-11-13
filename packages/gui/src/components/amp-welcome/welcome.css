@@ -32,7 +32,7 @@
     outline: none;
     padding: 0;
     box-shadow: 0 0 0 4px $ui-white-transparent-default;
-    border-radius: calc($space * 2);
+    border-radius: calc($roundedness * 2);
     user-select: none;
     color: $text-primary;
     overflow: hidden;

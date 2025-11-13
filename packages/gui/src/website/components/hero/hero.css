@@ -5,7 +5,7 @@
 .primary-button {
     background-color: white;
     color: $motion-tertiary !important;
-    border-radius: $space;
+    border-radius: $roundedness;
     padding: 12px 18px;
     text-decoration: none;
     display: inline-block;
@@ -13,12 +13,12 @@
     font-size: 1.3em;
     box-shadow: 0 0 0 0 $ui-white-transparent-default;
     transition: box-shadow 0.3s;
-    margin-top: $space;
+    margin-top: $margin;
     transform-style: preserve-3d;
 }
 
 .primary-button:hover {
-    box-shadow: 0 0 0 $space $ui-white-transparent-default;
+    box-shadow: 0 0 0 $margin $ui-white-transparent-default;
 }
 
 .header-container-container {

@@ -122,8 +122,8 @@ const Backpack = ({
                                 selected={false}
                                 onClick={noop}
                                 onDeleteButtonClick={onDelete}
-                                // Currently, renaming sprites is not supported.
-                                onRenameButtonClick={item.type === 'sprite' ? null : onRename}
+                                // amp: renaming sprites is now supported
+                                onRenameButtonClick={onRename}
                             />
                         ))}
                         {showMore && (

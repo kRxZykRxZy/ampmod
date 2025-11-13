@@ -22,8 +22,8 @@
     width: 100%;
     box-sizing: border-box;
     resize: vertical;
-    padding: $space;
-    border-radius: $space;
+    padding: $margin;
+    border-radius: $roundedness;
     border: 1px solid $ui-black-transparent;
     background-color: $input-background;
     color: inherit;

@@ -11,13 +11,13 @@
 }
 
 [dir='ltr'] .wrapper {
-    border-top-right-radius: $space;
-    border-bottom-right-radius: $space;
+    border-top-right-radius: $roundedness;
+    border-bottom-right-radius: $roundedness;
 }
 
 [dir='rtl'] .wrapper {
-    border-top-left-radius: $space;
-    border-bottom-left-radius: $space;
+    border-top-left-radius: $roundedness;
+    border-bottom-left-radius: $roundedness;
 }
 
 .detail-area {
