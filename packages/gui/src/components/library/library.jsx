@@ -70,7 +70,7 @@ class LibraryComponent extends React.Component {
         if (this.props.setStopHandler) this.props.setStopHandler(this.handlePlayingEnd);
     }
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.filterQuery !== this.state.filterQuery || prevState.selectedTag !== this.state.selectedTag) {
+        if (prevState.filterQuery !== this.state.filterQuery || prevState.selectedTags !== this.state.selectedTags) {
             this.scrollToTop();
         }
 
