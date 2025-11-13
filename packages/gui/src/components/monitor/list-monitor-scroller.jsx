@@ -29,7 +29,7 @@ class ListMonitorScroller extends React.Component {
                     className={styles.listValue}
                     data-index={index}
                     style={{ background: categoryColor.background, color: categoryColor.text }}
-                    onClick={draggable ? this.handleEventFactory(index) : undefined}
+                    // onClick={draggable ? this.handleEventFactory(index) : undefined}
                 >
                     {draggable && activeIndex === index && !isNestedList && !is2DArray ? (
                         <div className={styles.inputWrapper}>
