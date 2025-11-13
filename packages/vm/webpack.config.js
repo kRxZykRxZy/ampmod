@@ -18,11 +18,21 @@ const base = {
     module: {
         rules: [
             {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                include: path.resolve(__dirname, 'src'),
-                query: {
-                    presets: [['@babel/preset-env']]
+                test: /\.[jt]s$/,
+                loader: 'swc-loader',
+                include: [
+                    path.resolve(__dirname, 'src')
+                ],
+                options: {
+                    jsc: {
+                        parser: {
+                            syntax: 'typescript',
+                            decorators: false,
+                            dynamicImport: true
+                        },
+                        target: 'es2022'
+                    },
+                    sourceMaps: process.env.NODE_ENV !== 'production'
                 }
             },
             {
