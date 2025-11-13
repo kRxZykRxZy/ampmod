@@ -462,6 +462,12 @@ class ScriptTreeGenerator {
                 letter: this.descendInputOfBlock(block, 'LETTER').toType(InputType.NUMBER_INDEX),
                 string: this.descendInputOfBlock(block, 'STRING').toType(InputType.STRING)
             });
+        case 'operator_substring':
+            return new IntermediateInput(InputOpcode.OP_SUBSTRING, InputType.STRING, {
+                start: this.descendInputOfBlock(block, 'START').toType(InputType.NUMBER_INDEX),
+                end: this.descendInputOfBlock(block, 'END').toType(InputType.NUMBER_INDEX),
+                string: this.descendInputOfBlock(block, 'STRING').toType(InputType.STRING)
+            });
         case 'operator_lt':
             return new IntermediateInput(InputOpcode.OP_LESS, InputType.BOOLEAN, {
                 left: this.descendInputOfBlock(block, 'OPERAND1'),

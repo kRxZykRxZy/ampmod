@@ -364,6 +364,34 @@ Blockly.Blocks["operator_letter_of"] = {
     },
 };
 
+Blockly.Blocks["operator_substring"] = {
+    /**
+     * amp: Block for "letters _ to _ of _" operator.
+     * @this Blockly.Block
+     */
+    init: function () {
+        this.jsonInit({
+            message0: Blockly.Msg.OPERATORS_SUBSTRING,
+            args0: [
+                {
+                    type: "input_value",
+                    name: "START",
+                },
+                {
+                    type: "input_value",
+                    name: "END",
+                },
+                {
+                    type: "input_value",
+                    name: "STRING",
+                },
+            ],
+            category: Blockly.Categories.operators,
+            extensions: ["colours_strings", "output_string"],
+        });
+    },
+};
+
 Blockly.Blocks["operator_length"] = {
     /**
      * Block for string length operator.

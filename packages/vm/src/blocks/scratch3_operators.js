@@ -119,6 +119,17 @@ class Scratch3OperatorsBlocks {
         return str.charAt(index);
     }
 
+    substring (args) {
+        const start = Cast.toNumber(args.START) - 1;
+        const end = Cast.toNumber(args.END) - 1;
+        const str = Cast.toString(args.STRING);
+        // Out of bounds?
+        if ((start < 0 || start >= str.length) && (end < 0 || end >= str.length)) {
+            return '';
+        }
+        return str.substring(start, end);
+    }
+
     length (args) {
         return Cast.toString(args.STRING).length;
     }

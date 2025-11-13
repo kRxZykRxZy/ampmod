@@ -240,6 +240,7 @@ const InputOpcode = {
     OP_JOIN: 'op.join',
     OP_LENGTH: 'op.length',
     OP_LETTER_OF: 'op.letterOf',
+    OP_SUBSTRING: 'op.substring',
     OP_ABS: 'op.abs',
     OP_FLOOR: 'op.floor',
     OP_CEILING: 'op.ceiling',
