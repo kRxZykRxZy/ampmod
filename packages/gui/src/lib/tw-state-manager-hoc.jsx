@@ -14,10 +14,9 @@ import {setSearchParams} from './tw-navigation-utils';
 import {defaultStageSize} from '../reducers/custom-stage-size';
 import lsNamespace from './amp-localstorage-namespace';
 import { sizePresets } from '../components/tw-settings-modal/settings-modal';
+import { APP_NAME } from '@ampmod/branding';
 
 const isStandalone = process.env.NODE_ENV === "standalone";
-
- 
 
 const messages = defineMessages({
     invalidFPS: {
@@ -466,9 +465,9 @@ const TWStateManager = function (WrappedComponent) {
                     searchParams.delete('caseSensitive');
                 }
 
-                if (compilerOptions.enabled) {
+                /* if (compilerOptions.enabled) {
                     searchParams.delete('nocompile');
-                }
+                } */
 
                 if (this.props.isPlayerOnly) {
                     if (compilerOptions.warpTimer) {

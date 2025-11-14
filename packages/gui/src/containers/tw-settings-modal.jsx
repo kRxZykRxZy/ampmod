@@ -131,7 +131,7 @@ class UsernameModal extends React.Component {
                 onWarpTimerChange={this.handleWarpTimerChange}
                 onStageWidthChange={this.handleStageWidthChange}
                 onStageHeightChange={this.handleStageHeightChange}
-                onDisableCompilerChange={this.handleDisableCompilerChange}
+                // onDisableCompilerChange={this.handleDisableCompilerChange}
                 stageWidth={this.props.customStageSize.width}
                 stageHeight={this.props.customStageSize.height}
                 customStageSizeEnabled={
@@ -188,7 +188,7 @@ const mapStateToProps = state => ({
     caseSensitivity: state.scratchGui.tw.runtimeOptions.caseSensitivity,
     warpTimer: state.scratchGui.tw.compilerOptions.warpTimer,
     customStageSize: state.scratchGui.customStageSize,
-    disableCompiler: !state.scratchGui.tw.compilerOptions.enabled
+    disableCompiler: false
 });
 
 const mapDispatchToProps = dispatch => ({
