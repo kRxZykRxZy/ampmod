@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
 import {connect} from 'react-redux';
-
+import React from 'react';
 import {MenuItem} from '../menu/menu.jsx';
 import {GUI_DARK, GUI_LIGHT, Theme} from '../../lib/themes/index.js';
 import {closeSettingsMenu} from '../../reducers/menus.js';
