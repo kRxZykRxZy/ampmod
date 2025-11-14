@@ -14,10 +14,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {APP_BLOG, APP_FORUMS, APP_NAME, APP_SOURCE, APP_WIKI} from '@ampmod/branding';
-import LangSelect from './lang-select';
-import styles from './footer.css';
-import Localise from '../localise/localise';
+import React from "react";
+import {
+    APP_BLOG,
+    APP_FORUMS,
+    APP_NAME,
+    APP_SOURCE,
+    APP_WIKI,
+} from "@ampmod/branding";
+import LangSelect from "./lang-select.jsx";
+import styles from "./footer.css";
+import Localise from "../localise/localise.jsx";
 
 const Footer = () => {
     const isAprilFools = () => {

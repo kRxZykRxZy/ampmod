@@ -7,6 +7,7 @@ import './minor-pages.css';
 import render from '../../playground/app-target.js';
 import {applyGuiColors} from '../../lib/themes/guiHelpers.js';
 import {detectTheme} from '../../lib/themes/themePersistance.js';
+import React from "react";
 
 applyGuiColors(detectTheme());
 document.documentElement.lang = 'en';

@@ -1,9 +1,9 @@
-import {useEffect, useState} from 'react';
-import styles from '../../design.css';
-import myStyles from './hero.css';
-import WelcomeBanner from '../../../components/amp-welcome/welcome-banner.svg';
-import * as Bowser from 'bowser';
-import Localise from '../localise/localise';
+import React, { useEffect, useState } from "react";
+import styles from "../../design.css";
+import myStyles from "./hero.css";
+import WelcomeBanner from "../../../components/amp-welcome/welcome-banner.svg";
+import * as Bowser from "bowser";
+import Localise from "../localise/localise.jsx";
 
 export default () => {
     const [isPhone, setIsPhone] = useState(false);

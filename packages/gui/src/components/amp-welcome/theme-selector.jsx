@@ -1,7 +1,8 @@
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import {FormattedMessage, defineMessages} from 'react-intl';
-import {connect} from 'react-redux';
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import React from "react";
+import { FormattedMessage, defineMessages } from "react-intl";
+import { connect } from "react-redux";
 
 import check from '../../lib/assets/icon--success.svg';
 import {

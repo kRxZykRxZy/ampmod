@@ -137,7 +137,6 @@ const base = {
                         target: 'es2022',
                         transform: {
                             react: {
-                                runtime: 'automatic',
                                 pragma: 'React.createElement',
                                 pragmaFrag: 'React.Fragment',
                                 throwIfNamespace: true,

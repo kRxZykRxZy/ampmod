@@ -1,5 +1,5 @@
 import '../../playground/import-first.js';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './examples.css';
 import homeStyles from '../home/home.css';
 import Box from '../../components/box/box.jsx';

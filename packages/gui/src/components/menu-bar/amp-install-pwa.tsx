@@ -1,7 +1,12 @@
-import {FormattedMessage} from 'react-intl';
-import {MenuItem} from '../menu/menu.jsx';
-import styles from './settings-menu.css';
-import {notScratchDesktop} from '../../lib/isScratchDesktop.js';
+import PropTypes from "prop-types";
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import { connect } from "react-redux";
+
+import { MenuItem } from "../menu/menu.jsx";
+import { closeSettingsMenu } from "../../reducers/menus.js";
+import styles from "./settings-menu.css";
+import { notScratchDesktop } from "../../lib/isScratchDesktop.js";
 
 let showPwaButton = false;
 // @ts-ignore

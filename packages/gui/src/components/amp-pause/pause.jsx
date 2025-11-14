@@ -1,5 +1,6 @@
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import React from "react";
 
 import pauseIcon from './pause.svg';
 import playIcon from './play.svg';

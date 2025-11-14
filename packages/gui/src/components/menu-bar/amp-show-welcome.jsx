@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types';
-import {FormattedMessage} from 'react-intl';
-import {connect} from 'react-redux';
+import PropTypes from "prop-types";
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import { connect } from "react-redux";
 
 import {MenuItem} from '../menu/menu.jsx';
 import {openWelcomeModal} from '../../reducers/modals';

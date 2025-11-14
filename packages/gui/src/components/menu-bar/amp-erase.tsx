@@ -1,3 +1,4 @@
+import React from "react";
 import {FormattedMessage} from 'react-intl';
 import {MenuItem} from '../menu/menu.jsx';
 import errorIcon from './tw-error.svg';

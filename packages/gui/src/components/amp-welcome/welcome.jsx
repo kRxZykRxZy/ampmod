@@ -1,13 +1,13 @@
-import {useState} from 'react';
-import PropTypes from 'prop-types';
-import {FormattedMessage, injectIntl, intlShape} from 'react-intl';
-import ReactModal from 'react-modal';
-import Box from '../box/box.jsx';
-import styles from './welcome.css';
-import {APP_NAME} from '@ampmod/branding';
-import CloseButton from '../close-button/close-button.jsx';
-import ThemeSelector from './theme-selector.jsx';
-import AccentSelector from './accent-selector.jsx';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { FormattedMessage, injectIntl, intlShape } from "react-intl";
+import ReactModal from "react-modal";
+import Box from "../box/box.jsx";
+import styles from "./welcome.css";
+import { APP_NAME } from "@ampmod/branding";
+import CloseButton from "../close-button/close-button.jsx";
+import ThemeSelector from "./theme-selector.jsx";
+import AccentSelector from "./accent-selector.jsx";
 
 const Welcome = ({intl, isRtl, onContinue}) => {
     const [stepIndex, setStepIndex] = useState(0);

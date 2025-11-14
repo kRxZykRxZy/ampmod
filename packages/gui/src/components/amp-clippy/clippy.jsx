@@ -1,6 +1,6 @@
-import {useState, useEffect} from 'react';
-import clippyImage from './clippy.svg';
-import styles from './clippy.css';
+import React, { useState, useEffect } from "react";
+import clippyImage from "./clippy.svg";
+import styles from "./clippy.css";
 
 const ClippyComponent = ({isFixed, messageSet}) => {
     const messageSets = {
