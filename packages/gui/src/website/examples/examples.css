@@ -1,6 +1,10 @@
 @import '../../css/colors.css';
 @import '../../css/units.css';
 
+:global(:root) {
+    --driver-overlay-colour: $ui-modal-overlay;
+}
+
 .examples-row {
     display: flex;
     flex-wrap: wrap;
@@ -68,7 +72,7 @@
     margin: auto;
 }
 
-:global(.ReactModal__Body--open) {
+:global(.ReactModal__Body--open), :global(.driver-active) {
     overflow: hidden;
 }
 
@@ -77,4 +81,19 @@
     background-color: #ff525240;
     padding: 8px;
     border-radius: 4px;
+}
+
+.popover {
+    color: white !important;
+    background-color: $sound-primary !important;
+
+    :global(.driver-popover-description) {
+        font-family: "Inter Variable", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    :global(.driver-popover-arrow-side-bottom) {
+        border-bottom-color: $sound-primary !important;
+    }
 }

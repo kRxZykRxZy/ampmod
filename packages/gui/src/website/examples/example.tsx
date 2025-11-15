@@ -1,5 +1,5 @@
 import '../../playground/import-first.js';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef, Ref, RefObject } from 'react';
 import styles from './examples.css';
 import homeStyles from '../home/home.css';
 import Box from '../../components/box/box.jsx';
@@ -24,9 +24,10 @@ interface ExampleProps {
   img?: string;
   id: ExampleID;
   by?: string;
+  onClick?: () => void;
 }
 
-const ExampleModal: React.FC<ExampleModalProps> = (props) => {
+const ExampleModal: React.FC<ExampleModalProps> = (props: ExampleModalProps) => {
     const [downloadLink, setDownloadLink] = useState<DownloadLink>(null);
 
     useEffect(() => {
@@ -94,12 +95,12 @@ const ExampleModal: React.FC<ExampleModalProps> = (props) => {
     );
 };
 
-const Example: React.FC<ExampleProps> = (props) => {
+const Example: React.FC<ExampleProps> = forwardRef<HTMLDivElement, ExampleProps>((props: ExampleProps, ref) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
         <>
-            <div className={styles.example} onClick={() => setIsOpen(true)}>
+            <div className={styles.example} onClick={() => {props.onClick?.(); setIsOpen(true)}} ref={ref}>
                 <img className={styles.exampleThumbnail} src={props.img} draggable={false} />
                 <div className={styles.exampleContent}>
                     <div className={styles.exampleTitle}>
@@ -116,6 +117,6 @@ const Example: React.FC<ExampleProps> = (props) => {
             {isOpen && <ExampleModal {...props} onCancel={() => setIsOpen(false)} isSupported={true} />}
         </>
     );
-};
+});
 
 export default Example;

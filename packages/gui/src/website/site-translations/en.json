@@ -87,6 +87,8 @@
     "examples.apz.griffpatch.description": "{APP_NAME}'s Box2D extension allows you to add 2-dimensional physics to your games.",
     "examples.apz.battery": "What's my battery on?",
     "examples.apz.battery.description": "The Battery extension can get the battery percentage of your device.",
+    "examples.apz.101": "AmpMod 101",
+    "examples.apz.101.description": "Check out this project featuring demonstrations of AmpMod's capabilities!",
 
     "faq.title": "Frequently Asked Questions",
 

@@ -11,6 +11,15 @@ type ExampleMeta = {
 };
 
 const examples: Record<string, ExampleMeta> = {
+    "101": {
+        id: '101',
+        by: 'AmpMod',
+        img: require("./images/ampmod101.svg"),
+        loader: () =>
+            import(
+                /* webpackChunkName: "examples-apz-101" */ './101.apz?bytes'
+            ).then(module => module.default as unknown as ArrayBuffer)
+    },
     griffpatch: {
         id: 'griffpatch',
         by: 'DNin01',
