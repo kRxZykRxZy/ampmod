@@ -1,6 +1,5 @@
 // This is plain JS for the sake of saving a lot of megabytes from the React bundle,
 // since we inline our js into the 404 page.
-import '@fontsource/inter';
 import {APP_FORUMS, APP_NAME} from '@ampmod/branding';
 import {applyGuiColors} from '../lib/themes/guiHelpers';
 import {detectTheme} from '../lib/themes/themePersistance';
