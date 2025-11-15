@@ -135,7 +135,7 @@ const base = {
                             decorators: false,
                             dynamicImport: true
                         },
-                        target: 'es2022',
+                        target: process.env.NODE_ENV === 'production' ? 'es2022' : 'esnext',
                         transform: {
                             react: {
                                 pragma: 'React.createElement',

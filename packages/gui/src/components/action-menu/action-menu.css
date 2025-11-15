@@ -136,7 +136,6 @@ button::-moz-focus-inner {
 */
 .tooltip {
     background-color: $extensions-primary !important;
-    opacity: 1 !important;
     border: 1px solid hsla(0, 0%, 0%, 0.1) !important;
     box-shadow: 0 0 0.5rem hsla(0, 0%, 0%, 0.25) !important;
     font-family: Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
