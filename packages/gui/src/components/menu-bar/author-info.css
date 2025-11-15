@@ -2,7 +2,7 @@
 @import '../../css/units.css';
 
 .author-info {
-    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, sans-serif;
+    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, sans-serif;
     display: flex;
     justify-content: flex-start;
     align-items: center;

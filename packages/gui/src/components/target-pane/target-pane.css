@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: row;
     flex-grow: 1;
-    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .stage-selector-wrapper {

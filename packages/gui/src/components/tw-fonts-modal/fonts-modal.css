@@ -59,7 +59,7 @@
 }
 .open-button-text-main {
     font-weight: bold;
-    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, sans-serif;
+    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, sans-serif;
     font-size: 1.2rem;
 }
 .open-button-text-sub {
@@ -97,7 +97,7 @@
     height: 1.5rem;
     cursor: pointer;
     transition: 0.1s ease;
-    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, sans-serif;
+    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, sans-serif;
 }
 .font-dropdown-item:hover {
     background-color: $looks-secondary;
@@ -115,7 +115,7 @@
     font-size: 1.5rem;
     border: 1px solid $ui-black-transparent;
     border-radius: 0.25rem;
-    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, sans-serif;
+    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 .button {
@@ -188,7 +188,7 @@
     font-size: 2rem;
     margin-bottom: 0.5rem;
     overflow-wrap: anywhere;
-    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, sans-serif;
+    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 .manage-font-buttons {

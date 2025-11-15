@@ -134,7 +134,7 @@
     border-radius: $roundedness;
     user-select: none;
 
-    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     overflow: hidden;
 }
 
@@ -179,7 +179,7 @@ $sides: 20rem;
     color: $ui-modal-header-foreground;
     border-bottom: 1px $menu-bar-bottom-border solid;
 
-    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 1rem;
     font-weight: normal;
 }
@@ -212,7 +212,7 @@ $sides: 20rem;
     user-select: none;
     letter-spacing: 0.4px;
     cursor: default;
-    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 1.2rem;
     font-weight: bold;
     justify-content: center;

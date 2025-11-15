@@ -4,7 +4,7 @@
 
 .sprite-info {
     padding: 0.75rem;
-    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: $ui-white;
     color: $text-primary;
     border-top-left-radius: $roundedness;
