@@ -4,7 +4,7 @@
 
 .page-wrapper {
     height: 100%;
-    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     display: flex;
     flex-direction: column;
 }
@@ -65,7 +65,7 @@
     flex-shrink: 0;
     gap: $margin;
 
-    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 500;
     font-size: 0.8rem;
 
@@ -103,7 +103,7 @@
         font-weight 0.3s,
         padding 0.3s;
 
-    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 @media (prefers-reduced-motion: reduce) {

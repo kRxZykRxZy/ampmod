@@ -1,7 +1,6 @@
 import {Theme} from '.';
 import AddonHooks from '../../addons/hooks';
 import './global-styles.css';
-import '@fontsource/inter';
 
 const BLOCK_COLOR_NAMES = [
     // Corresponds to the name of the object in blockColors

@@ -13,7 +13,7 @@
     max-width: 160px;
     margin: $margin;
     padding: 1rem 1rem 0 1rem;
-    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: $text-primary;
     background: $ui-white;
     border-radius: $roundedness;

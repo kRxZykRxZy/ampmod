@@ -20,7 +20,7 @@
 body {
     background-color: $page-background;
     color: $page-foreground;
-    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     margin: 0;
 }
 

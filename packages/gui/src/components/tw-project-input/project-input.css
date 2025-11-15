@@ -9,7 +9,7 @@
     opacity: 0.5;
     background-color: transparent;
     color: inherit;
-    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .input:focus {
     opacity: 1;
@@ -23,7 +23,7 @@
     background-color: $extensions-primary !important;
     border: 1px solid $ui-black-transparent !important;
     box-shadow: 0 0 0.5rem $shadow !important;
-    font-family: 'Inter Variable', Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     z-index: $z-index-menu-bar !important;
 }
 
