@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../design.css";
 import myStyles from "./hero.css";
-import WelcomeBanner from "../../../components/amp-welcome/welcome-banner.svg";
+import WelcomeBanner from "./image.png";
 import * as Bowser from "bowser";
 import Localise from "../localise/localise.jsx";
+import classNames from "classnames";
 
 export default () => {
     const [isPhone, setIsPhone] = useState(false);
@@ -15,39 +16,43 @@ export default () => {
     }, []);
 
     return (
-        <header className={styles.headerContainer}>
-            <div className={myStyles.headerContainerContainer}>
-                <div className={myStyles.headerContent}>
-                    <h1 className={styles.headerText}>
-                        <Localise id="appSlogan" />
-                    </h1>
+        <>
+            <header className={classNames([styles.headerContainer, myStyles.headerContainer])}>
+                <div className={myStyles.headerContainerContainer}>
+                    <div className={myStyles.headerContent}>
+                        <h1 className={styles.headerText}>
+                            <Localise id="appSlogan" />
+                        </h1>
 
-                    {process.env.ampmod_mode === 'canary' && (
-                        <>
-                            <strong>
-                                <Localise id="hero.canaryWarning" />
-                            </strong>
-                        </>
-                    )}
-
-                    <div className={styles.spacing}></div>
-                    <div className={myStyles.buttonRow}>
-                        {!isPhone && (
-                            <a href="editor.html" className={myStyles.primaryButton}>
-                                <Localise id="hero.create" />
-                            </a>
+                        {process.env.ampmod_mode === 'canary' && (
+                            <>
+                                <strong>
+                                    <Localise id="hero.canaryWarning" />
+                                </strong>
+                            </>
                         )}
-                        <a href="examples.html" className={myStyles.primaryButton}>
-                            <Localise id="hero.examples" />
-                        </a>
-                    </div>
-                    <div className={styles.spacing}></div>
-                </div>
 
-                <div className={myStyles.headerImage}>
-                    <img src={WelcomeBanner} alt="Welcome Banner" />
+                        <div className={styles.spacing}></div>
+                        <div className={myStyles.buttonRow}>
+                            {!isPhone && (
+                                <a href="editor.html" className={myStyles.primaryButton}>
+                                    <Localise id="hero.create" />
+                                </a>
+                            )}
+                            <a href="examples.html" className={myStyles.primaryButton}>
+                                <Localise id="hero.examples" />
+                            </a>
+                        </div>
+                    </div>
+
+                    <div className={myStyles.headerImage}>
+                        <div className={myStyles.ledOverlay} />
+                        <img src={WelcomeBanner} height={500} alt="An image of the AmpMod programming interface, with a project featuring a dango in the center, a navigation bar at the top for selecting different demos with Mode 2 currently selected, and a block falling from the dango." />
+                    </div>
+                    <div className={myStyles.laptopKeyboard}></div>
                 </div>
-            </div>
-        </header>
+            </header>
+            <div className={myStyles.headerBottomBump} />
+        </>
     );
 };

@@ -1,0 +1,13 @@
+# Everything goes to CoreTeam.
+* @ampmod/CoreTeam
+
+# Example projects and assets belong to ct
+packages/gui/src/lib/examples @ampmod/CreativeTeam
+packages/gui/src/lib/libaries/extensions/*/* @ampmod/CreativeTeam
+
+# Temporary until aw3 is ready
+packages/gui/src/website @ampmod/aw3
+
+# Extensions belong to ex reviewer even though extensions normally shouldn't belong
+# here. We might make rare exceptions though.
+packages/vm/src/extensions @ampmod/ExtensionReviewer

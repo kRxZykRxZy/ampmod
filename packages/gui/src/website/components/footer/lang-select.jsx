@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import lsNamespace from "../../../lib/amp-localstorage-namespace";
 import locales from "@turbowarp/scratch-l10n";
 import styles from "./footer.css";
+import classNames from "classnames";
+import icon from "./language-icon.svg";
 
 const LANGUAGE_KEY = `${lsNamespace}language`;
 
@@ -54,11 +56,14 @@ const LanguageSelect = () => {
     return (
         <div className={styles.customDropdown} ref={dropdownRef}>
             <button
-                className={styles.dropdownToggle}
+                className={classNames(styles.dropdownToggle, open && styles.open)}
                 onClick={() => setOpen(prev => !prev)}
                 aria-label="Select language"
             >
-                {locales[currentLocale]?.name || currentLocale}
+                <div style={{display: "flex", gap: "6px", alignItems: "center"}}>
+                    <img src={icon} height={24} alt={"Language selection"} draggable={false} />
+                    {locales[currentLocale]?.name || currentLocale}
+                </div>
             </button>
             {open && (
                 <ul className={styles.dropdownMenu}>

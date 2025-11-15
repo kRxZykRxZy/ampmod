@@ -1,5 +1,6 @@
 @import '../../../css/colors.css';
-@import '../../../css/default-colors.css';
+@import '../../../css/units.css';
+@import '../../../css/filters.css';
 
 .footer {
     padding: 10px 0;
@@ -62,10 +63,9 @@
 .dropdownToggle {
     width: 100%;
     padding: 8px 12px;
-    border-radius: 4px;
-    color: white;
-    background: $motion-primary;
-    border: 1px solid $ui-black-transparent-default;
+    border-radius: $roundedness;
+    background: $ui-secondary;
+    border: 1px solid $ui-black-transparent;
     cursor: pointer;
     text-align: left;
     display: flex;
@@ -75,14 +75,36 @@
 }
 
 .dropdownToggle::after {
-    content: '▼'; /* arrow icon */
-    font-size: 0.7em;
-    margin-left: 0.5em;
-    transition: transform 0.2s ease;
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0.6em;
+    height: 0.6em;
+    transform: translateY(-50%);
+    margin-inline-end: 1rem;
+
+    /* The magic triangle */
+    background: currentColor; /* makes it match text color */
+    clip-path: polygon(
+        50% 100%, /* bottom center */
+        0 0,      /* top left */
+        100% 0    /* top right */
+    );
+}
+[dir=rtl] .dropdownToggle::after {
+    right: unset;
+    left: 0;
 }
 
+.dropdownToggle.open {
+    background: $ui-tertiary;
+}
 .dropdownToggle.open::after {
-    transform: rotate(180deg); /* flip when open */
+    transform: rotate(180deg) translateY(55%); /* flip when open */
+}
+.dropdownToggle img {
+    filter: $filter-icon-black;
 }
 
 .dropdownMenu {
@@ -90,10 +112,10 @@
     bottom: 100%; /* dropdown opens above */
     left: 0;
     width: 100%;
-    color: white;
-    background: $motion-primary;
-    border: 1px solid $ui-black-transparent-default;
-    border-radius: 4px;
+    color: $menu-bar-foreground;
+    background: $menu-bar-background;
+    border: 1px solid $menu-bar-hover;
+    border-radius: $roundedness;
     margin-bottom: 2px;
     max-height: 400px;
     overflow-y: auto;
@@ -112,6 +134,7 @@
     font-weight: bold;
     padding-inline-start: 24px;
     position: relative;
+    transition: background-color .2s;
 }
 
 .dropdownItem::before {
@@ -122,8 +145,8 @@
     transform: translateY(-50%) rotate(45deg); /* rotate to get the checkmark angle */
     width: 6px;
     height: 12px;
-    border-bottom: 2px solid white;
-    border-right: 2px solid white;
+    border-bottom: 2px solid $menu-bar-foreground;
+    border-right: 2px solid $menu-bar-foreground;
     opacity: 0;
 }
 
@@ -132,5 +155,5 @@
 }
 
 .dropdownItem:hover {
-    background: $ui-black-transparent-default;
+    background: $menu-bar-hover;
 }

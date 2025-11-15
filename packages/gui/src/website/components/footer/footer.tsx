@@ -113,11 +113,11 @@ const Footer = () => {
                         <h3>
                             <Localise id="footer.heading.resources" />
                         </h3>
-                        <a href="https://ampmod.codeberg.page/extensions/">
-                            <Localise id="tw.footer.extensions" />
-                        </a>
                         <a href="https://ampmod.codeberg.page/manual/">
                             <Localise id="tw.footer.manual" />
+                        </a>
+                        <a href="https://ampmod.codeberg.page/extensions/">
+                            <Localise id="tw.footer.extensions" />
                         </a>
                         <a href={APP_SOURCE}>
                             <Localise id="tw.code" />
@@ -131,9 +131,9 @@ const Footer = () => {
                                 <Localise id="amp.canary" />
                             </a>
                         )}
-                        <a href="https://docs.turbowarp.org/url-parameters">
+                        {/* <a href="https://docs.turbowarp.org/url-parameters">
                             <Localise id="tw.footer.parameters" />
-                        </a>
+                        </a> */}
                     </div>
                     <div className={styles.footerSection}>
                         <h3>
