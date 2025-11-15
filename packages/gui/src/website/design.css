@@ -16,8 +16,9 @@
     body {
         margin: 0;
         padding: 0;
-        background: $page-background;
+        background: $page-background !important;
         color: $page-foreground;
+        min-height: 100vh;
 
         a {
             color: $link-color;
