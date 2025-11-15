@@ -12,6 +12,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { SwcMinifyWebpackPlugin } = require('swc-minify-webpack-plugin');
 const HtmlInlineScriptPlugin = require('html-inline-script-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
 const {APP_NAME, APP_SLOGAN, APP_DESCRIPTION, APP_SOURCE} = require('@ampmod/branding');
@@ -151,8 +152,9 @@ const base = {
             },
             {
                 test: /\.css$/i,
+                resourceQuery: /^(?!basic$).*/,
                 use: [
-                    'style-loader',
+                    MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                         options: {
@@ -168,48 +170,15 @@ const base = {
                         loader: 'postcss-loader',
                         options: {
                             postcssOptions: {
-                            plugins: [
-                                require('postcss-import'),
-                                require('postcss-simple-vars'),
-                                require('postcss-nesting'),
-                                require('autoprefixer'),
-                                ...(process.env.NODE_ENV === 'production'
-                                    ? [require('cssnano')({ preset: 'default' })]
-                                    : [])
-                            ]
-                            }
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.sss$/i,
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: {
-                                namedExport: false,
-                                localIdentName: '[name]_[local]_[hash:base64:5]',
-                                exportLocalsConvention: 'camelCaseOnly'
-                            },
-                            importLoaders: 1
-                        }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            postcssOptions: {
-                                parser: "sugarss",
                                 plugins: [
                                     require('postcss-import'),
                                     require('postcss-simple-vars'),
                                     require('postcss-nesting'),
-                                    require('autoprefixer'),
+                                    require('postcss-preset-env'),
                                     ...(process.env.NODE_ENV === 'production'
                                         ? [require('cssnano')({ preset: 'default' })]
-                                        : [])
+                                        : []),
+                                    require('@csstools/postcss-bundler'),
                                 ]
                             }
                         }
@@ -302,6 +271,18 @@ const base = {
         new webpack.ProvidePlugin({
             Buffer: ["buffer", "Buffer"],
         }),
+        new MiniCssExtractPlugin({
+            filename:
+                process.env.NODE_ENV === 'production'
+                    ? `css/${CACHE_EPOCH}/[contenthash].css`
+                    : 'css/[name].css',
+            chunkFilename:
+                process.env.NODE_ENV === 'production'
+                    ? `css/${CACHE_EPOCH}/[contenthash].css`
+                    : 'css/[id].css',
+            ignoreOrder: true,
+            runtime: true,
+        })
     ],
 };
 
