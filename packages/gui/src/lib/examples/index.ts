@@ -16,9 +16,8 @@ const examples: Record<string, ExampleMeta> = {
         by: 'AmpMod',
         img: require("./images/ampmod101.svg"),
         loader: () =>
-            import(
-                /* webpackChunkName: "examples-apz-101" */ './101.apz?bytes'
-            ).then(module => module.default as unknown as ArrayBuffer)
+            // @ts-ignore
+            alert("Not implemented"),
     },
     griffpatch: {
         id: 'griffpatch',
