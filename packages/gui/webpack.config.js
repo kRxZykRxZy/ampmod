@@ -97,10 +97,10 @@ const base = {
         library: "GUI",
         filename:
             process.env.NODE_ENV === "production"
-                ? `js/${CACHE_EPOCH}/[contenthash].js`
+                ? `js/${CACHE_EPOCH}/[name].[contenthash].js`
                 : "js/[name].js",
         chunkFilename:
-            process.env.NODE_ENV === 'production' ? `js/${CACHE_EPOCH}/[contenthash].js` : 'js/[name].js',
+            process.env.NODE_ENV === 'production' ? `js/${CACHE_EPOCH}/[name].[contenthash].js` : 'js/[name].js',
         publicPath: root
     },
     resolve: {
@@ -274,11 +274,11 @@ const base = {
         new MiniCssExtractPlugin({
             filename:
                 process.env.NODE_ENV === 'production'
-                    ? `css/${CACHE_EPOCH}/[contenthash].css`
+                    ? `css/${CACHE_EPOCH}/[name].[contenthash].css`
                     : 'css/[name].css',
             chunkFilename:
                 process.env.NODE_ENV === 'production'
-                    ? `css/${CACHE_EPOCH}/[contenthash].css`
+                    ? `css/${CACHE_EPOCH}/[name].[contenthash].css`
                     : 'css/[id].css',
             ignoreOrder: true,
             runtime: true,
