@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import {defineMessages, injectIntl, intlShape, FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactTooltip from 'react-tooltip';
+import { Tooltip } from 'react-tooltip';
 
 import styles from './coming-soon.css';
 
@@ -31,23 +31,27 @@ const messages = defineMessages({
 class ComingSoonContent extends React.Component {
     constructor(props) {
         super(props);
-        bindAll(this, ['setHide', 'setShow', 'getRandomMessage']);
+        bindAll(this, ['getRandomMessage']);
         this.state = {
             isShowing: false
         };
     }
+
     setShow() {
         // needed to set the opacity to 1, since the default is .9 on show
         this.setState({isShowing: true});
     }
+
     setHide() {
         this.setState({isShowing: false});
     }
+
     getRandomMessage() {
-        // randomly chooses a messages from `messages` to display in the tooltip.
+        // randomly chooses a message from `messages` to display in the tooltip.
         const images = [awwCatIcon, coolCatIcon];
         const messageNumber = Math.floor(Math.random() * Object.keys(messages).length) + 1;
         const imageNumber = Math.floor(Math.random() * Object.keys(images).length);
+
         return (
             <FormattedMessage
                 {...messages[`message${messageNumber}`]}
@@ -61,20 +65,24 @@ class ComingSoonContent extends React.Component {
             />
         );
     }
+
     render() {
+        const { className, place } = this.props;
+
         return (
-            <ReactTooltip
-                afterHide={this.setHide}
-                afterShow={this.setShow}
-                className={classNames(styles.comingSoon, this.props.className, {
+            <Tooltip
+                className={classNames(styles.comingSoon, className, {
                     [styles.show]: this.state.isShowing,
-                    [styles.left]: this.props.place === 'left',
-                    [styles.right]: this.props.place === 'right',
-                    [styles.top]: this.props.place === 'top',
-                    [styles.bottom]: this.props.place === 'bottom'
+                    [styles.left]: place === 'left',
+                    [styles.right]: place === 'right',
+                    [styles.top]: place === 'top',
+                    [styles.bottom]: place === 'bottom'
                 })}
-                getContent={this.getRandomMessage}
-                id={this.props.tooltipId}
+                place={place}
+                // v5 uses `content` instead of `getContent`
+                content={this.getRandomMessage()}
+                onShow={this.setShow.bind(this)}
+                onHide={this.setHide.bind(this)}
             />
         );
     }
@@ -83,8 +91,7 @@ class ComingSoonContent extends React.Component {
 ComingSoonContent.propTypes = {
     className: PropTypes.string,
     intl: intlShape,
-    place: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
-    tooltipId: PropTypes.string.isRequired
+    place: PropTypes.oneOf(['top', 'right', 'bottom', 'left'])
 };
 
 ComingSoonContent.defaultProps = {
@@ -93,19 +100,17 @@ ComingSoonContent.defaultProps = {
 
 const ComingSoon = injectIntl(ComingSoonContent);
 
+// Wrapper component
 const ComingSoonTooltip = props => (
     <div className={props.className}>
-        <div
-            data-delay-hide={props.delayHide}
-            data-delay-show={props.delayShow}
-            data-effect="solid"
-            data-for={props.tooltipId}
-            data-place={props.place}
-            data-tip="tooltip"
-        >
-            {props.children}
-        </div>
-        <ComingSoon className={props.tooltipClassName} place={props.place} tooltipId={props.tooltipId} />
+        <Tooltip
+            className={props.tooltipClassName}
+            place={props.place}
+            // v5 uses `content` instead of `data-tip`
+            content={props.children}
+            delayHide={props.delayHide}
+            delayShow={props.delayShow}
+        />
     </div>
 );
 
@@ -115,13 +120,13 @@ ComingSoonTooltip.propTypes = {
     delayHide: PropTypes.number,
     delayShow: PropTypes.number,
     place: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
-    tooltipClassName: PropTypes.string,
-    tooltipId: PropTypes.string.isRequired
+    tooltipClassName: PropTypes.string
 };
 
 ComingSoonTooltip.defaultProps = {
     delayHide: 0,
-    delayShow: 0
+    delayShow: 0,
+    place: 'bottom'
 };
 
-export {ComingSoon as ComingSoonComponent, ComingSoonTooltip};
+export { ComingSoon as ComingSoonComponent, ComingSoonTooltip };
