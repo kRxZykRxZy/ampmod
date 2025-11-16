@@ -345,6 +345,28 @@ module.exports = [
                         minChunks: 2,
                         priority: 35,
                         reuseExistingChunk: true
+                    },
+                    stylesEditor: {
+                        name: 'common-editor',
+                        type: 'css/mini-extract',
+                        chunks: chunk => ['editor', 'fullscreen', 'embed'].includes(chunk.name),
+                        enforce: true,
+                        minChunks: 2
+                    },
+                    stylesWebsite: {
+                        name: 'common-website',
+                        type: 'css/mini-extract',
+                        chunks: chunk =>
+                            ['home', 'minorpages', 'faq', 'examples-landing', 'credits', 'notfound'].includes(chunk.name),
+                        enforce: true,
+                        minChunks: 2
+                    },
+                    stylesGlobal: {
+                        name: 'common',
+                        type: 'css/mini-extract',
+                        chunks: 'all',
+                        enforce: true,
+                        minChunks: 4
                     }
                 }
             },
