@@ -88,12 +88,12 @@ const StageHeaderComponent = function (props) {
 
     if (isFullScreen || isEmbedded) {
         const settingsButton =
-            isEmbedded && enableSettingsButton ? (
+            !isEmbedded || enableSettingsButton ? (
                 <div className={classNames(styles.settingsButton, styles.unselectWrapper)}>
                     <Button className={styles.stageButton} onClick={onOpenSettings}>
                         <img
                             alt={props.intl.formatMessage(messages.openSettingsMessage)}
-                            className={styles.stageButtonIcon}
+                            className={styles.settingsButtonIcon}
                             draggable={false}
                             src={settingsIcon}
                             title={props.intl.formatMessage(messages.openSettingsMessage)}
@@ -145,6 +145,18 @@ const StageHeaderComponent = function (props) {
             </Box>
         );
     } else {
+        const settingsButton =
+                <div className={classNames(styles.settingsButton, styles.unselectWrapper)}>
+                    <Button className={styles.stageButton} onClick={onOpenSettings}>
+                        <img
+                            alt={props.intl.formatMessage(messages.openSettingsMessage)}
+                            className={styles.settingsButtonIcon}
+                            draggable={false}
+                            src={settingsIcon}
+                            title={props.intl.formatMessage(messages.openSettingsMessage)}
+                        />
+                    </Button>
+                </div>
         const stageControls = isPlayerOnly ? (
             []
         ) : (
@@ -200,6 +212,7 @@ const StageHeaderComponent = function (props) {
                         key="editor" // addons require the HTML element to be not be re-used by in-editor buttons
                     >
                         {stageControls}
+                        {settingsButton}
                         <div>
                             <Button className={styles.stageButton} onClick={onSetStageFullScreen}>
                                 <img

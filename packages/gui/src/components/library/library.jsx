@@ -306,7 +306,13 @@ class LibraryComponent extends React.Component {
                                             return <Separator key={`separator-${id}`} />;
                                         }
                                         if (tagProps['heading']) {
-                                            return <h4>{tagProps.heading}</h4>;
+                                            return (
+                                                <h4>
+                                                    {typeof tagProps.heading === 'string'
+                                                    ? tagProps.heading
+                                                    : this.props.intl.formatMessage(tagProps.heading)}
+                                                </h4>
+                                            );
                                         }
                                         return (
                                             <TagButton
