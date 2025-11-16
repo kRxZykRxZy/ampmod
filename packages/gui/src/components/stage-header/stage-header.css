@@ -85,12 +85,6 @@
     filter: $filter-icon-gray;
 }
 
-.settings-button-icon {
-    width: 100%;
-    height: 100%;
-    filter: $filter-icon-black;
-}
-
 [dir='rtl'] .stage-button-icon {
     transform: scaleX(-1);
 }
