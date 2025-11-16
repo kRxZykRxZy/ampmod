@@ -23,10 +23,6 @@
     stroke: $ui-black-transparent !important;
 }
 
-:global(html), :global(input) {
-    font-feature-settings: 'ss01' 1, 'cv05' 1, 'ss07' 1, 'ss08' 1, 'tnum' 1, 'dlig' 1;
-}
-
 /* ScratchAdddons editor-dark-mode compatibility */
 :root {
     --editorDarkMode-primary: $looks-secondary;
