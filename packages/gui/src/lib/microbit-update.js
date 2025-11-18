@@ -4,7 +4,9 @@ import keyMirror from 'keymirror';
 
 import log from './log.js';
 
-import hexUrl from '../generated/microbit-hex-url.cjs';
+// amp: Host the microbit firmware externally since the ST made it proprietary for whatever
+// reason.
+const hexUrl = "https://amp-mod.github.io/microbit-hex/scratch-microbit-1.2.0.hex";
 
 /**
  * @typedef {import('@microbit/microbit-universal-hex').IndividualHex} IndividualHex

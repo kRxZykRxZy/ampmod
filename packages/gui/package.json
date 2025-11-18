@@ -13,7 +13,6 @@
     "scripts": {
         "build": "webpack --bail",
         "clean": "rimraf ./build && mkdirp build && rimraf ./dist && mkdirp dist",
-        "prepare": "node scripts/prepublish.mjs",
         "i18n:push": "wlc push --project ampmod --component ampmod-editor-interface --file translations/en.json",
         "i18n:src": "rimraf ./translations/messages/src && babel src > tmp.js && rimraf tmp.js && build-i18n-src ./translations/messages/src ./translations/",
         "start": "webpack-dev-server",
