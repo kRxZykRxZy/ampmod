@@ -233,6 +233,7 @@ const base = {
                 process.env.DISABLE_SERVICE_WORKER || ""
             ),
             "process.env.ROOT": JSON.stringify(root),
+            "process.env.AW3": Boolean(process.env.AW3),
             "process.env.ROUTING_STYLE": JSON.stringify(
                 process.env.ROUTING_STYLE || "filehash"
             ),
