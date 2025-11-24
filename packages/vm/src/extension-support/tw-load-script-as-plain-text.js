@@ -1,4 +1,4 @@
-import * as SingleEntryPlugin from 'webpack/lib/SingleEntryPlugin';
+import SingleEntryPlugin from 'webpack/lib/SingleEntryPlugin.js';
 export const pitch = function (request) {
     // Technically this loader does work in other environments, but our use case does not want that.
     if (this.target !== 'web') {
@@ -7,6 +7,7 @@ export const pitch = function (request) {
     this.cacheable(false);
     const callback = this.async();
     const compiler = this._compilation.createChildCompiler('extension-worker', {});
+    compiler.options.target = 'webworker';
     new SingleEntryPlugin(this.context, `!!${request}`, 'extension-worker').apply(compiler);
     compiler.runAsChild((err, entries, compilation) => {
         if (err) {

@@ -1,6 +1,7 @@
 export const isWorker = true;
-export { self as centralDispatchService };
+const centralDispatchService = self;
+export {centralDispatchService};
 export default {
     isWorker,
-    centralDispatchService: self
+    centralDispatchService
 };

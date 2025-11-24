@@ -19,7 +19,7 @@ import 'canvas-toBlob';
 import {exportCostume} from './serialization/tw-costume-import-export.js';
 import Base64Util from './util/base64-util.js';
 import validate from 'scratch-parser';
-import scratchSb1Converter from 'scratch-sb1-converter';
+import {SB1File, ValidationError} from 'scratch-sb1-converter';
 import sb3 from './serialization/sb3.js';
 import sb2 from './serialization/sb2.js';
 import defaultExtensionURLs from './extension-support/tw-default-extension-urls.js';
@@ -421,7 +421,6 @@ class VirtualMachine extends EventEmitter {
                 resolve(res);
             });
         }).catch(error => {
-            const {SB1File, ValidationError} = scratchSb1Converter;
             try {
                 const sb1 = new SB1File(input);
                 const json = sb1.json;
