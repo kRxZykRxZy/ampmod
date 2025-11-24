@@ -31,6 +31,7 @@ if (process.env.ENABLE_SERVICE_WORKER) {
 
 const IS_CBP_BUILD = Boolean(process.env.IS_CBP_BUILD);
 const htmlWebpackPluginCommon = {
+    scriptLoading: 'module',
     root: root,
     meta: JSON.parse(process.env.EXTRA_META || '{}'),
     APP_NAME,
@@ -92,16 +93,21 @@ const base = {
             overlay: false,
         }
     },
+    experiments: {
+        futureDefaults: true,
+        css: false, // for now
+        outputModule: true,
+    },
     output: {
         clean: !process.env.CI,
-        library: "GUI",
         filename:
             process.env.NODE_ENV === "production"
                 ? `js/${CACHE_EPOCH}/[name].[contenthash].js`
                 : "js/[name].js",
         chunkFilename:
             process.env.NODE_ENV === 'production' ? `js/${CACHE_EPOCH}/[name].[contenthash].js` : 'js/[name].js',
-        publicPath: root
+        publicPath: root,
+        module: true
     },
     resolve: {
         symlinks: false,
@@ -228,6 +234,7 @@ const base = {
     },
     plugins: [
         new webpack.DefinePlugin({
+            "global": "globalThis",
             "process.env.DEBUG": Boolean(process.env.DEBUG),
             "process.env.DISABLE_SERVICE_WORKER": JSON.stringify(
                 process.env.DISABLE_SERVICE_WORKER || ""
@@ -519,8 +526,6 @@ module.exports = [
                   'standalone': ['./src/playground/amp-standalone-handler.jsx']
               },
               output: {
-                  library: 'AmpModStandalone',
-                  libraryTarget: 'umd',
                   filename: '[name].js',
                   chunkFilename: '[name].js',
                   path: path.resolve('standalone'),
