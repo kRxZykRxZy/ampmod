@@ -1,5 +1,6 @@
-module.exports = {
-    isWorker: true,
-    // centralDispatchService is the object to call postMessage() on to send a message to parent.
+export const isWorker = true;
+export { self as centralDispatchService };
+export default {
+    isWorker,
     centralDispatchService: self
 };
