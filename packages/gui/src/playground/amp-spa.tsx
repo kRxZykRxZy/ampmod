@@ -51,7 +51,7 @@ const RedirectWithParams: React.FC<{ to: string }> = ({ to }) => {
 
 render(
   <ErrorBoundary>
-    <Router basename={process.env.ROOT} future={{ v7_startTransition: true }}>
+    <Router basename={String(process.env.ROOT || '').replace(/\/+$/, "")} future={{ v7_startTransition: true }}>
       <Suspense fallback={
         <div className={styles.launching} />
       }>
