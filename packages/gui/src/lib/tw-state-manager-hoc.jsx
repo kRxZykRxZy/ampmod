@@ -96,6 +96,8 @@ class FileHashRouter extends HashRouter {
     }
 
     onpathchange() {
+        if (process.env.SPA) return;
+
         const pathName = location.pathname;
 
         if (pathName === this.editorPath || pathName === this.compat_playerPath) {
@@ -388,9 +390,9 @@ const TWStateManager = function (WrappedComponent) {
             }
 
             if (
-                this.props.reduxProjectId !== prevProps.reduxProjectId ||
+                !process.env.SPA && (this.props.reduxProjectId !== prevProps.reduxProjectId ||
                 this.props.isPlayerOnly !== prevProps.isPlayerOnly ||
-                this.props.isFullScreen !== prevProps.isFullScreen
+                this.props.isFullScreen !== prevProps.isFullScreen)
             ) {
                 const oldPath = `${location.pathname}${location.search}${location.hash}`;
                 const routerState = {

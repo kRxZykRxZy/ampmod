@@ -50,7 +50,7 @@ importers:
         version: 6.0.1(webpack-dev-server@5.2.2)(webpack@5.102.1)
       webpack-dev-server:
         specifier: ^5.2.2
-        version: 5.2.2(webpack-cli@6.0.1(webpack-dev-server@5.2.2)(webpack@5.102.1))(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1))
+        version: 5.2.2(webpack-cli@6.0.1)(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1))
       webpack-merge:
         specifier: ^6.0.1
         version: 6.0.1
@@ -336,6 +336,12 @@ importers:
       react-responsive:
         specifier: 5.0.0
         version: 5.0.0(react@16.14.0)
+      react-router:
+        specifier: ^6.30.2
+        version: 6.30.2(react@16.14.0)
+      react-router-dom:
+        specifier: ^6.30.2
+        version: 6.30.2(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
       react-string-replace:
         specifier: ^0.4.4
         version: 0.4.4
@@ -408,7 +414,7 @@ importers:
         version: 6.7.4
       '@pmmmwh/react-refresh-webpack-plugin':
         specifier: ^0.6.1
-        version: 0.6.1(@types/webpack@5.28.5(@swc/core@1.15.0)(webpack-cli@6.0.1))(react-refresh@0.18.0)(sockjs-client@1.6.1)(type-fest@0.21.3)(webpack-dev-server@5.2.2(webpack-cli@6.0.1(webpack-dev-server@5.2.2)(webpack@5.102.1))(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1)))(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1))
+        version: 0.6.1(@types/webpack@5.28.5(@swc/core@1.15.0)(webpack-cli@6.0.1))(react-refresh@0.18.0)(sockjs-client@1.6.1)(type-fest@0.21.3)(webpack-dev-server@5.2.2(webpack-cli@6.0.1)(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1)))(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1))
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.46.4
         version: 8.46.4(@typescript-eslint/parser@8.46.4(eslint@9.38.0(jiti@2.6.1))(typescript@3.9.10))(eslint@9.38.0(jiti@2.6.1))(typescript@3.9.10)
@@ -2809,6 +2815,10 @@ packages:
         optional: true
       webpack-plugin-serve:
         optional: true
+
+  '@remix-run/router@1.23.1':
+    resolution: {integrity: sha512-vDbaOzF7yT2Qs4vO6XV1MHcJv+3dgR1sT+l3B8xxOVhUC336prMvqrvsLL/9Dnw2xr6Qhz4J0dmS0llNAbnUmQ==}
+    engines: {node: '>=14.0.0'}
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
@@ -9971,6 +9981,19 @@ packages:
     peerDependencies:
       react: ^16.0.0
 
+  react-router-dom@6.30.2:
+    resolution: {integrity: sha512-l2OwHn3UUnEVUqc6/1VMmR1cvZryZ3j3NzapC2eUXO1dB0sYp5mvwdjiXhpUbRb21eFow3qSxpP8Yv6oAU824Q==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+
+  react-router@6.30.2:
+    resolution: {integrity: sha512-H2Bm38Zu1bm8KUE5NVWRMzuIyAV8p/JrOaBJAwVmp37AXG72+CZJlEBw6pdn9i5TBgLMhNDgijS4ZlblpHyWTA==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=16.8'
+
   react-string-replace@0.4.4:
     resolution: {integrity: sha512-FAMkhxmDpCsGTwTZg7p/2v+/GTmxAp73so3fbSvlAcBBX36ujiGRNEaM/1u+jiYQrArhns+7eE92g2pi5E5FUA==}
     engines: {node: '>=0.12.0'}
@@ -15085,7 +15108,7 @@ snapshots:
 
   '@pkgr/core@0.2.9': {}
 
-  '@pmmmwh/react-refresh-webpack-plugin@0.6.1(@types/webpack@5.28.5(@swc/core@1.15.0)(webpack-cli@6.0.1))(react-refresh@0.18.0)(sockjs-client@1.6.1)(type-fest@0.21.3)(webpack-dev-server@5.2.2(webpack-cli@6.0.1(webpack-dev-server@5.2.2)(webpack@5.102.1))(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1)))(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1))':
+  '@pmmmwh/react-refresh-webpack-plugin@0.6.1(@types/webpack@5.28.5(@swc/core@1.15.0)(webpack-cli@6.0.1))(react-refresh@0.18.0)(sockjs-client@1.6.1)(type-fest@0.21.3)(webpack-dev-server@5.2.2(webpack-cli@6.0.1)(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1)))(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1))':
     dependencies:
       anser: 2.3.2
       core-js-pure: 3.46.0
@@ -15099,7 +15122,9 @@ snapshots:
       '@types/webpack': 5.28.5(@swc/core@1.15.0)(webpack-cli@6.0.1)
       sockjs-client: 1.6.1(supports-color@6.1.0)
       type-fest: 0.21.3
-      webpack-dev-server: 5.2.2(webpack-cli@6.0.1(webpack-dev-server@5.2.2)(webpack@5.102.1))(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1))
+      webpack-dev-server: 5.2.2(webpack-cli@6.0.1)(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1))
+
+  '@remix-run/router@1.23.1': {}
 
   '@rtsao/scc@1.1.0': {}
 
@@ -15847,7 +15872,7 @@ snapshots:
       webpack: 5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1)
       webpack-cli: 6.0.1(webpack-dev-server@5.2.2)(webpack@5.102.1)
     optionalDependencies:
-      webpack-dev-server: 5.2.2(webpack-cli@6.0.1(webpack-dev-server@5.2.2)(webpack@5.102.1))(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1))
+      webpack-dev-server: 5.2.2(webpack-cli@6.0.1)(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1))
 
   '@xhmikosr/archive-type@7.1.0':
     dependencies:
@@ -24532,6 +24557,18 @@ snapshots:
       prop-types: 15.8.1
       react: 16.14.0
 
+  react-router-dom@6.30.2(react-dom@16.14.0(react@16.14.0))(react@16.14.0):
+    dependencies:
+      '@remix-run/router': 1.23.1
+      react: 16.14.0
+      react-dom: 16.14.0(react@16.14.0)
+      react-router: 6.30.2(react@16.14.0)
+
+  react-router@6.30.2(react@16.14.0):
+    dependencies:
+      '@remix-run/router': 1.23.1
+      react: 16.14.0
+
   react-string-replace@0.4.4:
     dependencies:
       lodash: 4.17.21
@@ -26329,7 +26366,7 @@ snapshots:
     transitivePeerDependencies:
       - bluebird
 
-  terser-webpack-plugin@5.3.14(@swc/core@1.15.0)(webpack@5.102.1):
+  terser-webpack-plugin@5.3.14(@swc/core@1.15.0)(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
@@ -26962,7 +26999,7 @@ snapshots:
       webpack: 5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1)
       webpack-merge: 6.0.1
     optionalDependencies:
-      webpack-dev-server: 5.2.2(webpack-cli@6.0.1(webpack-dev-server@5.2.2)(webpack@5.102.1))(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1))
+      webpack-dev-server: 5.2.2(webpack-cli@6.0.1)(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1))
 
   webpack-dev-middleware@3.7.3(webpack@4.47.0):
     dependencies:
@@ -27026,7 +27063,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  webpack-dev-server@5.2.2(webpack-cli@6.0.1(webpack-dev-server@5.2.2)(webpack@5.102.1))(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1)):
+  webpack-dev-server@5.2.2(webpack-cli@6.0.1)(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1)):
     dependencies:
       '@types/bonjour': 3.5.13
       '@types/connect-history-api-fallback': 1.5.4
@@ -27137,7 +27174,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.3
       tapable: 2.3.0
-      terser-webpack-plugin: 5.3.14(@swc/core@1.15.0)(webpack@5.102.1)
+      terser-webpack-plugin: 5.3.14(@swc/core@1.15.0)(webpack@5.102.1(@swc/core@1.15.0)(webpack-cli@6.0.1))
       watchpack: 2.4.4
       webpack-sources: 3.3.3
     optionalDependencies:
