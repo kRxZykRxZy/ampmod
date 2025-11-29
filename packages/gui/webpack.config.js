@@ -350,7 +350,7 @@ module.exports = [
             ...(process.env.SPA
                 ? [
                     new HtmlWebpackPlugin({
-                        template: 'src/playground/simple.ejs',
+                        template: 'src/playground/index.ejs',
                         filename: 'index.html',
                         title: `${APP_NAME} - ${APP_SLOGAN}`,
                         ...htmlWebpackPluginCommon
@@ -360,7 +360,7 @@ module.exports = [
                     new HtmlWebpackPlugin({
                         chunks: ['info', 'minorpages'],
                         title: `Privacy Policy - ${APP_NAME}`,
-                        template: 'src/playground/simple.ejs',
+                        template: 'src/playground/index.ejs',
                         filename: 'privacy.html',
                         skipSimpleAnalytics: true,
                         page: 'privacy',
@@ -403,7 +403,7 @@ module.exports = [
                         ? [
                                 new HtmlWebpackPlugin({
                                     chunks: ['info', 'home'],
-                                    template: 'src/playground/simple.ejs',
+                                    template: 'src/playground/index.ejs',
                                     filename: 'index.html',
                                     title: `${APP_NAME} - ${APP_SLOGAN}`,
                                     description: APP_DESCRIPTION,
@@ -413,7 +413,7 @@ module.exports = [
                         : []),
                     new HtmlWebpackPlugin({
                         chunks: ['info', 'minorpages'],
-                        template: 'src/playground/simple.ejs',
+                        template: 'src/playground/index.ejs',
                         filename: 'new-compiler.html',
                         title: `New compiler - ${APP_NAME}`,
                         description: `${APP_NAME} 0.3 includes a rewritten compiler to make projects run up to 2 times faster than in ${APP_NAME} 0.2.2.`,
@@ -422,7 +422,7 @@ module.exports = [
                     }),
                     new HtmlWebpackPlugin({
                         chunks: ['info', 'examples-landing'],
-                        template: 'src/playground/simple.ejs',
+                        template: 'src/playground/index.ejs',
                         filename: 'examples.html',
                         title: `Examples - ${APP_NAME}`,
                         description: `Example projects for ${APP_NAME}.`,
@@ -430,7 +430,7 @@ module.exports = [
                     }),
                     new HtmlWebpackPlugin({
                         chunks: ['info', 'faq'],
-                        template: 'src/playground/simple.ejs',
+                        template: 'src/playground/index.ejs',
                         filename: 'faq.html',
                         title: `FAQ - ${APP_NAME}`,
                         description: `Frequently asked questions about ${APP_NAME}.`,
@@ -445,7 +445,7 @@ module.exports = [
                     }),
                     new HtmlWebpackPlugin({
                         chunks: ['info', 'credits'],
-                        template: 'src/playground/simple.ejs',
+                        template: 'src/playground/index.ejs',
                         filename: 'credits.html',
                         title: `Credits - ${APP_NAME}`,
                         description: `Meet the development team of ${APP_NAME}.`,
@@ -453,7 +453,7 @@ module.exports = [
                     }),
                     new HtmlWebpackPlugin({
                         chunks: ['notfound'],
-                        template: 'src/playground/simple.ejs',
+                        template: 'src/playground/index.ejs',
                         filename: '404.html',
                         title: `Not Found - ${APP_NAME}`,
                         ...htmlWebpackPluginCommon
@@ -517,7 +517,7 @@ module.exports = [
                   new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
                   new HtmlWebpackPlugin({
                       chunks: ['standalone'],
-                      template: 'src/playground/simple.ejs',
+                      template: 'src/playground/index.ejs',
                       filename: `AmpMod-Standalone-${monorepoPackageJson.version}-EXPERIMENTAL.html`,
                       title: `${APP_NAME} - ${APP_SLOGAN}`,
                       isEditor: true,
