@@ -360,7 +360,7 @@ class JSGenerator {
         case InputOpcode.OP_LETTER_OF:
             return `((${this.descendInput(node.string)})[${this.descendInput(node.letter)} - 1] || "")`;
         case InputOpcode.OP_SUBSTRING:
-            return `(Array.from(${this.descendInput(node.string)}).slice(${this.descendInput(node.start)} - 1, ${this.descendInput(node.end)}).join("") || "")`;
+            return `(Array.from(${this.descendInput(node.string)}).slice(${this.descendInput(node.start)} - 1, ${this.descendInput(node.end)} - 1).join("") || "")`;
         case InputOpcode.OP_LOG_E:
             return `Math.log(${this.descendInput(node.value)})`;
         case InputOpcode.OP_LOG_10:

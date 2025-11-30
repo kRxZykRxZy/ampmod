@@ -681,7 +681,7 @@ const strings = function (isInitialSetup, isStage, targetId, colors) {
             </value>
             <value name="END">
                 <shadow type="math_whole_number">
-                    <field name="NUM">${apple.length + 1 + banana.length}</field>
+                    <field name="NUM">${apple.length + banana.length + 2}</field>
                 </shadow>
             </value>
             <value name="STRING">
