@@ -1,6 +1,16 @@
-import Cast from '../util/cast.js';
+const Cast = require('../util/cast');
+const Runtime = require('../engine/runtime');
 
 class AmpModArraysBlocks {
+    runtime: typeof Runtime;
+    constructor (runtime: any) {
+        /**
+         * The runtime instantiating this block package.
+         * @type {Runtime}
+         */
+        this.runtime = runtime;
+    }
+
     getPrimitives () {
         return {
             arrays_empty_array: this.emptyArray,
@@ -69,4 +79,4 @@ class AmpModArraysBlocks {
     }
 }
 
-export default AmpModArraysBlocks;
+module.exports = AmpModArraysBlocks;
