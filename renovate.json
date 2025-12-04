@@ -1,14 +1,13 @@
 {
-  "baseBranches": ["develop"],
-  "extends": ["config:base"],
+  "baseBranchPatterns": ["develop"],
+  "extends": ["config:recommended"],
   "automerge": true,
   "packageRules": [
     {
-      "packagePatterns": ["*"],
       "enabled": true,
       "automerge": true,
       "automergeType": "branch",
-      "schedule": ["before 9am on monday"]
+      "matchPackageNames": ["*"]
     }
   ],
   "prConcurrentLimit": 10,
