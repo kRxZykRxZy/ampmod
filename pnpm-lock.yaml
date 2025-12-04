@@ -400,6 +400,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5
+      '@babel/eslint-parser':
+        specifier: 7.11.0
+        version: 7.11.0(@babel/core@7.28.5)(eslint@9.38.0(jiti@2.6.1))
       '@babel/preset-env':
         specifier: 7.14.8
         version: 7.14.8(@babel/core@7.28.5)
@@ -424,9 +427,6 @@ importers:
       babel-core:
         specifier: 7.0.0-bridge.0
         version: 7.0.0-bridge.0(@babel/core@7.28.5)
-      babel-eslint:
-        specifier: 10.1.0
-        version: 10.1.0(eslint@9.38.0(jiti@2.6.1))
       babel-loader:
         specifier: 10.0.0
         version: 10.0.0(@babel/core@7.28.5)(webpack@5.103.0(@swc/core@1.15.3)(webpack-cli@6.0.1))
@@ -449,8 +449,8 @@ importers:
         specifier: 9.38.0
         version: 9.38.0(jiti@2.6.1)
       eslint-config-scratch:
-        specifier: 9.0.3
-        version: 9.0.3(@babel/eslint-parser@7.28.5(@babel/core@7.28.5)(eslint@9.38.0(jiti@2.6.1)))(eslint@9.38.0(jiti@2.6.1))
+        specifier: 9.0.9
+        version: 9.0.9(@babel/eslint-parser@7.11.0(@babel/core@7.28.5)(eslint@9.38.0(jiti@2.6.1)))(eslint@9.38.0(jiti@2.6.1))
       eslint-import-resolver-webpack:
         specifier: 0.11.1
         version: 0.11.1(eslint-plugin-import@2.32.0)(webpack@5.103.0(@swc/core@1.15.3)(webpack-cli@6.0.1))
@@ -551,6 +551,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5
+      '@babel/eslint-parser':
+        specifier: 7.11.0
+        version: 7.11.0(@babel/core@7.28.5)(eslint@8.55.0)
       '@babel/node':
         specifier: ^7.28.0
         version: 7.28.0(@babel/core@7.28.5)
@@ -563,9 +566,6 @@ importers:
       autoprefixer:
         specifier: 9.7.4
         version: 9.7.4
-      babel-eslint:
-        specifier: 10.1.0
-        version: 10.1.0(eslint@8.55.0)
       babel-jest:
         specifier: 29.7.0
         version: 29.7.0(@babel/core@7.28.5)
@@ -591,8 +591,8 @@ importers:
         specifier: 8.55.0
         version: 8.55.0
       eslint-config-scratch:
-        specifier: 9.0.3
-        version: 9.0.3(@babel/eslint-parser@7.28.5(@babel/core@7.28.5)(eslint@8.55.0))(eslint@8.55.0)
+        specifier: 9.0.9
+        version: 9.0.9(@babel/eslint-parser@7.11.0(@babel/core@7.28.5)(eslint@8.55.0))(eslint@8.55.0)
       eslint-plugin-import:
         specifier: 2.29.0
         version: 2.29.0(eslint@8.55.0)
@@ -726,12 +726,12 @@ importers:
         specifier: 4.4.0
         version: 4.4.0
     devDependencies:
+      '@babel/eslint-parser':
+        specifier: 7.11.0
+        version: 7.11.0(@babel/core@7.28.5)(eslint@8.55.0)
       babel-core:
         specifier: 6.26.3
         version: 6.26.3
-      babel-eslint:
-        specifier: 10.1.0
-        version: 10.1.0(eslint@8.55.0)
       babel-loader:
         specifier: 7.1.5
         version: 7.1.5(babel-core@6.26.3)(webpack@5.103.0(@swc/core@1.15.3)(webpack-cli@6.0.1))
@@ -751,8 +751,8 @@ importers:
         specifier: 8.55.0
         version: 8.55.0
       eslint-config-scratch:
-        specifier: 9.0.3
-        version: 9.0.3(@babel/eslint-parser@7.28.5(@babel/core@7.28.5)(eslint@8.55.0))(eslint@8.55.0)
+        specifier: 9.0.9
+        version: 9.0.9(@babel/eslint-parser@7.11.0(@babel/core@7.28.5)(eslint@8.55.0))(eslint@8.55.0)
       jsdoc:
         specifier: 3.6.7
         version: 3.6.7
@@ -778,12 +778,12 @@ importers:
         specifier: 1.0.0
         version: 1.0.0
     devDependencies:
+      '@babel/eslint-parser':
+        specifier: ^7.11.0
+        version: 7.11.0(@babel/core@7.28.5)(eslint@4.19.1)
       babel-core:
         specifier: 6.26.3
         version: 6.26.3
-      babel-eslint:
-        specifier: ^8.2.6
-        version: 8.2.6
       babel-loader:
         specifier: 10.0.0
         version: 10.0.0(@babel/core@7.28.5)(webpack@5.103.0(@swc/core@1.15.3)(webpack-cli@6.0.1))
@@ -795,7 +795,7 @@ importers:
         version: 4.19.1
       eslint-config-scratch:
         specifier: ^5.1.0
-        version: 5.1.0(babel-eslint@8.2.6)(eslint@4.19.1)
+        version: 5.1.0(babel-eslint@10.1.0(eslint@4.19.1))(eslint@4.19.1)
       json:
         specifier: ^10.0.0
         version: 10.0.0
@@ -821,8 +821,8 @@ importers:
         specifier: ^1.0.0-202312300007-62fe825
         version: 1.0.202505311824(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)
       '@vernier/godirect':
-        specifier: 1.5.0
-        version: 1.5.0
+        specifier: 1.8.3
+        version: 1.8.3
       arraybuffer-loader:
         specifier: ^1.0.8
         version: 1.0.8
@@ -872,15 +872,15 @@ importers:
       '@babel/core':
         specifier: 7.13.10
         version: 7.13.10
+      '@babel/eslint-parser':
+        specifier: 7.11.0
+        version: 7.11.0(@babel/core@7.13.10)(eslint@8.55.0)
       '@babel/preset-env':
         specifier: 7.14.8
         version: 7.14.8(@babel/core@7.13.10)
       adm-zip:
         specifier: 0.4.11
         version: 0.4.11
-      babel-eslint:
-        specifier: 10.1.0
-        version: 10.1.0(eslint@8.55.0)
       babel-loader:
         specifier: 10.0.0
         version: 10.0.0(@babel/core@7.13.10)(webpack@5.103.0(@swc/core@1.15.3)(webpack-cli@6.0.1))
@@ -897,8 +897,8 @@ importers:
         specifier: 8.55.0
         version: 8.55.0
       eslint-config-scratch:
-        specifier: 9.0.3
-        version: 9.0.3(@babel/eslint-parser@7.28.5(@babel/core@7.13.10)(eslint@8.55.0))(eslint@8.55.0)
+        specifier: 9.0.9
+        version: 9.0.9(@babel/eslint-parser@7.11.0(@babel/core@7.13.10)(eslint@8.55.0))(eslint@8.55.0)
       expose-loader:
         specifier: 0.7.5
         version: 0.7.5(webpack@5.103.0(@swc/core@1.15.3)(webpack-cli@6.0.1))
@@ -972,9 +972,6 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
-  '@babel/code-frame@7.0.0-beta.44':
-    resolution: {integrity: sha512-cuAuTTIQ9RqcFRJ/Y8PvTh+paepNcaGxwQwjIDRWPXmzzyAeCO4KqS9ikMvq0MCbRk6GlYKwfzStrcP3/jSL8g==}
-
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
     engines: {node: '>=6.9.0'}
@@ -991,15 +988,12 @@ packages:
     resolution: {integrity: sha512-e7jT4DxYvIDLk1ZHmU/m/mB19rex9sv0c2ftBtjSBv+kVM/902eh0fINUzD7UwLLNR+jU585GxUJ8/EBfAM5fw==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/eslint-parser@7.28.5':
-    resolution: {integrity: sha512-fcdRcWahONYo+JRnJg1/AekOacGvKx12Gu0qXJXFi2WBqQA1i7+O5PaxRB7kxE/Op94dExnCiiar6T09pvdHpA==}
+  '@babel/eslint-parser@7.11.0':
+    resolution: {integrity: sha512-dJDM2Pc01D9TwKL3Mmz2xgVF9X953RBHq9H4gywbN1q8MrfvXmNHfsCt06vvByBVQqm+9WxMs+doEH/R09TwWQ==}
     engines: {node: ^10.13.0 || ^12.13.0 || >=14.0.0}
     peerDependencies:
-      '@babel/core': ^7.11.0
-      eslint: ^7.5.0 || ^8.0.0 || ^9.0.0
-
-  '@babel/generator@7.0.0-beta.44':
-    resolution: {integrity: sha512-5xVb7hlhjGcdkKpMXgicAVgx8syK5VJz193k0i/0sLP6DzE6lRrU1K3B/rFefgdo9LPGMAOOOAWW4jycj07ShQ==}
+      '@babel/core': '>=7.11.0'
+      eslint: '>=7.5.0'
 
   '@babel/generator@7.28.5':
     resolution: {integrity: sha512-3EwLFhZ38J4VyIP6WNtt2kUdW9dokXA9Cr4IVIFHuCpZ3H8/YFOl5JjZHisrn1fATPBmKKqXzDFvh9fUwHz6CQ==}
@@ -1038,12 +1032,6 @@ packages:
   '@babel/helper-environment-visitor@7.24.7':
     resolution: {integrity: sha512-DoiN84+4Gnd0ncbBOM9AZENV4a5ZiL39HYMyZJGZ/AZEykHYdJw0wW3kdcsh9/Kn+BRXHLkkklZ51ecPKmI1CQ==}
     engines: {node: '>=6.9.0'}
-
-  '@babel/helper-function-name@7.0.0-beta.44':
-    resolution: {integrity: sha512-MHRG2qZMKMFaBavX0LWpfZ2e+hLloT++N7rfM3DYOMUOGCD8cVjqZpwiL8a0bOX3IYcQev1ruciT0gdFFRTxzg==}
-
-  '@babel/helper-get-function-arity@7.0.0-beta.44':
-    resolution: {integrity: sha512-w0YjWVwrM2HwP6/H3sEgrSQdkCaxppqFeJtAnB23pRiJB5E/O9Yp7JAAeWBl+gGEgmBFinnTyOv2RN7rcSmMiw==}
 
   '@babel/helper-globals@7.28.0':
     resolution: {integrity: sha512-+W6cISkXFa1jXsDEdYA8HeevQT/FULhxzR99pxphltZcVaugps53THCeiWA8SguxxpSp3gKPiuYfSWopkLQ4hw==}
@@ -1087,9 +1075,6 @@ packages:
     resolution: {integrity: sha512-Tub4ZKEXqbPjXgWLl2+3JpQAYBJ8+ikpQ2Ocj/q/r0LwE3UhENh7EUabyHjz2kCEsrRY83ew2DQdHluuiDQFzg==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/helper-split-export-declaration@7.0.0-beta.44':
-    resolution: {integrity: sha512-aQ7QowtkgKKzPGf0j6u77kBMdUFVBKNHw2p/3HX/POt5/oz8ec5cs0GwlgM8Hz7ui5EwJnzyfRmkNF1Nx1N7aA==}
-
   '@babel/helper-string-parser@7.27.1':
     resolution: {integrity: sha512-qMlSxKbpRlAridDExk92nSobyDdpPijUq2DW6oDnUqd0iOGxmQjyqhMIihI9+zv4LPyZdRje2cavWPbCbWm3eA==}
     engines: {node: '>=6.9.0'}
@@ -1109,9 +1094,6 @@ packages:
   '@babel/helpers@7.28.4':
     resolution: {integrity: sha512-HFN59MmQXGHVyYadKLVumYsA9dBFun/ldYxipEjzA4196jpLZd8UjEEBLkbEkvfYreDqJhZxYAWFPtrfhNpj4w==}
     engines: {node: '>=6.9.0'}
-
-  '@babel/highlight@7.0.0-beta.44':
-    resolution: {integrity: sha512-Il19yJvy7vMFm8AVAh6OZzaFoAd0hbkeMZiX3P5HGD+z7dyI7RzndHB0dg6Urh/VAFfHtpOIzDUSxmY6coyZWQ==}
 
   '@babel/node@7.28.0':
     resolution: {integrity: sha512-6u1Mmn3SIMUH8uwTq543L062X3JDgms9HPf06o/pIGdDjeD/zNQ+dfZPQD27sCyvtP0ZOlJtwnl2RIdPe9bHeQ==}
@@ -1757,22 +1739,13 @@ packages:
     resolution: {integrity: sha512-Q/N6JNWvIvPnLDvjlE1OUBLPQHH6l3CltCEsHIujp45zQUSSh8K+gHnaEX45yAT1nyngnINhvWtzN+Nb9D8RAQ==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/template@7.0.0-beta.44':
-    resolution: {integrity: sha512-w750Sloq0UNifLx1rUqwfbnC6uSUk0mfwwgGRfdLiaUzfAOiH0tHJE6ILQIUi3KYkjiCDTskoIsnfqZvWLBDng==}
-
   '@babel/template@7.27.2':
     resolution: {integrity: sha512-LPDZ85aEJyYSd18/DkjNh4/y1ntkE5KwUHWTiqgRxruuZL2F1yuHligVHLvcHY2vMHXttKFpJn6LwfI7cw7ODw==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/traverse@7.0.0-beta.44':
-    resolution: {integrity: sha512-UHuDz8ukQkJCDASKHf+oDt3FVUzFd+QYfuBIsiNu/4+/ix6pP/C+uQZJ6K1oEfbCMv/IKWbgDEh7fcsnIE5AtA==}
-
   '@babel/traverse@7.28.5':
     resolution: {integrity: sha512-TCCj4t55U90khlYkVV/0TfkJkAkUg3jZFA3Neb7unZT8CPok7iiRfaX0F+WnqWqt7OxhOn0uBKXCw4lbL8W0aQ==}
     engines: {node: '>=6.9.0'}
-
-  '@babel/types@7.0.0-beta.44':
-    resolution: {integrity: sha512-5eTV4WRmqbaFM3v9gHAIljEQJU4Ssc6fxL61JN+Oe2ga/BwyjzjamwkCVVAQjHGuAX8i0BWo42dshL8eO5KfLQ==}
 
   '@babel/types@7.28.5':
     resolution: {integrity: sha512-qQ5m48eI/MFLQ5PxQj4PFaprjyCTLI37ElWMmNs0K8Lk3dVeOdNpB3ks8jc7yM5CDmVC73eMVk/trk3fgmrUpA==}
@@ -2737,9 +2710,6 @@ packages:
   '@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3':
     resolution: {integrity: sha512-s88O1aVtXftvp5bCPB7WnmXc5IwOZZ7YPuwNPt+GtOOXpPvad1LfbmjYv+qII7zP6RU2QGnqve27dnLycEnyEQ==}
 
-  '@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1':
-    resolution: {integrity: sha512-54/JRvkLIzzDWshCWfuhadfrfZVPiElY8Fcgmg1HroEly/EDSszzhBAsarCux+D/kOslTRquNzuyGSmUSTTHGg==}
-
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -3252,6 +3222,9 @@ packages:
 
   '@vernier/godirect@1.5.0':
     resolution: {integrity: sha512-vMS0fQubI3WSSLg1Ry3aey/qWCl9XoCsFzgwOWYkeJs45YxjPel+42pLh5pO7uP6oF47sjZUKx8kGOoTiiiirA==}
+
+  '@vernier/godirect@1.8.3':
+    resolution: {integrity: sha512-poS0LZ3jAjH36gIAI0aNBBdsGGbmt11VFbLO+eGDJ/JDSPtMu1iUStvOi0UM/ZH6Jyh34SjVd8Cnxu/Wmcb8iQ==}
 
   '@webassemblyjs/ast@1.14.1':
     resolution: {integrity: sha512-nuBEDgQfm1ccRp/8bCQrx1frohyufl4JlbMMZ4P1wpeOfDhF6FQkxZJ1b/e+PLwr6X1Nhw6OLme5usuBWYBvuQ==}
@@ -3786,11 +3759,6 @@ packages:
     peerDependencies:
       eslint: '>= 4.12.1'
 
-  babel-eslint@8.2.6:
-    resolution: {integrity: sha512-aCdHjhzcILdP8c9lej7hvXKvQieyRt20SF102SIGyY4cUIiw6UaAtK4j2o3dXX74jEmy0TJ0CEhv4fTIM3SzcA==}
-    engines: {node: '>=4'}
-    deprecated: babel-eslint is now @babel/eslint-parser. This package will no longer receive updates.
-
   babel-generator@6.26.1:
     resolution: {integrity: sha512-HyfwY6ApZj7BYTcJURpM5tznulaBvyio7/0d4zFOeMPUmfxkCjHocCuoLa2SAGzBI8AREcH3eP3758F672DppA==}
 
@@ -4051,11 +4019,6 @@ packages:
 
   babylon@6.18.0:
     resolution: {integrity: sha512-q/UEjfGJ2Cm3oKV71DJz9d25TPnq5rhBVL2Q4fA5wcC3jcrdn7+SssEybFIxwAvvP+YCsCYNKughoF33GxgycQ==}
-    hasBin: true
-
-  babylon@7.0.0-beta.44:
-    resolution: {integrity: sha512-5Hlm13BJVAioCHpImtFqNOF2H3ieTOHd0fmFGMxOJ9jgeFqeAwsv3u5P5cR7CSeFrkgHsT19DgFJkHV0/Mcd8g==}
-    engines: {node: '>=4.2.0'}
     hasBin: true
 
   balance-text@3.3.1:
@@ -5553,8 +5516,8 @@ packages:
       babel-eslint: '>=8.0.1'
       eslint: '>=4.0.0'
 
-  eslint-config-scratch@9.0.3:
-    resolution: {integrity: sha512-BSMx4Y6V7IjDW/thMXLAYTxKvjeI4M8RtHmbpUbx3N70CZV4armoA9zJ7RmER1hjV5KQebCVQy45A2xMj2Ng8w==}
+  eslint-config-scratch@9.0.9:
+    resolution: {integrity: sha512-6OlJ8Gc/X35bMCA1fWnEdJ7r3NC+xLn8qDLUj8hUTM+N7P+AKgS+itWUUoWlVpVvIpQlR6Bq1ctdL5zVp2+1Aw==}
     peerDependencies:
       '@babel/eslint-parser': ^7.11.0
       eslint: ^8.0.0
@@ -5646,10 +5609,6 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
 
-  eslint-scope@3.7.1:
-    resolution: {integrity: sha512-ivpbtpUgg9SJS4TLjK7KdcDhqc/E3CGItsvQbBNLkNGUeMhd5qnJcryba/brESS+dg3vrLqPuc/UcS7jRJdN5A==}
-    engines: {node: '>=4.0.0'}
-
   eslint-scope@3.7.3:
     resolution: {integrity: sha512-W+B0SvF4gamyCTmUc+uITPY0989iXVfKvhwtmJocTaYoc/3khEHmEmvfY/Gn9HA9VV75jrQECsHizkNw1b68FA==}
     engines: {node: '>=4.0.0'}
@@ -5657,6 +5616,10 @@ packages:
   eslint-scope@4.0.3:
     resolution: {integrity: sha512-p7VutNr1O/QrxysMo3E45FjYDTeXBy0iTltPFNSqKAIfjDSXC+4dj+qfyuD8bfAXrW/y6lW3O76VaYNPKfpKrg==}
     engines: {node: '>=4.0.0'}
+
+  eslint-scope@5.1.0:
+    resolution: {integrity: sha512-iiGRvtxWqgtx5m8EyQUJihBloE4EnYeGE/bz1wSPwJE6tZuJUtHlhqDM4Xj2ukE8Dyy1+HCZ4hE0fzIVMzb58w==}
+    engines: {node: '>=8.0.0'}
 
   eslint-scope@5.1.1:
     resolution: {integrity: sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw==}
@@ -5673,10 +5636,6 @@ packages:
   eslint-visitor-keys@1.3.0:
     resolution: {integrity: sha512-6J72N8UNa462wa/KFODt/PJ3IU60SDpC3QXC1Hjc1BXXpfL2C9R5+AU7jhe0F6GREqVMh4Juu+NY7xn+6dipUQ==}
     engines: {node: '>=4'}
-
-  eslint-visitor-keys@2.1.0:
-    resolution: {integrity: sha512-0rSmRBzXgDzIsD6mGdJgevzgezI534Cer5L/vyMX0kHzT/jiB43jRhd9YUlMGYLQy2zprNmoT8qasCGtY+QaKw==}
-    engines: {node: '>=10'}
 
   eslint-visitor-keys@3.4.3:
     resolution: {integrity: sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag==}
@@ -7546,11 +7505,6 @@ packages:
 
   jsesc@1.3.0:
     resolution: {integrity: sha512-Mke0DA0QjUWuJlhsE0ZPPhYiJkRap642SmI/4ztCFaUs6V2AiH1sfecc+57NgaryfAA2VR3v6O+CSjC1jZJKOA==}
-    hasBin: true
-
-  jsesc@2.5.2:
-    resolution: {integrity: sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==}
-    engines: {node: '>=4'}
     hasBin: true
 
   jsesc@3.1.0:
@@ -10819,10 +10773,6 @@ packages:
     resolution: {integrity: sha512-lxrWP8ejsq+7E3nNjwYmUBMAgjMTZoTI+sdBOpvNyijeDLa29LUn9QaoXAHv4+Z578hbmHHJKZknzxVtvo77og==}
     engines: {node: '>=0.10.0'}
 
-  to-fast-properties@2.0.0:
-    resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
-    engines: {node: '>=4'}
-
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
@@ -11599,10 +11549,6 @@ snapshots:
       '@nicolo-ribaudo/chokidar-2': 2.1.8-no-fsevents.3
       chokidar: 3.6.0
 
-  '@babel/code-frame@7.0.0-beta.44':
-    dependencies:
-      '@babel/highlight': 7.0.0-beta.44
-
   '@babel/code-frame@7.27.1':
     dependencies:
       '@babel/helper-validator-identifier': 7.28.5
@@ -11652,37 +11598,37 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/eslint-parser@7.28.5(@babel/core@7.13.10)(eslint@8.55.0)':
+  '@babel/eslint-parser@7.11.0(@babel/core@7.13.10)(eslint@8.55.0)':
     dependencies:
       '@babel/core': 7.13.10
-      '@nicolo-ribaudo/eslint-scope-5-internals': 5.1.1-v1
       eslint: 8.55.0
-      eslint-visitor-keys: 2.1.0
+      eslint-scope: 5.1.0
+      eslint-visitor-keys: 1.3.0
       semver: 6.3.1
 
-  '@babel/eslint-parser@7.28.5(@babel/core@7.28.5)(eslint@8.55.0)':
+  '@babel/eslint-parser@7.11.0(@babel/core@7.28.5)(eslint@4.19.1)':
     dependencies:
       '@babel/core': 7.28.5
-      '@nicolo-ribaudo/eslint-scope-5-internals': 5.1.1-v1
-      eslint: 8.55.0
-      eslint-visitor-keys: 2.1.0
+      eslint: 4.19.1
+      eslint-scope: 5.1.0
+      eslint-visitor-keys: 1.3.0
       semver: 6.3.1
 
-  '@babel/eslint-parser@7.28.5(@babel/core@7.28.5)(eslint@9.38.0(jiti@2.6.1))':
+  '@babel/eslint-parser@7.11.0(@babel/core@7.28.5)(eslint@8.55.0)':
     dependencies:
       '@babel/core': 7.28.5
-      '@nicolo-ribaudo/eslint-scope-5-internals': 5.1.1-v1
+      eslint: 8.55.0
+      eslint-scope: 5.1.0
+      eslint-visitor-keys: 1.3.0
+      semver: 6.3.1
+
+  '@babel/eslint-parser@7.11.0(@babel/core@7.28.5)(eslint@9.38.0(jiti@2.6.1))':
+    dependencies:
+      '@babel/core': 7.28.5
       eslint: 9.38.0(jiti@2.6.1)
-      eslint-visitor-keys: 2.1.0
+      eslint-scope: 5.1.0
+      eslint-visitor-keys: 1.3.0
       semver: 6.3.1
-
-  '@babel/generator@7.0.0-beta.44':
-    dependencies:
-      '@babel/types': 7.0.0-beta.44
-      jsesc: 2.5.2
-      lodash: 4.17.21
-      source-map: 0.5.7
-      trim-right: 1.0.1
 
   '@babel/generator@7.28.5':
     dependencies:
@@ -11787,16 +11733,6 @@ snapshots:
     dependencies:
       '@babel/types': 7.28.5
 
-  '@babel/helper-function-name@7.0.0-beta.44':
-    dependencies:
-      '@babel/helper-get-function-arity': 7.0.0-beta.44
-      '@babel/template': 7.0.0-beta.44
-      '@babel/types': 7.0.0-beta.44
-
-  '@babel/helper-get-function-arity@7.0.0-beta.44':
-    dependencies:
-      '@babel/types': 7.0.0-beta.44
-
   '@babel/helper-globals@7.28.0': {}
 
   '@babel/helper-member-expression-to-functions@7.28.5':
@@ -11880,10 +11816,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/helper-split-export-declaration@7.0.0-beta.44':
-    dependencies:
-      '@babel/types': 7.0.0-beta.44
-
   '@babel/helper-string-parser@7.27.1': {}
 
   '@babel/helper-validator-identifier@7.28.5': {}
@@ -11902,12 +11834,6 @@ snapshots:
     dependencies:
       '@babel/template': 7.27.2
       '@babel/types': 7.28.5
-
-  '@babel/highlight@7.0.0-beta.44':
-    dependencies:
-      chalk: 2.4.2
-      esutils: 2.0.3
-      js-tokens: 3.0.2
 
   '@babel/node@7.28.0(@babel/core@7.28.5)':
     dependencies:
@@ -13242,33 +13168,11 @@ snapshots:
 
   '@babel/runtime@7.28.4': {}
 
-  '@babel/template@7.0.0-beta.44':
-    dependencies:
-      '@babel/code-frame': 7.0.0-beta.44
-      '@babel/types': 7.0.0-beta.44
-      babylon: 7.0.0-beta.44
-      lodash: 4.17.21
-
   '@babel/template@7.27.2':
     dependencies:
       '@babel/code-frame': 7.27.1
       '@babel/parser': 7.28.5
       '@babel/types': 7.28.5
-
-  '@babel/traverse@7.0.0-beta.44':
-    dependencies:
-      '@babel/code-frame': 7.0.0-beta.44
-      '@babel/generator': 7.0.0-beta.44
-      '@babel/helper-function-name': 7.0.0-beta.44
-      '@babel/helper-split-export-declaration': 7.0.0-beta.44
-      '@babel/types': 7.0.0-beta.44
-      babylon: 7.0.0-beta.44
-      debug: 3.2.7
-      globals: 11.12.0
-      invariant: 2.2.4
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - supports-color
 
   '@babel/traverse@7.28.5':
     dependencies:
@@ -13281,12 +13185,6 @@ snapshots:
       debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
-
-  '@babel/types@7.0.0-beta.44':
-    dependencies:
-      esutils: 2.0.3
-      lodash: 4.17.21
-      to-fast-properties: 2.0.0
 
   '@babel/types@7.28.5':
     dependencies:
@@ -14391,10 +14289,6 @@ snapshots:
   '@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3':
     optional: true
 
-  '@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1':
-    dependencies:
-      eslint-scope: 5.1.1
-
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -15008,6 +14902,8 @@ snapshots:
   '@ungap/structured-clone@1.3.0': {}
 
   '@vernier/godirect@1.5.0': {}
+
+  '@vernier/godirect@1.8.3': {}
 
   '@webassemblyjs/ast@1.14.1':
     dependencies:
@@ -15720,38 +15616,15 @@ snapshots:
     dependencies:
       '@babel/core': 7.28.5
 
-  babel-eslint@10.1.0(eslint@8.55.0):
+  babel-eslint@10.1.0(eslint@4.19.1):
     dependencies:
       '@babel/code-frame': 7.27.1
       '@babel/parser': 7.28.5
       '@babel/traverse': 7.28.5
       '@babel/types': 7.28.5
-      eslint: 8.55.0
+      eslint: 4.19.1
       eslint-visitor-keys: 1.3.0
       resolve: 1.22.11
-    transitivePeerDependencies:
-      - supports-color
-
-  babel-eslint@10.1.0(eslint@9.38.0(jiti@2.6.1)):
-    dependencies:
-      '@babel/code-frame': 7.27.1
-      '@babel/parser': 7.28.5
-      '@babel/traverse': 7.28.5
-      '@babel/types': 7.28.5
-      eslint: 9.38.0(jiti@2.6.1)
-      eslint-visitor-keys: 1.3.0
-      resolve: 1.22.11
-    transitivePeerDependencies:
-      - supports-color
-
-  babel-eslint@8.2.6:
-    dependencies:
-      '@babel/code-frame': 7.0.0-beta.44
-      '@babel/traverse': 7.0.0-beta.44
-      '@babel/types': 7.0.0-beta.44
-      babylon: 7.0.0-beta.44
-      eslint-scope: 3.7.1
-      eslint-visitor-keys: 1.3.0
     transitivePeerDependencies:
       - supports-color
 
@@ -16350,8 +16223,6 @@ snapshots:
       to-fast-properties: 1.0.3
 
   babylon@6.18.0: {}
-
-  babylon@7.0.0-beta.44: {}
 
   balance-text@3.3.1: {}
 
@@ -18300,33 +18171,33 @@ snapshots:
       esrecurse: 4.3.0
       estraverse: 4.3.0
 
-  eslint-config-scratch@5.1.0(babel-eslint@8.2.6)(eslint@4.19.1):
+  eslint-config-scratch@5.1.0(babel-eslint@10.1.0(eslint@4.19.1))(eslint@4.19.1):
     dependencies:
-      babel-eslint: 8.2.6
+      babel-eslint: 10.1.0(eslint@4.19.1)
       eslint: 4.19.1
     optionalDependencies:
       eslint-plugin-react: 7.37.5(eslint@4.19.1)
 
-  eslint-config-scratch@9.0.3(@babel/eslint-parser@7.28.5(@babel/core@7.13.10)(eslint@8.55.0))(eslint@8.55.0):
+  eslint-config-scratch@9.0.9(@babel/eslint-parser@7.11.0(@babel/core@7.13.10)(eslint@8.55.0))(eslint@8.55.0):
     dependencies:
-      '@babel/eslint-parser': 7.28.5(@babel/core@7.13.10)(eslint@8.55.0)
+      '@babel/eslint-parser': 7.11.0(@babel/core@7.13.10)(eslint@8.55.0)
       eslint: 8.55.0
     optionalDependencies:
-      eslint-plugin-react: 7.37.5(eslint@8.55.0)
+      eslint-plugin-react: 7.33.2(eslint@8.55.0)
 
-  eslint-config-scratch@9.0.3(@babel/eslint-parser@7.28.5(@babel/core@7.28.5)(eslint@8.55.0))(eslint@8.55.0):
+  eslint-config-scratch@9.0.9(@babel/eslint-parser@7.11.0(@babel/core@7.28.5)(eslint@8.55.0))(eslint@8.55.0):
     dependencies:
-      '@babel/eslint-parser': 7.28.5(@babel/core@7.28.5)(eslint@8.55.0)
+      '@babel/eslint-parser': 7.11.0(@babel/core@7.28.5)(eslint@8.55.0)
       eslint: 8.55.0
     optionalDependencies:
-      eslint-plugin-react: 7.37.5(eslint@8.55.0)
+      eslint-plugin-react: 7.33.2(eslint@8.55.0)
 
-  eslint-config-scratch@9.0.3(@babel/eslint-parser@7.28.5(@babel/core@7.28.5)(eslint@9.38.0(jiti@2.6.1)))(eslint@9.38.0(jiti@2.6.1)):
+  eslint-config-scratch@9.0.9(@babel/eslint-parser@7.11.0(@babel/core@7.28.5)(eslint@9.38.0(jiti@2.6.1)))(eslint@9.38.0(jiti@2.6.1)):
     dependencies:
-      '@babel/eslint-parser': 7.28.5(@babel/core@7.28.5)(eslint@9.38.0(jiti@2.6.1))
+      '@babel/eslint-parser': 7.11.0(@babel/core@7.28.5)(eslint@9.38.0(jiti@2.6.1))
       eslint: 9.38.0(jiti@2.6.1)
     optionalDependencies:
-      eslint-plugin-react: 7.37.5(eslint@9.38.0(jiti@2.6.1))
+      eslint-plugin-react: 7.33.2(eslint@9.38.0(jiti@2.6.1))
 
   eslint-import-resolver-node@0.3.9:
     dependencies:
@@ -18513,63 +18384,17 @@ snapshots:
       string.prototype.repeat: 1.0.0
     optional: true
 
-  eslint-plugin-react@7.37.5(eslint@8.55.0):
-    dependencies:
-      array-includes: 3.1.9
-      array.prototype.findlast: 1.2.5
-      array.prototype.flatmap: 1.3.3
-      array.prototype.tosorted: 1.1.4
-      doctrine: 2.1.0
-      es-iterator-helpers: 1.2.1
-      eslint: 8.55.0
-      estraverse: 5.3.0
-      hasown: 2.0.2
-      jsx-ast-utils: 3.3.5
-      minimatch: 3.1.2
-      object.entries: 1.1.9
-      object.fromentries: 2.0.8
-      object.values: 1.2.1
-      prop-types: 15.8.1
-      resolve: 2.0.0-next.5
-      semver: 6.3.1
-      string.prototype.matchall: 4.0.12
-      string.prototype.repeat: 1.0.0
-    optional: true
-
-  eslint-plugin-react@7.37.5(eslint@9.38.0(jiti@2.6.1)):
-    dependencies:
-      array-includes: 3.1.9
-      array.prototype.findlast: 1.2.5
-      array.prototype.flatmap: 1.3.3
-      array.prototype.tosorted: 1.1.4
-      doctrine: 2.1.0
-      es-iterator-helpers: 1.2.1
-      eslint: 9.38.0(jiti@2.6.1)
-      estraverse: 5.3.0
-      hasown: 2.0.2
-      jsx-ast-utils: 3.3.5
-      minimatch: 3.1.2
-      object.entries: 1.1.9
-      object.fromentries: 2.0.8
-      object.values: 1.2.1
-      prop-types: 15.8.1
-      resolve: 2.0.0-next.5
-      semver: 6.3.1
-      string.prototype.matchall: 4.0.12
-      string.prototype.repeat: 1.0.0
-    optional: true
-
-  eslint-scope@3.7.1:
-    dependencies:
-      esrecurse: 4.3.0
-      estraverse: 4.3.0
-
   eslint-scope@3.7.3:
     dependencies:
       esrecurse: 4.3.0
       estraverse: 4.3.0
 
   eslint-scope@4.0.3:
+    dependencies:
+      esrecurse: 4.3.0
+      estraverse: 4.3.0
+
+  eslint-scope@5.1.0:
     dependencies:
       esrecurse: 4.3.0
       estraverse: 4.3.0
@@ -18590,8 +18415,6 @@ snapshots:
       estraverse: 5.3.0
 
   eslint-visitor-keys@1.3.0: {}
-
-  eslint-visitor-keys@2.1.0: {}
 
   eslint-visitor-keys@3.4.3: {}
 
@@ -21323,8 +21146,6 @@ snapshots:
   jsesc@0.5.0: {}
 
   jsesc@1.3.0: {}
-
-  jsesc@2.5.2: {}
 
   jsesc@3.1.0: {}
 
@@ -25190,8 +25011,6 @@ snapshots:
       typed-array-buffer: 1.0.3
 
   to-fast-properties@1.0.3: {}
-
-  to-fast-properties@2.0.0: {}
 
   to-regex-range@5.0.1:
     dependencies:

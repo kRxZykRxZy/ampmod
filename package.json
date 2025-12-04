@@ -3,7 +3,7 @@
     "version": "0.3.0",
     "description": "The AmpMod monorepo",
     "private": true,
-    "packageManager": "pnpm@10.20.0",
+    "packageManager": "pnpm@10.24.0",
     "scripts": {
         "test": "pnpm --recursive run test",
         "build": "pnpm --filter ./packages/gui run build",

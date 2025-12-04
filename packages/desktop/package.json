@@ -3,7 +3,7 @@
     "description": "Scratch mod with a compiler, dark mode, a bunch of addons, and more.",
     "version": "1.15.0",
     "license": "GPL-3.0",
-    "packageManager": "pnpm@10.18.1",
+    "packageManager": "pnpm@10.24.0",
     "author": {
         "email": "contact@turbowarp.org",
         "name": "Thomas Weber"

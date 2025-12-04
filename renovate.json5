@@ -1,13 +1,18 @@
 {
   "baseBranchPatterns": ["develop"],
   "extends": ["config:recommended"],
+  "gitAuthor": "AmpMod Bot <ampmod-bot@noreply.codeberg.org>",
   "automerge": true,
   "packageRules": [
     {
       "enabled": true,
-      "automerge": true,
+      "automerge": false,
       "automergeType": "branch",
       "matchPackageNames": ["*"]
+    },
+    {
+      "matchDatasources": ["github-actions"],
+      "enabled": false
     }
   ],
   "prConcurrentLimit": 10,
