@@ -1,0 +1,26 @@
+{
+  "platform": "forgejo",
+  "endpoint": "https://codeberg.org/api/v1/",
+  "baseBranches": ["develop"],
+  "hostRules": [
+    {
+      "hostType": "forgejo",
+      "hostName": "codeberg.org"
+    }
+  ],
+  "extends": ["config:base"],
+  "automerge": true,
+  "packageRules": [
+    {
+      "packagePatterns": ["*"],
+      "enabled": true,
+      "automerge": true,
+      "automergeType": "branch",
+      "schedule": ["before 9am on monday"]
+    }
+  ],
+  "prConcurrentLimit": 10,
+  "dependencyDashboard": true,
+  "timezone": "UTC",
+  "labels": ["Kind/Dependencies"]
+}
