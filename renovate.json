@@ -1,13 +1,5 @@
 {
-  "platform": "forgejo",
-  "endpoint": "https://codeberg.org/api/v1/",
   "baseBranches": ["develop"],
-  "hostRules": [
-    {
-      "hostType": "forgejo",
-      "hostName": "codeberg.org"
-    }
-  ],
   "extends": ["config:base"],
   "automerge": true,
   "packageRules": [
