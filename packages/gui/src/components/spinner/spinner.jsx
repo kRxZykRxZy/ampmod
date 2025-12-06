@@ -10,18 +10,11 @@ const SpinnerComponent = function (props) {
     const [isMotionReduced, setIsMotionReduced] = useState(false);
 
     useEffect(() => {
-        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-        setIsMotionReduced(mediaQuery.matches);
-
-        const listener = event => setIsMotionReduced(event.matches);
-
-        mediaQuery.addListener(listener);
-        return () => mediaQuery.removeListener(listener);
+        setIsMotionReduced(!document.documentElement.classList.contains('amp-gui-animations-enabled'));
     }, []);
 
     if (isMotionReduced) {
-        return <div className={classNames(className, styles.loadingText)}>loading</div>;
+        return <div className={classNames(className, styles.loadingText)}>Loading...</div>;
     }
 
     return (

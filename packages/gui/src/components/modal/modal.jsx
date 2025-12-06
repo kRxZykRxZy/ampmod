@@ -27,7 +27,7 @@ const ModalComponent = props => {
             },
             // If the user chooses to disable animations in system settings,
             // respect that setting.
-            window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 200
+            document.documentElement.classList.contains('amp-gui-animations-enabled') ? 200 : 0
         );
     };
 

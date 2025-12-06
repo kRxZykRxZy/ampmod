@@ -96,7 +96,7 @@
     backdrop-filter: blur(1px) contrast(0.8);
 }
 
-@media (prefers-reduced-motion: no-preference) {
+:global(.amp-gui-animations-enabled) {
     .modal-overlay {
         animation: fadeIn 0.15s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     }
