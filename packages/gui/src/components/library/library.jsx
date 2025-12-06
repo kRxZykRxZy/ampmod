@@ -175,12 +175,18 @@ class LibraryComponent extends React.Component {
         const assignOtherTag = dataArr =>
             dataArr.map(dataItem => {
                 if (typeof dataItem !== 'object' || !dataItem) return dataItem;
-                const tags = (dataItem.tags || []).map(t => t.toLowerCase());
+                const tags = (dataItem.tags || []);
                 const ignored = ['scratch', 'tw', 'ampmod'];
-                // If no tags, or only ignored tags, add 'Other'
-                if (tags.length === 0 || tags.every(t => ignored.includes(t))) {
+                const sidebarTags = this.props.tags.map(t => t.tag);
+
+                // Only ignore the ignored tags when deciding if Other is needed
+                const meaningfulTags = tags.filter(t => !ignored.includes(t));
+
+                // If there are no meaningful tags in the sidebar, add Other
+                if (!meaningfulTags.some(tag => sidebarTags.includes(tag))) {
                     return {...dataItem, tags: [...tags, 'Other']};
                 }
+
                 return dataItem;
             });
 
