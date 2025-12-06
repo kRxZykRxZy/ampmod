@@ -39,34 +39,7 @@
             &-alt-colour {
                 background-color: $looks-secondary;
             }
-        }
-
-        .users {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            gap: 8px;
-
-            .user {
-                display: flex;
-                align-items: center;
-                width: 300px;
-                padding: 4px;
-                border-radius: 4px;
-                font-size: 1.25rem;
-                color: inherit !important;
-                text-decoration: none;
-                transition: background 0.2s;
-
-                &:link:hover {
-                    background: $ui-black-transparent;
-                }
-
-                .user-image {
-                    margin-right: 12px;
-                }
-            }
-        }
+        }   
 
         .spacing {
             margin-bottom: 12px;
