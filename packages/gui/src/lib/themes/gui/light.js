@@ -9,12 +9,12 @@ const guiColors = {
 
     'ui-modal-background': 'hsla(0, 100%, 100%, 1)' /* #FFFFFF */,
     'ui-modal-foreground': 'hsla(225, 15%, 40%, 1)' /* #575E75 */,
-    'ui-modal-header-background': 'var(--looks-secondary)',
+    'ui-modal-header-background': 'var(--ui-modal-header-background-classic, var(--looks-secondary))',
     'ui-modal-header-foreground': 'hsla(0, 100%, 100%, 1)' /* #FFFFFF */,
     'progress-bar-outer': 'hsla(0, 100%, 100%, 0.25)',
-    'menu-bar-hover': 'hsla(0, 0%, 0%, 0.15)',
+    'menu-bar-hover': 'var(--menu-bar-hover-classic, hsla(0, 0%, 0%, 0.15))',
 
-    'menu-bar-background': 'var(--looks-secondary)',
+    'menu-bar-background': 'var(--menu-bar-background-classic, --looks-secondary)',
     'menu-bar-foreground': '#ffffff',
     'menu-bar-icon-filter': 'none',
     'menu-bar-background-image': 'var(--menu-bar-background-image-classic)',
