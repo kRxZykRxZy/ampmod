@@ -7,24 +7,18 @@ import styles from './header.css';
 import TWNews from '../../../components/menu-bar/tw-news';
 import Localise from '../localise/localise';
 import SmartLink from "../smart-link/smart-link";
-
-// Determine if today is April Fools’ Day
-function isAprilFools() {
-    const now = new Date();
-    return now.getMonth() === 3 && now.getDate() === 1;
-}
+import isAprilFools from '../../../lib/amp-enable-pranks';
 
 const Header = () => {
-    const showFakeLogo = isAprilFools();
     const logoSrc =
         process.env.ampmod_mode === 'canary'
             ? CanaryLogo
-            : showFakeLogo
+            : isAprilFools
             ? FakeLogo
             : Logo;
 
     const logoAlt =
-        showFakeLogo && process.env.ampmod_mode !== 'canary'
+        isAprilFools && process.env.ampmod_mode !== 'canary'
             ? 'LampMod Logo'
             : 'AmpMod Logo';
 
