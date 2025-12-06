@@ -84,7 +84,6 @@ of here.
     megabytes in case you aren't going to develop the desktop app.
 -   `pnpm start` - Start a development server
 -   `pnpm run build` - Build the project for production
--   `prettier --write .` - modify your files to follow our style guide
 
 ## Update the credits
 
