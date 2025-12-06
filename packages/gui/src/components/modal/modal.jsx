@@ -36,7 +36,8 @@ const ModalComponent = props => {
             isOpen
             className={classNames(styles.modalContent, props.className, {
                 [styles.fullScreen]: props.fullScreen,
-                [styles.closing]: isClosing
+                [styles.closing]: isClosing,
+                [styles.noZoomAnimation]: props.noZoomAnimation
             })}
             contentLabel={props.contentLabel}
             overlayClassName={classNames(styles.modalOverlay, {

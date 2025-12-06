@@ -25,6 +25,7 @@ const CustomProcedures = props => (
         contentLabel={props.intl.formatMessage(messages.myblockModalTitle)}
         onRequestClose={props.onCancel}
         id="customProceduresModal"
+        noZoomAnimation
     >
         <Box className={styles.workspace} componentRef={props.componentRef} />
         <Box className={styles.body}>
