@@ -299,7 +299,7 @@ class JSGenerator {
         case InputOpcode.OP_ADD:
             return `(${this.descendInput(node.left)} + ${this.descendInput(node.right)})`;
         case InputOpcode.OP_EXPO:
-            if (environment.supportsSimpleExpo) return `${this.descendInput(node.left)} ** ${this.descendInput(node.right)}`;
+            if (environment.supportsSimpleExpo) return `(${this.descendInput(node.left)} ** ${this.descendInput(node.right)})`;
             return `Math.pow(${this.descendInput(node.left)}, ${this.descendInput(node.right)})`;
         case InputOpcode.OP_AND:
             return `(${this.descendInput(node.left)} && ${this.descendInput(node.right)})`;
