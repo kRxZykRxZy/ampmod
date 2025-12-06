@@ -1076,6 +1076,13 @@ const makeToolboxXML = function (
         gap,
         soundXML,
         gap,
+    ];
+
+    if (penXML) {
+        everything.push(penXML, gap);
+    }
+
+    everything.push(
         eventsXML,
         gap,
         controlXML,
@@ -1084,14 +1091,13 @@ const makeToolboxXML = function (
         gap,
         operatorsXML,
         gap,
-        stringsXML
-    ];
-
-    if (penXML) {
-        everything.push(gap, penXML, gap);
-    }
-
-    everything.push(variablesXML, gap, arraysXML, gap, myBlocksXML);
+        stringsXML,
+        variablesXML,
+        gap,
+        arraysXML,
+        gap,
+        myBlocksXML
+    );
 
     if (futureEnabled) {
         const futureXML = moveCategory('future') || futureToolbox(isInitialSetup, isStage, targetId);
