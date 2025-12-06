@@ -322,9 +322,7 @@ class ScriptTreeGenerator {
                 InputOpcode.ARRAYS_INDEX,
                 InputType.ANY,
                 {
-                    index: this.descendInputOfBlock(block, "INDEX").toType(
-                        InputType.NUMBER
-                    ),
+                    index: this.descendInputOfBlock(block, "INDEX"), // Cannot convert to number due to "last" and "random"
                     array: this.descendInputOfBlock(block, "VALUE").toType(
                         InputType.ARRAY
                     ),

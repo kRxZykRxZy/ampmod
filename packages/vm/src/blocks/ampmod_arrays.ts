@@ -59,10 +59,13 @@ class AmpModArraysBlocks {
         return [args.ITEM, ...a]; // adds to start
     }
 
-    insertAt (args: { ARRAY: any; INDEX: any; ITEM: any; }) {
-        const a = [...Cast.toList(args.ARRAY)];
-        a.splice(Math.max(0, Cast.toNumber(args.INDEX) - 1), 0, args.ITEM);
-        return a;
+    insertAt(args: { ARRAY: any; INDEX: any; ITEM: any; }) {
+        const arr = [...Cast.toList(args.ARRAY)];
+        const i = args.INDEX === "last" ? arr.length :
+                args.INDEX === "random" ? Math.floor(Math.random() * (arr.length + 1)) :
+                Math.max(0, Cast.toNumber(args.INDEX) - 1);
+        arr.splice(i, 0, args.ITEM);
+        return arr;
     }
 
     range (args: { START: any; END: any; }) {

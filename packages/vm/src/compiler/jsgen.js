@@ -589,7 +589,11 @@ class JSGenerator {
         case InputOpcode.ARRAYS_RANGE:
             return `((s, e) => [...Array(Math.max(0, e - s + 1))].map((_, i) => s + i))(${this.descendInput(node.start)}, ${this.descendInput(node.end)})`;
         case InputOpcode.ARRAYS_INDEX:
-            return `(${this.descendInput(node.array)}[Math.max(0, Math.min(${this.descendInput(node.array)}.length - 1, ${this.descendInput(node.index)} - 1))]) || ""`;
+            return `((i => ${this.descendInput(node.array)}[i])(
+                ${this.descendInput(node.index)} === "last" ? ${this.descendInput(node.array)}.length - 1 :
+                ${this.descendInput(node.index)} === "random" ? Math.floor(Math.random() * ${this.descendInput(node.array)}.length) :
+                Math.max(0, Math.min(${this.descendInput(node.array)}.length - 1, ${this.descendInput(node.index)} - 1))
+            )) || ""`;
         case InputOpcode.ARRAYS_LENGTH:
             return `${this.descendInput(node.array)}.length`;
         case InputOpcode.ARRAYS_IN_FRONT_OF:
