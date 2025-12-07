@@ -96,6 +96,7 @@
     padding: 0;
     line-height: 1;
     gap: 0;
+    overflow: hidden;
 }
 
 .dropdownItem {
@@ -106,7 +107,6 @@
     text-align: start;
     font-weight: bold;
     padding-inline-start: 24px;
-    transition: background-color .2s;
 }
 
 .checkmark {
