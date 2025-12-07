@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
+import { NavigationMenu } from "radix-ui";
 import Logo from '../../../components/menu-bar/tw-advanced.svg';
 import FakeLogo from './lampmod.svg';
 import CanaryLogo from '../../../components/menu-bar/ampmod-canary.svg';
@@ -22,6 +23,8 @@ const Header = () => {
             ? 'LampMod Logo'
             : 'AmpMod Logo';
 
+    const linkClassesThatShouldBeMergedOneDay = classNames(styles.headerItem, styles.hoverable);
+
     return (
         <>
             <div className={styles.header}>
@@ -35,38 +38,53 @@ const Header = () => {
                         <img height={26} src={logoSrc} alt={logoAlt} />
                     </SmartLink>
 
-                    <SmartLink
-                        to="/editor"
-                        className={classNames(styles.headerItem, styles.hoverable)}
-                    >
-                        <Localise id="header.create" />
-                    </SmartLink>
+                    <NavigationMenu.Root className={styles.mainNav}>
+                        <NavigationMenu.List className={styles.navList}>
+                            
+                            <NavigationMenu.Item className={styles.navItem}>
+                                <SmartLink
+                                    to="/editor"
+                                    className={linkClassesThatShouldBeMergedOneDay}
+                                >
+                                    <Localise id="header.create" />
+                                </SmartLink>
+                            </NavigationMenu.Item>
 
-                    <SmartLink
-                        to="/examples"
-                        className={classNames(styles.headerItem, styles.hoverable)}
-                        onMouseEnter={() => process.env.SPA && import(/* webpackChunkName: "examples-landing" */ '../../examples/examples')}
-                    >
-                        <Localise id="examples.title" />
-                    </SmartLink>
+                            <NavigationMenu.Item className={styles.navItem}>
+                                <SmartLink
+                                    to="/examples"
+                                    className={linkClassesThatShouldBeMergedOneDay}
+                                    onMouseEnter={() => process.env.SPA && import(/* webpackChunkName: "examples-landing" */ '../../examples/examples')}
+                                >
+                                    <Localise id="examples.title" />
+                                </SmartLink>
+                            </NavigationMenu.Item>
 
-                    <SmartLink
-                        to="https://ampmod.codeberg.page/manual"
-                        className={classNames(styles.headerItem, styles.hoverable)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <Localise id="header.manual" />
-                    </SmartLink>
+                            <NavigationMenu.Item className={styles.navItem}>
+                                <SmartLink
+                                    to="https://ampmod.codeberg.page/manual"
+                                    className={linkClassesThatShouldBeMergedOneDay}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <Localise id="header.manual" />
+                                </SmartLink>
+                            </NavigationMenu.Item>
 
-                    <SmartLink
-                        to="https://ampmod.codeberg.page/extensions"
-                        className={classNames(styles.headerItem, styles.hoverable)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <Localise id="header.extensions" />
-                    </SmartLink>
+                            <NavigationMenu.Item className={styles.navItem}>
+                                <SmartLink
+                                    to="https://ampmod.codeberg.page/extensions"
+                                    className={linkClassesThatShouldBeMergedOneDay}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <Localise id="header.extensions" />
+                                </SmartLink>
+                            </NavigationMenu.Item>
+
+                        </NavigationMenu.List>
+                    </NavigationMenu.Root>
+                    
                 </div>
             </div>
 

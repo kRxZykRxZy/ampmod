@@ -234,3 +234,13 @@
 [dir='rtl'] .ampmod-logo {
     transform: scaleX(-1);
 }
+
+.main-nav ul {
+    padding-left: 0;
+    display: flex;
+    flex-direction: row;
+    gap: $margin;
+}
+.nav-item {
+    list-style-type: none;
+}
