@@ -5,15 +5,15 @@
   "automerge": true,
   "packageRules": [
     {
+      "matchDatasources": ["github-actions"],
+      "enabled": false
+    },
+    {
       "enabled": true,
       "automerge": false,
       "matchUpdateTypes": ["minor", "patch"],
       "automergeType": "branch",
       "matchPackageNames": ["*"]
-    },
-    {
-      "matchDatasources": ["github-actions"],
-      "enabled": false
     }
   ],
   "prConcurrentLimit": 10,
