@@ -295,6 +295,15 @@ class LibraryComponent extends React.Component {
                 <div className={styles.sidebarContainer}>
                     {(this.props.filterable || sidebarTags.length) && (
                         <div className={classNames(styles.filterBar, this.state.isSidebarOpen && styles.filterBarOpen)}>
+                            <button
+                                onClick={() => {this.setState({isSidebarOpen: !this.state.isSidebarOpen})}}
+                                className=
+                                    {classNames(styles.openButton, !this.state.isSidebarOpen && styles.openButtonClosed)} 
+                                aria-label={`Filter bar is ${this.state.isSidebarOpen ? 'open' : 'closed'}, select to  ${this.state.isSidebarOpen ? 'close' : 'open'}`}
+                                title={`${this.state.isSidebarOpen ? 'Close' : 'Open'} filter bar`}
+                            >
+                                <img src={sidebarToggleIcon} width={10} draggable='false' aria-hidden='true' />
+                            </button>
                             {this.state.isSidebarOpen && <div className={styles.filterBarMain}>
                                 {this.props.filterable && (
                                     <Filter
@@ -347,15 +356,6 @@ class LibraryComponent extends React.Component {
                                     </React.Fragment>
                                 )}
                             </div>}
-                            <button
-                                onClick={() => {this.setState({isSidebarOpen: !this.state.isSidebarOpen})}}
-                                className=
-                                    {classNames(styles.openButton, !this.state.isSidebarOpen && styles.openButtonClosed)} 
-                                aria-label={`Filter bar is ${this.state.isSidebarOpen ? 'open' : 'closed'}, select to  ${this.state.isSidebarOpen ? 'close' : 'open'}`}
-                                title={`${this.state.isSidebarOpen ? 'Close' : 'Open'} filter bar`}
-                            >
-                                <img src={sidebarToggleIcon} width={10} draggable='false' aria-hidden='true' />
-                            </button>
                         </div>
                     )}
                     {this.state.isSidebarOpen && <div className={styles.libraryOverlay} onClick={() => {this.setState({isSidebarOpen: false})}} />}
