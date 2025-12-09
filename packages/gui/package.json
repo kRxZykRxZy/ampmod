@@ -138,7 +138,7 @@
         "postcss-preset-env": "^10.4.0",
         "react-refresh": "^0.18.0",
         "react-test-renderer": "16.14.0",
-        "redux-mock-store": "1.5.3",
+        "redux-mock-store": "1.5.5",
         "rimraf": "2.7.1",
         "selenium-webdriver": "3.6.0",
         "web-audio-test-api": "0.5.2",

@@ -506,8 +506,8 @@ importers:
         specifier: 16.14.0
         version: 16.14.0(react@16.14.0)
       redux-mock-store:
-        specifier: 1.5.3
-        version: 1.5.3
+        specifier: 1.5.5
+        version: 1.5.5(redux@3.7.2)
       rimraf:
         specifier: 2.7.1
         version: 2.7.1
@@ -669,8 +669,8 @@ importers:
         specifier: 3.7.2
         version: 3.7.2
       redux-mock-store:
-        specifier: 1.5.4
-        version: 1.5.4
+        specifier: 1.5.5
+        version: 1.5.5(redux@3.7.2)
       redux-throttle:
         specifier: 0.1.1
         version: 0.1.1
@@ -10249,11 +10249,10 @@ packages:
     resolution: {integrity: sha512-/vxpCXddiX8NGfGO/mTafwjq4aFa/71pvamip0++IQk3zG8cbCj0fifNPrjjF1XMXUne91jL9OoxmdykoEtifQ==}
     engines: {node: '>= 10.13.0'}
 
-  redux-mock-store@1.5.3:
-    resolution: {integrity: sha512-ryhkkb/4D4CUGpAV2ln1GOY/uh51aczjcRz9k2L2bPx/Xja3c5pSGJJPyR25GNVRXtKIExScdAgFdiXp68GmJA==}
-
-  redux-mock-store@1.5.4:
-    resolution: {integrity: sha512-xmcA0O/tjCLXhh9Fuiq6pMrJCwFRaouA8436zcikdIpYWWCjU76CRk+i2bHx8EeiSiMGnB85/lZdU3wIJVXHTA==}
+  redux-mock-store@1.5.5:
+    resolution: {integrity: sha512-YxX+ofKUTQkZE4HbhYG4kKGr7oCTJfB0GLy7bSeqx86GLpGirrbUWstMnqXkqHNaQpcnbMGbof2dYs5KsPE6Zg==}
+    peerDependencies:
+      redux: '*'
 
   redux-throttle@0.1.1:
     resolution: {integrity: sha512-24stzg4+1xtlO8ubP4HKudpBdPsG4qvbn0Z9hv8tz6fM6ZcQJe2dKEwYIqTl8+yPMGgjNKHp1lzTwRqjWCxj/Q==}
@@ -24742,13 +24741,10 @@ snapshots:
     dependencies:
       resolve: 1.22.11
 
-  redux-mock-store@1.5.3:
+  redux-mock-store@1.5.5(redux@3.7.2):
     dependencies:
       lodash.isplainobject: 4.0.6
-
-  redux-mock-store@1.5.4:
-    dependencies:
-      lodash.isplainobject: 4.0.6
+      redux: 3.7.2
 
   redux-throttle@0.1.1:
     dependencies:
