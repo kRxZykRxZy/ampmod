@@ -116,8 +116,6 @@ const base = {
             buffer: require.resolve("buffer/"),
         },
         alias: {
-            'react': path.resolve(__dirname, 'node_modules/react'),
-            'react-dom': path.resolve(__dirname, 'node_modules/react-dom'),
             'text-encoding$': path.resolve(__dirname, 'src/lib/tw-text-encoder'),
             'scratch-render-fonts$': path.resolve(__dirname, 'src/lib/tw-scratch-render-fonts'),
             '@ampmod/branding$': path.resolve(__dirname, 'src/lib/amp-intercept-branding'),
@@ -146,12 +144,11 @@ const base = {
                         target: process.env.NODE_ENV === 'production' ? 'es2022' : 'esnext',
                         transform: {
                             react: {
-                                pragma: 'React.createElement',
-                                pragmaFrag: 'React.Fragment',
                                 throwIfNamespace: true,
                                 development: process.env.NODE_ENV !== 'production',
                                 refresh: process.env.NODE_ENV !== 'production',
-                                useBuiltins: true
+                                useBuiltins: true,
+                                runtime: 'automatic'
                             }
                         }
                     },
