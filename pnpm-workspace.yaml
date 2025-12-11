@@ -10,3 +10,5 @@ onlyBuiltDependencies:
     - electron-winstaller
     - es5-ext
     - esbuild
+
+shamefullyHoist: true
