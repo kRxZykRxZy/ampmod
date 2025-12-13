@@ -1673,8 +1673,8 @@ class Runtime extends EventEmitter {
     }
 
     handleExtensionButtonPress (buttonData) {
-        const callback = this.extensionButtons.get(buttonData);
-        callback();
+        console.log(this.extensionButtons);
+        this.extensionButtons.get(buttonData).call();
     }
 
     /**

@@ -14,6 +14,8 @@
     border-width: 1px;
     border-style: solid;
     border-bottom: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .sprite-wrapper {
@@ -139,4 +141,13 @@
 .placeholder > .sprite {
     background: black;
     filter: opacity(15%) brightness(0%);
+}
+
+.sprite-search {
+    flex-grow: 1;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--ui-black-transparent);
+    outline: none;
+    padding: $margin;
 }
