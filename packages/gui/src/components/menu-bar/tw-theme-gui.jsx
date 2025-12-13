@@ -69,7 +69,7 @@ const icons = {
     [GUI_CUSTOM]: customIcon,
 };
 
-const GuiIcon = ({ id }) => <img src={icons[id]} draggable={false} alt="" />;
+const GuiIcon = ({ id }) => <img src={icons[id]} draggable={false} width={24} height={24} className={styles.icon} alt="" />;
 
 GuiIcon.propTypes = {id: PropTypes.string};
 
