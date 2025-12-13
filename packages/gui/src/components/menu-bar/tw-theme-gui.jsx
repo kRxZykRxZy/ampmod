@@ -62,42 +62,14 @@ const options = defineMessages({
 
 const icons = {
     [GUI_LIGHT]: lightModeIcon,
+    [GUI_AMP_LIGHT]: lightModeIcon,
     [GUI_DARK]: darkModeIcon,
     [GUI_AMOLED]: darkModeIcon,
-    [GUI_HIGH_CONTRAST]: darkModeIcon
+    [GUI_HIGH_CONTRAST]: darkModeIcon,
+    [GUI_CUSTOM]: customIcon,
 };
 
-const GuiIcon = ({id}) => {
-    if (id === GUI_CUSTOM) {
-        return <img src={customIcon} className={styles.paintbrushIcon} width={24} draggable={false} />;
-    }
-
-    return (
-        <div
-            className={styles.guiThemeIconOuter}
-            style={{
-                backgroundColor: GUI_MAP[id].guiColors['ui-primary'] || GUI_MAP['light'].guiColors['ui-primary']
-            }}
-        >
-            <div
-                className={`${styles.guiThemeIconMenubar} ${!GUI_MAP[id].guiColors['menu-bar-background'] && styles.noCustomMenuBar}`}
-                style={{
-                    borderBottomColor: GUI_MAP[id].guiColors['high-contrast-border'] || 'transparent',
-                    backgroundColor:
-                        GUI_MAP[id].guiColors['menu-bar-background'] ||
-                        GUI_MAP['light'].guiColors['menu-bar-background']
-                }}
-            />
-            <div
-                className={styles.guiThemeIconFakeBlocks}
-                style={{
-                    borderColor: GUI_MAP[id].guiColors['ui-black-transparent'],
-                    backgroundColor: GUI_MAP[id].blockColors['workspace'] || '#fff'
-                }}
-            />
-        </div>
-    );
-};
+const GuiIcon = ({ id }) => <img src={icons[id]} draggable={false} alt="" />;
 
 GuiIcon.propTypes = {id: PropTypes.string};
 
