@@ -68,6 +68,7 @@ const CACHE_EPOCH = `amp-${monorepoPackageJson.version}`;
 const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     devtool: process.env.SOURCEMAP || (process.env.NODE_ENV === 'production' ? false : 'source-map'),
+    cache: { type: 'filesystem' },
     devServer: {
         static: { directory: path.resolve(__dirname, "build") },
         host: "0.0.0.0",
@@ -339,15 +340,10 @@ module.exports = [
             },
             minimizer: [new SwcMinifyWebpackPlugin({compress: true, mangle: true, format: {comments: "some"}})]
         },
-        stats:
-            process.env.NODE_ENV === 'production'
-                ? 'errors-only'
-                : {
-                      chunks: true,
-                      chunkModules: false,
-                      chunkOrigins: false,
-                      colors: true
-                  },
+        stats: {
+            preset: process.env.STATS ?? 'summary',
+            errorDetails: true
+        },
         plugins: base.plugins.concat([
             ...(process.env.SPA
                 ? [
