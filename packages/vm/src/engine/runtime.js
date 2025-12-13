@@ -2629,6 +2629,7 @@ class Runtime extends EventEmitter {
         } else if (!this.isPaused && this._pauseTasksDone && !this._unpauseTasksDone) {
             this._pauseTasksDone = false;
             this.ioDevices.clock.resume();
+            this.audioEngine.audioContext.resume();
             this.emit(Runtime.RUNTIME_UNPAUSED);
             this._unpauseTasksDone = true;
         }
