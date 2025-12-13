@@ -143,11 +143,42 @@
     filter: opacity(15%) brightness(0%);
 }
 
+$main-button-size: 2.75rem;
+
 .sprite-search {
-    flex-grow: 1;
-    background-color: transparent;
+    box-shadow: 0 0 0 4px $looks-transparent;
     border: 0;
-    border-bottom: 1px solid var(--ui-black-transparent);
     outline: none;
-    padding: $margin;
+    padding-inline: calc($margin * 2);
+    position: absolute;
+    border-radius: 9999em;
+    bottom: 0.75rem;
+    right: 5rem;
+    height: $main-button-size;
+    width: $main-button-size;
+    transition: width 0.3s, background-color 0.3s;
+    background:
+        url('./icon--filter.svg') center / 1.2em no-repeat,
+        $motion-primary;
+}
+
+.sprite-search:hover, .sprite-search:focus, .sprite-search:not(:placeholder-shown) {
+    width: calc(((100% / $sprites-per-row) - $margin) * 4);
+    color: $text-primary;
+    background:
+        none,
+        $ui-white;
+}
+
+.sprite-search:focus {
+    outline: 2px $looks-secondary solid;
+}
+
+.sprite-search::placeholder {
+    color: transparent;
+}
+
+.sprite-search:hover::placeholder,
+.sprite-search:focus::placeholder {
+    color: $text-primary-transparent;
 }
