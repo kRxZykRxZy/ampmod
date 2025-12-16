@@ -262,6 +262,7 @@ const InputOpcode = {
     OP_RANDOM: 'op.random',
     OP_ROUND: 'op.round',
     OP_SUBTRACT: 'op.subtract',
+    OP_ARRAYJOIN: 'op.arrayJoin',
 
     SENSING_ANSWER: 'sensing.answer',
     SENSING_COLOR_TOUCHING_COLOR: 'sensing.colorTouchingColor',

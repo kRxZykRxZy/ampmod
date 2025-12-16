@@ -398,6 +398,8 @@ class JSGenerator {
         }
         case InputOpcode.OP_JOIN:
             return `(${this.descendInput(node.left)} + ${this.descendInput(node.right)})`;
+        case InputOpcode.OP_ARRAYJOIN:
+            return `(${this.descendInput(node.array)}.join(${this.descendInput(node.delim)}))`;
         case InputOpcode.OP_LENGTH:
             return `${this.descendInput(node.string)}.length`;
         case InputOpcode.OP_LESS: {

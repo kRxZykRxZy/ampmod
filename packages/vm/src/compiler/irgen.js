@@ -148,9 +148,14 @@ class ScriptTreeGenerator {
     createConstantInput (constant, preserveStrings = false) {
         if (constant === null) throw new Error('IR: Constant cannot have a null value.');
 
+        if (Array.isArray(constant)) {
+            return new IntermediateInput(InputOpcode.CONSTANT, InputType.ARRAY, {value: constant});
+        }
+
         constant += '';
         const numConstant = +constant;
         const preserve = preserveStrings && this.namesOfCostumesAndSounds.has(constant);
+
 
         if (!Number.isNaN(numConstant) && (constant.trim() !== '' || constant.includes('\t'))) {
             if (!preserve && numConstant.toString() === constant) {
@@ -450,6 +455,11 @@ class ScriptTreeGenerator {
             return new IntermediateInput(InputOpcode.OP_JOIN, InputType.STRING, {
                 left: this.descendInputOfBlock(block, 'STRING1').toType(InputType.STRING),
                 right: this.descendInputOfBlock(block, 'STRING2').toType(InputType.STRING)
+            });
+        case 'operator_arrayjoin':
+            return new IntermediateInput(InputOpcode.OP_ARRAYJOIN, InputType.STRING, {
+                array: this.descendInputOfBlock(block, 'ARRAY').toType(InputType.ARRAY),
+                delim: this.descendInputOfBlock(block, 'DELIM').toType(InputType.STRING)
             });
         case 'operator_length':
             return new IntermediateInput(InputOpcode.OP_LENGTH, InputType.NUMBER_REAL, {

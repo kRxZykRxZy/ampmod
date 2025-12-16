@@ -661,6 +661,13 @@ const strings = function (isInitialSetup, isStage, targetId, colors) {
                 </shadow>
             </value>
         </block>
+        <block type="operator_arrayjoin">
+            <value name="DELIM">
+                <shadow type="text">
+                    <field name="TEXT">,</field>
+                </shadow>
+            </value>
+        </block>
         <block type="operator_letter_of">
             <value name="LETTER">
                 <shadow type="math_whole_number">
