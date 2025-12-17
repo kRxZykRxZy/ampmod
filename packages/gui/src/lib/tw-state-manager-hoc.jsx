@@ -422,6 +422,10 @@ const TWStateManager = function (WrappedComponent) {
                 // Always remove legacy parameter
                 searchParams.delete('60fps');
 
+                // amp: remove legacy parameters before these became defaults
+                searchParams.delete('hqpen');
+                searchParams.delete('offscreen');
+
                 const {width, height} = this.props.customStageSize;
                 if (width === defaultStageSize.width && height === defaultStageSize.height) {
                     searchParams.delete('size');
