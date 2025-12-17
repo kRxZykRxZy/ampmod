@@ -316,8 +316,8 @@ const TWStateManager = function (WrappedComponent) {
                 }
             }
 
-            if (urlParams.has('hqpen')) {
-                this.props.vm.renderer.setUseHighQualityRender(true);
+            if (urlParams.has('lqpen')) {
+                this.props.vm.renderer.setUseHighQualityRender(false);
             }
 
             if (urlParams.has('turbo')) {
@@ -353,9 +353,9 @@ const TWStateManager = function (WrappedComponent) {
                 });
             }
 
-            if (urlParams.has('offscreen')) {
+            if (urlParams.has('fencing')) {
                 this.props.vm.setRuntimeOptions({
-                    fencing: false
+                    fencing: true
                 });
             }
 
@@ -455,10 +455,10 @@ const TWStateManager = function (WrappedComponent) {
                     searchParams.delete('turbo');
                 }
 
-                if (this.props.highQualityPen) {
-                    searchParams.set('hqpen', '');
+                if (!this.props.highQualityPen) {
+                    searchParams.set('lqpen', '');
                 } else {
-                    searchParams.delete('hqpen');
+                    searchParams.delete('lqpen');
                 }
 
                 if (this.props.runtimeOptions.caseSensitivity) {
@@ -487,10 +487,10 @@ const TWStateManager = function (WrappedComponent) {
                     searchParams.set('clones', runtimeOptions.maxClones);
                 }
 
-                if (runtimeOptions.fencing) {
-                    searchParams.delete('offscreen');
+                if (!runtimeOptions.fencing) {
+                    searchParams.delete('fencing');
                 } else {
-                    searchParams.set('offscreen', '');
+                    searchParams.set('fencing', '');
                 }
 
                 if (runtimeOptions.miscLimits) {
