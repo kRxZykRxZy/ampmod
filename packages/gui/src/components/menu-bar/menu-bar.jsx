@@ -532,7 +532,6 @@ class MenuBar extends React.Component {
                                     className="no-sa-compact-hide"
                                     alt="AmpMod"
                                 />
-                                <div className={styles.logoGround} />
                             </SmartLink>
                         )}
                         {(this.props.canChangeTheme || this.props.canChangeLanguage) && (
@@ -558,7 +557,7 @@ class MenuBar extends React.Component {
                             />
                         )}
                         {this.props.canManageFiles && (
-                            <div className={styles.fileButton}>
+                            <div>
                                 <MenuLabel
                                     open={this.props.fileMenuOpen}
                                     onOpen={this.props.onClickFile}
@@ -569,7 +568,6 @@ class MenuBar extends React.Component {
                                         draggable={false}
                                         width={20}
                                         height={20}
-                                        className={styles.buttonIcon}
                                     />
                                     <span className={styles.collapsibleLabel}>
                                         <FormattedMessage
@@ -709,7 +707,7 @@ class MenuBar extends React.Component {
                                 </MenuLabel>
                             </div>
                         )}
-                        <div className={styles.editButton}>
+                        <div>
                             <MenuLabel
                                 open={this.props.editMenuOpen}
                                 onOpen={this.props.onClickEdit}
@@ -720,7 +718,6 @@ class MenuBar extends React.Component {
                                     draggable={false}
                                     width={20}
                                     height={20}
-                                    className={styles.buttonIcon}
                                 />
                                 <span className={styles.collapsibleLabel}>
                                     <FormattedMessage

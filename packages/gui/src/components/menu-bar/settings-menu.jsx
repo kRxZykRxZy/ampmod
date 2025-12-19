@@ -103,14 +103,13 @@ class SettingsMenu extends React.Component {
         const {showAmpErase} = this.state;
 
         return (
-            <div className={menuBarStyles.settingsButton}>
+            <div>
                 <MenuLabel open={settingsMenuOpen} onOpen={onRequestOpen} onClose={onRequestClose}>
                     <img
                         src={settingsIcon}
                         draggable={false}
                         width={20}
                         height={20}
-                        className={menuBarStyles.buttonIcon}
                     />
                     <span className={styles.dropdownLabel}>
                         <FormattedMessage
