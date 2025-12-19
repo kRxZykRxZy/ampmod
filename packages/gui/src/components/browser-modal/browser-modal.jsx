@@ -38,9 +38,11 @@ const noop = () => {};
 
 const BrowserModal = ({intl, ...props}) => {
     const title =
-        props.onClickDesktopSettings
-            ? messages.systemNotSupported
-            : messages.browserNotSupported;
+        bowser.parse(navigator.userAgent).platform.type === 'mobile'
+            ? messages.deviceNotSupported
+            : props.onClickDesktopSettings
+              ? messages.systemNotSupported
+              : messages.browserNotSupported;
     const incompatibleUserscripts = findIncompatibleUserscripts();
     return (
         <>
@@ -70,6 +72,21 @@ const BrowserModal = ({intl, ...props}) => {
                             {incompatibleUserscripts.map((message, index) => (
                                 <p key={index}>{message}</p>
                             ))}
+                        </React.Fragment>
+                    )}
+
+                    {bowser.parse(navigator.userAgent).platform.type === 'mobile' && !props.isEmbedded && (
+                        <React.Fragment>
+                            <p>
+                                <FormattedMessage
+                                    defaultMessage="{APP_NAME}'s editor is not supported on mobile devices. However, you can still view projects on the AmpMod website."
+                                    description="Error message when on mobile."
+                                    id="amp.browserModal.mobile"
+                                    values={{
+                                        APP_NAME
+                                    }}
+                                />
+                            </p>
                         </React.Fragment>
                     )}
 
