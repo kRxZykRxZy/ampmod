@@ -3,7 +3,7 @@
 @import '../../css/z-index.css';
 
 .page-wrapper {
-    height: 100%;
+    height: 100vh;
     font-family: 'Inter Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     display: flex;
     flex-direction: column;
@@ -320,4 +320,18 @@ $fade-out-distance: 15px;
     height: 100%;
     /* overridden by JS; this will be used if the browser can't understand that color */
     background-color: white;
+}
+
+/* amp: Primitive mobile support. */
+@media (max-width: 800px) {
+    .page-wrapper {
+        flex-direction: row;
+    }
+    .flex-wrapper {
+        flex-direction: column-reverse;
+    }
+    /* TODO: do something better */
+    .stage-and-target-wrapper {
+        display: none;
+    }
 }
