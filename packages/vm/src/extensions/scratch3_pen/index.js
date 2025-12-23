@@ -300,6 +300,7 @@ class Scratch3PenBlocks {
                 description: 'Label for the pen extension category'
             }),
             // blockIconURI: blockIconURI,
+            addonToCategory: true,
             blocks: [
                 // tw: additional message when on the stage for clarity
                 {

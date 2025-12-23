@@ -40,7 +40,9 @@ const CORE_EXTENSIONS = [
     // 'operators',
     // 'variables',
     // 'myBlocks'
-    'pen'
+    'pen',
+    'music',
+    'videoSensing'
 ];
 
 // Disable missing translation warnings in console

@@ -341,7 +341,7 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
     `;
 };
 
-const sound = function (isInitialSetup, isStage, targetId, soundName, colors) {
+const sound = function (isInitialSetup, isStage, targetId, soundName, colors, music) {
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
     return `
     <category name="%{BKY_CATEGORY_SOUND}" id="sound" colour="${colors.primary}" secondaryColour="${colors.tertiary}">
@@ -392,6 +392,8 @@ const sound = function (isInitialSetup, isStage, targetId, soundName, colors) {
             </value>
         </block>
         <block id="${targetId}_volume" type="sound_volume"/>
+        ${blockSeparator}
+        ${music || ''}
         ${categorySeparator}
     </category>
     `;
@@ -534,7 +536,7 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
     `;
 };
 
-const sensing = function (isInitialSetup, isStage, targetId, colors) {
+const sensing = function (isInitialSetup, isStage, targetId, colors, videoSensing) {
     const name = translate('SENSING_ASK_TEXT', "What's your name?");
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
     return `
@@ -612,6 +614,8 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
             ${blockSeparator}
         `
         }
+        ${blockSeparator}
+        ${videoSensing || ''}
         ${blockSeparator}
         <block id="loudness" type="sensing_loudness"/>
         ${blockSeparator}
@@ -1010,7 +1014,17 @@ const futureToolbox = function (isInitialSetup, isStage, targetId) {
     `;
 };
 
- 
+const pen = function (isInitialSetup, isStage, targetId, colors, blocks) {
+    return `
+    <category
+        name="Pen"
+        id="ampmodPenCategory"
+        colour="${colors.primary}"
+        secondaryColour="${colors.tertiary}">
+        ${blocks}
+    </category>
+    `;
+};
 
 const xmlOpen = '<xml style="display: none">';
 const xmlClose = '</xml>';
@@ -1062,18 +1076,16 @@ const makeToolboxXML = function (
     const motionXML = moveCategory('motion') || motion(isInitialSetup, isStage, targetId, colors.motion);
     const looksXML =
         moveCategory('looks') || looks(isInitialSetup, isStage, targetId, costumeName, backdropName, colors.looks);
-    const soundXML = moveCategory('sound') || sound(isInitialSetup, isStage, targetId, soundName, colors.sounds);
+    const soundXML = moveCategory('sound') || sound(isInitialSetup, isStage, targetId, soundName, colors.sounds, moveCategory('music'));
     const eventsXML = moveCategory('event') || events(isInitialSetup, isStage, targetId, colors.event);
     const controlXML = moveCategory('control') || control(isInitialSetup, isStage, targetId, colors.control);
-    const sensingXML = moveCategory('sensing') || sensing(isInitialSetup, isStage, targetId, colors.sensing);
+    const sensingXML = moveCategory('sensing') || sensing(isInitialSetup, isStage, targetId, colors.sensing, moveCategory('videoSensing'));
     const operatorsXML = moveCategory('operators') || operators(isInitialSetup, isStage, targetId, colors.operators);
     const stringsXML = moveCategory('ampmodstrings') || strings(isInitialSetup, isStage, targetId, colors.strings);
     const variablesXML = moveCategory('data') || variables(isInitialSetup, isStage, targetId, colors.data);
     const arraysXML = moveCategory('arrays') || arrays(isInitialSetup, isStage, targetId, colors.data_lists);
     const myBlocksXML = moveCategory('procedures') || myBlocks(isInitialSetup, isStage, targetId, colors.more);
-
-    // Always display pen blocks as a normal category, if it exists.
-    let penXML = moveCategory('pen');
+    const penXML = moveCategory('ampmodPenCategory') || pen(isInitialSetup, isStage, targetId, colors.pen, moveCategory('pen'));
 
     const everything = [
         xmlOpen,

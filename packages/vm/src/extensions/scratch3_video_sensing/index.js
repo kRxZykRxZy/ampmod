@@ -101,6 +101,14 @@ class Scratch3VideoSensingBlocks {
          */
         this.firstInstall = true;
 
+        /**
+         * amp: We merge blocks from this extension into Sensing itself, so we can't
+         * just ask for camera on every project load.
+         * This fixes that.
+         * @type {boolean}
+         */
+        this.inUse = false;
+
         if (this.runtime.ioDevices) {
             // Configure the video device with values from globally stored locations.
             this.runtime.on(Runtime.PROJECT_LOADED, this.updateVideoDisplay.bind(this));
@@ -199,6 +207,7 @@ class Scratch3VideoSensingBlocks {
      * and set the video device to use them.
      */
     updateVideoDisplay () {
+        if (!this.inUse) return;
         this.setVideoTransparency({
             TRANSPARENCY: this.globalVideoTransparency
         });
@@ -241,6 +250,7 @@ class Scratch3VideoSensingBlocks {
         }
         const offset = time - this._lastUpdate;
         if (offset > Scratch3VideoSensingBlocks.INTERVAL) {
+            if (this.inUse) return;
             const frame = this.runtime.ioDevices.video.getFrame({
                 format: Video.FORMAT_IMAGE_DATA,
                 dimensions: Scratch3VideoSensingBlocks.DIMENSIONS
@@ -410,13 +420,6 @@ class Scratch3VideoSensingBlocks {
         // getInfo is run. This turns on the video device when it is
         // first added to a project, and is overwritten by a PROJECT_LOADED
         // event listener that later calls updateVideoDisplay
-        if (this.firstInstall) {
-            this.globalVideoState = VideoState.ON;
-            this.globalVideoTransparency = 50;
-            this.updateVideoDisplay();
-            this.firstInstall = false;
-        }
-
         // Return extension definition
         return {
             globalExtensions: ['colours_sensing'],
@@ -426,8 +429,9 @@ class Scratch3VideoSensingBlocks {
                 default: 'Video Sensing',
                 description: 'Label for the video sensing extension category'
             }),
-            blockIconURI: blockIconURI,
-            menuIconURI: menuIconURI,
+            // blockIconURI: blockIconURI,
+            // menuIconURI: menuIconURI,
+            addonToCategory: true,
             blocks: [
                 {
                     // @todo this hat needs to be set itself to restart existing
@@ -535,6 +539,7 @@ class Scratch3VideoSensingBlocks {
      * @returns {number} the motion amount or direction of the stage or sprite
      */
     videoOn (args, util) {
+        this.inUse = true;
         this.detect.analyzeFrame();
 
         let state = this.detect;
@@ -558,6 +563,13 @@ class Scratch3VideoSensingBlocks {
      *   reference
      */
     whenMotionGreaterThan (args, util) {
+        this.inUse = true;
+        if (this.firstInstall) {
+            this.globalVideoState = VideoState.ON;
+            this.globalVideoTransparency = 50;
+            this.updateVideoDisplay();
+            this.firstInstall = false;
+        }
         this.detect.analyzeFrame();
         const state = this._analyzeLocalMotion(util.target);
         return state.motionAmount > Number(args.REFERENCE);
@@ -570,6 +582,7 @@ class Scratch3VideoSensingBlocks {
      * @param {VideoState} args.VIDEO_STATE - the video state to set the device to
      */
     videoToggle (args) {
+        this.inUse = true;
         const state = args.VIDEO_STATE;
         this.globalVideoState = state;
         if (state === VideoState.OFF) {
@@ -589,6 +602,7 @@ class Scratch3VideoSensingBlocks {
      *   preview to
      */
     setVideoTransparency (args) {
+        this.inUse = true;
         const transparency = Cast.toNumber(args.TRANSPARENCY);
         this.globalVideoTransparency = transparency;
         this.runtime.ioDevices.video.setPreviewGhost(transparency);

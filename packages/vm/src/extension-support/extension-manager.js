@@ -3,7 +3,6 @@ const log = require('../util/log');
 const maybeFormatMessage = require('../util/maybe-format-message');
 const BlockType = require('./block-type');
 const SecurityManager = require('./tw-security-manager');
-const PenExtension = require('../extensions/scratch3_pen');
 
 /**
  * Built-in extensions to the VM. These are loaded dynamically using async `import()`.
@@ -11,14 +10,14 @@ const PenExtension = require('../extensions/scratch3_pen');
  */
 const defaultBuiltinExtensions = {
     coreExample: () => import(/* webpackChunkName: "extension-coreExample" */ '../blocks/scratch3_core_example'),
-    pen: () => PenExtension,
+    pen: () => require('../extensions/scratch3_pen'),
     wedo2: () => import(/* webpackChunkName: "extension-wedo2" */ '../extensions/scratch3_wedo2'),
-    music: () => import(/* webpackChunkName: "extension-music" */ '../extensions/scratch3_music'),
+    music: () => require('../extensions/scratch3_music'),
     microbit: () => import(/* webpackChunkName: "extension-microbit" */ '../extensions/scratch3_microbit'),
     text2speech: () => import(/* webpackChunkName: "extension-text2speech" */ '../extensions/scratch3_text2speech'),
     translate: () => import(/* webpackChunkName: "extension-translate" */ '../extensions/scratch3_translate'),
     videoSensing: () =>
-        import(/* webpackChunkName: "extension-video-sensing" */ '../extensions/scratch3_video_sensing'),
+        require('../extensions/scratch3_video_sensing'),
     ev3: () => import(/* webpackChunkName: "extension-ev3" */ '../extensions/scratch3_ev3'),
     makeymakey: () => import(/* webpackChunkName: "extension-makeymakey" */ '../extensions/scratch3_makeymakey'),
     boost: () => import(/* webpackChunkName: "extension-boost" */ '../extensions/scratch3_boost'),

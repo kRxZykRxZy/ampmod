@@ -1088,6 +1088,7 @@ class Runtime extends EventEmitter {
             blockIconURI: extensionInfo.blockIconURI,
             menuIconURI: extensionInfo.menuIconURI,
             docsURI: extensionInfo.docsURI,
+            addonToCategory: extensionInfo.addonToCategory,
             globalExtensions: []
         };
 
@@ -1409,7 +1410,7 @@ class Runtime extends EventEmitter {
             colourTertiary: blockInfo.color3 ?? categoryInfo.color3,
             helpUrl: blockInfo.helpURI ?? categoryInfo.docsURI,
             tooltip:
-                categoryInfo.id === 'pen' ?
+                categoryInfo.addonToCategory ?
                     '' :
                     blockInfo.tooltip ?
                         `${blockInfo.tooltip} (From the "${categoryInfo.name}" extension.)` :
@@ -1813,7 +1814,7 @@ class Runtime extends EventEmitter {
      */
     getBlocksXML (target) {
         return this._blockInfo.map(categoryInfo => {
-            const {name, color1, color2} = categoryInfo;
+            const {name, color1, color2, addonToCategory} = categoryInfo;
             // Filter out blocks that aren't supposed to be shown on this target, as determined by the block info's
             // `hideFromPalette` and `filter` properties.
             const paletteBlocks = categoryInfo.blocks.filter(block => {
@@ -1846,13 +1847,16 @@ class Runtime extends EventEmitter {
                 statusButtonXML = 'showStatusButton="true"';
             }
 
-            let xml = `<category name="${xmlEscape(name)}"`;
-            xml += ` id="${xmlEscape(categoryInfo.id)}"`;
-            xml += ` ${statusButtonXML}`;
-            xml += ` ${colorXML}`;
-            xml += ` ${menuIconXML}>`;
+            let xml;
+            if (!addonToCategory) {
+                xml = `<category name="${xmlEscape(name)}"`;
+                xml += ` id="${xmlEscape(categoryInfo.id)}"`;
+                xml += ` ${statusButtonXML}`;
+                xml += ` ${colorXML}`;
+                xml += ` ${menuIconXML}>`;
+            }
             xml += paletteBlocks.map(block => block.xml).join('');
-            xml += '</category>';
+            if (!addonToCategory) xml += '</category>';
 
             return {
                 id: categoryInfo.id,
