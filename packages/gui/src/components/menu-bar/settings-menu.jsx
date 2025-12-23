@@ -141,12 +141,15 @@ class SettingsMenu extends React.Component {
                                 </>
                             )}
                             {onClickDesktopSettings && <TWDesktopSettings onClick={onClickDesktopSettings} />}
+                        </MenuSection>
+                        <MenuSection>
                             <AmpAddonSettings handleClickAddonSettings={onClickAddonSettings} />
                             <AmpInstallPWA />
                             {/* <AmpShowWelcome /> */}
 
                             {showAmpErase && <AmpErase />}
-
+                        </MenuSection>
+                        <MenuSection>
                             <MenuItem>
                                 <div className={`${styles.option} ${styles.disabled}`}>
                                     <span className={styles.submenuLabel}>
