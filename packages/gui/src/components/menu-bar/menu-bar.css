@@ -252,3 +252,7 @@
             transform 0.25s ease;
     }
 }
+
+.icon {
+  filter: var(--menu-bar-icon-filter);
+}

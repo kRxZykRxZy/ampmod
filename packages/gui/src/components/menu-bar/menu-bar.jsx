@@ -565,6 +565,7 @@ class MenuBar extends React.Component {
                                 >
                                     <img
                                         src={fileIcon}
+                                        className={styles.icon}
                                         draggable={false}
                                         width={20}
                                         height={20}
@@ -715,6 +716,7 @@ class MenuBar extends React.Component {
                             >
                                 <img
                                     src={editIcon}
+                                    className={styles.icon}
                                     draggable={false}
                                     width={20}
                                     height={20}
