@@ -161,7 +161,9 @@ const base = {
             },
             {
                 test: /\.css$/i,
-                resourceQuery: /^(?!basic$).*/,
+                resourceQuery: {
+                    not: [/^\?basic$/, /^\?addon-style$/]
+                },
                 use: [
                     MiniCssExtractPlugin.loader,
                     {
@@ -188,6 +190,25 @@ const base = {
                                         ? [require('cssnano')({ preset: 'default' })]
                                         : []),
                                     // require('@csstools/postcss-bundler'),
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                resourceQuery: /addon-style/,
+                use: [
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    // we only want to minify
+                                    ...(process.env.NODE_ENV === 'production'
+                                        ? [require('cssnano')({ preset: 'default' })]
+                                        : []),
                                 ]
                             }
                         }
