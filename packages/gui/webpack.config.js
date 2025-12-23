@@ -220,7 +220,13 @@ const base = {
                 test: /\.(svg|png|wav|mp3|gif|jpg|woff2?|hex)$/,
                 type: "asset",
                 parser: { dataUrlCondition: { maxSize: 8 * 1024 } },
-                generator: { filename: "static/assets/[name][hash][ext]" },
+                generator: { filename: "static/assets/[hash][ext]" },
+            },
+            {
+                // Static assets
+                test: /\.(sb3|apz)$/,
+                type: "asset/resource",
+                generator: { filename: "static/projects/[name].[hash][ext]" },
             },
             {
                 resourceQuery: /raw/,
