@@ -822,6 +822,7 @@ class VirtualMachine extends EventEmitter {
 
             if (wholeProject) {
                 this.runtime.parseProjectOptions();
+                this.runtime.applyAmpModStoredOptions();
             }
 
             // Update the VM user's knowledge of targets and blocks on the workspace.
