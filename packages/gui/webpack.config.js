@@ -119,7 +119,6 @@ const base = {
         alias: {
             'react': path.resolve(__dirname, 'node_modules/react'),
             'react-dom': path.resolve(__dirname, 'node_modules/react-dom'),
-            'text-encoding$': path.resolve(__dirname, 'src/lib/tw-text-encoder'),
             'scratch-render-fonts$': path.resolve(__dirname, 'src/lib/tw-scratch-render-fonts'),
             '@ampmod/branding$': path.resolve(__dirname, 'src/lib/amp-intercept-branding'),
             'real-branding$': path.resolve(__dirname, '../branding'),

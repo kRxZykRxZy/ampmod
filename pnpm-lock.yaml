@@ -212,7 +212,7 @@ importers:
         version: 0.0.202403251715(encoding@0.1.13)(webpack@5.104.1(@swc/core@1.15.7)(webpack-cli@6.0.1))
       '@turbowarp/scratch-svg-renderer':
         specifier: ^1.0.202505311824
-        version: 1.0.202505311824(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)
+        version: 1.0.202505311824
       '@turbowarp/startaudiocontext':
         specifier: ^1.0.0
         version: 1.0.0
@@ -715,7 +715,7 @@ importers:
         version: 0.2.0
       '@turbowarp/scratch-svg-renderer':
         specifier: ^1.0.202505311824
-        version: 1.0.202505311824(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)
+        version: 1.0.202505311824
       grapheme-breaker:
         specifier: 0.3.2
         version: 0.3.2
@@ -862,15 +862,9 @@ importers:
       scratch-parser:
         specifier: github:TurboWarp/scratch-parser#master
         version: https://codeload.github.com/TurboWarp/scratch-parser/tar.gz/5e21d953d58d92672956030b9f93402f11249c96
-      scratch-sb1-converter:
-        specifier: 0.2.7
-        version: 0.2.7
       scratch-translate-extension-languages:
         specifier: 0.0.20191118205314
         version: 0.0.20191118205314
-      text-encoding:
-        specifier: 0.7.0
-        version: 0.7.0
       uuid:
         specifier: 8.3.2
         version: 8.3.2
@@ -3667,7 +3661,6 @@ packages:
 
   '@turbowarp/scratch-svg-renderer@1.0.202505311824':
     resolution: {integrity: sha512-EaKVqIuEwrr4SzQGOVyr8GBE+DGzUbbn38qiV6DMWFzb++/HgWl1qdlKA/j+mOK+GDwYydMFP0FuWYvWBkt6sA==}
-    version: 1.0.202505311824
     peerDependencies:
       scratch-render-fonts: github:TurboWarp/scratch-render-fonts#master
 
@@ -16050,6 +16043,14 @@ snapshots:
       - encoding
       - webpack
 
+  '@turbowarp/scratch-svg-renderer@1.0.202505311824':
+    dependencies:
+      '@turbowarp/nanolog': 0.2.0
+      base64-js: 1.2.1
+      base64-loader: 1.0.0
+      dompurify: 2.5.8
+      transformation-matrix: 1.15.0
+
   '@turbowarp/scratch-svg-renderer@1.0.202505311824(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)':
     dependencies:
       '@turbowarp/nanolog': 0.2.0
@@ -25338,7 +25339,7 @@ snapshots:
     dependencies:
       '@turbowarp/ancient-hull.js': 0.2.13
       '@turbowarp/nanolog': 0.2.0
-      '@turbowarp/scratch-svg-renderer': 1.0.202505311824(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)
+      '@turbowarp/scratch-svg-renderer': 1.0.202505311824
       grapheme-breaker: 0.3.2
       ify-loader: 1.0.4
       linebreak: 0.3.0
