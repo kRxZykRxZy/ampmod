@@ -3064,25 +3064,24 @@ class Runtime extends EventEmitter {
 
         const opts = this.projectSettingsFromJson;
 
-        if (opts.runtimeOptions && typeof this.setRuntimeOptions === 'function') {
+        if (opts.runtimeOptions) {
             this.setRuntimeOptions(opts.runtimeOptions);
         }
 
-        if (opts.framerate !== null && typeof this.setFramerate === 'function') {
+        if (opts.framerate !== null) {
             this.setFramerate(opts.framerate);
         }
 
-        if (opts.interpolation !== null && typeof this.setInterpolation === 'function') {
+        if (opts.interpolation !== null) {
             this.setInterpolation(opts.interpolation);
         }
 
         if (Array.isArray(opts.stageSize) && opts.stageSize.length === 2 &&
-            typeof opts.stageSize[0] === 'number' && typeof opts.stageSize[1] === 'number' &&
-            typeof this.setStageSize === 'function') {
+            typeof opts.stageSize[0] === 'number' && typeof opts.stageSize[1] === 'number') {
             this.setStageSize(opts.stageSize[0], opts.stageSize[1]);
         }
 
-        if (opts.hq !== null && this.renderer && typeof this.renderer.setUseHighQualityRender === 'function') {
+        if (opts.hq !== null && this.renderer) {
             this.renderer.setUseHighQualityRender(!!opts.hq);
         }
     }

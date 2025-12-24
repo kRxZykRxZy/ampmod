@@ -784,7 +784,10 @@ const serialize = function (runtime, targetId, {allowOptimization = true} = {}) 
     // we don't really care about breaking Scratch compatibility anyways as we use our own file
     // extension
     obj.projectSettings = {
-        runtimeOptions: runtime.runtimeOptions,
+        runtimeOptions: {
+            ...runtime.runtimeOptions,
+            clones: String(runtime.runtimeOptions.clones)
+        },
         framerate: runtime.frameLoop.framerate,
         interpolation: runtime.interpolationEnabled,
         stageSize: [runtime.stageWidth, runtime.stageHeight],
@@ -1563,7 +1566,10 @@ const deserialize = async function (json, runtime, zip, isSingleSprite) {
     const monitorObjects = json.monitors || [];
 
     // eslint-disable-next-line require-atomic-updates
-    runtime.projectSettingsFromJson = json.projectSettings;
+    runtime.projectSettingsFromJson = json.projectSettings ? {
+        ...json.projectSettings,
+        clones: +json.projectSettings.runtimeOptions.clones
+    } : null;
 
     return (
         fontPromise
