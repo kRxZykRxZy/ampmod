@@ -489,7 +489,7 @@ module.exports = [
                         from: 'static',
                         to: ''
                     },
-                  ...(process.env.IS_CBP_BUILD ? { from: "./static-prod", to: ""} : {})
+                  ...(process.env.IS_CBP_BUILD ? [{ from: "./static-prod", to: ""}] : [])
                 ]
             }),
         ]),
