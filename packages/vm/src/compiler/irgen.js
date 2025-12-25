@@ -871,6 +871,16 @@ class ScriptTreeGenerator {
                 whenTrue: this.descendSubstack(block, 'SUBSTACK'),
                 whenFalse: this.descendSubstack(block, 'SUBSTACK2')
             });
+        case 'control_switch':
+            return new IntermediateStackBlock(StackOpcode.CONTROL_SWITCH, {
+                value: this.descendInputOfBlock(block, 'VALUE'),
+                cases: this.descendSubstack(block, 'SUBSTACK', true)
+            });
+        case 'control_case':
+            return new IntermediateStackBlock(StackOpcode.CONTROL_CASE, {
+                value: this.descendInputOfBlock(block, 'VALUE'),
+                substack: this.descendSubstack(block, 'SUBSTACK')
+            });
         case 'control_repeat':
             return new IntermediateStackBlock(
                 StackOpcode.CONTROL_REPEAT,
@@ -1234,13 +1244,13 @@ class ScriptTreeGenerator {
      * @private
      * @returns {IntermediateStack} Stacked blocks.
      */
-    descendSubstack (parentBlock, substackName) {
+    descendSubstack (parentBlock, substackName, isSwitch) {
         const input = parentBlock.inputs[substackName];
         if (!input) {
             return new IntermediateStack();
         }
         const stackId = input.block;
-        return this.walkStack(stackId);
+        return this.walkStack(stackId, isSwitch);
     }
 
     /**
@@ -1249,7 +1259,7 @@ class ScriptTreeGenerator {
      * @private
      * @returns {IntermediateStack} List of stacked block nodes.
      */
-    walkStack (startingBlockId) {
+    walkStack (startingBlockId, isSwitch) {
         const result = new IntermediateStack();
         let blockId = startingBlockId;
 
@@ -1257,6 +1267,16 @@ class ScriptTreeGenerator {
             const block = this.getBlockById(blockId);
             if (!block) {
                 break;
+            }
+            if (block.opcode === 'control_case' && !isSwitch) {
+                log.warn('stray case block');
+                blockId = block.next;
+                continue;
+            }
+            if (block.opcode !== 'control_case' && isSwitch) {
+                log.warn('a non-case block was found in a switch walk');
+                blockId = block.next;
+                continue;
             }
 
             const node = this.descendStackedBlock(block);

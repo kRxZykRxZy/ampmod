@@ -491,7 +491,7 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
                 </shadow>
             </value>
         </block>
-        <!-- ${blockSeparator}
+        ${blockSeparator}
         <block id="switch" type="control_switch">
             <value name="VALUE">
                 <shadow type="text">
@@ -505,7 +505,7 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
                     <field name="TEXT">${apple}</field>
                 </shadow>
             </value>
-        </block>
+        </block> <!--
         ${blockSeparator}
         <block id="async" type="control_async"/> -->
         ${blockSeparator}

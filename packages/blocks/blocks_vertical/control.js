@@ -733,20 +733,4 @@ Blockly.Blocks["control_case"] = {
             extensions: ["colours_control", "shape_switch_case"],
         });
     },
-    onchange: function (event) {
-        if (!this.workspace || this.isInFlyout) return;
-
-        let parentBlock = this.getSurroundParent();
-        let isChildOfSwitch = false;
-
-        if (parentBlock && parentBlock.type === "control_switch") {
-            isChildOfSwitch = true;
-        }
-
-        if (!isChildOfSwitch) {
-            this.setWarningText(Blockly.Msg.CONTROL_SWITCH_BAD_SYNTAX, this.id);
-        } else {
-            this.setWarningText(null, this.id);
-        }
-    },
 };

@@ -717,6 +717,17 @@ class JSGenerator {
             }
             this.source += `}\n`;
             break;
+        case StackOpcode.CONTROL_SWITCH:
+            this.source += `switch (${this.descendInput(node.value)}) {\n`;
+            this.descendStack(node.cases, new Frame(false));
+            this.source += `}\n`;
+            break;
+        case StackOpcode.CONTROL_CASE:
+            this.source += `case (${this.descendInput(node.value)}): {\n`;
+            this.descendStack(node.substack, new Frame(false));
+            this.source += `break;\n`;
+            this.source += `}\n`;
+            break;
         case StackOpcode.CONTROL_REPEAT: {
             const i = this.localVariables.next();
             this.source += `for (var ${i} = ${this.descendInput(node.times)}; ${i} >= 0.5; ${i}--) {\n`;
