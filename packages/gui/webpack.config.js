@@ -303,7 +303,7 @@ const base = {
                     from: "src/lib/themes/blocks/dark-media/blocks-media",
                     to: "static/blocks-media/dark",
                     force: true,
-                },
+                }
             ],
         }),
         new webpack.ProvidePlugin({
@@ -488,7 +488,8 @@ module.exports = [
                     {
                         from: 'static',
                         to: ''
-                    }
+                    },
+                  ...(process.env.IS_CBP_BUILD ? { from: "./static-prod", to: ""} : {})
                 ]
             }),
         ]),

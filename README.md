@@ -5,6 +5,8 @@ language mainly focusing on adding more data types to Scratch, as well as dozens
 
 [![Try AmpMod now!](readme-assets/trynow.svg)](https://ampmod.codeberg.page) 
 
+View this repository [**on Codeberg**](https://codeberg.org/ampmod/ampmod) or [on GitHub](https://github.com/amp-mod/ampmod).
+
 *To access the canary build which has the newest features at the cost of more bugs, see https://ampmod.codeberg.page/@canary*
 
 ## Included packages
