@@ -511,6 +511,7 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
         ${blockSeparator}
         <block id="async" type="control_async"/> -->
         ${blockSeparator}
+        <block type="control_break"/>
         <block type="control_stop"/>
         ${blockSeparator}
         ${

@@ -126,6 +126,7 @@ const StackOpcode = {
     CONTROL_SWITCH: 'control.switch',
     CONTROL_CASE: 'control.case',
     CONTROL_DEFAULT: 'control.default',
+    CONTROL_BREAK: 'control.break',
 
     LIST_ADD: 'list.add',
     LIST_INSERT: 'list.instert',

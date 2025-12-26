@@ -76,6 +76,8 @@ class ScriptTreeGenerator {
         this.script = new IntermediateScript();
         this.script.warpTimer = this.target.runtime.compilerOptions.warpTimer;
 
+        this.stackContext = [];
+
         /**
          * Cache of variable ID to variable data object.
          * @type {Object.<string, object>}
@@ -143,6 +145,22 @@ class ScriptTreeGenerator {
             return null;
         }
         return blockInfo;
+    }
+
+    pushContext(type) {
+        if (type) this.stackContext.push(type);
+    }
+
+    popContext(type) {
+        if (type) this.stackContext.pop();
+    }
+
+    isInValidBreakContext() {
+        return this.stackContext.includes('loop') || this.stackContext.includes('switch');
+    }
+
+    isInSwitchContext() {
+        return this.stackContext[this.stackContext.length - 1] === 'switch';
     }
 
     createConstantInput (constant, preserveStrings = false) {
@@ -845,7 +863,7 @@ class ScriptTreeGenerator {
                 StackOpcode.CONTROL_WHILE,
                 {
                     condition: this.createConstantInput(true).toType(InputType.BOOLEAN),
-                    do: this.descendSubstack(block, 'SUBSTACK')
+                    do: this.descendSubstack(block, 'SUBSTACK', 'loop')
                 },
                 this.analyzeLoop()
             );
@@ -855,7 +873,7 @@ class ScriptTreeGenerator {
                 {
                     variable: this.descendVariable(block, 'VARIABLE', SCALAR_TYPE),
                     count: this.descendInputOfBlock(block, 'VALUE').toType(InputType.NUMBER),
-                    do: this.descendSubstack(block, 'SUBSTACK')
+                    do: this.descendSubstack(block, 'SUBSTACK', 'loop')
                 },
                 this.analyzeLoop()
             );
@@ -874,7 +892,7 @@ class ScriptTreeGenerator {
         case 'control_switch':
             return new IntermediateStackBlock(StackOpcode.CONTROL_SWITCH, {
                 value: this.descendInputOfBlock(block, 'VALUE'),
-                cases: this.descendSubstack(block, 'SUBSTACK', true)
+                cases: this.descendSubstack(block, 'SUBSTACK', 'switch')
             });
         case 'control_case':
             return new IntermediateStackBlock(StackOpcode.CONTROL_CASE, {
@@ -890,7 +908,7 @@ class ScriptTreeGenerator {
                 StackOpcode.CONTROL_REPEAT,
                 {
                     times: this.descendInputOfBlock(block, 'TIMES').toType(InputType.NUMBER),
-                    do: this.descendSubstack(block, 'SUBSTACK')
+                    do: this.descendSubstack(block, 'SUBSTACK', 'loop')
                 },
                 this.analyzeLoop()
             );
@@ -906,7 +924,7 @@ class ScriptTreeGenerator {
                     condition: new IntermediateInput(InputOpcode.OP_NOT, InputType.BOOLEAN, {
                         operand: condition
                     }),
-                    do: this.descendSubstack(block, 'SUBSTACK'),
+                    do: this.descendSubstack(block, 'SUBSTACK', 'loop'),
                     warpTimer: needsWarpTimer
                 },
                 this.analyzeLoop() || needsWarpTimer
@@ -944,7 +962,7 @@ class ScriptTreeGenerator {
                 StackOpcode.CONTROL_WHILE,
                 {
                     condition: this.descendInputOfBlock(block, 'CONDITION').toType(InputType.BOOLEAN),
-                    do: this.descendSubstack(block, 'SUBSTACK'),
+                    do: this.descendSubstack(block, 'SUBSTACK', 'loop'),
                     // We should consider analyzing this like we do for control_repeat_until
                     warpTimer: false
                 },
@@ -954,6 +972,8 @@ class ScriptTreeGenerator {
             return new IntermediateStackBlock(StackOpcode.CONTROL_CLEAR_COUNTER);
         case 'control_incr_counter':
             return new IntermediateStackBlock(StackOpcode.CONTORL_INCR_COUNTER);
+        case 'control_break':
+            return new IntermediateStackBlock(StackOpcode.CONTROL_BREAK);
 
         case 'data_addtolist':
             return new IntermediateStackBlock(StackOpcode.LIST_ADD, {
@@ -1248,13 +1268,13 @@ class ScriptTreeGenerator {
      * @private
      * @returns {IntermediateStack} Stacked blocks.
      */
-    descendSubstack (parentBlock, substackName, isSwitch) {
+    descendSubstack (parentBlock, substackName, type) {
         const input = parentBlock.inputs[substackName];
         if (!input) {
             return new IntermediateStack();
         }
         const stackId = input.block;
-        return this.walkStack(stackId, isSwitch);
+        return this.walkStack(stackId, type);
     }
 
     /**
@@ -1263,23 +1283,24 @@ class ScriptTreeGenerator {
      * @private
      * @returns {IntermediateStack} List of stacked block nodes.
      */
-    walkStack (startingBlockId, isSwitch) {
+    walkStack (startingBlockId, type) {
+        this.pushContext(type); // Enter new context level
         const result = new IntermediateStack();
         let blockId = startingBlockId;
         const caseBlocks = ['control_case', 'control_default'];
 
         while (blockId !== null) {
             const block = this.getBlockById(blockId);
-            if (!block) {
-                break;
-            }
-            if (caseBlocks.includes(block.opcode) && !isSwitch) {
-                log.warn('stray case block');
+            if (!block) break;
+
+            if (block.opcode === 'control_break' && !this.isInValidBreakContext()) {
+                log.warn('stray break block');
                 blockId = block.next;
                 continue;
             }
-            if (!caseBlocks.includes(block.opcode) && isSwitch) {
-                log.warn('a non-case block was found in a switch walk');
+            
+            if (caseBlocks.includes(block.opcode) && !this.isInSwitchContext()) {
+                log.warn('stray case block');
                 blockId = block.next;
                 continue;
             }
@@ -1287,10 +1308,10 @@ class ScriptTreeGenerator {
             const node = this.descendStackedBlock(block);
             this.script.yields = this.script.yields || node.yields;
             result.blocks.push(node);
-
             blockId = block.next;
         }
 
+        this.popContext(type);
         return result;
     }
 

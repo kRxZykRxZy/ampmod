@@ -787,6 +787,9 @@ class JSGenerator {
         case StackOpcode.CONTORL_INCR_COUNTER:
             this.source += 'runtime.ext_scratch3_control._counter++;\n';
             break;
+        case StackOpcode.CONTROL_BREAK:
+            this.source += 'break;\n';
+            break;
 
         case StackOpcode.EVENT_BROADCAST:
             this.source += `startHats("event_whenbroadcastreceived", { BROADCAST_OPTION: ${this.descendInput(node.broadcast)} });\n`;

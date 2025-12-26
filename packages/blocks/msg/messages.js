@@ -62,6 +62,7 @@ Blockly.Msg.CONTROL_SWITCH_BAD_SYNTAX =
     '"if () was matched" blocks must be in a "test if () is matched" C-block.';
 Blockly.Msg.CONTROL_CASE = "if %1 was matched, then";
 Blockly.Msg.CONTROL_DEFAULT = "if no match was found, then";
+Blockly.Msg.CONTROL_BREAK = "break out of sub-stack";
 
 // Data blocks
 Blockly.Msg.DATA_SETVARIABLETO = "set %1 to %2";

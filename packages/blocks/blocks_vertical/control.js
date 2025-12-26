@@ -755,3 +755,17 @@ Blockly.Blocks["control_default"] = {
         });
     },
 };
+
+Blockly.Blocks["control_break"] = {
+    /**
+     * amp: Block for "break".
+     * @this Blockly.Block
+     */
+    init: function () {
+        this.jsonInit({
+            message0: Blockly.Msg.CONTROL_BREAK,
+            category: Blockly.Categories.control,
+            extensions: ["colours_control", "shape_end"],
+        });
+    },
+};
