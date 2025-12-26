@@ -61,6 +61,7 @@ Blockly.Msg.CONTROL_SWITCH = "test if %1 is matched";
 Blockly.Msg.CONTROL_SWITCH_BAD_SYNTAX =
     '"if () was matched" blocks must be in a "test if () is matched" C-block.';
 Blockly.Msg.CONTROL_CASE = "if %1 was matched, then";
+Blockly.Msg.CONTROL_DEFAULT = "if no match was found, then";
 
 // Data blocks
 Blockly.Msg.DATA_SETVARIABLETO = "set %1 to %2";

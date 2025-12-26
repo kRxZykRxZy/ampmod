@@ -728,6 +728,12 @@ class JSGenerator {
             this.source += `break;\n`;
             this.source += `}\n`;
             break;
+        case StackOpcode.CONTROL_DEFAULT:
+            this.source += `default: {\n`;
+            this.descendStack(node.substack, new Frame(false));
+            this.source += `break;\n`;
+            this.source += `}\n`;
+            break;
         case StackOpcode.CONTROL_REPEAT: {
             const i = this.localVariables.next();
             this.source += `for (var ${i} = ${this.descendInput(node.times)}; ${i} >= 0.5; ${i}--) {\n`;

@@ -505,7 +505,9 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
                     <field name="TEXT">${apple}</field>
                 </shadow>
             </value>
-        </block> <!--
+        </block> 
+        <block id="default" type="control_default"/>
+        <!--
         ${blockSeparator}
         <block id="async" type="control_async"/> -->
         ${blockSeparator}

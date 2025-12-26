@@ -881,6 +881,10 @@ class ScriptTreeGenerator {
                 value: this.descendInputOfBlock(block, 'VALUE'),
                 substack: this.descendSubstack(block, 'SUBSTACK')
             });
+        case 'control_default':
+            return new IntermediateStackBlock(StackOpcode.CONTROL_DEFAULT, {
+                substack: this.descendSubstack(block, 'SUBSTACK')
+            });
         case 'control_repeat':
             return new IntermediateStackBlock(
                 StackOpcode.CONTROL_REPEAT,
@@ -1262,18 +1266,19 @@ class ScriptTreeGenerator {
     walkStack (startingBlockId, isSwitch) {
         const result = new IntermediateStack();
         let blockId = startingBlockId;
+        const caseBlocks = ['control_case', 'control_default'];
 
         while (blockId !== null) {
             const block = this.getBlockById(blockId);
             if (!block) {
                 break;
             }
-            if (block.opcode === 'control_case' && !isSwitch) {
+            if (caseBlocks.includes(block.opcode) && !isSwitch) {
                 log.warn('stray case block');
                 blockId = block.next;
                 continue;
             }
-            if (block.opcode !== 'control_case' && isSwitch) {
+            if (!caseBlocks.includes(block.opcode) && isSwitch) {
                 log.warn('a non-case block was found in a switch walk');
                 blockId = block.next;
                 continue;
