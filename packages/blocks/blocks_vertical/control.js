@@ -769,3 +769,23 @@ Blockly.Blocks["control_break"] = {
         });
     },
 };
+
+Blockly.Blocks["control_error"] = {
+    /**
+     * Block for "throw error..."
+     * @this Blockly.Block
+     */
+    init: function () {
+        this.jsonInit({
+            message0: Blockly.Msg.CONTROL_ERROR,
+            args0: [
+                {
+                    type: "input_value",
+                    name: "MESSAGE",
+                },
+            ],
+            category: Blockly.Categories.control,
+            extensions: ["colours_control", "shape_end"],
+        });
+    },
+};

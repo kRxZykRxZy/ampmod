@@ -1045,6 +1045,15 @@ class JSGenerator {
             break;
         }
 
+        case StackOpcode.BLOCK_ERROR: {
+            const value = this.localVariables.next();
+            this.source += `const ${value} = ${this.descendInput(node.input)};`;
+            // blocks like legacy no-ops can return a literal `undefined`
+            this.source += `if (${value} !== undefined) runtime.blockError(target, "${sanitize(this.script.topBlockId)}", ${value});\n`;
+            this.source += `retire();\n`;
+            break;
+        }
+
         default:
             log.warn(`JS: Unknown stacked block: ${block.opcode}`, node);
             throw new Error(`JS: Unknown stacked block: ${block.opcode}`);

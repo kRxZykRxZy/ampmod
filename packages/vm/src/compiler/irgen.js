@@ -856,6 +856,10 @@ class ScriptTreeGenerator {
             return new IntermediateStackBlock(StackOpcode.CONTROL_CLONE_CREATE, {
                 target: this.descendInputOfBlock(block, 'CLONE_OPTION').toType(InputType.STRING)
             });
+        case 'control_error':
+            return new IntermediateStackBlock(StackOpcode.BLOCK_ERROR, {
+                input: this.descendInputOfBlock(block, 'MESSAGE').toType(InputType.STRING)
+            });
         case 'control_delete_this_clone':
             return new IntermediateStackBlock(StackOpcode.CONTROL_CLONE_DELETE, {}, true);
         case 'control_forever':

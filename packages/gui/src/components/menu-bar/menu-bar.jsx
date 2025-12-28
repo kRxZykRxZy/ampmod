@@ -104,7 +104,7 @@ import sharedMessages from '../../lib/shared-messages';
 
 import SeeInsideButton from './tw-see-inside.jsx';
 import isScratchDesktop, {notScratchDesktop} from '../../lib/isScratchDesktop.js';
-import {APP_FORUMS, APP_FORUMS_BUGS, APP_NAME} from '@ampmod/branding';
+import {APP_CONTACT, APP_FORUMS, APP_FORUMS_BUGS, APP_NAME} from '@ampmod/branding';
 
 import ampmodIcon from './tw-advanced.svg';
 import ampmodCanaryIcon from './ampmod-canary.svg';
@@ -488,14 +488,14 @@ class MenuBar extends React.Component {
                                         place={this.props.isRtl ? 'left' : 'right'}
                                     >
                                         <MenuSection>
-                                            <MenuItemLink href={APP_FORUMS_BUGS}>
+                                            <MenuItemLink href={APP_CONTACT}>
                                                 <FormattedMessage
-                                                    defaultMessage="Some scripts encountered errors."
+                                                    defaultMessage="Some scripts encountered errors during compilation."
                                                     description="Link in error menu"
-                                                    id="tw.menuBar.reportError1"
+                                                    id="amp.menuBar.reportError1"
                                                 />
                                             </MenuItemLink>
-                                            <MenuItemLink href={APP_FORUMS_BUGS}>
+                                            <MenuItemLink href={APP_CONTACT}>
                                                 <FormattedMessage
                                                     defaultMessage="This is a bug. Please report it."
                                                     description="Link in error menu"

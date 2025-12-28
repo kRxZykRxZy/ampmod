@@ -104,6 +104,7 @@ const StackOpcode = {
     ADDON_CALL: 'addons.call',
     DEBUGGER: 'tw.debugger',
     VISUAL_REPORT: 'visualReport',
+    BLOCK_ERROR: 'blockError',
     COMPATIBILITY_LAYER: 'compat',
     OLD_COMPILER_COMPATIBILITY_LAYER: 'oldCompiler',
 

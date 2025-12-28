@@ -753,6 +753,14 @@ class Runtime extends EventEmitter {
     }
 
     /**
+     * Event name for visual error report.
+     * @const {string}
+     */
+    static get BLOCK_ERROR () {
+        return 'BLOCK_ERROR';
+    }
+
+    /**
      * Event name for project loaded report.
      * @const {string}
      */
@@ -3242,6 +3250,21 @@ class Runtime extends EventEmitter {
     visualReport (target, blockId, value) {
         if (target === this.getEditingTarget()) {
             this.emit(Runtime.VISUAL_REPORT, {
+                id: blockId,
+                value: String(value)
+            });
+        }
+    }
+
+    /**
+     * Emit value for error to show in the blocks.
+     * @param {Target} target The target that the block was run in.
+     * @param {string} blockId ID for the block.
+     * @param {string} value Error message to show associated with the block.
+     */
+    blockError (target, blockId, value) {
+        if (target === this.getEditingTarget()) {
+            this.emit(Runtime.BLOCK_ERROR, {
                 id: blockId,
                 value: String(value)
             });
