@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Switch, Route, Redirect, Link, useLocation, Router } from 'wouter';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import render from "./app-target";
 import styles from "./amp-spa.css";
 import "./import-first";
@@ -47,43 +47,40 @@ const NotFound: React.FC = () => {
 
 const RedirectWithParams: React.FC<{ to: string }> = ({ to }) => {
   const location = useLocation();
-  return <Redirect to={`${to}${location.search}${location.hash}`} replace />;
+  return <Navigate to={`${to}${location.search}${location.hash}`} replace />;
 };
 
 render(
   <ErrorBoundary>
-    <Router base={process.env.ROOT}>
+    <Router basename={String(process.env.ROOT || '').replace(/\/+$/, "")} future={{ v7_startTransition: true }}>
       <Suspense fallback={
-        <div className={styles.launching}>
-          <Spinner bare isWhite />
-          {process.env.ampmod_mode === "canary" && "Canary: expect bugs. Most features here will eventually be on the main site."}
-        </div>
+        <div className={styles.launching}><Spinner bare isWhite />{process.env.ampmod_mode === "canary" && "Canary: expect bugs. Most features here will eventually be on the main site."}</div>
       }>
-        <Switch>
-          <Route path="/" component={Home} />
-          <Route path="/examples" component={Examples} />
-          <Route path="/credits" component={Credits} />
-          <Route path="/faq" component={FAQ} />
-          <Route path="/editor" component={Interface} />
-          <Route path="/player" component={() => <RedirectWithParams to="/editor" />} />
-          <Route path="/fullscreen" component={() => <Interface isFullScreen />} />
-          <Route path="/addons" component={AddonSettings} />
-          <Route path="/embed" component={Embed} />
-          <Route path="/new-compiler" component={() => <><Header /><MinorPages.newcompiler /><Footer /></>} />
-          <Route path="/privacy" component={() => <><Header /><MinorPages.privacy /><Footer /></>} />
-          <Route path="/index.html" component={() => <RedirectWithParams to="/" />} />
-          <Route path="/examples.html" component={() => <RedirectWithParams to="/examples" />} />
-          <Route path="/credits.html" component={() => <RedirectWithParams to="/credits" />} />
-          <Route path="/faq.html" component={() => <RedirectWithParams to="/faq" />} />
-          <Route path="/editor.html" component={() => <RedirectWithParams to="/editor" />} />
-          <Route path="/player.html" component={() => <RedirectWithParams to="/editor" />} />
-          <Route path="/fullscreen.html" component={() => <RedirectWithParams to="/fullscreen" />} />
-          <Route path="/addons.html" component={() => <RedirectWithParams to="/addons" />} />
-          <Route path="/embed.html" component={() => <RedirectWithParams to="/embed" />} />
-          <Route path="/privacy.html" component={() => <RedirectWithParams to="/privacy" />} />
-          <Route path="/new-compiler.html" component={() => <RedirectWithParams to="/new-compiler" />} />
-          <Route path="*"><NotFound /></Route>
-        </Switch>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/examples" element={<Examples />} />
+          <Route path="/credits" element={<Credits />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/editor" element={<Interface />} />
+          <Route path="/player" element={<RedirectWithParams to="/editor" />} />
+          <Route path="/fullscreen" element={<Interface isFullScreen />} />
+          <Route path="/addons" element={<AddonSettings />} />
+          <Route path="/embed" element={<Embed />} />
+          <Route path="/new-compiler" element={<><Header /><MinorPages.newcompiler /><Footer /></>} />
+          <Route path="/privacy" element={<><Header /><MinorPages.privacy /><Footer /></>} />
+          <Route path="/index.html" element={<RedirectWithParams to="/" />} />
+          <Route path="/examples.html" element={<RedirectWithParams to="/examples" />} />
+          <Route path="/credits.html" element={<RedirectWithParams to="/credits" />} />
+          <Route path="/faq.html" element={<RedirectWithParams to="/faq" />} />
+          <Route path="/editor.html" element={<RedirectWithParams to="/editor" />} />
+          <Route path="/player.html" element={<RedirectWithParams to="/editor" />} />
+          <Route path="/fullscreen.html" element={<RedirectWithParams to="/fullscreen" />} />
+          <Route path="/addons.html" element={<RedirectWithParams to="/addons" />} />
+          <Route path="/embed.html" element={<RedirectWithParams to="/embed" />} />
+          <Route path="/privacy.html" element={<RedirectWithParams to="/privacy" />} />
+          <Route path="/new-compiler.html" element={<RedirectWithParams to="/new-compiler" />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </Suspense>
     </Router>
   </ErrorBoundary>
