@@ -134,7 +134,7 @@ importers:
         version: 2.0.0
       '@turbowarp/extensions':
         specifier: git+https://codeberg.org/ampmod/extensions.git
-        version: git+https://codeberg.org/ampmod/extensions.git#005c75dc1dc5ace1cd6e0f4370e12bbe48d178cf(jiti@2.6.1)
+        version: git+https://codeberg.org/ampmod/extensions.git#e72d5ea793e998cf21259f34c61d684333c3a030(jiti@2.6.1)
       adm-zip:
         specifier: ^0.5.16
         version: 0.5.16
@@ -212,7 +212,7 @@ importers:
         version: 0.0.202403251715(encoding@0.1.13)(webpack@5.104.1(@swc/core@1.15.7)(webpack-cli@6.0.1))
       '@turbowarp/scratch-svg-renderer':
         specifier: ^1.0.202505311824
-        version: 1.0.202505311824
+        version: 1.0.202505311824(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)
       '@turbowarp/startaudiocontext':
         specifier: ^1.0.0
         version: 1.0.0
@@ -342,12 +342,6 @@ importers:
       react-responsive:
         specifier: 5.0.0
         version: 5.0.0(react@16.14.0)
-      react-router:
-        specifier: ^6.30.2
-        version: 6.30.2(react@16.14.0)
-      react-router-dom:
-        specifier: ^6.30.2
-        version: 6.30.2(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
       react-string-replace:
         specifier: ^0.4.4
         version: 0.4.4
@@ -365,7 +359,7 @@ importers:
         version: 9.22.6(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
       react-virtuoso:
         specifier: ^4.15.0
-        version: 4.17.0(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
+        version: 4.18.0(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
       redux:
         specifier: 3.7.2
         version: 3.7.2
@@ -396,6 +390,9 @@ importers:
       wav-encoder:
         specifier: 1.3.0
         version: 1.3.0
+      wouter:
+        specifier: ^3.9.0
+        version: 3.9.0(react@16.14.0)
       xhr:
         specifier: 2.5.0
         version: 2.5.0
@@ -420,7 +417,7 @@ importers:
         version: 2.0.8(postcss@8.5.6)
       '@formatjs/cli':
         specifier: ^6.7.4
-        version: 6.8.6
+        version: 6.8.7
       '@pmmmwh/react-refresh-webpack-plugin':
         specifier: ^0.6.2
         version: 0.6.2(@types/webpack@5.28.5(@swc/core@1.15.7)(webpack-cli@6.0.1))(react-refresh@0.18.0)(type-fest@0.21.3)(webpack-dev-server@5.2.2(webpack-cli@6.0.1(webpack-dev-server@5.2.2)(webpack@5.104.1))(webpack@5.104.1(@swc/core@1.15.7)(webpack-cli@6.0.1)))(webpack@5.104.1(@swc/core@1.15.7)(webpack-cli@6.0.1))
@@ -501,7 +498,7 @@ importers:
         version: 13.0.2(postcss@8.5.6)
       postcss-preset-env:
         specifier: ^10.4.0
-        version: 10.5.0(postcss@8.5.6)
+        version: 10.6.0(postcss@8.5.6)
       react-refresh:
         specifier: ^0.18.0
         version: 0.18.0
@@ -715,7 +712,7 @@ importers:
         version: 0.2.0
       '@turbowarp/scratch-svg-renderer':
         specifier: ^1.0.202505311824
-        version: 1.0.202505311824
+        version: 1.0.202505311824(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)
       grapheme-breaker:
         specifier: 0.3.2
         version: 0.3.2
@@ -1982,6 +1979,12 @@ packages:
     peerDependencies:
       postcss: ^8.4
 
+  '@csstools/postcss-property-rule-prelude-list@1.0.0':
+    resolution: {integrity: sha512-IxuQjUXq19fobgmSSvUDO7fVwijDJaZMvWQugxfEUxmjBeDCVaDuMpsZ31MsTm5xbnhA+ElDi0+rQ7sQQGisFA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      postcss: ^8.4
+
   '@csstools/postcss-random-function@2.0.1':
     resolution: {integrity: sha512-q+FQaNiRBhnoSNo+GzqGOIBKoHQ43lYz0ICrV+UudfWnEF6ksS6DsBIJSISKQT2Bvu3g4k6r7t0zYrk5pDlo8w==}
     engines: {node: '>=18'}
@@ -2014,6 +2017,12 @@ packages:
 
   '@csstools/postcss-stepped-value-functions@4.0.9':
     resolution: {integrity: sha512-h9btycWrsex4dNLeQfyU3y3w40LMQooJWFMm/SK9lrKguHDcFl4VMkncKKoXi2z5rM9YGWbUQABI8BT2UydIcA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      postcss: ^8.4
+
+  '@csstools/postcss-syntax-descriptor-syntax-production@1.0.1':
+    resolution: {integrity: sha512-GneqQWefjM//f4hJ/Kbox0C6f2T7+pi4/fqTqOFGTL3EjnvOReTqO1qUQ30CaUjkwjYq9qZ41hzarrAxCc4gow==}
     engines: {node: '>=18'}
     peerDependencies:
       postcss: ^8.4
@@ -2335,8 +2344,8 @@ packages:
   '@fontsource/inter@5.2.8':
     resolution: {integrity: sha512-P6r5WnJoKiNVV+zvW2xM13gNdFhAEpQ9dQJHt3naLvfg+LkF2ldgSLiF4T41lf1SQCM9QmkqPTn4TH568IRagg==}
 
-  '@formatjs/cli@6.8.6':
-    resolution: {integrity: sha512-YITOfOHWItE440v+b8ctMtQYS17nuZGAhEkmDBMbdl73I9VCrOBAbx7oueWfmaX77gnfGYhtwZdnIhmE0RZKKg==}
+  '@formatjs/cli@6.8.7':
+    resolution: {integrity: sha512-xm0mnctV7AvZIKXjLme4YTOXDe9NpPdY7OnZXRP2Ugb4yPIS2w83i9lV4AHJsO+qg9/A0/ZY+tmosQ9m+NhLkQ==}
     engines: {node: '>= 16'}
     hasBin: true
     peerDependencies:
@@ -3475,10 +3484,6 @@ packages:
   '@radix-ui/rect@1.1.1':
     resolution: {integrity: sha512-HPwpGIzkl28mWyZqG52jiqDJ12waP11Pa1lGoiyUkIEuMLBP0oeK/C89esbXrxsky5we7dfd8U58nm0SgAWpVw==}
 
-  '@remix-run/router@1.23.1':
-    resolution: {integrity: sha512-vDbaOzF7yT2Qs4vO6XV1MHcJv+3dgR1sT+l3B8xxOVhUC336prMvqrvsLL/9Dnw2xr6Qhz4J0dmS0llNAbnUmQ==}
-    engines: {node: '>=14.0.0'}
-
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
 
@@ -3632,8 +3637,8 @@ packages:
   '@turbowarp/ancient-hull.js@0.2.13':
     resolution: {integrity: sha512-lpVDr18qRjOLWcPtw9H+nlFhY7hbdgQlLU1b6nJfEn2pMYRnOEtzFXZbprG5JgmUCIzGx/H9WPajbkjRdvUC+Q==}
 
-  '@turbowarp/extensions@git+https://codeberg.org/ampmod/extensions.git#005c75dc1dc5ace1cd6e0f4370e12bbe48d178cf':
-    resolution: {commit: 005c75dc1dc5ace1cd6e0f4370e12bbe48d178cf, repo: https://codeberg.org/ampmod/extensions.git, type: git}
+  '@turbowarp/extensions@git+https://codeberg.org/ampmod/extensions.git#e72d5ea793e998cf21259f34c61d684333c3a030':
+    resolution: {commit: e72d5ea793e998cf21259f34c61d684333c3a030, repo: https://codeberg.org/ampmod/extensions.git, type: git}
     version: 0.0.1
 
   '@turbowarp/json@0.1.2':
@@ -3661,6 +3666,7 @@ packages:
 
   '@turbowarp/scratch-svg-renderer@1.0.202505311824':
     resolution: {integrity: sha512-EaKVqIuEwrr4SzQGOVyr8GBE+DGzUbbn38qiV6DMWFzb++/HgWl1qdlKA/j+mOK+GDwYydMFP0FuWYvWBkt6sA==}
+    version: 1.0.202505311824
     peerDependencies:
       scratch-render-fonts: github:TurboWarp/scratch-render-fonts#master
 
@@ -5525,8 +5531,8 @@ packages:
     resolution: {integrity: sha512-u/O3vwbptzhMs3L1fQE82ZSLHQQfto5gyZzwteVIEyeaY5Fc7R4dapF/BvRoSYFeqfBk4m0V1Vafq5Pjv25wvA==}
     engines: {node: '>= 6'}
 
-  cssdb@8.5.2:
-    resolution: {integrity: sha512-Pmoj9RmD8RIoIzA2EQWO4D4RMeDts0tgAH0VXdlNdxjuBGI3a9wMOIcUwaPNmD4r2qtIa06gqkIf7sECl+cBCg==}
+  cssdb@8.6.0:
+    resolution: {integrity: sha512-7ZrRi/Z3cRL1d5I8RuXEWAkRFP3J4GeQRiyVknI4KC70RAU8hT4LysUZDe0y+fYNOktCbxE8sOPUOhyR12UqGQ==}
 
   cssesc@3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
@@ -8708,6 +8714,9 @@ packages:
     resolution: {integrity: sha512-x471SsVjUtBRtcvd4BzKE9kFC+/2TeWgKCgw0bZcw1b9l2X3QX5vCWgF+KaZaYm87Ss//rHnWryupDrgLvmSkA==}
     engines: {node: '>=4.0.0'}
 
+  mitt@3.0.1:
+    resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
+
   mkdirp@0.5.1:
     resolution: {integrity: sha512-SknJC52obPfGQPnjIkXbmA6+5H15E+fR+E4iR2oQ3zzCLbd7/ONua69R/Gw7AgkTLsRG+r5fzksYwWe1AgTyWA==}
     deprecated: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
@@ -9819,8 +9828,8 @@ packages:
     peerDependencies:
       postcss: ^8.4
 
-  postcss-preset-env@10.5.0:
-    resolution: {integrity: sha512-xgxFQPAPxeWmsgy8cR7GM1PGAL/smA5E9qU7K//D4vucS01es3M0fDujhDJn3kY8Ip7/vVYcecbe1yY+vBo3qQ==}
+  postcss-preset-env@10.6.0:
+    resolution: {integrity: sha512-+LzpUSLCGHUdlZ1YZP7lp7w1MjxInJRSG0uaLyk/V/BM17iU2B7xTO7I8x3uk0WQAcLLh/ffqKzOzfaBvG7Fdw==}
     engines: {node: '>=18'}
     peerDependencies:
       postcss: ^8.4
@@ -10233,19 +10242,6 @@ packages:
     peerDependencies:
       react: ^16.0.0
 
-  react-router-dom@6.30.2:
-    resolution: {integrity: sha512-l2OwHn3UUnEVUqc6/1VMmR1cvZryZ3j3NzapC2eUXO1dB0sYp5mvwdjiXhpUbRb21eFow3qSxpP8Yv6oAU824Q==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      react: '>=16.8'
-      react-dom: '>=16.8'
-
-  react-router@6.30.2:
-    resolution: {integrity: sha512-H2Bm38Zu1bm8KUE5NVWRMzuIyAV8p/JrOaBJAwVmp37AXG72+CZJlEBw6pdn9i5TBgLMhNDgijS4ZlblpHyWTA==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      react: '>=16.8'
-
   react-string-replace@0.4.4:
     resolution: {integrity: sha512-FAMkhxmDpCsGTwTZg7p/2v+/GTmxAp73so3fbSvlAcBBX36ujiGRNEaM/1u+jiYQrArhns+7eE92g2pi5E5FUA==}
     engines: {node: '>=0.12.0'}
@@ -10297,8 +10293,8 @@ packages:
       react: ^16.3.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  react-virtuoso@4.17.0:
-    resolution: {integrity: sha512-od3pi2v13v31uzn5zPXC2u3ouISFCVhjFVFch2VvS2Cx7pWA2F1aJa3XhNTN2F07M3lhfnMnsmGeH+7wZICr7w==}
+  react-virtuoso@4.18.0:
+    resolution: {integrity: sha512-bpbbqHQ/EhP4LLD+UAakmxdr+3V0A7v7s76/N51O5Jllaf68srzgSdgjji2U/7Ozbn/KKI/a+VzfnbUeQgLemQ==}
     peerDependencies:
       react: '>=16 || >=17 || >= 18 || >= 19'
       react-dom: '>=16 || >=17 || >= 18 || >=19'
@@ -10394,6 +10390,10 @@ packages:
   regexp.prototype.flags@1.5.4:
     resolution: {integrity: sha512-dYqgNSZbDwkaJ2ceRd9ojCGjBq+mOm9LmtXnAnEGyHhN/5R7iDW2TRw3h+o/jCFxus3P2LfWIIiwowAjANm7IA==}
     engines: {node: '>= 0.4'}
+
+  regexparam@3.0.0:
+    resolution: {integrity: sha512-RSYAtP31mvYLkAHrOlh25pCNQ5hWnT106VukGaaFfuJrZFkGRX5GhUAdPqpSDXxOhA2c4akmRuplv1mRqnBn6Q==}
+    engines: {node: '>=8'}
 
   regexpp@1.1.0:
     resolution: {integrity: sha512-LOPw8FpgdQF9etWMaAfG/WRthIdXJGYp4mJ2Jgn/2lpkbod9jPn0t9UqN7AxBOKNfzRbYyVfgc7Vk4t/MpnXgw==}
@@ -11622,8 +11622,8 @@ packages:
   truncate-utf8-bytes@1.0.2:
     resolution: {integrity: sha512-95Pu1QXQvruGEhv62XCMO3Mm90GscOCClvrIUwCM0PYOXK3kaF3l3sIHxx71ThJfcbM2O5Au6SO3AWCSEfW4mQ==}
 
-  ts-api-utils@2.1.0:
-    resolution: {integrity: sha512-CUgTZL1irw8u29bzrOD/nH85jqyc74D6SshFgujOIA7osm2Rz7dYH77agkx7H4FBNxDq7Cjf+IjaX/8zwFW+ZQ==}
+  ts-api-utils@2.2.0:
+    resolution: {integrity: sha512-L6f5oQRAoLU1RwXz0Ab9mxsE7LtxeVB6AIR1lpkZMsOyg/JXeaxBaXa/FVCBZyNr9S9I4wkHrlZTklX+im+WMw==}
     engines: {node: '>=18.12'}
     peerDependencies:
       typescript: '>=4.8.4'
@@ -12157,6 +12157,11 @@ packages:
     engines: {node: '>= 6.9.0 || >= 8.9.0'}
     peerDependencies:
       webpack: ^3.0.0 || ^4.0.0-alpha.0 || ^4.0.0
+
+  wouter@3.9.0:
+    resolution: {integrity: sha512-sF/od/PIgqEQBQcrN7a2x3MX6MQE6nW0ygCfy9hQuUkuB28wEZuu/6M5GyqkrrEu9M6jxdkgE12yDFsQMKos4Q==}
+    peerDependencies:
+      react: '>=16.8.0'
 
   wrap-ansi@5.1.0:
     resolution: {integrity: sha512-QC1/iN/2/RPVJ5jYK8BGttj5z83LmSKmvbvrXPNCLZSEb32KKVDJDl/MOt2N01qU2H/FkzEa9PKto1BqDjtd7Q==}
@@ -14228,6 +14233,12 @@ snapshots:
       postcss: 8.5.6
       postcss-value-parser: 4.2.0
 
+  '@csstools/postcss-property-rule-prelude-list@1.0.0(postcss@8.5.6)':
+    dependencies:
+      '@csstools/css-parser-algorithms': 3.0.5(@csstools/css-tokenizer@3.0.4)
+      '@csstools/css-tokenizer': 3.0.4
+      postcss: 8.5.6
+
   '@csstools/postcss-random-function@2.0.1(postcss@8.5.6)':
     dependencies:
       '@csstools/css-calc': 2.1.4(@csstools/css-parser-algorithms@3.0.5(@csstools/css-tokenizer@3.0.4))(@csstools/css-tokenizer@3.0.4)
@@ -14266,6 +14277,11 @@ snapshots:
     dependencies:
       '@csstools/css-calc': 2.1.4(@csstools/css-parser-algorithms@3.0.5(@csstools/css-tokenizer@3.0.4))(@csstools/css-tokenizer@3.0.4)
       '@csstools/css-parser-algorithms': 3.0.5(@csstools/css-tokenizer@3.0.4)
+      '@csstools/css-tokenizer': 3.0.4
+      postcss: 8.5.6
+
+  '@csstools/postcss-syntax-descriptor-syntax-production@1.0.1(postcss@8.5.6)':
+    dependencies:
       '@csstools/css-tokenizer': 3.0.4
       postcss: 8.5.6
 
@@ -14568,7 +14584,7 @@ snapshots:
 
   '@fontsource/inter@5.2.8': {}
 
-  '@formatjs/cli@6.8.6': {}
+  '@formatjs/cli@6.8.7': {}
 
   '@gar/promisify@1.1.3': {}
 
@@ -15853,8 +15869,6 @@ snapshots:
 
   '@radix-ui/rect@1.1.1': {}
 
-  '@remix-run/router@1.23.1': {}
-
   '@rtsao/scc@1.1.0': {}
 
   '@sinclair/typebox@0.27.8': {}
@@ -15986,7 +16000,7 @@ snapshots:
 
   '@turbowarp/ancient-hull.js@0.2.13': {}
 
-  '@turbowarp/extensions@git+https://codeberg.org/ampmod/extensions.git#005c75dc1dc5ace1cd6e0f4370e12bbe48d178cf(jiti@2.6.1)':
+  '@turbowarp/extensions@git+https://codeberg.org/ampmod/extensions.git#e72d5ea793e998cf21259f34c61d684333c3a030(jiti@2.6.1)':
     dependencies:
       '@turbowarp/json': 0.1.2
       '@turbowarp/scratchblocks': 3.6.7
@@ -16045,14 +16059,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - webpack
-
-  '@turbowarp/scratch-svg-renderer@1.0.202505311824':
-    dependencies:
-      '@turbowarp/nanolog': 0.2.0
-      base64-js: 1.2.1
-      base64-loader: 1.0.0
-      dompurify: 2.5.8
-      transformation-matrix: 1.15.0
 
   '@turbowarp/scratch-svg-renderer@1.0.202505311824(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)':
     dependencies:
@@ -16237,7 +16243,7 @@ snapshots:
 
   '@types/responselike@1.0.3':
     dependencies:
-      '@types/node': 25.0.3
+      '@types/node': 22.19.3
 
   '@types/retry@0.12.2': {}
 
@@ -16308,7 +16314,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 25.0.3
+      '@types/node': 22.19.3
     optional: true
 
   '@typescript-eslint/eslint-plugin@8.50.1(@typescript-eslint/parser@8.50.1(eslint@9.39.2(jiti@2.6.1))(typescript@3.9.10))(eslint@9.39.2(jiti@2.6.1))(typescript@3.9.10)':
@@ -16322,7 +16328,7 @@ snapshots:
       eslint: 9.39.2(jiti@2.6.1)
       ignore: 7.0.5
       natural-compare: 1.4.0
-      ts-api-utils: 2.1.0(typescript@3.9.10)
+      ts-api-utils: 2.2.0(typescript@3.9.10)
       typescript: 3.9.10
     transitivePeerDependencies:
       - supports-color
@@ -16371,7 +16377,7 @@ snapshots:
       '@typescript-eslint/utils': 8.50.1(eslint@9.39.2(jiti@2.6.1))(typescript@3.9.10)
       debug: 4.4.3
       eslint: 9.39.2(jiti@2.6.1)
-      ts-api-utils: 2.1.0(typescript@3.9.10)
+      ts-api-utils: 2.2.0(typescript@3.9.10)
       typescript: 3.9.10
     transitivePeerDependencies:
       - supports-color
@@ -16393,7 +16399,7 @@ snapshots:
       minimatch: 9.0.5
       semver: 7.7.3
       tinyglobby: 0.2.15
-      ts-api-utils: 2.1.0(typescript@3.9.10)
+      ts-api-utils: 2.2.0(typescript@3.9.10)
       typescript: 3.9.10
     transitivePeerDependencies:
       - supports-color
@@ -18676,7 +18682,7 @@ snapshots:
 
   css-what@6.2.2: {}
 
-  cssdb@8.5.2: {}
+  cssdb@8.6.0: {}
 
   cssesc@3.0.0: {}
 
@@ -23040,6 +23046,8 @@ snapshots:
       stream-each: 1.2.3
       through2: 2.0.5
 
+  mitt@3.0.1: {}
+
   mkdirp@0.5.1:
     dependencies:
       minimist: 0.0.8
@@ -24191,7 +24199,7 @@ snapshots:
       postcss: 8.5.6
       postcss-value-parser: 4.2.0
 
-  postcss-preset-env@10.5.0(postcss@8.5.6):
+  postcss-preset-env@10.6.0(postcss@8.5.6):
     dependencies:
       '@csstools/postcss-alpha-function': 1.0.1(postcss@8.5.6)
       '@csstools/postcss-cascade-layers': 5.0.2(postcss@8.5.6)
@@ -24222,11 +24230,13 @@ snapshots:
       '@csstools/postcss-oklab-function': 4.0.12(postcss@8.5.6)
       '@csstools/postcss-position-area-property': 1.0.0(postcss@8.5.6)
       '@csstools/postcss-progressive-custom-properties': 4.2.1(postcss@8.5.6)
+      '@csstools/postcss-property-rule-prelude-list': 1.0.0(postcss@8.5.6)
       '@csstools/postcss-random-function': 2.0.1(postcss@8.5.6)
       '@csstools/postcss-relative-color-syntax': 3.0.12(postcss@8.5.6)
       '@csstools/postcss-scope-pseudo-class': 4.0.1(postcss@8.5.6)
       '@csstools/postcss-sign-functions': 1.1.4(postcss@8.5.6)
       '@csstools/postcss-stepped-value-functions': 4.0.9(postcss@8.5.6)
+      '@csstools/postcss-syntax-descriptor-syntax-production': 1.0.1(postcss@8.5.6)
       '@csstools/postcss-system-ui-font-family': 1.0.0(postcss@8.5.6)
       '@csstools/postcss-text-decoration-shorthand': 4.0.3(postcss@8.5.6)
       '@csstools/postcss-trigonometric-functions': 4.0.9(postcss@8.5.6)
@@ -24236,7 +24246,7 @@ snapshots:
       css-blank-pseudo: 7.0.1(postcss@8.5.6)
       css-has-pseudo: 7.0.3(postcss@8.5.6)
       css-prefers-color-scheme: 10.0.0(postcss@8.5.6)
-      cssdb: 8.5.2
+      cssdb: 8.6.0
       postcss: 8.5.6
       postcss-attribute-case-insensitive: 7.0.1(postcss@8.5.6)
       postcss-clamp: 4.1.0(postcss@8.5.6)
@@ -24743,18 +24753,6 @@ snapshots:
       prop-types: 15.8.1
       react: 16.14.0
 
-  react-router-dom@6.30.2(react-dom@16.14.0(react@16.14.0))(react@16.14.0):
-    dependencies:
-      '@remix-run/router': 1.23.1
-      react: 16.14.0
-      react-dom: 16.14.0(react@16.14.0)
-      react-router: 6.30.2(react@16.14.0)
-
-  react-router@6.30.2(react@16.14.0):
-    dependencies:
-      '@remix-run/router': 1.23.1
-      react: 16.14.0
-
   react-string-replace@0.4.4:
     dependencies:
       lodash: 4.17.21
@@ -24819,7 +24817,7 @@ snapshots:
       react-dom: 16.14.0(react@16.14.0)
       react-lifecycles-compat: 3.0.4
 
-  react-virtuoso@4.17.0(react-dom@16.14.0(react@16.14.0))(react@16.14.0):
+  react-virtuoso@4.18.0(react-dom@16.14.0(react@16.14.0))(react@16.14.0):
     dependencies:
       react: 16.14.0
       react-dom: 16.14.0(react@16.14.0)
@@ -24952,6 +24950,8 @@ snapshots:
       get-proto: 1.0.1
       gopd: 1.2.0
       set-function-name: 2.0.2
+
+  regexparam@3.0.0: {}
 
   regexpp@1.1.0: {}
 
@@ -25344,7 +25344,7 @@ snapshots:
     dependencies:
       '@turbowarp/ancient-hull.js': 0.2.13
       '@turbowarp/nanolog': 0.2.0
-      '@turbowarp/scratch-svg-renderer': 1.0.202505311824
+      '@turbowarp/scratch-svg-renderer': 1.0.202505311824(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)
       grapheme-breaker: 0.3.2
       ify-loader: 1.0.4
       linebreak: 0.3.0
@@ -26577,7 +26577,7 @@ snapshots:
     dependencies:
       utf8-byte-length: 1.0.5
 
-  ts-api-utils@2.1.0(typescript@3.9.10):
+  ts-api-utils@2.2.0(typescript@3.9.10):
     dependencies:
       typescript: 3.9.10
 
@@ -27194,6 +27194,13 @@ snapshots:
       loader-utils: 1.4.2
       schema-utils: 0.4.7
       webpack: 5.104.1(@swc/core@1.15.7)(webpack-cli@6.0.1)
+
+  wouter@3.9.0(react@16.14.0):
+    dependencies:
+      mitt: 3.0.1
+      react: 16.14.0
+      regexparam: 3.0.0
+      use-sync-external-store: 1.6.0(react@16.14.0)
 
   wrap-ansi@5.1.0:
     dependencies:

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter';
 
 export default ({ to, children, ...rest }) => {
     if (!!process.env.SPA) {
