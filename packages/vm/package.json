@@ -55,9 +55,9 @@
         "@turbowarp/scratch-svg-renderer": "^1.0.0-202312300007-62fe825"
     },
     "devDependencies": {
-        "@babel/core": "7.13.10",
-        "@babel/eslint-parser": "7.11.0",
-        "@babel/preset-env": "7.14.8",
+        "@babel/core": "7.28.5",
+        "@babel/eslint-parser": "7.28.5",
+        "@babel/preset-env": "7.28.5",
         "adm-zip": "0.4.11",
         "babel-loader": "10.0.0",
         "callsite": "1.0.0",
