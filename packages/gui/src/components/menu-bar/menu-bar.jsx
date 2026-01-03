@@ -979,13 +979,7 @@ class MenuBar extends React.Component {
             </Box>
         );
 
-        return (
-            <React.Fragment>
-                {menuBar}
-
-                <TWNews />
-            </React.Fragment>
-        );
+        return menuBar;
     }
 }
 
