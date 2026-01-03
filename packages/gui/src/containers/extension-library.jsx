@@ -277,9 +277,9 @@ class ExtensionLibrary extends React.PureComponent {
                 onItemSelected={this.handleItemSelect}
                 onRequestClose={this.props.onRequestClose}
                 sidebarNotice={{
-                    defaultMessage: "A few extensions have been moved to the main toolbox. Learn more in the manual.",
+                    defaultMessage: "Looking for the Pen extension? It has been moved to the main toolbox.",
                     description: "Appears at the bottom of the builtin 'Choose a Extension' library.",
-                    id: "amp.extensionsMoved"
+                    id: "amp.penExtensionMoved"
                 }}
             />
         );

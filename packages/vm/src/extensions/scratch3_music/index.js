@@ -765,9 +765,8 @@ class Scratch3MusicBlocks {
                 default: 'Music',
                 description: 'Label for the Music extension category'
             }),
-            // menuIconURI: menuIconURI,
-            // blockIconURI: blockIconURI,
-            addonToCategory: true,
+            menuIconURI: menuIconURI,
+            blockIconURI: blockIconURI,
             blocks: [
                 {
                     opcode: 'playDrumForBeats',

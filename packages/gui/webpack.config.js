@@ -68,7 +68,7 @@ const CACHE_EPOCH = `amp-${monorepoPackageJson.version}`;
 const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     devtool: process.env.SOURCEMAP || (process.env.NODE_ENV === 'production' ? false : 'source-map'),
-    // cache: { type: 'filesystem' },
+    cache: { type: 'filesystem' },
     devServer: {
         static: { directory: path.resolve(__dirname, "build") },
         host: "0.0.0.0",

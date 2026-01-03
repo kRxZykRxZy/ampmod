@@ -58,7 +58,6 @@ import {APP_NAME} from '@ampmod/branding';
 //import listInsetIconURL from './list/list-small.svg';
 
 export default [
-    /* amp: these are in the main toolbox instead (pen is its own category, music is in sound, video sensing is in sensing)
     {
         name: (
             <FormattedMessage
@@ -102,7 +101,7 @@ export default [
         ),
         tags: ['scratch', 'hardware'],
         featured: true
-    }, */
+    },
     {
         name: (
             <FormattedMessage
