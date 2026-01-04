@@ -143,6 +143,7 @@
         "rimraf": "2.7.1",
         "selenium-webdriver": "3.6.0",
         "web-audio-test-api": "0.5.2",
+        "workbox-webpack-plugin": "^7.4.0",
         "yauzl": "2.10.0"
     },
     "jest": {

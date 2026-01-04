@@ -16,17 +16,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
 const {APP_NAME, APP_SLOGAN, APP_DESCRIPTION, APP_SOURCE} = require('@ampmod/branding');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+ const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const root = process.env.ROOT || '';
 if (root.length > 0 && !root.endsWith('/')) {
     throw new Error('If ROOT is defined, it must have a trailing slash.');
-}
-
-if (process.env.ENABLE_SERVICE_WORKER) {
-    console.warn(
-        'amp: ENABLE_SERVICE_WORKER is deprecated as the service worker is now enabled by default. To disable the service worker, use DISABLE_SERVICE_WORKER instead.'
-    );
 }
 
 const IS_CBP_BUILD = Boolean(process.env.IS_CBP_BUILD);
@@ -265,9 +259,6 @@ const base = {
         new webpack.DefinePlugin({
             "global": "globalThis",
             "process.env.DEBUG": Boolean(process.env.DEBUG),
-            "process.env.DISABLE_SERVICE_WORKER": JSON.stringify(
-                process.env.DISABLE_SERVICE_WORKER || ""
-            ),
             "process.env.ROOT": JSON.stringify(root),
             "process.env.AW3": Boolean(process.env.AW3),
             "process.env.SPA": Boolean(process.env.SPA),
@@ -334,7 +325,10 @@ if (process.env.NODE_ENV !== "production") {
 module.exports = [
     // to run editor examples
     merge(base, {
-        entry: process.env.SPA ? './src/playground/amp-spa.tsx' : {
+        entry: process.env.SPA ? {
+            'main':  './src/playground/amp-spa.tsx',
+            'service-worker-extra': './src/playground/service-worker.js',
+        } : {
             'website': [
                 './src/website/components/header/header.tsx',
                 './src/website/components/footer/footer.tsx',
@@ -349,7 +343,8 @@ module.exports = [
             'notfound': './src/website/not-found.ts',
             'minorpages': './src/website/minor-pages/render.tsx',
             'faq': './src/website/faq/faq.tsx',
-            'examples-landing': './src/website/examples/examples.jsx'
+            'examples-landing': './src/website/examples/examples.jsx',
+            'service-worker-extra': './src/playground/service-worker.js',
         },
         output: {
             hashFunction: 'sha256',
@@ -360,9 +355,9 @@ module.exports = [
             splitChunks: {
                 chunks: 'all',
                 minChunks: 1,
-                minSize: 50000,
-                maxSize: 8000000,
-                maxInitialRequests: 8,
+                minSize: 500 * 1024,
+                maxSize: 10 * 1024 * 1024,
+                maxInitialRequests: 12,
             },
             minimizer: [new SwcMinifyWebpackPlugin({compress: true, mangle: true, format: {comments: "some"}})]
         },
@@ -374,6 +369,7 @@ module.exports = [
             ...(process.env.SPA
                 ? [
                     new HtmlWebpackPlugin({
+                        chunks: ['main'],
                         template: 'src/playground/index.ejs',
                         filename: 'index.html',
                         title: `${APP_NAME} - ${APP_SLOGAN}`,
@@ -426,7 +422,7 @@ module.exports = [
                     ...(process.env.BUILD_MODE !== 'lab'
                         ? [
                                 new HtmlWebpackPlugin({
-                                    chunks: ['info', 'home'],
+                                    chunks: ['website', 'home'],
                                     template: 'src/playground/index.ejs',
                                     filename: 'index.html',
                                     title: `${APP_NAME} - ${APP_SLOGAN}`,
@@ -436,7 +432,7 @@ module.exports = [
                             ]
                         : []),
                     new HtmlWebpackPlugin({
-                        chunks: ['info', 'minorpages'],
+                        chunks: ['website', 'minorpages'],
                         template: 'src/playground/index.ejs',
                         filename: 'new-compiler.html',
                         title: `New compiler - ${APP_NAME}`,
@@ -445,7 +441,7 @@ module.exports = [
                         ...htmlWebpackPluginCommon
                     }),
                     new HtmlWebpackPlugin({
-                        chunks: ['info', 'examples-landing'],
+                        chunks: ['website', 'examples-landing'],
                         template: 'src/playground/index.ejs',
                         filename: 'examples.html',
                         title: `Examples - ${APP_NAME}`,
@@ -453,7 +449,7 @@ module.exports = [
                         ...htmlWebpackPluginCommon
                     }),
                     new HtmlWebpackPlugin({
-                        chunks: ['info', 'faq'],
+                        chunks: ['website', 'faq'],
                         template: 'src/playground/index.ejs',
                         filename: 'faq.html',
                         title: `FAQ - ${APP_NAME}`,
@@ -468,7 +464,7 @@ module.exports = [
                         ...htmlWebpackPluginCommon
                     }),
                     new HtmlWebpackPlugin({
-                        chunks: ['info', 'credits'],
+                        chunks: ['website', 'credits'],
                         template: 'src/playground/index.ejs',
                         filename: 'credits.html',
                         title: `Credits - ${APP_NAME}`,
@@ -481,7 +477,7 @@ module.exports = [
                         filename: '404.html',
                         title: `Not Found - ${APP_NAME}`,
                         ...htmlWebpackPluginCommon
-                    })
+                    }),
                 ]),
             new CopyWebpackPlugin({
                 patterns: [
@@ -492,6 +488,41 @@ module.exports = [
                   ...(process.env.IS_CBP_BUILD ? [{ from: "./static-prod", to: ""}] : [])
                 ]
             }),
+            ...process.env.NODE_ENV === "production" || process.env.ENABLE_SERVICE_WORKER ? [
+                new WorkboxPlugin.GenerateSW({
+                    // these options encourage the ServiceWorkers to get in there fast
+                    // and not allow any straggling "old" SWs to hang around
+                    clientsClaim: true,
+                    skipWaiting: true,
+                    maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
+                    excludeChunks: [
+                        // website pages
+                        'examples-landing',
+                        'faq',
+                        'credits',
+                        'home',
+                        'embed',
+                        'notfound', // used in MPA
+                        'minorpages', // used in MPA
+                        'page-new-compiler', // used in SPA
+                        'page-privacy', // used in SPA
+                        'extension-gdxfor', // what the heck is a gdxfor (i know but barely anyone uses this)
+                        // bunch of obscure LEGO stuff
+                        'extension-ev3',
+                        'extension-boost',
+                        'extension-wedo2',
+                        // people seem to use microbit on scratch so not including that unless nobody uses that over here
+                    ],
+                    exclude: [
+                        /images\/seo\/.*/, // SEO stuff
+                        /.*\.map$/, // source maps
+                        /^robots\.txt$/, // no use outside of the internet
+                        /\.woff$/, // old font format
+                        /\/static\/blocks-media\/.*\/icons\/(control_(forever|wait)|event_.*|set\-led.*|wedo.*)/ // unused
+                    ],
+                    importScriptsViaChunks: ['service-worker-extra'],
+                }),
+            ] : []
         ]),
     }),
 ].concat(
