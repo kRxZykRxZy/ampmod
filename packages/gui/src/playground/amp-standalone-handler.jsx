@@ -18,15 +18,26 @@ Object.entries(themes).forEach(([name, context]) => {
 });
 
 function resolveVirtualPath(url) {
-  if (typeof url !== 'string' || !url.startsWith('about:blank#blocks-media/')) return url;
-  
-  const match = url.match(/#blocks-media\/(default|high-contrast|dark)\/(.+)$/);
-  if (match) {
-    const [_, theme, path] = match;
-    const themeMap = mediaMaps[theme === 'high-contrast' ? 'highContrast' : theme];
-    if (themeMap && themeMap[path]) {
-      return themeMap[path] ?? mediaMaps['default'][path];
-    }
+  if (typeof url !== 'string') return url;
+
+  const hashIndex = url.indexOf('#blocks-media/');
+  if (hashIndex === -1) return url;
+
+  const fragment = url.slice(hashIndex);
+
+  const match = fragment.match(
+    /^#blocks-media\/(default|high-contrast|dark)\/(.+)$/
+  );
+  if (!match) return url;
+
+  const [, theme, path] = match;
+  const themeKey =
+    theme === 'high-contrast' ? 'highContrast' : theme;
+  if (mediaMaps[themeKey]?.[path]) {
+    return mediaMaps[themeKey][path];
+  }
+  if (mediaMaps.default?.[path]) {
+    return mediaMaps.default[path];
   }
   return url;
 }
