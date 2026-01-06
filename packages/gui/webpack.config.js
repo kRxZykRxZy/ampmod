@@ -281,6 +281,20 @@ const base = {
         emitOnErrors: true,
     },
     plugins: [
+        ...(process.env.BUILD_MODE !== 'standalone' ? [
+            new MiniCssExtractPlugin({
+                filename:
+                    process.env.NODE_ENV === 'production'
+                        ? `css/${CACHE_EPOCH}/[name].[contenthash].css`
+                        : 'css/[name].css',
+                chunkFilename:
+                    process.env.NODE_ENV === 'production'
+                        ? `css/${CACHE_EPOCH}/[name].[contenthash].css`
+                        : 'css/[id].css',
+                ignoreOrder: true,
+                runtime: true,
+            })
+        ] : []),
         new webpack.DefinePlugin({
             "global": "globalThis",
             "process.env.DEBUG": Boolean(process.env.DEBUG),
@@ -325,7 +339,6 @@ const base = {
         new webpack.ProvidePlugin({
             Buffer: ["buffer", "Buffer"],
         }),
-
     ],
 };
 
