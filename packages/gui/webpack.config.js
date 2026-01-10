@@ -16,8 +16,6 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const WorkboxPlugin = require('workbox-webpack-plugin');
-const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
-const glob = require("glob");
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
 const {APP_NAME, APP_SLOGAN, APP_DESCRIPTION, APP_SOURCE} = require('@ampmod/branding');
@@ -283,9 +281,6 @@ const base = {
         emitOnErrors: true,
     },
     plugins: [
-        ...process.env.NODE_ENV === 'production' ? [new PurgeCSSPlugin({
-            paths: glob.sync('src/**/*', { nodir: true }),
-        })] : [],
         ...(process.env.BUILD_MODE !== 'standalone' ? [
             new MiniCssExtractPlugin({
                 filename:

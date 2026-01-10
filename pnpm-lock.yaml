@@ -27,18 +27,12 @@ importers:
       esbuild-loader:
         specifier: ^4.4.0
         version: 4.4.2(webpack@5.104.1)
-      glob:
-        specifier: 7.2.3
-        version: 7.2.3
       mini-svg-data-uri:
         specifier: ^1.4.4
         version: 1.4.4
       optimize-css-assets-webpack-plugin:
         specifier: ^6.0.1
         version: 6.0.1(webpack@5.104.1)
-      purgecss-webpack-plugin:
-        specifier: ^7.0.2
-        version: 7.0.2(webpack@5.104.1)
       sugarss:
         specifier: ^5.0.1
         version: 5.0.1(postcss@8.5.6)
@@ -10432,15 +10426,6 @@ packages:
 
   pure-rand@6.1.0:
     resolution: {integrity: sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA==}
-
-  purgecss-webpack-plugin@7.0.2:
-    resolution: {integrity: sha512-YKN93Ndg/T/FsJaUL7KJdFBh/kfGi3pH7sm1OmVbhzb11mmS+vbRAQ5UIvqUd70kQrJ57+ZpPkDtRv66d89q9A==}
-    peerDependencies:
-      webpack: '>=5.0.0'
-
-  purgecss@7.0.2:
-    resolution: {integrity: sha512-4Ku8KoxNhOWi9X1XJ73XY5fv+I+hhTRedKpGs/2gaBKU8ijUiIKF/uyyIyh7Wo713bELSICF5/NswjcuOqYouQ==}
-    hasBin: true
 
   qs@6.14.1:
     resolution: {integrity: sha512-4EK3+xJl8Ts67nLYNwqw/dsFVnCf+qR7RgXSK9jEEm9unao3njwMDdmsdvoKBKHzxd7tCYz5e5M+SnMjdtXGQQ==}
@@ -24701,18 +24686,6 @@ snapshots:
   punycode@2.3.1: {}
 
   pure-rand@6.1.0: {}
-
-  purgecss-webpack-plugin@7.0.2(webpack@5.104.1):
-    dependencies:
-      purgecss: 7.0.2
-      webpack: 5.104.1(@swc/core@1.15.8)(webpack-cli@6.0.1)
-
-  purgecss@7.0.2:
-    dependencies:
-      commander: 12.1.0
-      glob: 11.1.0
-      postcss: 8.5.6
-      postcss-selector-parser: 6.1.2
 
   qs@6.14.1:
     dependencies:
