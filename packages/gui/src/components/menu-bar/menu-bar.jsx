@@ -517,7 +517,7 @@ class MenuBar extends React.Component {
                                 </MenuLabel>
                             </div>
                         )}
-                        {(isScratchDesktop && aboutButton) || !process.env.ampmod_mode === 'standalone' && (
+                        {(isScratchDesktop && aboutButton) || process.env.ampmod_mode !== 'standalone' && (
                             <SmartLink className={classNames(styles.menuBarItem, styles.logo)} to="/" target="_blank">
                                 <img
                                     src={
