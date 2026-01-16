@@ -30,6 +30,9 @@ packages much easier.
 
 ## Development
 
+**Please read [CONTRIBUTING.md](CONTRIBUTING.md) before you contribute. This might seem pointless, but it is very important
+so you don't end up submitting broken, vibe-coded snippets.**
+
 We use `pnpm` to manage dependencies. To install `pnpm`, run `corepack enable` (Node >= 18) or `npm i -g pnpm` (Node < 18).
 
 Run `pnpm i` in the root directory to install all packages needed.
