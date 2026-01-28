@@ -62,6 +62,11 @@ at the end of the command.
 AmpMod is based off TurboWarp, so if you have modified it before, you know how to modify
 AmpMod as well. If not, check [the dev docs](https://ampmod.codeberg.page/manual/dev).
 
+> [!NOTE]
+> The prefix used for AmpMod-specific files or modifications in Scratch folders is `amp`.
+> For the sake of clarity, please use this prefix instead of leaving your files without it.
+> This prevents conflicts if we merge code from upstream.
+
 ## On joke functionality and loading messages
 
 Joke functionality will **not** be added **except from 1-31 March**.
